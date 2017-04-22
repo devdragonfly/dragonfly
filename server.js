@@ -20,7 +20,8 @@ var router = express();
 var server = http.createServer(router);
 var io = socketio.listen(server);
 
-router.use(express.static(path.resolve(__dirname, 'client')));
+router.use(express.static(path.resolve(__dirname, 'src/client')));
+router.use(express.static(path.resolve(__dirname, 'src/client/public')));
 var messages = [];
 var sockets = [];
 
@@ -81,5 +82,10 @@ function broadcast(event, data) {
 server.listen(process.env.PORT || 3000, process.env.IP || "0.0.0.0", function(){
   var addr = server.address();
   console.log("Chat server listening at", addr.address + ":" + addr.port);
+  console.log('BUILD THE JSX: npm run build');
+  console.log('ADD TO COMMIT: git add .');
+  console.log('CREATE COMMIT: git commit -m "commit message"');
+  console.log('PUSH TO GITHUB: git push');
+  console.log('PUSH TO AWS: eb deploy');
   console.log('TEST IN C9 AT:  https://dragonfly-pelling.c9users.io/');
 });
