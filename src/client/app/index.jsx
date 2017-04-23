@@ -1,13 +1,13 @@
 import React from 'react';
 import {render} from 'react-dom';
-import AwesomeComponent from './AwesomeComponent.jsx';
+import SignUpComponent from './SignUpComponent.jsx';
 
 class App extends React.Component {
   render () {
     return (
       <div>
         <p> Hello Dragonfly!</p>
-        <AwesomeComponent />
+        <SignUpComponent />
       </div>
     );
   }
