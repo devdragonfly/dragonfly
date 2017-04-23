@@ -1,7 +1,26 @@
-import { Config, CognitoIdentityCredentials } from "aws-sdk";
+//import { Config, CognitoIdentityCredentials } from "aws-sdk";
 import { CognitoUserPool, CognitoUserAttribute } from "amazon-cognito-identity-js";
 import React from 'react';
 import appconfig from "./appconfig";
+
+
+//Config.region = appconfig.region;
+
+/*
+Config.credentials = new CognitoIdentityCredentials({
+  IdentityPoolId: appconfig.IdentityPoolId
+});
+*/
+
+
+const userPool = new CognitoUserPool({
+  UserPoolId: appconfig.UserPoolId,
+  ClientId: appconfig.ClientId,
+});
+
+
+
+
 
 class SignUpComponent extends React.Component {
 
@@ -38,48 +57,30 @@ class SignUpComponent extends React.Component {
   }
   
   handleSubmit(e) {
-    var email = this.state.emailValue;
-    var password = this.state.passwordValue;
+    alert('Ok, it was clicked');
+    const email = this.state.emailValue.trim();
+    const password = this.state.passwordValue.trim();
     
-    var poolData = {
-      UserPoolId : '', // your user pool id here
-      ClientId : '' // your app client id here
-    };
+    alert(email + ' ' + password);
     
-    var userPool = new AWSCognito.CognitoIdentityServiceProvider.CognitoUserPool(poolData);
-    var userData = {
-        Username : '...', // your username here
-        Pool : userPool
-    };
+    const attributeList = [
+      new CognitoUserAttribute({
+        Name: 'email',
+        Value: email
+      })
+    ];
     
-    var attributeList = [];
-     
-    var dataEmail = {
-        Name : 'email',
-        Value : email // your email here
-    };
-
-    var attributeEmail =  new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataEmail);
-    var attributePhoneNumber =  new AWSCognito.CognitoIdentityServiceProvider.CognitoUserAttribute(dataPhoneNumber);
-     
-    attributeList.push(attributeEmail);
-    attributeList.push(attributePhoneNumber);
-     
+    alert(JSON.stringify(userPool));
+    
     var cognitoUser;
-    userPool.signUp('username', 'password', attributeList, null, function(err, result){
-        if (err) {
-            alert(err);
-            return;
-        }
-        cognitoUser = result.user;
-        console.log('user name is ' + cognitoUser.getUsername());
+    userPool.signUp(email, password, attributeList, null, (err, result) => {
+      if (err) {
+        alert(err);
+        return;
+      }
+    cognitoUser = result.user;
+    alert('user name is ' + cognitoUser.getUsername());
     });
-    
-    
-    
-    
-    
-    
   }
 
 }
