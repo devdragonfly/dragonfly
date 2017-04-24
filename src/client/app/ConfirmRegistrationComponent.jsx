@@ -1,6 +1,7 @@
 //import { Config, CognitoIdentityCredentials } from "aws-sdk";
-import { CognitoUserPool, CognitoUserAttribute } from "amazon-cognito-identity-js";
+import { CognitoUserPool, CognitoUserAttribute, CognitoUser } from "amazon-cognito-identity-js";
 import React from 'react';
+import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 'react-router';
 import appconfig from "./appconfig";
 
 
@@ -26,7 +27,8 @@ class ConfirmRegistrationComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {codeValue : ''};
+    this.state = {emailValue : props.user.username, codeValue : ''};
+    this.updateEmailValue = this.updateEmailValue.bind(this);
     this.updateCodeValue = this.updateCodeValue.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -34,11 +36,19 @@ class ConfirmRegistrationComponent extends React.Component {
   render() {
     return (
       <div>
+        EMAIL<br/>
+        <input value={this.state.emailValue} onChange={this.updateEmailValue}/><br/>
         CODE<br/>
         <input value={this.state.codeValue} onChange={this.updateCodeValue}/><br/>
         <button onClick={this.handleSubmit}>Submit</button>
       </div>
     );
+  }
+  
+  updateEmailValue(e) {
+    this.setState({
+      emailValue: e.target.value
+    });
   }
 
   updateCodeValue(e) {
@@ -49,6 +59,26 @@ class ConfirmRegistrationComponent extends React.Component {
   
   
   handleSubmit(e) {
+    const email = this.state.emailValue.trim();
+    const code = this.state.codeValue.trim();
+    
+    var userData = {
+        Username : email,
+        Pool : userPool
+    };
+    
+    var cognitoUser = new CognitoUser(userData);
+    
+    cognitoUser.confirmRegistration(code, true, function(err, result) {
+          if (err) {
+          alert(err);
+          return;
+        }
+        
+          this.props.history.push('organizations');
+    });
+    
+    
   }
 }
 

@@ -1,11 +1,10 @@
 //import { Config, CognitoIdentityCredentials } from "aws-sdk";
-import { CognitoUserPool, CognitoUserAttribute } from "amazon-cognito-identity-js";
+import { CognitoUserPool, CognitoUserAttribute, AuthenticationDetails, CognitoUser } from "amazon-cognito-identity-js";
 import React from 'react';
 import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 'react-router';
 import appconfig from "./appconfig";
 
-
-//Config.region = appconfig.region;
+//AWSCognito.config.region = appconfig.region;
 
 /*
 Config.credentials = new CognitoIdentityCredentials({
@@ -23,11 +22,11 @@ const userPool = new CognitoUserPool({
 
 
 
-class SignUpComponent extends React.Component {
+class SignInComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {emailValue : props.user.username, passwordValue : ''};
+    this.state = {emailValue : '', passwordValue : ''};
     this.updateEmailValue = this.updateEmailValue.bind(this);
     this.updatePasswordValue = this.updatePasswordValue.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -60,27 +59,38 @@ class SignUpComponent extends React.Component {
   handleSubmit(e) {
     const email = this.state.emailValue.trim();
     const password = this.state.passwordValue.trim();
-    
-    const attributeList = [
-      new CognitoUserAttribute({
-        Name: 'email',
-        Value: email
-      })
-    ];
+
+    var authenticationData = {
+        Username : email, 
+        Password : password
+    };
     
     
-    var cognitoUser;
-    userPool.signUp(email, password, attributeList, null, (err, result) => {
-        if (err) {
-          alert(err);
-          return;
-        }
-      cognitoUser = result.user;
-      this.props.handleUserReceived(cognitoUser);
-      this.props.history.push('confirmregistration');
-    });
-  }
+    var authenticationDetails = new AuthenticationDetails(authenticationData);
+ 
+    
+    var userData = {
+        Username : email,
+        Pool : userPool
+    };
+    
+    
+    var cognitoUser = new CognitoUser(userData);
+    this.props.handleUserReceived(cognitoUser);
+    var thisProps = this.props; // we lose this.props inside the authenticateUser function
+    
+    cognitoUser.authenticateUser(authenticationDetails, {
+          onSuccess: function (result) {
+              thisProps.handleIdTokenReceived(result);
+              thisProps.history.push('organizations');
+          },
+   
+          onFailure: function(err) {
+              alert(JSON.stringify(err));
+          }
+      });
+    }
 
 }
 
-export default SignUpComponent;
+export default SignInComponent;

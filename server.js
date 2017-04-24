@@ -25,6 +25,8 @@ router.use(express.static(path.resolve(__dirname, 'src/client/public')));
 var messages = [];
 var sockets = [];
 
+
+
 io.on('connection', function (socket) {
     messages.forEach(function (data) {
       socket.emit('message', data);
