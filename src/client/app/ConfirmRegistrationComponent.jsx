@@ -27,29 +27,37 @@ class ConfirmRegistrationComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {emailValue : props.user.username, codeValue : ''};
-    this.updateEmailValue = this.updateEmailValue.bind(this);
+    this.state = {codeValue : ''};
     this.updateCodeValue = this.updateCodeValue.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   render() {
     return (
-      <div>
-        EMAIL<br/>
-        <input value={this.state.emailValue} onChange={this.updateEmailValue}/><br/>
-        CODE<br/>
-        <input value={this.state.codeValue} onChange={this.updateCodeValue}/><br/>
-        <button onClick={this.handleSubmit}>Submit</button>
+      
+      <div className="row">
+        <div className="col-sm-6">
+
+        </div>
+        <div className="col-sm-4">
+            <h2>Confirm Email Address</h2>
+            A six-digit verification code was sent to the email address <br/><br/>
+            <i>{this.props.user.username}</i>. <br/><br/> 
+            Please enter that code here so we can verify this is your email.
+            <br/><br/>
+            <b>VERIFICATION CODE</b><br/>
+            <input value={this.state.codeValue} onChange={this.updateCodeValue} />
+            <br/><br/>
+            <button onClick={this.handleSubmit}>Confirm</button>   
+        </div>
+        <div className="col-sm-2">
+
+        </div>
       </div>
+      
     );
   }
   
-  updateEmailValue(e) {
-    this.setState({
-      emailValue: e.target.value
-    });
-  }
 
   updateCodeValue(e) {
     this.setState({
@@ -59,7 +67,7 @@ class ConfirmRegistrationComponent extends React.Component {
   
   
   handleSubmit(e) {
-    const email = this.state.emailValue.trim();
+    const email = this.props.user.username;
     const code = this.state.codeValue.trim();
     
     var userData = {
@@ -68,14 +76,14 @@ class ConfirmRegistrationComponent extends React.Component {
     };
     
     var cognitoUser = new CognitoUser(userData);
+    var thisProps = this.props; // we lose this.props inside the confirmRegistration function
     
     cognitoUser.confirmRegistration(code, true, function(err, result) {
           if (err) {
           alert(err);
           return;
         }
-        
-          this.props.history.push('organizations');
+        thisProps.history.push('successcodeverified');
     });
     
     

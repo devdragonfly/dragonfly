@@ -3,10 +3,10 @@ import { render } from 'react-dom';
 // Import routing components
 import {Router, Route, IndexRoute, browserHistory} from 'react-router';
 import Main from './Main.jsx';
-import SignInComponent from './SignInComponent.jsx';
 import SignUpComponent from './SignUpComponent.jsx';
 import OrganizationsComponent from './OrganizationsComponent.jsx';
 import ConfirmRegistrationComponent from './ConfirmRegistrationComponent.jsx';
+import SuccessCodeVerifiedComponent from './SuccessCodeVerifiedComponent.jsx';
 
 class Home extends Component {
     render(){
@@ -17,12 +17,12 @@ class Home extends Component {
 render(
     <Router>
         <Route path="/" component={Main} history={browserHistory}>
-            <IndexRoute component={Home} />
-            <Route path="" component={Home}/>
-            <Route path="signin" component={SignInComponent}/>
-            <Route path="signup" component={SignUpComponent}/>
-            <Route path="organizations" component={OrganizationsComponent}/>
+            <IndexRoute component={SignUpComponent} />
+            <Route path="" component={SignUpComponent}/>
+            <Route path="signup" component={SignUpComponent} />
             <Route path="confirmregistration" component={ConfirmRegistrationComponent}/>
+            <Route path="successcodeverified" component={SuccessCodeVerifiedComponent}/>
+            <Route path="organizations" component={OrganizationsComponent}/>
         </Route>
     </Router>,
     document.getElementById('container')

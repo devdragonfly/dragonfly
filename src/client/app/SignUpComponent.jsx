@@ -35,13 +35,20 @@ class SignUpComponent extends React.Component {
 
   render() {
     return (
-      <div>
-        EMAIL<br/>
-        <input value={this.state.emailValue} onChange={this.updateEmailValue}/><br/>
-        PASSWORD<br/>
-        <input type="password" value={this.state.passwordValue} onChange={this.updatePasswordValue}/><br/>
-        <button onClick={this.handleSubmit}>Alert Value</button>
+      <div className="row">
+        <div className="col-sm-6">
+          <h1>Dragonfly</h1>
+          Marketing text here...
+        </div>
+        <div className="col-sm-6">
+            <h2>Sign Up</h2>
+            <input value={this.state.emailValue} onChange={this.updateEmailValue}/>
+            <br/><br/>
+            <input type="password" value={this.state.passwordValue} onChange={this.updatePasswordValue}/><br/>
+            <button onClick={this.handleSubmit}>Create Account</button>   
+        </div>
       </div>
+      
     );
   }
 

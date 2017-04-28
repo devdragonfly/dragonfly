@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
-import { Link } from 'react-router';
+import { Router, Route, Link, browserHistory } from 'react-router';
+import SignInComponent from './SignInComponent.jsx';
+import SignOutComponent from './SignOutComponent.jsx';
 
 class Main extends Component {
 
@@ -21,7 +23,9 @@ class Main extends Component {
     
     
     
+    
     render(){
+        
         
         const childrenWithProps = React.Children.map(this.props.children,
          (child) => React.cloneElement(child, {
@@ -32,19 +36,33 @@ class Main extends Component {
          })
         );
         
+        var email = this.state.user.username;
+        var idToken = this.state.idToken;  
+        var handleUserReceived = this.handleUserReceived;
+        var handleIdTokenReceived = this.handleIdTokenReceived;
+        var history = this.props.history;
+        var rightnav = function() { return '' }();
+        
+        if (idToken === 'not found') {
+            rightnav = function() {return <SignInComponent handleUserReceived={handleUserReceived} handleIdTokenReceived={handleIdTokenReceived} email={email} history={history} /> }();
+        } else {
+            rightnav = function() {return <SignOutComponent handleUserReceived={handleUserReceived} handleIdTokenReceived={handleIdTokenReceived} email={email} history={history} /> }();
+        }
+        
         
         
         return(
-            <div>
-                <Link to="/">Home</Link>
-                <Link to="signin">Sign In</Link>
-                <Link to="signup">Sign Up</Link>
-                <Link to="confirmregistration">Confirm Registrations</Link>
-                <Link to="organizations">Organizations</Link>
-                {this.state.user.username}
-                <div className="container">
-                    {childrenWithProps}
+            <div class="container-fluid">
+                
+                <div className="row dragon-navbar">
+                  <div className="col-sm-6">
+                    Dragonfly Logo
+                  </div>
+                  <div className="col-sm-6">{rightnav}</div>
                 </div>
+                
+                
+                    {childrenWithProps}
             </div>
         );
     }

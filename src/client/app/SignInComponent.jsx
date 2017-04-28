@@ -26,20 +26,22 @@ class SignInComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {emailValue : '', passwordValue : ''};
+    this.state = {emailValue : props.email, passwordValue : ''};
     this.updateEmailValue = this.updateEmailValue.bind(this);
     this.updatePasswordValue = this.updatePasswordValue.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
+  
+  componentWillReceiveProps(nextProps) {
+    this.setState({emailValue : nextProps.email});
+  } 
 
   render() {
     return (
       <div>
-        EMAIL<br/>
-        <input value={this.state.emailValue} onChange={this.updateEmailValue}/><br/>
-        PASSWORD<br/>
-        <input type="password" value={this.state.passwordValue} onChange={this.updatePasswordValue}/><br/>
-        <button onClick={this.handleSubmit}>Alert Value</button>
+        <input value={this.state.emailValue} onChange={this.updateEmailValue} placeholder="email" />
+        <input type="password" value={this.state.passwordValue} onChange={this.updatePasswordValue} placeholder="password" />
+        <button onClick={this.handleSubmit}>Sign In</button>
       </div>
     );
   }
