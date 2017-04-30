@@ -21,7 +21,7 @@ const userPool = new CognitoUserPool({
 
 
 
-
+const buttonClassName = "btn btn-success btn-lg";
 
 class SignUpComponent extends React.Component {
 
@@ -29,11 +29,12 @@ class SignUpComponent extends React.Component {
     super(props);
     this.state = {emailValue : props.user.username, 
                   passwordValue : '',
-                  buttonNormal : "btn btn-success btn-lg",
-                  buttonClicked : "dragon-hidden",
+                  buttonRestClassName : buttonClassName,
+                  buttonClickedClassName : "dragon-hidden"
     };
     this.updateEmailValue = this.updateEmailValue.bind(this);
     this.updatePasswordValue = this.updatePasswordValue.bind(this);
+    this.showClickedButtonState = this.showClickedButtonState.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -44,19 +45,31 @@ class SignUpComponent extends React.Component {
           Marketing text here...
         </div>
         <div className="col-sm-3">
-            <h1>Sign Up</h1>
-            <input value={this.state.emailValue} onChange={this.updateEmailValue} placeholder="email" className="form-control input-lg"/>
-            <br/>
-            <input type="password" value={this.state.passwordValue} onChange={this.updatePasswordValue} placeholder="password" className="form-control input-lg"/>
-            <br/>
-            <button onClick={this.handleSubmit} className={this.state.buttonNormal}>Create Account</button>   
-            <button className={this.state.buttonClicked}><i className='fa fa-circle-o-notch fa-spin'></i> Creating Account</button>   
+          <form onSubmit={this.handleSubmit}>
+              <h1>Sign Up</h1>
+              <input value={this.state.emailValue} onChange={this.updateEmailValue} placeholder="email" className="form-control input-lg"/>
+              <br/>
+              <input type="password" value={this.state.passwordValue} onChange={this.updatePasswordValue} placeholder="password" className="form-control input-lg"/>
+              <br/>
+            <input type="submit" className={this.state.buttonRestClassName} value="Create Account" />
+            <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Creating Account</div> 
+          </form>
         </div>
         <div className="col-sm-3">
         </div>
       </div>
       
     );
+  }
+
+  showClickedButtonState(yes) {
+    if (yes) {
+          this.setState({ buttonRestClassName: "dragon-hidden" });
+          this.setState({ buttonClickedClassName: buttonClassName });
+    } else {
+          this.setState({ buttonRestClassName: buttonClassName });
+          this.setState({ buttonClickedClassName: "dragon-hidden" });
+    }
   }
 
   updateEmailValue(e) {
@@ -72,8 +85,8 @@ class SignUpComponent extends React.Component {
   }
   
   handleSubmit(e) {
-    this.setState({buttonClicked : this.state.buttonNormal});
-    this.setState({buttonNormal : "dragon-hidden"});
+    e.preventDefault();
+    this.showClickedButtonState(true);
     
     const email = this.state.emailValue.trim();
     const password = this.state.passwordValue.trim();
@@ -87,14 +100,17 @@ class SignUpComponent extends React.Component {
     
     
     var cognitoUser;
+    var myThis = this;
+    
     userPool.signUp(email, password, attributeList, null, (err, result) => {
+      myThis.showClickedButtonState(false);
         if (err) {
           alert(err);
           return;
         }
       cognitoUser = result.user;
-      this.props.handleUserReceived(cognitoUser);
-      this.props.history.push('confirmregistration');
+      myThis.props.handleUserReceived(cognitoUser);
+      myThis.props.history.push('confirmregistration');
     });
   }
 

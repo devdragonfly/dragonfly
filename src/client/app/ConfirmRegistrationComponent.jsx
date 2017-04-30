@@ -21,17 +21,18 @@ const userPool = new CognitoUserPool({
 
 
 
-
+const buttonClassName = "btn btn-success btn-lg";
 
 class ConfirmRegistrationComponent extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {codeValue : '',
-                  buttonNormal : "btn btn-success btn-lg",
-                  buttonClicked : "dragon-hidden",
+                  buttonRestClassName : buttonClassName,
+                  buttonClickedClassName : "dragon-hidden"
     };
     this.updateCodeValue = this.updateCodeValue.bind(this);
+    this.showClickedButtonState = this.showClickedButtonState.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -43,16 +44,18 @@ class ConfirmRegistrationComponent extends React.Component {
 
         </div>
         <div className="col-sm-3">
-            <h1>Confirm Email Address</h1>
-            A six-digit verification code was sent to the email address <br/><br/>
-            <i>{this.props.user.username}</i>. <br/><br/> 
-            Please enter that code here so we can verify this is your email.
-            <br/><br/>
-            <b>VERIFICATION CODE</b><br/>
-            <input value={this.state.codeValue} onChange={this.updateCodeValue} className="form-control input-lg"/>
-            <br/>
-            <button onClick={this.handleSubmit} className={this.state.buttonNormal}>Confirm</button>   
-            <button className={this.state.buttonClicked}><i className='fa fa-circle-o-notch fa-spin'></i> Confirming</button>   
+          <form onSubmit={this.handleSubmit}>
+              <h1>Confirm Email Address</h1>
+              A six-digit verification code was sent to the email address <br/><br/>
+              <i>{this.props.user.username}</i>. <br/><br/> 
+              Please enter that code here so we can verify this is your email.
+              <br/><br/>
+              <b>VERIFICATION CODE</b><br/>
+              <input value={this.state.codeValue} onChange={this.updateCodeValue} className="form-control input-lg"/>
+              <br/>
+            <input type="submit" className={this.state.buttonRestClassName} value="Confirm" />
+            <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Confirming</div>
+          </form>
             <br/><br/><br/><br/>
             
             Can't find email with verification code?<br/>
@@ -66,7 +69,16 @@ class ConfirmRegistrationComponent extends React.Component {
     );
   }
   
-
+  showClickedButtonState(yes) {
+    if (yes) {
+          this.setState({ buttonRestClassName: "dragon-hidden" });
+          this.setState({ buttonClickedClassName: buttonClassName });
+    } else {
+          this.setState({ buttonRestClassName: buttonClassName });
+          this.setState({ buttonClickedClassName: "dragon-hidden" });
+    }
+  }
+  
   updateCodeValue(e) {
     this.setState({
       codeValue: e.target.value
@@ -75,8 +87,8 @@ class ConfirmRegistrationComponent extends React.Component {
   
   
   handleSubmit(e) {
-    this.setState({buttonClicked : this.state.buttonNormal});
-    this.setState({buttonNormal : "dragon-hidden"});
+    e.preventDefault();
+    this.showClickedButtonState(true);
     
     
     const email = this.props.user.username;
@@ -88,14 +100,15 @@ class ConfirmRegistrationComponent extends React.Component {
     };
     
     var cognitoUser = new CognitoUser(userData);
-    var thisProps = this.props; // we lose this.props inside the confirmRegistration function
+    var myThis = this; // we lose this.props inside the confirmRegistration function
     
     cognitoUser.confirmRegistration(code, true, function(err, result) {
+        myThis.showClickedButtonState(false);
           if (err) {
           alert(err);
           return;
         }
-        thisProps.history.push('successcodeverified');
+        myThis.props.history.push('successcodeverified');
     });
     
     

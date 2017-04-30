@@ -20,20 +20,25 @@ const userPool = new CognitoUserPool({
 
 
 
-
+const buttonClassName = "btn btn-primary btn-sm";
 
 class SignInComponent extends React.Component {
 
   constructor(props) {
     super(props);
+    
     this.state = {emailValue : props.email, 
-                  passwordValue : '', 
-                  buttonNormal : "btn btn-primary btn-sm",
-                  buttonClicked : "dragon-hidden",
+                  passwordValue : '',
+                  buttonRestClassName : buttonClassName,
+                  buttonClickedClassName : "dragon-hidden"
+                  
     };
     this.updateEmailValue = this.updateEmailValue.bind(this);
     this.updatePasswordValue = this.updatePasswordValue.bind(this);
+    this.showClickedButtonState = this.showClickedButtonState.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    
+    
   }
   
   componentWillReceiveProps(nextProps) {
@@ -41,30 +46,44 @@ class SignInComponent extends React.Component {
   } 
 
   render() {
-      
+
     
     return (
-      <div className="form-inline dragon-login-box">
-      
-      <div className="form-group">
-        <input value={this.state.emailValue} onChange={this.updateEmailValue} placeholder="email" className="form-control input-sm"/>&nbsp;&nbsp;<br/>
-        <span>&nbsp;</span>
-      </div>
-      
-      <div className="form-group">
-        <input type="password" value={this.state.passwordValue} onChange={this.updatePasswordValue} placeholder="password" className="form-control input-sm"/>&nbsp;&nbsp;<br/>
-        <Link to={`accessaccount`}>forgot password?</Link>
-      </div>
-      
-      <div className="form-group">
-        <button onClick={this.handleSubmit} className={this.state.buttonNormal}>Sign In</button>
-        <button className={this.state.buttonClicked}><i className='fa fa-circle-o-notch fa-spin'></i> Signing In</button>
-        <br/>
-        <span>&nbsp;</span>
-      </div>
-        <br/>
+      <div className="dragon-login-box">
+        <form className="form-inline" onSubmit={this.handleSubmit}>
+          
+          <div className="form-group">
+            <input value={this.state.emailValue} onChange={this.updateEmailValue} placeholder="email" className="form-control input-sm"/>&nbsp;&nbsp;<br/>
+            <span>&nbsp;</span>
+          </div>
+          
+          <div className="form-group">
+            <input type="password" value={this.state.passwordValue} onChange={this.updatePasswordValue} placeholder="password" className="form-control input-sm"/>&nbsp;&nbsp;<br/>
+            <Link to={`accessaccount`}>forgot password?</Link>
+          </div>
+          
+          <div className="form-group">
+            <input type="submit" className={this.state.buttonRestClassName} value="Sign In" />
+            <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Signing In</div>
+            <br/>
+            <span>&nbsp;</span>
+          </div>
+            <br/>
+            
+        </form>
       </div>
     );
+  }
+  
+
+  showClickedButtonState(yes) {
+    if (yes) {
+          this.setState({ buttonRestClassName: "dragon-hidden" });
+          this.setState({ buttonClickedClassName: buttonClassName });
+    } else {
+          this.setState({ buttonRestClassName: buttonClassName });
+          this.setState({ buttonClickedClassName: "dragon-hidden" });
+    }
   }
 
   updateEmailValue(e) {
@@ -80,8 +99,9 @@ class SignInComponent extends React.Component {
   }
   
   handleSubmit(e) {
-    this.setState({buttonClicked : this.state.buttonNormal});
-    this.setState({buttonNormal : "dragon-hidden"});
+    e.preventDefault();
+    this.showClickedButtonState(true);
+    
     const email = this.state.emailValue.trim();
     const password = this.state.passwordValue.trim();
 
@@ -106,16 +126,17 @@ class SignInComponent extends React.Component {
     
     cognitoUser.authenticateUser(authenticationDetails, {
           onSuccess: function (result) {
+              myThis.showClickedButtonState(false);
               myThis.props.handleIdTokenReceived(result);
               myThis.props.history.push('organizations');
           },
    
           onFailure: function(err) {
-              myThis.setState({buttonNormal : myThis.state.buttonClicked});
-              myThis.setState({buttonClicked : "dragon-hidden"});
+              myThis.showClickedButtonState(false);
               if (err.code === "UserNotConfirmedException") {
                 myThis.props.history.push('confirmregistration');
               }
+              alert(err.message);
           }
       });
     }

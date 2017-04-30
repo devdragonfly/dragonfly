@@ -13,7 +13,7 @@ const userPool = new CognitoUserPool({
 
 
 
-
+const buttonClassName = "btn btn-success btn-lg";
 
 class CreateNewPasswordComponent extends React.Component {
 
@@ -21,11 +21,12 @@ class CreateNewPasswordComponent extends React.Component {
     super(props);
     this.state = {codeValue : '',
                   passwordValue : '',
-                  buttonNormal : "btn btn-success btn-lg",
-                  buttonClicked : "dragon-hidden",
+                  buttonRestClassName : buttonClassName,
+                  buttonClickedClassName : "dragon-hidden"
     };
     this.updateCodeValue = this.updateCodeValue.bind(this);
     this.updatePasswordValue = this.updatePasswordValue.bind(this);
+    this.showClickedButtonState = this.showClickedButtonState.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -37,18 +38,19 @@ class CreateNewPasswordComponent extends React.Component {
 
         </div>
         <div className="col-sm-3">
-            <h1>Create New Password</h1>
-            A six-digit verification code was sent to the email address <br/><br/>
-            <i>{this.props.user.username}</i>. <br/><br/> 
-            Please enter that code here and create a new password.
-            <br/><br/>
-            <input value={this.state.codeValue} onChange={this.updateCodeValue} placeholder="code" className="form-control input-lg"/>
-            <br/>
-            <input value={this.state.passwordValue} onChange={this.updatePasswordValue} placeholder="new password" type="password" className="form-control input-lg"/>
-            <br/>
-            <button onClick={this.handleSubmit} className={this.state.buttonNormal}>Save Password</button>   
-            <button className={this.state.buttonClicked}><i className='fa fa-circle-o-notch fa-spin'></i> Saving Password</button>   
-            
+          <form onSubmit={this.handleSubmit}>
+              <h1>Create New Password</h1>
+              A six-digit verification code was sent to the email address <br/><br/>
+              <i>{this.props.user.username}</i>. <br/><br/> 
+              Please enter that code here and create a new password.
+              <br/><br/>
+              <input value={this.state.codeValue} onChange={this.updateCodeValue} placeholder="code" className="form-control input-lg"/>
+              <br/>
+              <input value={this.state.passwordValue} onChange={this.updatePasswordValue} placeholder="new password" type="password" className="form-control input-lg"/>
+              <br/>
+            <input type="submit" className={this.state.buttonRestClassName} value="Save Password" />
+            <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Saving Password</div>
+          </form>
         </div>
         <div className="col-sm-3">
 
@@ -58,7 +60,16 @@ class CreateNewPasswordComponent extends React.Component {
     );
   }
   
-
+  showClickedButtonState(yes) {
+    if (yes) {
+          this.setState({ buttonRestClassName: "dragon-hidden" });
+          this.setState({ buttonClickedClassName: buttonClassName });
+    } else {
+          this.setState({ buttonRestClassName: buttonClassName });
+          this.setState({ buttonClickedClassName: "dragon-hidden" });
+    }
+  }
+  
   updateCodeValue(e) {
     this.setState({
       codeValue: e.target.value
@@ -73,8 +84,8 @@ class CreateNewPasswordComponent extends React.Component {
   
   
   handleSubmit(e) {
-    this.setState({buttonClicked : this.state.buttonNormal});
-    this.setState({buttonNormal : "dragon-hidden"});
+    e.preventDefault();
+    this.showClickedButtonState(true);
     
     
     const email = this.props.user.username;
@@ -91,9 +102,11 @@ class CreateNewPasswordComponent extends React.Component {
     
     cognitoUser.confirmPassword(code, password, {
         onSuccess: function (result) {
+            myThis.showClickedButtonState(false);
             myThis.props.history.push('successpasswordsaved');
         },
         onFailure: function(err) {
+            myThis.showClickedButtonState(false);
             alert(err);
         }
     });

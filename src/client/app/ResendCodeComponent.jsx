@@ -13,17 +13,18 @@ const userPool = new CognitoUserPool({
 
 
 
-
+const buttonClassName = "btn btn-success btn-lg";
 
 class ResendCodeComponent extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {emailValue : props.user.username,
-                  buttonNormal : "btn btn-success btn-lg",
-                  buttonClicked : "dragon-hidden",
+                  buttonRestClassName : buttonClassName,
+                  buttonClickedClassName : "dragon-hidden"
     };
     this.updateEmailValue = this.updateEmailValue.bind(this);
+    this.showClickedButtonState = this.showClickedButtonState.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -35,14 +36,16 @@ class ResendCodeComponent extends React.Component {
 
         </div>
         <div className="col-sm-3">
+        <form onSubmit={this.handleSubmit}>
             <h1>Resend Email</h1>
             
             Please enter your email and we will re-send the verification code.<br/><br/>
             
             <input value={this.state.emailValue} onChange={this.updateEmailValue} placeholder="email" className="form-control input-lg"/>
             <br/>
-            <button onClick={this.handleSubmit} className={this.state.buttonNormal}>Send</button>  
-            <button className={this.state.buttonClicked}><i className='fa fa-circle-o-notch fa-spin'></i> Sending</button>  
+            <input type="submit" className={this.state.buttonRestClassName} value="Semd" />
+            <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Sending</div>
+        </form>
         </div>
         <div className="col-sm-3">
 
@@ -52,7 +55,16 @@ class ResendCodeComponent extends React.Component {
     );
   }
   
-
+  showClickedButtonState(yes) {
+    if (yes) {
+          this.setState({ buttonRestClassName: "dragon-hidden" });
+          this.setState({ buttonClickedClassName: buttonClassName });
+    } else {
+          this.setState({ buttonRestClassName: buttonClassName });
+          this.setState({ buttonClickedClassName: "dragon-hidden" });
+    }
+  }
+  
   updateEmailValue(e) {
     this.setState({
       emailValue: e.target.value
@@ -61,8 +73,8 @@ class ResendCodeComponent extends React.Component {
   
   
   handleSubmit(e) {
-    this.setState({buttonClicked : this.state.buttonNormal});
-    this.setState({buttonNormal : "dragon-hidden"});
+    e.preventDefault();
+    this.showClickedButtonState(true);
     
     
     const email = this.state.emailValue.trim();
@@ -73,14 +85,16 @@ class ResendCodeComponent extends React.Component {
     };
     
     var cognitoUser = new CognitoUser(userData);
-    var thisProps = this.props; // we lose this.props inside the resendConfirmationCode function
+    var myThis = this; // we lose this.props inside the resendConfirmationCode function
     
     cognitoUser.resendConfirmationCode(function(err, result) {
+      myThis.showClickedButtonState(false);
+      
       if (err) {
         alert(err);
         return;
       }
-        thisProps.history.push('confirmregistration');
+        myThis.props.history.push('confirmregistration');
     });
     
     
