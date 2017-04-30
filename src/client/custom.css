@@ -2,6 +2,10 @@
     background-color: #215FAA;
 }
 
+.dragon-navbar a {
+    color:white;
+}
+
 .dragon-logo-img {
     margin:14px 0px;
 }

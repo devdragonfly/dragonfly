@@ -53,7 +53,7 @@ class SignInComponent extends React.Component {
       
       <div className="form-group">
         <input type="password" value={this.state.passwordValue} onChange={this.updatePasswordValue} placeholder="password" className="form-control input-sm"/>&nbsp;&nbsp;<br/>
-        <span>forgot password?</span>
+        <Link to={`accessaccount`}>forgot password?</Link>
       </div>
       
       <div className="form-group">

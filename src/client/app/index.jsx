@@ -7,14 +7,12 @@ import SignUpComponent from './SignUpComponent.jsx';
 import ConfirmRegistrationComponent from './ConfirmRegistrationComponent.jsx';
 import ResendCodeComponent from './ResendCodeComponent.jsx';
 import SuccessCodeVerifiedComponent from './SuccessCodeVerifiedComponent.jsx';
+import AccessAccountComponent from './AccessAccountComponent.jsx';
+import CreateNewPasswordComponent from './CreateNewPasswordComponent.jsx';
+import SuccessPasswordSavedComponent from './SuccessPasswordSavedComponent.jsx';
 import OrganizationsComponent from './OrganizationsComponent.jsx';
 import ProfileComponent from './ProfileComponent.jsx';
 
-class Home extends Component {
-    render(){
-        return (<h1>Dragonfly</h1>);
-    }
-}
 
 render(
     <Router>
@@ -25,6 +23,9 @@ render(
             <Route path="confirmregistration" component={ConfirmRegistrationComponent}/>
             <Route path="successcodeverified" component={SuccessCodeVerifiedComponent}/>
             <Route path="resendcode" component={ResendCodeComponent}/>
+            <Route path="accessaccount" component={AccessAccountComponent}/>
+            <Route path="createnewpassword" component={CreateNewPasswordComponent}/>
+            <Route path="successpasswordsaved" component={SuccessPasswordSavedComponent}/>
             <Route path="organizations" component={OrganizationsComponent}/>
             <Route path="profile" component={ProfileComponent}/>
         </Route>

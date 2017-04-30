@@ -5,14 +5,6 @@ import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 're
 import appconfig from "./appconfig";
 
 
-//Config.region = appconfig.region;
-
-/*
-Config.credentials = new CognitoIdentityCredentials({
-  IdentityPoolId: appconfig.IdentityPoolId
-});
-*/
-
 
 const userPool = new CognitoUserPool({
   UserPoolId: appconfig.UserPoolId,
@@ -23,15 +15,17 @@ const userPool = new CognitoUserPool({
 
 
 
-class ConfirmRegistrationComponent extends React.Component {
+class CreateNewPasswordComponent extends React.Component {
 
   constructor(props) {
     super(props);
     this.state = {codeValue : '',
+                  passwordValue : '',
                   buttonNormal : "btn btn-success btn-lg",
                   buttonClicked : "dragon-hidden",
     };
     this.updateCodeValue = this.updateCodeValue.bind(this);
+    this.updatePasswordValue = this.updatePasswordValue.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
@@ -43,20 +37,18 @@ class ConfirmRegistrationComponent extends React.Component {
 
         </div>
         <div className="col-sm-3">
-            <h1>Confirm Email Address</h1>
+            <h1>Create New Password</h1>
             A six-digit verification code was sent to the email address <br/><br/>
             <i>{this.props.user.username}</i>. <br/><br/> 
-            Please enter that code here so we can verify this is your email.
+            Please enter that code here and create a new password.
             <br/><br/>
-            <b>VERIFICATION CODE</b><br/>
-            <input value={this.state.codeValue} onChange={this.updateCodeValue} className="form-control input-lg"/>
+            <input value={this.state.codeValue} onChange={this.updateCodeValue} placeholder="code" className="form-control input-lg"/>
             <br/>
-            <button onClick={this.handleSubmit} className={this.state.buttonNormal}>Confirm</button>   
-            <button className={this.state.buttonClicked}><i className='fa fa-circle-o-notch fa-spin'></i> Confirming</button>   
-            <br/><br/><br/><br/>
+            <input value={this.state.passwordValue} onChange={this.updatePasswordValue} placeholder="new password" type="password" className="form-control input-lg"/>
+            <br/>
+            <button onClick={this.handleSubmit} className={this.state.buttonNormal}>Save Password</button>   
+            <button className={this.state.buttonClicked}><i className='fa fa-circle-o-notch fa-spin'></i> Saving Password</button>   
             
-            Can't find email with verification code?<br/>
-            <Link to={`resendcode`}>Re-send email.</Link>
         </div>
         <div className="col-sm-3">
 
@@ -73,6 +65,12 @@ class ConfirmRegistrationComponent extends React.Component {
     });
   }
   
+  updatePasswordValue(e) {
+    this.setState({
+      passwordValue: e.target.value
+    });
+  }
+  
   
   handleSubmit(e) {
     this.setState({buttonClicked : this.state.buttonNormal});
@@ -81,6 +79,7 @@ class ConfirmRegistrationComponent extends React.Component {
     
     const email = this.props.user.username;
     const code = this.state.codeValue.trim();
+    const password = this.state.passwordValue.trim();
     
     var userData = {
         Username : email,
@@ -88,18 +87,19 @@ class ConfirmRegistrationComponent extends React.Component {
     };
     
     var cognitoUser = new CognitoUser(userData);
-    var thisProps = this.props; // we lose this.props inside the confirmRegistration function
+    var myThis = this; // we lose this inside the confirmPassword function
     
-    cognitoUser.confirmRegistration(code, true, function(err, result) {
-          if (err) {
-          alert(err);
-          return;
+    cognitoUser.confirmPassword(code, password, {
+        onSuccess: function (result) {
+            myThis.props.history.push('successpasswordsaved');
+        },
+        onFailure: function(err) {
+            alert(err);
         }
-        thisProps.history.push('successcodeverified');
     });
     
     
   }
 }
 
-export default ConfirmRegistrationComponent;
+export default CreateNewPasswordComponent;
