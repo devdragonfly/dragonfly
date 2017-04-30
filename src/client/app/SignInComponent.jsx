@@ -26,7 +26,11 @@ class SignInComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {emailValue : props.email, passwordValue : ''};
+    this.state = {emailValue : props.email, 
+                  passwordValue : '', 
+                  buttonNormal : "btn btn-primary btn-sm",
+                  buttonClicked : "dragon-hidden",
+    };
     this.updateEmailValue = this.updateEmailValue.bind(this);
     this.updatePasswordValue = this.updatePasswordValue.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -37,11 +41,28 @@ class SignInComponent extends React.Component {
   } 
 
   render() {
+      
+    
     return (
-      <div>
-        <input value={this.state.emailValue} onChange={this.updateEmailValue} placeholder="email" />
-        <input type="password" value={this.state.passwordValue} onChange={this.updatePasswordValue} placeholder="password" />
-        <button onClick={this.handleSubmit}>Sign In</button>
+      <div className="form-inline dragon-login-box">
+      
+      <div className="form-group">
+        <input value={this.state.emailValue} onChange={this.updateEmailValue} placeholder="email" className="form-control input-sm"/>&nbsp;&nbsp;<br/>
+        <span>&nbsp;</span>
+      </div>
+      
+      <div className="form-group">
+        <input type="password" value={this.state.passwordValue} onChange={this.updatePasswordValue} placeholder="password" className="form-control input-sm"/>&nbsp;&nbsp;<br/>
+        <span>forgot password?</span>
+      </div>
+      
+      <div className="form-group">
+        <button onClick={this.handleSubmit} className={this.state.buttonNormal}>Sign In</button>
+        <button className={this.state.buttonClicked}><i className='fa fa-circle-o-notch fa-spin'></i> Signing In</button>
+        <br/>
+        <span>&nbsp;</span>
+      </div>
+        <br/>
       </div>
     );
   }
@@ -59,6 +80,8 @@ class SignInComponent extends React.Component {
   }
   
   handleSubmit(e) {
+    this.setState({buttonClicked : this.state.buttonNormal});
+    this.setState({buttonNormal : "dragon-hidden"});
     const email = this.state.emailValue.trim();
     const password = this.state.passwordValue.trim();
 
@@ -79,16 +102,20 @@ class SignInComponent extends React.Component {
     
     var cognitoUser = new CognitoUser(userData);
     this.props.handleUserReceived(cognitoUser);
-    var thisProps = this.props; // we lose this.props inside the authenticateUser function
+    var myThis = this; // we lose this.props inside the authenticateUser function
     
     cognitoUser.authenticateUser(authenticationDetails, {
           onSuccess: function (result) {
-              thisProps.handleIdTokenReceived(result);
-              thisProps.history.push('organizations');
+              myThis.props.handleIdTokenReceived(result);
+              myThis.props.history.push('organizations');
           },
    
           onFailure: function(err) {
-              alert(JSON.stringify(err));
+              myThis.setState({buttonNormal : myThis.state.buttonClicked});
+              myThis.setState({buttonClicked : "dragon-hidden"});
+              if (err.code === "UserNotConfirmedException") {
+                myThis.props.history.push('confirmregistration');
+              }
           }
       });
     }

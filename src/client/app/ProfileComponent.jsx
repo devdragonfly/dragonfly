@@ -2,7 +2,7 @@ import React from 'react';
 import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 'react-router';
 
 
-class OrganizationsComponent extends React.Component {
+class ProfileComponent extends React.Component {
 
   constructor(props) {
     super(props);
@@ -12,7 +12,7 @@ class OrganizationsComponent extends React.Component {
   render() {
     return (
       <div>
-        <h3>Organizations</h3>
+        <h3>Profile</h3>
       </div>
     );
   }
@@ -20,4 +20,4 @@ class OrganizationsComponent extends React.Component {
 
 }
 
-export default OrganizationsComponent;
+export default ProfileComponent;

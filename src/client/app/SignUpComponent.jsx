@@ -27,7 +27,11 @@ class SignUpComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {emailValue : props.user.username, passwordValue : ''};
+    this.state = {emailValue : props.user.username, 
+                  passwordValue : '',
+                  buttonNormal : "btn btn-success btn-lg",
+                  buttonClicked : "dragon-hidden",
+    };
     this.updateEmailValue = this.updateEmailValue.bind(this);
     this.updatePasswordValue = this.updatePasswordValue.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -37,15 +41,18 @@ class SignUpComponent extends React.Component {
     return (
       <div className="row">
         <div className="col-sm-6">
-          <h1>Dragonfly</h1>
           Marketing text here...
         </div>
-        <div className="col-sm-6">
-            <h2>Sign Up</h2>
-            <input value={this.state.emailValue} onChange={this.updateEmailValue}/>
-            <br/><br/>
-            <input type="password" value={this.state.passwordValue} onChange={this.updatePasswordValue}/><br/>
-            <button onClick={this.handleSubmit}>Create Account</button>   
+        <div className="col-sm-3">
+            <h1>Sign Up</h1>
+            <input value={this.state.emailValue} onChange={this.updateEmailValue} placeholder="email" className="form-control input-lg"/>
+            <br/>
+            <input type="password" value={this.state.passwordValue} onChange={this.updatePasswordValue} placeholder="password" className="form-control input-lg"/>
+            <br/>
+            <button onClick={this.handleSubmit} className={this.state.buttonNormal}>Create Account</button>   
+            <button className={this.state.buttonClicked}><i className='fa fa-circle-o-notch fa-spin'></i> Creating Account</button>   
+        </div>
+        <div className="col-sm-3">
         </div>
       </div>
       
@@ -65,6 +72,9 @@ class SignUpComponent extends React.Component {
   }
   
   handleSubmit(e) {
+    this.setState({buttonClicked : this.state.buttonNormal});
+    this.setState({buttonNormal : "dragon-hidden"});
+    
     const email = this.state.emailValue.trim();
     const password = this.state.passwordValue.trim();
     

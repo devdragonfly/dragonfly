@@ -27,7 +27,10 @@ class ConfirmRegistrationComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {codeValue : ''};
+    this.state = {codeValue : '',
+                  buttonNormal : "btn btn-success btn-lg",
+                  buttonClicked : "dragon-hidden",
+    };
     this.updateCodeValue = this.updateCodeValue.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
@@ -39,18 +42,23 @@ class ConfirmRegistrationComponent extends React.Component {
         <div className="col-sm-6">
 
         </div>
-        <div className="col-sm-4">
-            <h2>Confirm Email Address</h2>
+        <div className="col-sm-3">
+            <h1>Confirm Email Address</h1>
             A six-digit verification code was sent to the email address <br/><br/>
             <i>{this.props.user.username}</i>. <br/><br/> 
             Please enter that code here so we can verify this is your email.
             <br/><br/>
             <b>VERIFICATION CODE</b><br/>
-            <input value={this.state.codeValue} onChange={this.updateCodeValue} />
-            <br/><br/>
-            <button onClick={this.handleSubmit}>Confirm</button>   
+            <input value={this.state.codeValue} onChange={this.updateCodeValue} className="form-control input-lg"/>
+            <br/>
+            <button onClick={this.handleSubmit} className={this.state.buttonNormal}>Confirm</button>   
+            <button className={this.state.buttonClicked}><i className='fa fa-circle-o-notch fa-spin'></i> Confirming</button>   
+            <br/><br/><br/><br/>
+            
+            Can't find email with verification code?<br/>
+            <Link to={`resendcode`}>Re-send Email</Link>
         </div>
-        <div className="col-sm-2">
+        <div className="col-sm-3">
 
         </div>
       </div>
@@ -67,6 +75,10 @@ class ConfirmRegistrationComponent extends React.Component {
   
   
   handleSubmit(e) {
+    this.setState({buttonClicked : this.state.buttonNormal});
+    this.setState({buttonNormal : "dragon-hidden"});
+    
+    
     const email = this.props.user.username;
     const code = this.state.codeValue.trim();
     

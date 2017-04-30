@@ -4,9 +4,11 @@ import { render } from 'react-dom';
 import {Router, Route, IndexRoute, browserHistory} from 'react-router';
 import Main from './Main.jsx';
 import SignUpComponent from './SignUpComponent.jsx';
-import OrganizationsComponent from './OrganizationsComponent.jsx';
 import ConfirmRegistrationComponent from './ConfirmRegistrationComponent.jsx';
+import ResendCodeComponent from './ResendCodeComponent.jsx';
 import SuccessCodeVerifiedComponent from './SuccessCodeVerifiedComponent.jsx';
+import OrganizationsComponent from './OrganizationsComponent.jsx';
+import ProfileComponent from './ProfileComponent.jsx';
 
 class Home extends Component {
     render(){
@@ -22,7 +24,9 @@ render(
             <Route path="signup" component={SignUpComponent} />
             <Route path="confirmregistration" component={ConfirmRegistrationComponent}/>
             <Route path="successcodeverified" component={SuccessCodeVerifiedComponent}/>
+            <Route path="resendcode" component={ResendCodeComponent}/>
             <Route path="organizations" component={OrganizationsComponent}/>
+            <Route path="profile" component={ProfileComponent}/>
         </Route>
     </Router>,
     document.getElementById('container')

@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import { Router, Route, Link, browserHistory } from 'react-router';
 import SignInComponent from './SignInComponent.jsx';
-import SignOutComponent from './SignOutComponent.jsx';
+import UserDropdownComponent from './UserDropdownComponent.jsx';
 
 class Main extends Component {
 
@@ -46,7 +46,7 @@ class Main extends Component {
         if (idToken === 'not found') {
             rightnav = function() {return <SignInComponent handleUserReceived={handleUserReceived} handleIdTokenReceived={handleIdTokenReceived} email={email} history={history} /> }();
         } else {
-            rightnav = function() {return <SignOutComponent handleUserReceived={handleUserReceived} handleIdTokenReceived={handleIdTokenReceived} email={email} history={history} /> }();
+            rightnav = function() {return <UserDropdownComponent handleUserReceived={handleUserReceived} handleIdTokenReceived={handleIdTokenReceived} email={email} history={history} /> }();
         }
         
         
@@ -56,7 +56,7 @@ class Main extends Component {
                 
                 <div className="row dragon-navbar">
                   <div className="col-sm-6">
-                    Dragonfly Logo
+                    <img className="dragon-logo-img" src="images/dr-logo-white-213x50.png"/>
                   </div>
                   <div className="col-sm-6">{rightnav}</div>
                 </div>
