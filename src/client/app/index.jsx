@@ -11,6 +11,7 @@ import AccessAccountComponent from './AccessAccountComponent.jsx';
 import CreateNewPasswordComponent from './CreateNewPasswordComponent.jsx';
 import SuccessPasswordSavedComponent from './SuccessPasswordSavedComponent.jsx';
 import OrganizationsComponent from './OrganizationsComponent.jsx';
+import CreateOrganizationComponent from './CreateOrganizationComponent.jsx';
 import ProfileComponent from './ProfileComponent.jsx';
 
 
@@ -27,6 +28,7 @@ render(
             <Route path="createnewpassword" component={CreateNewPasswordComponent}/>
             <Route path="successpasswordsaved" component={SuccessPasswordSavedComponent}/>
             <Route path="organizations" component={OrganizationsComponent}/>
+            <Route path="createorganization" component={CreateOrganizationComponent}/>
             <Route path="profile" component={ProfileComponent}/>
         </Route>
     </Router>,

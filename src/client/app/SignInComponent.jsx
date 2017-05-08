@@ -1,23 +1,5 @@
-//import { Config, CognitoIdentityCredentials } from "aws-sdk";
-import { CognitoUserPool, CognitoUserAttribute, AuthenticationDetails, CognitoUser } from "amazon-cognito-identity-js";
 import React from 'react';
 import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 'react-router';
-import appconfig from "./appconfig";
-
-//AWSCognito.config.region = appconfig.region;
-
-/*
-Config.credentials = new CognitoIdentityCredentials({
-  IdentityPoolId: appconfig.IdentityPoolId
-});
-*/
-
-
-const userPool = new CognitoUserPool({
-  UserPoolId: appconfig.UserPoolId,
-  ClientId: appconfig.ClientId,
-});
-
 
 
 const buttonClassName = "btn btn-primary btn-sm";
@@ -37,8 +19,6 @@ class SignInComponent extends React.Component {
     this.updatePasswordValue = this.updatePasswordValue.bind(this);
     this.showClickedButtonState = this.showClickedButtonState.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    
-    
   }
   
   componentWillReceiveProps(nextProps) {
@@ -101,46 +81,19 @@ class SignInComponent extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     this.showClickedButtonState(true);
+    var myThis = this;
     
     const email = this.state.emailValue.trim();
     const password = this.state.passwordValue.trim();
+    
+    this.props.handleLoadEmail(email);
+    this.props.handleAuthenticate(email, password, function(){
+      myThis.showClickedButtonState(false);
+      myThis.props.history.push('organizations');
+    });
+    
 
-    var authenticationData = {
-        Username : email, 
-        Password : password
-    };
-    
-    
-    var authenticationDetails = new AuthenticationDetails(authenticationData);
- 
-    
-    var userData = {
-        Username : email,
-        Pool : userPool
-    };
-    
-    
-    var cognitoUser = new CognitoUser(userData);
-    this.props.handleUserReceived(cognitoUser);
-    var myThis = this; // we lose this.props inside the authenticateUser function
-    
-    cognitoUser.authenticateUser(authenticationDetails, {
-          onSuccess: function (result) {
-              myThis.showClickedButtonState(false);
-              myThis.props.handleIdTokenReceived(result);
-              myThis.props.history.push('organizations');
-          },
-   
-          onFailure: function(err) {
-              myThis.showClickedButtonState(false);
-              if (err.code === "UserNotConfirmedException") {
-                myThis.props.history.push('confirmregistration');
-              }
-              alert(err.message);
-          }
-      });
-    }
-
+  }
 }
 
 export default SignInComponent;

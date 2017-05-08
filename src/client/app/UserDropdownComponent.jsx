@@ -79,7 +79,7 @@ class UserDropdownComponent extends React.Component {
           cognitoUser.signOut();
         }
         
-    this.props.handleIdTokenReceived('not found');
+    this.props.handleTokenReceived('not found');
     this.props.handleUserReceived('not found');
     
     this.props.history.push('signup');

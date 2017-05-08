@@ -13,6 +13,8 @@ class OrganizationsComponent extends React.Component {
     return (
       <div>
         <h3>Organizations</h3>
+        
+        <Link to={`createorganization`}>Create Organization</Link>
       </div>
     );
   }
