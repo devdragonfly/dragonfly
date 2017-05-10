@@ -88,7 +88,7 @@ class CreateNewPasswordComponent extends React.Component {
     this.showClickedButtonState(true);
     
     
-    const email = this.props.user.username;
+    const email = this.props.email;
     const code = this.state.codeValue.trim();
     const password = this.state.passwordValue.trim();
     

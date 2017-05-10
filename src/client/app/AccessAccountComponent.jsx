@@ -19,7 +19,7 @@ class AccessAccountComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {emailValue : props.user.username,
+    this.state = {emailValue : props.email,
                   buttonRestClassName : buttonClassName,
                   buttonClickedClassName : "dragon-hidden"
     };

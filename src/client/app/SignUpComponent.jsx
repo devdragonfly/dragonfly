@@ -27,7 +27,7 @@ class SignUpComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {emailValue : props.user.username, 
+    this.state = {emailValue : props.email, 
                   passwordValue : '',
                   buttonRestClassName : buttonClassName,
                   buttonClickedClassName : "dragon-hidden"

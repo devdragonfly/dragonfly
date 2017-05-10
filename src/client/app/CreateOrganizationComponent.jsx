@@ -64,21 +64,26 @@ class CreateOrganizationComponent extends React.Component {
     e.preventDefault();
     this.showClickedButtonState(true);
     var myThis = this;
-    const name = this.state.nameValue.trim();
+    const nameValue = this.state.nameValue.trim();
+    const userIdValue = this.props.userId;
     
-    var orgId = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+    var organizationIdValue = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
         var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
         return v.toString(16);
     });
     
+
+    
     var params = {
         TableName:"Organizations",
         Item:{
-            "userid" : "83aff21e-706f-4832-955d-e986eca2302d",
-            "oganizationid": orgId,
-            "name": name
+            userid : userIdValue,
+            organizationid : organizationIdValue,
+            name : nameValue
         }
     };
+    
+    alert(JSON.stringify(params));
     
     this.props.handleTest(params, function(){ myThis.showClickedButtonState(false); });
     

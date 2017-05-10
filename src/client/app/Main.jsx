@@ -19,11 +19,10 @@ class Main extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {email : '', user : 'not found', token : 'not found', cognitoAuthenticated : null};
+        this.state = {email : '', userId : 'not found'};
         this.handleLoadEmail = this.handleLoadEmail.bind(this);
         this.handleAuthenticate = this.handleAuthenticate.bind(this);
-        this.handleUserReceived = this.handleUserReceived.bind(this);
-        this.handleTokenReceived = this.handleTokenReceived.bind(this);
+        this.handleUserIdReceived = this.handleUserIdReceived.bind(this);
         this.handleLoadAttributes = this.handleLoadAttributes.bind(this);
         this.handleTest = this.handleTest.bind(this);
     }
@@ -41,7 +40,6 @@ class Main extends Component {
                    alert(err);
                     return;
                 }
-                alert('session validity: ' + session.isValid());
     
                 AWS.config.region = 'us-west-2';
                 AWS.config.credentials = new AWS.CognitoIdentityCredentials({
@@ -54,7 +52,7 @@ class Main extends Component {
                 
                 
                 
-                
+                /*
                 cognitoUser.getUserAttributes(function(err, result) {
                     if (err) {
                         alert(err);
@@ -64,7 +62,7 @@ class Main extends Component {
                         alert('attribute ' + result[i].getName() + ' has value ' + result[i].getValue());
                     }
                 });
-                
+                */
                 
                 myThis.dynamoDBputParams(params, callback);
                 
@@ -113,9 +111,7 @@ class Main extends Component {
         
         cognitoUser.authenticateUser(authenticationDetails, {
               onSuccess: function (result) {
-                    myThis.handleTokenReceived(result);
-                    myThis.setState({ cognitoAuthenticated : cognitoUser });
-                    callback();
+                    myThis.handleLoadAttributes(cognitoUser, callback);
               },
        
               onFailure: function(err) {
@@ -130,9 +126,8 @@ class Main extends Component {
     
     
     
-    handleLoadAttributes(callback) {
+    handleLoadAttributes(cognitoUser, callback) {
         var myThis = this;
-        var cognitoUser = myThis.state.cognitoAuthenticated;
         cognitoUser.getUserAttributes(function(err, result) {
             if (err) {
                 alert(err);
@@ -140,7 +135,8 @@ class Main extends Component {
                 return;
             }
             if (result) {
-                alert(JSON.stringify(result));
+                var userId = result[0].getValue();
+                myThis.setState({ userId : userId });
                 callback();
                 
               
@@ -152,8 +148,6 @@ class Main extends Component {
     dynamoDBputParams(params, callback) {
 
         var myThis = this;
-        
-        alert("I'm inside the dynamoDBputParams function");
 
         var docClient = new AWS.DynamoDB.DocumentClient();
         docClient.put(params, function(err, data) {
@@ -170,28 +164,13 @@ class Main extends Component {
     
     
 
-    handleUserReceived(cognitoUser) {
-        this.setState({user : cognitoUser});
+    handleUserIdReceived(userId) {
+        this.setState({userId : userId});
     }
     
     
     
-    
-    handleTokenReceived(token) {
-        try{
-        
-        this.setState({token : token});
-        AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-                        IdentityPoolId : 'us-west-2:b6311e4b-9082-4058-883c-19d23e34802b', // your identity pool id here
-                        Logins : {
-                            'cognito-idp.us-west-2.amazonaws.com/us-west-2_N8urEcZBJ' : token
-                        }
-                    })
-        
-        } catch(e) {
-            alert("ERROR loading token = " + JSON.stringify(e.message));
-        }
-    }
+
     
 
     
@@ -203,26 +182,26 @@ class Main extends Component {
         
         const childrenWithProps = React.Children.map(this.props.children,
          (child) => React.cloneElement(child, {
-           user: this.state.user,
+           userId: this.state.userId,
+           email: this.state.email,
            handleLoadEmail: this.handleLoadEmail,
-           handleUserReceived: this.handleUserReceived,
+           handleUserIdReceived: this.handleUserIdReceived,
            handleTest: this.handleTest
          })
         );
         
-        var email = this.state.user.username;
-        var token = this.state.token;  
-        var handleUserReceived = this.handleUserReceived;
+        var email = this.state.email;
+        var userId = this.state.userId;  
+        var handleUserIdReceived = this.handleUserIdReceived;
         var handleAuthenticate = this.handleAuthenticate;
-        var handleTokenReceived = this.handleTokenReceived;
         var handleLoadEmail = this.handleLoadEmail;
         var history = this.props.history;
         var rightnav = function() { return '' }();
         
-        if (token === 'not found') {
+        if (userId === 'not found') {
             rightnav = function() {return <SignInComponent handleLoadEmail={handleLoadEmail} handleAuthenticate={handleAuthenticate} email={email} history={history} /> }();
         } else {
-            rightnav = function() {return <UserDropdownComponent handleUserReceived={handleUserReceived} handleTokenReceived={handleTokenReceived} email={email} history={history} /> }();
+            rightnav = function() {return <UserDropdownComponent handleUserIdReceived={handleUserIdReceived} email={email} history={history} /> }();
         }
         
         
