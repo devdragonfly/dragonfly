@@ -4,6 +4,7 @@ import React, {Component} from 'react';
 import { Router, Route, Link, browserHistory } from 'react-router';
 import SignInComponent from './SignInComponent.jsx';
 import UserDropdownComponent from './UserDropdownComponent.jsx';
+import OrganizationsComponent from './OrganizationsComponent.jsx';
 import appconfig from "./appconfig";
 
 var AWS = require("aws-sdk");
@@ -13,78 +14,26 @@ AWS.config.region = 'us-west-2';
 const userPool = new CognitoUserPool({ UserPoolId: appconfig.UserPoolId, ClientId: appconfig.ClientId});
 const AWSLogin = 'cognito-idp.' + appconfig.region + '.amazonaws.com/' + appconfig.UserPoolId;
 const AWSIdentityPoolId = appconfig.IdentityPoolId;
-
+var dragonfly = {};
 
 class Main extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {email : '', userId : 'not found'};
+        this.state = {email : '', 
+                    userId : 'not found', 
+                    organizations: 'not found',
+                    organizationName: 'not found',
+                    organizationId: 'not found'
+        };
         this.handleLoadEmail = this.handleLoadEmail.bind(this);
         this.handleAuthenticate = this.handleAuthenticate.bind(this);
-        this.handleUserIdReceived = this.handleUserIdReceived.bind(this);
+        this.handleSignOut = this.handleSignOut.bind(this);
         this.handleLoadAttributes = this.handleLoadAttributes.bind(this);
-        this.handleTest = this.handleTest.bind(this);
-    }
-    
-    
-    
-    
-    handleTest(params, callback) {
-        var myThis = this;
-        
-        var cognitoUser = userPool.getCurrentUser();
-        if (cognitoUser != null) {
-            cognitoUser.getSession(function(err, session) {
-                if (err) {
-                   alert(err);
-                    return;
-                }
-    
-                AWS.config.region = 'us-west-2';
-                AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-                        //AccountId: '698305963744',
-                        //RoleArn: 'arn:aws:iam::698305963744:role/Cognito_dragonflyAuth_Role', 
-                        IdentityPoolId : 'us-west-2:b6311e4b-9082-4058-883c-19d23e34802b',
-                        Logins : { 'cognito-idp.us-west-2.amazonaws.com/us-west-2_N8urEcZBJ' : session.getIdToken().getJwtToken() }
-                });
-                
-                
-                
-                
-                /*
-                cognitoUser.getUserAttributes(function(err, result) {
-                    if (err) {
-                        alert(err);
-                        return;
-                    }
-                    for (var i = 0; i < result.length; i++) {
-                        alert('attribute ' + result[i].getName() + ' has value ' + result[i].getValue());
-                    }
-                });
-                */
-                
-                myThis.dynamoDBputParams(params, callback);
-                
-                
-                
-                
-                
-                
-                //AWS.config.update = new AWS.CognitoIdentityCredentials({
-                        //AccountId: '698305963744',
-                        //IdentityPoolId : 'us-west-2:b6311e4b-9082-4058-883c-19d23e34802b',
-                        //RoleArn: 'arn:aws:iam::698305963744:role/Cognito_dragonflyAuth_Role',               
-                        
-                        //Logins : { 'cognito-idp.us-west-2.amazonaws.com/us-west-2_N8urEcZBJ' : token  }
-                //});
-
-    
-                // Instantiate aws sdk service objects now that the credentials have been updated.
-                // example: var s3 = new AWS.S3();
-    
-            });
-        }  
+        this.handleLoadOrganizations = this.handleLoadOrganizations.bind(this);
+        this.handleLoadOrganization = this.handleLoadOrganization.bind(this);
+        this.dbPut = this.dbPut.bind(this);
+        this.dbQuery = this.dbQuery.bind(this);
     }
     
     
@@ -92,6 +41,15 @@ class Main extends Component {
     
     handleLoadEmail(email) {
         this.setState({email : email});
+    }
+    
+    handleLoadOrganizations(result) {
+        this.setState({organizations : result.Items});
+    }
+    
+    handleLoadOrganization(organizationId, organizationName) {
+        this.setState({organizationId : organizationId});
+        this.setState({organizationName : organizationName});
     }
     
     
@@ -111,7 +69,21 @@ class Main extends Component {
         
         cognitoUser.authenticateUser(authenticationDetails, {
               onSuccess: function (result) {
-                    myThis.handleLoadAttributes(cognitoUser, callback);
+                  
+                  
+                  
+                AWS.config.region = 'us-west-2';
+                AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+                        //AccountId: '698305963744',
+                        //RoleArn: 'arn:aws:iam::698305963744:role/Cognito_dragonflyAuth_Role', 
+                        IdentityPoolId : 'us-west-2:b6311e4b-9082-4058-883c-19d23e34802b',
+                        Logins : { 'cognito-idp.us-west-2.amazonaws.com/us-west-2_N8urEcZBJ' : result.getIdToken().getJwtToken() }
+                });
+                  
+                
+                dragonfly.docClient = new AWS.DynamoDB.DocumentClient();
+                dragonfly.cognitoUser = cognitoUser;
+                myThis.handleLoadAttributes(callback);
               },
        
               onFailure: function(err) {
@@ -126,9 +98,9 @@ class Main extends Component {
     
     
     
-    handleLoadAttributes(cognitoUser, callback) {
+    handleLoadAttributes(callback) {
         var myThis = this;
-        cognitoUser.getUserAttributes(function(err, result) {
+        dragonfly.cognitoUser.getUserAttributes(function(err, result) {
             if (err) {
                 alert(err);
                 callback();
@@ -145,27 +117,42 @@ class Main extends Component {
     } 
     
     
-    dynamoDBputParams(params, callback) {
+    dbPut(params, callback) {
 
-        var myThis = this;
-
-        var docClient = new AWS.DynamoDB.DocumentClient();
-        docClient.put(params, function(err, data) {
+        dragonfly.docClient.put(params, function(err, data) {
           
             if (err) {
                 alert(JSON.stringify(err));
                 callback();
             } else {
-                alert(JSON.stringify(data));
-                callback();
+                callback(data);
+            }
+        });        
+    }
+    
+    
+    
+    dbQuery(params, callback) {
+
+        dragonfly.docClient.query(params, function(err, data) {
+          
+            if (err) {
+                alert(JSON.stringify(err));
+                callback(data);
+            } else {
+                callback(data);
             }
         });        
     }
     
     
 
-    handleUserIdReceived(userId) {
-        this.setState({userId : userId});
+    handleSignOut() {
+        this.setState({email : ''});
+        this.setState({userId : 'not found'});
+        this.setState({organizations : 'not found'});
+        this.setState({organizationName : 'not found'});
+        this.setState({organizationId : 'not found'});
     }
     
     
@@ -184,24 +171,43 @@ class Main extends Component {
          (child) => React.cloneElement(child, {
            userId: this.state.userId,
            email: this.state.email,
+           organizations: this.state.organizations,
+           organizationId: this.state.organizationName,
+           organizationName: this.state.organizationName,
            handleLoadEmail: this.handleLoadEmail,
            handleUserIdReceived: this.handleUserIdReceived,
-           handleTest: this.handleTest
+           handleLoadOrganizations: this.handleLoadOrganizations,
+           handleLoadOrganization: this.handleLoadOrganization,
+           dbPut: this.dbPut,
+           dbQuery: this.dbQuery
          })
         );
         
         var email = this.state.email;
         var userId = this.state.userId;  
-        var handleUserIdReceived = this.handleUserIdReceived;
+        var organizations = this.state.organizations;
+        var organizationName = this.state.organizationName;
+        var handleSignOut = this.handleSignOut;
         var handleAuthenticate = this.handleAuthenticate;
         var handleLoadEmail = this.handleLoadEmail;
+        var handleLoadOrganization = this.handleLoadOrganization;
+        var dbQuery = this.dbQuery;
         var history = this.props.history;
+        
+        
         var rightnav = function() { return '' }();
         
         if (userId === 'not found') {
             rightnav = function() {return <SignInComponent handleLoadEmail={handleLoadEmail} handleAuthenticate={handleAuthenticate} email={email} history={history} /> }();
         } else {
-            rightnav = function() {return <UserDropdownComponent handleUserIdReceived={handleUserIdReceived} email={email} history={history} /> }();
+            rightnav = function() {return <UserDropdownComponent handleSignOut={handleSignOut} email={email} history={history} /> }();
+        }
+        
+        
+        var organizationsRow = function() { return ''}();
+        
+        if (organizations !== 'not found') {
+            organizationsRow = function() {return <OrganizationsComponent handleLoadOrganization={handleLoadOrganization} organizationName={organizationName}  organizations={organizations} userId={userId} history={history} /> }();
         }
         
         
@@ -211,12 +217,17 @@ class Main extends Component {
                 
                 <div className="row dragon-navbar">
                   <div className="col-sm-6">
-                    <img className="dragon-logo-img" src="images/dr-logo-white-213x50.png"/>
+                    <img src="./images/insect-74x80.png" className="dragon-logo-img"/>
+                    <div className="dragon-navbar-header">
+                    <div className="dragon-navbar-dragonfly">Dragonfly
+                        <span className="dragon-navbar-retention align-baseline">&nbsp;Retention</span>
+                    </div>
+                    </div>
                   </div>
                   <div className="col-sm-6">{rightnav}</div>
                 </div>
                 
-                
+                    {organizationsRow}
                     {childrenWithProps}
             </div>
         );

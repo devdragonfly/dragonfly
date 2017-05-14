@@ -7,13 +7,19 @@
 }
 
 .dragon-logo-img {
-    margin:14px 0px;
+    -webkit-filter: brightness(2000%); /* Safari 6.0 - 9.0 */
+    filter: brightness(2000%);
+    margin:-26px 4px 4px 0px;
+    width: 50px;
 }
 
-
+.dragon-navbar-header {display:inline-block;}
+.dragon-navbar-dragonfly { font-size:34px; color:white; margin-top:12px;}
+.dragon-navbar-retention {font-size:20px; color:white;}
 
 .dragon-login-box {
-    margin:20px 0px 10px 0px;
+    margin:14px 0px 0px 0px;
+    font-size:11px;
 }
 
 .dragon-hidden {
@@ -29,12 +35,18 @@
 
 .dragon-menu-visible {
     position:absolute;
-    right: 20px;
     width:200px;
     overflow:hidden;
     background-color:white;
     color:#303030;
-    border-radius: 5px;
+    border-radius: 3px;
+    border:1px solid #d0d0d0;
+    z-index: 10000000;
+}
+
+
+.dragon-menu-right {
+    right: 20px;
 }
 
 .dragon-menu-visible > div {
@@ -48,4 +60,27 @@
 .dragon-menu-visible > div:hover {
     background-color:#f0f0f0;
     
+}
+
+
+.dragon-org-menu {
+    width:200px;
+    cursor:pointer;
+    
+}
+
+
+.dragon-org-row {
+    padding:4px 0px 4px 0px;
+    background-color:#f0f0f0;
+    border-bottom:1px solid #a0a0a0;
+    
+}
+
+
+.dragon-left-menu {
+     width:80%;
+     font-size:16px;
+     border-right:1px solid #a0a0a0;
+     padding:8px;
 }

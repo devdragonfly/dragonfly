@@ -10,9 +10,11 @@ import SuccessCodeVerifiedComponent from './SuccessCodeVerifiedComponent.jsx';
 import AccessAccountComponent from './AccessAccountComponent.jsx';
 import CreateNewPasswordComponent from './CreateNewPasswordComponent.jsx';
 import SuccessPasswordSavedComponent from './SuccessPasswordSavedComponent.jsx';
-import OrganizationsComponent from './OrganizationsComponent.jsx';
+import LoadOrganizationsComponent from './LoadOrganizationsComponent.jsx';
+import LoadOrganizationComponent from './LoadOrganizationComponent.jsx';
 import CreateOrganizationComponent from './CreateOrganizationComponent.jsx';
 import ProfileComponent from './ProfileComponent.jsx';
+import CampaignsComponent from './CampaignsComponent.jsx';
 
 
 render(
@@ -27,9 +29,11 @@ render(
             <Route path="accessaccount" component={AccessAccountComponent}/>
             <Route path="createnewpassword" component={CreateNewPasswordComponent}/>
             <Route path="successpasswordsaved" component={SuccessPasswordSavedComponent}/>
-            <Route path="organizations" component={OrganizationsComponent}/>
+            <Route path="loadorganizations" component={LoadOrganizationsComponent}/>
+            <Route path="loadorganization" component={LoadOrganizationComponent}/>
             <Route path="createorganization" component={CreateOrganizationComponent}/>
             <Route path="profile" component={ProfileComponent}/>
+            <Route path="campaigns" component={CampaignsComponent}/>
         </Route>
     </Router>,
     document.getElementById('container')

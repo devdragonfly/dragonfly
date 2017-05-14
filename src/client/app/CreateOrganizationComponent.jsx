@@ -1,14 +1,6 @@
 import React from 'react';
-import { CognitoUserPool, CognitoUserAttribute, AuthenticationDetails, CognitoUser } from "amazon-cognito-identity-js";
 import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 'react-router';
 import appconfig from "./appconfig";
-var AWS = require("aws-sdk");
-
-const AWSRegion = appconfig.region;
-const AWSEndpoint = "https://dynamodb."  + appconfig.region + ".amazonaws.com";
-const AWSIdentityPoolId = appconfig.IdentityPoolId;
-const AWSLogin = 'cognito-idp.' + appconfig.region + '.amazonaws.com/' + appconfig.UserPoolId;
-
 
 
 const buttonClassName = "btn btn-success btn-lg";
@@ -23,21 +15,24 @@ class CreateOrganizationComponent extends React.Component {
     };
     this.updateNameValue = this.updateNameValue.bind(this);
     this.showClickedButtonState = this.showClickedButtonState.bind(this);
-    this.handleSubmit2 = this.handleSubmit2.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   render() {
     return (
       
-        <div>
-          <form onSubmit={this.handleSubmit2}>
-              <h3>Create Organization</h3>
-              <input value={this.state.nameValue} onChange={this.updateNameValue} className="form-control input-lg"/>
-              <br/>
-            <input type="submit" className={this.state.buttonRestClassName} value="Create Organization" />
-            <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Creating Organization</div>
-          </form>
-            
+        <div className="row">
+          <div className="col-sm-4">
+            <form onSubmit={this.handleSubmit}>
+                <h3>Create Organization</h3>
+                <input value={this.state.nameValue} onChange={this.updateNameValue} className="form-control input-lg" placeholder="name of organization"/>
+                <br/>
+              <input type="submit" className={this.state.buttonRestClassName} value="Create Organization" />
+              <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Creating Organization</div>
+            </form>
+          </div> 
+          <div className="col-sm-8">
+          </div>
         </div>
 
       
@@ -60,7 +55,7 @@ class CreateOrganizationComponent extends React.Component {
     });
   }
   
-  handleSubmit2(e) {
+  handleSubmit(e) {
     e.preventDefault();
     this.showClickedButtonState(true);
     var myThis = this;
@@ -83,9 +78,11 @@ class CreateOrganizationComponent extends React.Component {
         }
     };
     
-    alert(JSON.stringify(params));
-    
-    this.props.handleTest(params, function(){ myThis.showClickedButtonState(false); });
+    this.props.dbPut(params, function(result){ 
+      myThis.showClickedButtonState(false); 
+      myThis.props.handleLoadOrganization(organizationIdValue, nameValue);
+      myThis.props.history.push('loadorganizations');
+    });
     
   }
   

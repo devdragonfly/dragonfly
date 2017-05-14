@@ -28,13 +28,12 @@ class UserDropdownComponent extends React.Component {
     this.mouseOver = this.mouseOver.bind(this);
     this.mouseOut = this.mouseOut.bind(this);
     this.handleSelectProfile = this.handleSelectProfile.bind(this);
-    this.handleSelectOrganizations = this.handleSelectOrganizations.bind(this);
     this.handleSignOut = this.handleSignOut.bind(this);
 
   }
   
     mouseOver() {
-        this.setState({menuClass: "dragon-menu-visible"});
+        this.setState({menuClass: "dragon-menu-visible dragon-menu-right"});
         
     }
 
@@ -45,10 +44,10 @@ class UserDropdownComponent extends React.Component {
     render() {
         return (
           <div onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} className="dragon-user-menu pull-right">
-            <i className="fa fa-user-circle fa-3x"></i>
+            <i className="fa fa-user-circle fa-2x"></i>
             <div className={this.state.menuClass}>
               <div onClick={this.handleSelectProfile}>Profile</div>
-              <div onClick={this.handleSelectOrganizations}>Organizations</div>
+              <div>Something Else</div>
               <div onClick={this.handleSignOut}>Sign Out</div>
             </div>
           </div>
@@ -58,10 +57,7 @@ class UserDropdownComponent extends React.Component {
   handleSelectProfile() {
     this.props.history.push('profile');
   }
-  
-  handleSelectOrganizations() {
-    this.props.history.push('organizations');
-  }
+
   
   handleSignOut(e) {
     
@@ -79,7 +75,7 @@ class UserDropdownComponent extends React.Component {
           cognitoUser.signOut();
         }
         
-    this.props.handleUserIdReceived('not found');
+    this.props.handleSignOut();
     
     this.props.history.push('signup');
     

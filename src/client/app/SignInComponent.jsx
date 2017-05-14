@@ -48,7 +48,6 @@ class SignInComponent extends React.Component {
             <br/>
             <span>&nbsp;</span>
           </div>
-            <br/>
             
         </form>
       </div>
@@ -89,7 +88,7 @@ class SignInComponent extends React.Component {
     this.props.handleLoadEmail(email);
     this.props.handleAuthenticate(email, password, function(){
       myThis.showClickedButtonState(false);
-      myThis.props.history.push('organizations');
+      myThis.props.history.push('loadorganizations');
     });
     
 
