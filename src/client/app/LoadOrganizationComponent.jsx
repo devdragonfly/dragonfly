@@ -6,6 +6,7 @@ class LoadOrganizationComponent extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {organizationName: this.props.organizationName};
   }
   
   componentWillMount() {
@@ -50,9 +51,8 @@ class LoadOrganizationComponent extends React.Component {
     }
   }
   
-  componentDidMount() {
+  componentWillUpdate() {
     // this is where code goes to pull data from DB for this org
-    
     this.props.history.push('campaigns');  
     
     
@@ -62,7 +62,7 @@ class LoadOrganizationComponent extends React.Component {
   render() {
     return (
       <div>
-          <i className='fa fa-circle-o-notch fa-spin'></i> Loading {this.props.organizationName}
+          <i className='fa fa-circle-o-notch fa-spin'></i> Loading {this.state.organizationName}
       </div>
     );
   }

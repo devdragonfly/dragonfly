@@ -2,9 +2,8 @@ import { Config, CognitoIdentityCredentials } from "aws-sdk";
 import { CognitoUserPool, CognitoUserAttribute, AuthenticationDetails, CognitoUser } from "amazon-cognito-identity-js";
 import React, {Component} from 'react';
 import { Router, Route, Link, browserHistory } from 'react-router';
-import SignInComponent from './SignInComponent.jsx';
-import UserDropdownComponent from './UserDropdownComponent.jsx';
-import OrganizationsComponent from './OrganizationsComponent.jsx';
+import NavOutsideComponent from './NavOutsideComponent.jsx';
+import NavInsideComponent from './NavInsideComponent.jsx';
 import appconfig from "./appconfig";
 
 var AWS = require("aws-sdk");
@@ -195,19 +194,14 @@ class Main extends Component {
         var history = this.props.history;
         
         
-        var rightnav = function() { return '' }();
+        var nav = function() { return '' }();
         
         if (userId === 'not found') {
-            rightnav = function() {return <SignInComponent handleLoadEmail={handleLoadEmail} handleAuthenticate={handleAuthenticate} email={email} history={history} /> }();
-        } else {
-            rightnav = function() {return <UserDropdownComponent handleSignOut={handleSignOut} email={email} history={history} /> }();
+            nav = function() {return <NavOutsideComponent handleLoadEmail={handleLoadEmail} handleAuthenticate={handleAuthenticate} email={email} history={history} /> }();
         }
         
-        
-        var organizationsRow = function() { return ''}();
-        
-        if (organizations !== 'not found') {
-            organizationsRow = function() {return <OrganizationsComponent handleLoadOrganization={handleLoadOrganization} organizationName={organizationName}  organizations={organizations} userId={userId} history={history} /> }();
+        if (organizationName !== 'not found') {
+            nav = function() {return <NavInsideComponent handleLoadOrganization={handleLoadOrganization} organizationName={organizationName}  organizations={organizations} userId={userId} email={email}   handleSignOut={handleSignOut}  history={history} /> }();
         }
         
         
@@ -215,19 +209,8 @@ class Main extends Component {
         return(
             <div class="container-fluid">
                 
-                <div className="row dragon-navbar">
-                  <div className="col-sm-6">
-                    <img src="./images/insect-74x80.png" className="dragon-logo-img"/>
-                    <div className="dragon-navbar-header">
-                    <div className="dragon-navbar-dragonfly">Dragonfly
-                        <span className="dragon-navbar-retention align-baseline">&nbsp;Retention</span>
-                    </div>
-                    </div>
-                  </div>
-                  <div className="col-sm-6">{rightnav}</div>
-                </div>
+                    {nav}
                 
-                    {organizationsRow}
                     {childrenWithProps}
             </div>
         );

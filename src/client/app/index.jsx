@@ -15,6 +15,9 @@ import LoadOrganizationComponent from './LoadOrganizationComponent.jsx';
 import CreateOrganizationComponent from './CreateOrganizationComponent.jsx';
 import ProfileComponent from './ProfileComponent.jsx';
 import CampaignsComponent from './CampaignsComponent.jsx';
+import SessionsComponent from './SessionsComponent.jsx';
+import ContactListsComponent from './ContactListsComponent.jsx';
+import SettingsComponent from './SettingsComponent.jsx';
 
 
 render(
@@ -34,6 +37,9 @@ render(
             <Route path="createorganization" component={CreateOrganizationComponent}/>
             <Route path="profile" component={ProfileComponent}/>
             <Route path="campaigns" component={CampaignsComponent}/>
+            <Route path="sessions" component={SessionsComponent}/>
+            <Route path="contactlists" component={ContactListsComponent}/>
+            <Route path="settings" component={SettingsComponent}/>
         </Route>
     </Router>,
     document.getElementById('container')

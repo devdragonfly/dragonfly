@@ -2,7 +2,7 @@ import React from 'react';
 import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 'react-router';
 import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
 
-class CampaignsComponent extends React.Component {
+class ContactListsComponent extends React.Component {
 
   constructor(props) {
     super(props);
@@ -11,7 +11,7 @@ class CampaignsComponent extends React.Component {
 
   render() {
     
-    var organizationMenu = function() {return <OrganizationMenuComponent current="campaigns" /> }();
+    var organizationMenu = function() {return <OrganizationMenuComponent current="contactlists" /> }();
     
     
     return (
@@ -19,7 +19,7 @@ class CampaignsComponent extends React.Component {
         <div className="row">
           {organizationMenu}
           <div className="col-sm-10">
-            <h3>Campaigns</h3>
+            <h3>Contact Lists</h3>
           </div>
         </div>
 
@@ -31,4 +31,4 @@ class CampaignsComponent extends React.Component {
 
 }
 
-export default CampaignsComponent;
+export default ContactListsComponent;

@@ -4,7 +4,7 @@ import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 're
 
 const buttonClassName = "btn btn-primary btn-sm";
 
-class SignInComponent extends React.Component {
+class NavOutsideComponent extends React.Component {
 
   constructor(props) {
     super(props);
@@ -29,28 +29,39 @@ class SignInComponent extends React.Component {
 
     
     return (
-      <div className="dragon-login-box">
-        <form className="form-inline" onSubmit={this.handleSubmit}>
-          
-          <div className="form-group">
-            <input value={this.state.emailValue} onChange={this.updateEmailValue} placeholder="email" className="form-control input-sm"/>&nbsp;&nbsp;<br/>
-            <span>&nbsp;</span>
-          </div>
-          
-          <div className="form-group">
-            <input type="password" value={this.state.passwordValue} onChange={this.updatePasswordValue} placeholder="password" className="form-control input-sm"/>&nbsp;&nbsp;<br/>
-            <Link to={`accessaccount`}>forgot password?</Link>
-          </div>
-          
-          <div className="form-group">
-            <input type="submit" className={this.state.buttonRestClassName} value="Sign In" />
-            <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Signing In</div>
-            <br/>
-            <span>&nbsp;</span>
-          </div>
-            
-        </form>
+      <div className="row dragon-navbar">
+        <div className="col-sm-6">
+          <img src="./images/insect-74x80.png" className="dragon-logo-img"/>
+        </div>
+        <div className="col-sm-6">
+            <div className="dragon-login-box">
+              <form className="form-inline" onSubmit={this.handleSubmit}>
+                
+                <div className="form-group">
+                  <input value={this.state.emailValue} onChange={this.updateEmailValue} placeholder="email" className="form-control input-sm"/>&nbsp;&nbsp;<br/>
+                  <span>&nbsp;</span>
+                </div>
+                
+                <div className="form-group">
+                  <input type="password" value={this.state.passwordValue} onChange={this.updatePasswordValue} placeholder="password" className="form-control input-sm"/>&nbsp;&nbsp;<br/>
+                  <Link to={`accessaccount`}>forgot password?</Link>
+                </div>
+                
+                <div className="form-group">
+                  <input type="submit" className={this.state.buttonRestClassName} value="Sign In" />
+                  <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Signing In</div>
+                  <br/>
+                  <span>&nbsp;</span>
+                </div>
+                  
+              </form>
+            </div>
+        </div>
       </div>
+      
+      
+      
+
     );
   }
   
@@ -95,4 +106,4 @@ class SignInComponent extends React.Component {
   }
 }
 
-export default SignInComponent;
+export default NavOutsideComponent;

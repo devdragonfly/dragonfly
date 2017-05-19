@@ -1,8 +1,8 @@
 import React from 'react';
 import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 'react-router';
+import UserDropdownComponent from './UserDropdownComponent.jsx';
 
-
-class OrganizationsComponent extends React.Component {
+class NavInsideComponent extends React.Component {
 
   constructor(props) {
     super(props);
@@ -26,17 +26,22 @@ class OrganizationsComponent extends React.Component {
 
   render() {
     var handleLoadOrganization = this.props.handleLoadOrganization;
+    var handleSignOut = this.props.handleSignOut;
+    var email = this.props.email;
+    var history = this.props.history;
     var mouseOut = this.mouseOut;
     var organizations = this.props.organizations.map((organization, i) => {
-      return <Organization name={organization.name} organizationid={organization.organizationid} handleLoadOrganization={handleLoadOrganization} mouseOut={mouseOut}/>
+      return <Organization name={organization.name} organizationid={organization.organizationid} handleLoadOrganization={handleLoadOrganization} mouseOut={mouseOut} history={history}/>
     });
+    
+    var userDropdown = function() {return <UserDropdownComponent handleSignOut={handleSignOut} email={email} history={history} /> }();
     
     
     return (
-      <div className="row dragon-org-row">
+      <div className="row dragon-navbar">
         <div className="col-sm-6">
             <div onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} className="dragon-org-menu">
-              {this.props.organizationName} <i className="fa fa-caret-down"></i>
+              <div className="dragon-org-name">{this.props.organizationName} <i className="fa fa-caret-down"></i></div>
               <div className={this.state.menuClass}>
                 {organizations}
                 <div onClick={this.handleSelectCreateOrganization}>Create Organization</div>
@@ -44,6 +49,7 @@ class OrganizationsComponent extends React.Component {
             </div>
         </div>
         <div className="col-sm-6">
+            {userDropdown}
         </div>
       </div>
     );
@@ -87,4 +93,4 @@ class Organization extends React.Component {
 }
 
 
-export default OrganizationsComponent;
+export default NavInsideComponent;

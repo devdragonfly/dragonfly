@@ -7,15 +7,12 @@
 }
 
 .dragon-logo-img {
-    -webkit-filter: brightness(2000%); /* Safari 6.0 - 9.0 */
-    filter: brightness(2000%);
-    margin:-26px 4px 4px 0px;
-    width: 50px;
+    -webkit-filter: brightness(1000000%); /* Safari 6.0 - 9.0 */
+    filter: brightness(1000000%);
+    width:58px;
+    padding:4px 0px 6px 0px;
 }
 
-.dragon-navbar-header {display:inline-block;}
-.dragon-navbar-dragonfly { font-size:34px; color:white; margin-top:12px;}
-.dragon-navbar-retention {font-size:20px; color:white;}
 
 .dragon-login-box {
     margin:14px 0px 0px 0px;
@@ -27,10 +24,10 @@
 }
 
 .dragon-user-menu {
-    width:50px;
-    margin-top:20px;
+    width:40px;
     color:white;
     cursor:pointer;
+    padding:8px;
 }
 
 .dragon-menu-visible {
@@ -63,6 +60,13 @@
 }
 
 
+.dragon-org-name {
+    color:white;
+    padding:10px;
+    font-size:16px;
+}
+
+
 .dragon-org-menu {
     width:200px;
     cursor:pointer;
@@ -70,17 +74,30 @@
 }
 
 
-.dragon-org-row {
-    padding:4px 0px 4px 0px;
-    background-color:#f0f0f0;
-    border-bottom:1px solid #a0a0a0;
-    
+
+.dragon-left-menu {
+    font-size:18px;
+    border-right:1px solid #a0a0a0;
+    margin-top:20px;
+    padding-bottom:20px;
 }
 
 
-.dragon-left-menu {
-     width:80%;
-     font-size:16px;
-     border-right:1px solid #a0a0a0;
-     padding:8px;
+.dragon-left-menu a:hover{
+    text-decoration: none;
+}
+
+
+.dragon-left-menu-item {
+    padding:30px 30px 0px 30px;
+    display:block;
+    border-left:2px solid white;
+}
+
+.dragon-left-menu-item-current {
+    padding:30px 30px 0px 30px;
+    display:block;
+    background-image: url("./images/insect-74x80.png");
+    background-size: 48px 48px;
+    background-repeat: no-repeat;
 }
