@@ -14,12 +14,12 @@ class LoadOrganizationsComponent extends React.Component {
     
     var params = {
         TableName : "Organizations",
-        KeyConditionExpression: "#userid = :userid",
+        KeyConditionExpression: "#userId = :userId",
         ExpressionAttributeNames:{
-            "#userid": "userid"
+            "#userId": "userId"
         },
         ExpressionAttributeValues: {
-            ":userid":userId
+            ":userId":userId
         }
     };
 

@@ -31,7 +31,7 @@ class NavInsideComponent extends React.Component {
     var history = this.props.history;
     var mouseOut = this.mouseOut;
     var organizations = this.props.organizations.map((organization, i) => {
-      return <Organization name={organization.name} organizationid={organization.organizationid} handleLoadOrganization={handleLoadOrganization} mouseOut={mouseOut} history={history}/>
+      return <Organization name={organization.name} organizationId={organization.organizationId} handleLoadOrganization={handleLoadOrganization} mouseOut={mouseOut} history={history}/>
     });
     
     var userDropdown = function() {return <UserDropdownComponent handleSignOut={handleSignOut} email={email} history={history} /> }();
@@ -76,7 +76,7 @@ class Organization extends React.Component {
 
   render() {
     return (
-        <div onClick={this.handleSelectOrganization.bind(this, this.props.organizationid, this.props.name)}>
+        <div onClick={this.handleSelectOrganization.bind(this, this.props.organizationId, this.props.name)}>
           {this.props.name}
         </div>
     );

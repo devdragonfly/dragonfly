@@ -23,7 +23,9 @@ class Main extends Component {
                     userId : 'not found', 
                     organizations: 'not found',
                     organizationName: 'not found',
-                    organizationId: 'not found'
+                    organizationId: 'not found',
+                    contactLists: 'not found',
+                    contactList: 'not found'
         };
         this.handleLoadEmail = this.handleLoadEmail.bind(this);
         this.handleAuthenticate = this.handleAuthenticate.bind(this);
@@ -31,10 +33,10 @@ class Main extends Component {
         this.handleLoadAttributes = this.handleLoadAttributes.bind(this);
         this.handleLoadOrganizations = this.handleLoadOrganizations.bind(this);
         this.handleLoadOrganization = this.handleLoadOrganization.bind(this);
+        this.handleLoadContactLists = this.handleLoadContactLists.bind(this);
         this.dbPut = this.dbPut.bind(this);
         this.dbQuery = this.dbQuery.bind(this);
     }
-    
     
     
     
@@ -46,9 +48,20 @@ class Main extends Component {
         this.setState({organizations : result.Items});
     }
     
+    handleLoadContactLists(result) {
+        this.setState({contactLists : result.Items});
+    }
+    
+    handleLoadContactList(contactList) {
+        this.setState({contactList : contactList});
+    } 
+    
+    
+    
     handleLoadOrganization(organizationId, organizationName) {
         this.setState({organizationId : organizationId});
         this.setState({organizationName : organizationName});
+        this.setState({contactLists : 'not found'});
     }
     
     
@@ -152,6 +165,7 @@ class Main extends Component {
         this.setState({organizations : 'not found'});
         this.setState({organizationName : 'not found'});
         this.setState({organizationId : 'not found'});
+        this.setState({contactLists : 'not found'});
     }
     
     
@@ -171,12 +185,16 @@ class Main extends Component {
            userId: this.state.userId,
            email: this.state.email,
            organizations: this.state.organizations,
-           organizationId: this.state.organizationName,
+           organizationId: this.state.organizationId,
            organizationName: this.state.organizationName,
+           contactLists: this.state.contactLists,
+           contactList: this.state.contactList,
            handleLoadEmail: this.handleLoadEmail,
            handleUserIdReceived: this.handleUserIdReceived,
            handleLoadOrganizations: this.handleLoadOrganizations,
            handleLoadOrganization: this.handleLoadOrganization,
+           handleLoadContactLists: this.handleLoadContactLists,
+           handleLoadContactList: this.handleLoadContactList,
            dbPut: this.dbPut,
            dbQuery: this.dbQuery
          })

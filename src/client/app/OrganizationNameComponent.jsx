@@ -1,15 +1,15 @@
 import React from 'react';
-import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 'react-router';
-import appconfig from "./appconfig";
+import Link from 'react-router';
+import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
 
 
 const buttonClassName = "btn btn-success btn-lg";
 
-class CreateOrganizationComponent extends React.Component {
+class OrganizationNameComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {nameValue : '',
+    this.state = {nameValue : props.organizationName,
                   buttonRestClassName : buttonClassName,
                   buttonClickedClassName : "dragon-hidden"
     };
@@ -19,29 +19,43 @@ class CreateOrganizationComponent extends React.Component {
   }
 
   render() {
+    
+    var organizationMenu = function() {return <OrganizationMenuComponent current="settings" /> }();
+    
+    
     return (
-      
+
         <div className="row">
+          {organizationMenu}
           <div className="col-sm-4">
+          
+          
             <form onSubmit={this.handleSubmit}>
-                <h3>Create Organization</h3>
+                <h3>Organization Name</h3>
                 
                 <br/><br/>
                 
                 <input value={this.state.nameValue} onChange={this.updateNameValue} className="form-control input-lg" placeholder="name of organization"/>
                 <br/>
-              <input type="submit" className={this.state.buttonRestClassName} value="Create Organization" />
-              <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Creating Organization</div>
+              <input type="submit" className={this.state.buttonRestClassName} value="Save" />
+              <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Saving</div>
             </form>
           </div> 
-          <div className="col-sm-8">
+          
+          
+          
+          <div className="col-sm-4">
           </div>
         </div>
 
-      
+
+
     );
   }
-  
+
+
+
+
   showClickedButtonState(yes) {
     if (yes) {
           this.setState({ buttonRestClassName: "dragon-hidden" });
@@ -64,32 +78,14 @@ class CreateOrganizationComponent extends React.Component {
     var myThis = this;
     const nameValue = this.state.nameValue.trim();
     const userIdValue = this.props.userId;
+    const organizationIdValue = this.props.organizationId;
     
-    var organizationIdValue = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
-        return v.toString(16);
-    });
-    
-
-    
-    var params = {
-        TableName:"Organizations",
-        Item:{
-            userId : userIdValue,
-            organizationId : organizationIdValue,
-            name : nameValue
-        }
-    };
-    
-    this.props.dbPut(params, function(result){ 
-      myThis.showClickedButtonState(false); 
-      myThis.props.handleLoadOrganization(organizationIdValue, nameValue);
-      myThis.props.history.push('loadorganizations');
-    });
+    alert('need to add code to save name');
+    myThis.showClickedButtonState(false); 
     
   }
-  
-  
+
+
 }
 
-export default CreateOrganizationComponent;
+export default OrganizationNameComponent;

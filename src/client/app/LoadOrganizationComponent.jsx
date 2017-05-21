@@ -30,8 +30,8 @@ class LoadOrganizationComponent extends React.Component {
                     var params = {
                         TableName:"Organizations",
                         Item:{
-                            userid : userIdValue,
-                            organizationid : organizationIdValue,
+                            userId : userIdValue,
+                            organizationId : organizationIdValue,
                             name : nameValue
                         }
                     };
@@ -44,7 +44,7 @@ class LoadOrganizationComponent extends React.Component {
           
         } else {
           // organizations exist.  users just logged in a moment ago.  need to load top org
-          var organizationId = organizations[0].organizationid;
+          var organizationId = organizations[0].organizationId;
           var organizationName = organizations[0].name;
           this.props.handleLoadOrganization(organizationId, organizationName)
         }     

@@ -23,12 +23,13 @@ class SettingsComponent extends React.Component {
             
             <h3>Settings</h3>
             
-            <br/>
+            <br/><br/>
             
             <h4>Organization Name</h4>
             {this.props.organizationName}
             &nbsp;&nbsp;
-            <i className='fa fa-edit fa-fw'></i>
+            <Link to={`organizationname`}><i className='fa fa-edit fa-fw'></i></Link>
+            
             
             <br/><br/>
             
