@@ -24,9 +24,19 @@ class ContactListsComponent extends React.Component {
     var contactListsJsx = function() {return '' }();
     
     if (contactLists !== 'not found') {
-      contactListsJsx = this.props.contactLists.map((contactList, i) => {
-          return <ContactList contactList={contactList} handleLoadContactList={handleLoadContactList} history={history}/>
-      });
+          if (contactLists.length === 0) {
+            contactListsJsx = function() {return 'No contact lists created yet.' }();
+            
+          } else {
+            contactListsJsx = this.props.contactLists.map((contactList, i) => {
+                return <ContactList contactList={contactList} handleLoadContactList={handleLoadContactList} history={history}/>
+            });
+          }
+    }
+    
+    if (contactLists.length === 0) {
+      
+      
     }
 
     var organizationMenu = function() {return <OrganizationMenuComponent current="contactlists" /> }();
@@ -41,15 +51,12 @@ class ContactListsComponent extends React.Component {
               Contact Lists
             </h3>
             
-            <br/><br/>
+            <div className="dragon-select-list">
+              {contactListsJsx}
+            </div>
             
-            {contactListsJsx}
             
-            <br/><br/>
-            
-            <Link to={`loadcontactlists`}><i className='fa fa-refresh fa-fw'></i> Refresh</Link>
-            &nbsp;&nbsp;&nbsp;|&nbsp;&nbsp;&nbsp;
-            <Link to={`createcontactlist`}><i className='fa fa-plus fa-fw'></i> Create Contact List</Link>
+            <Link to={`createcontactlist`} className="btn btn-primary"><i className='fa fa-plus'></i> Create Contact List</Link>
             
           </div>
         </div>
@@ -74,8 +81,8 @@ class ContactList extends React.Component {
 
   render() {
     return (
-        <div>
-          {this.props.contactList.name}
+        <div onClick={this.handleSelectContactList.bind(this, this.props.contactList)}>
+          <i className='fa fa-address-book-o fa-fw'></i> {this.props.contactList.name}
         </div>
     );
   }

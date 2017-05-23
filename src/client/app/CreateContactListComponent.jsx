@@ -1,10 +1,10 @@
 import React from 'react';
-import Link from 'react-router';
+import { Link } from 'react-router';
 import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
 
 
 
-const buttonClassName = "btn btn-success btn-lg";
+const buttonClassName = "btn btn-primary";
 
 class CreateContactListComponent extends React.Component {
 
@@ -37,8 +37,8 @@ class CreateContactListComponent extends React.Component {
                 
                 <input value={this.state.nameValue} onChange={this.updateNameValue} className="form-control input-lg" placeholder="name of contact list"/>
                 <br/>
-              <input type="submit" className={this.state.buttonRestClassName} value="Create Contact List" />
-              <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Creating Contact List</div>
+              <input type="submit" className={this.state.buttonRestClassName} value="Save" />
+              <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Saving</div>
             </form>
           </div> 
           

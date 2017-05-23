@@ -34,6 +34,7 @@ class Main extends Component {
         this.handleLoadOrganizations = this.handleLoadOrganizations.bind(this);
         this.handleLoadOrganization = this.handleLoadOrganization.bind(this);
         this.handleLoadContactLists = this.handleLoadContactLists.bind(this);
+        this.handleLoadContactList = this.handleLoadContactList.bind(this);
         this.dbPut = this.dbPut.bind(this);
         this.dbQuery = this.dbQuery.bind(this);
     }

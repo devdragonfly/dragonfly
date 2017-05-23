@@ -101,3 +101,26 @@
     background-size: 48px 48px;
     background-repeat: no-repeat;
 }
+
+
+.dragon-select-list {
+    cursor:pointer;
+    margin:20px 0px;
+}
+
+.dragon-select-list div {
+    padding:8px;
+    font-size:16px;
+    border-bottom:1px solid #d0d0d0;
+    max-width:600px;
+}
+
+.dragon-select-list div:hover{
+    background-color:#f0f0f0;
+}
+
+.dragon-gray { color:#d0d0d0;}
+.dragon-green { color:#00b200;}
+
+
+

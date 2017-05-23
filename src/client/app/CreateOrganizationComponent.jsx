@@ -3,7 +3,7 @@ import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 're
 import appconfig from "./appconfig";
 
 
-const buttonClassName = "btn btn-success btn-lg";
+const buttonClassName = "btn btn-primary";
 
 class CreateOrganizationComponent extends React.Component {
 
@@ -30,8 +30,8 @@ class CreateOrganizationComponent extends React.Component {
                 
                 <input value={this.state.nameValue} onChange={this.updateNameValue} className="form-control input-lg" placeholder="name of organization"/>
                 <br/>
-              <input type="submit" className={this.state.buttonRestClassName} value="Create Organization" />
-              <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Creating Organization</div>
+              <input type="submit" className={this.state.buttonRestClassName} value="Save" />
+              <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Saving</div>
             </form>
           </div> 
           <div className="col-sm-8">

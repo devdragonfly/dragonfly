@@ -21,6 +21,10 @@ import SettingsComponent from './SettingsComponent.jsx';
 import CreateContactListComponent from './CreateContactListComponent.jsx';
 import OrganizationNameComponent from './OrganizationNameComponent.jsx';
 import LoadContactListsComponent from './LoadContactListsComponent.jsx';
+import ContactListComponent from './ContactListComponent.jsx';
+import AddContactsComponent from './AddContactsComponent.jsx';
+
+
 
 render(
     <Router>
@@ -45,6 +49,10 @@ render(
             <Route path="createcontactlist" component={CreateContactListComponent}/>
             <Route path="organizationname" component={OrganizationNameComponent}/>
             <Route path="loadcontactlists" component={LoadContactListsComponent}/>
+            <Route path="contactlist" component={ContactListComponent}/>
+            <Route path="addcontacts" component={AddContactsComponent}/>
+            
+            
         </Route>
     </Router>,
     document.getElementById('container')

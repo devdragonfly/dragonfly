@@ -31,7 +31,7 @@ class SettingsComponent extends React.Component {
             <Link to={`organizationname`}><i className='fa fa-edit fa-fw'></i></Link>
             
             
-            <br/><br/>
+            <br/><br/><br/>
             
             <h4>Team</h4>
             [list team members here]<br/>

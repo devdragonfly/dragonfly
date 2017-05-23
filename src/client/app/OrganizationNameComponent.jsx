@@ -3,7 +3,7 @@ import Link from 'react-router';
 import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
 
 
-const buttonClassName = "btn btn-success btn-lg";
+const buttonClassName = "btn btn-primary";
 
 class OrganizationNameComponent extends React.Component {
 
