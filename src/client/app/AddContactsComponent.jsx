@@ -9,22 +9,22 @@ class AddContactsComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {validContacts : [0,1,2,3,4,5,6,7,8,9],
+    this.state = {contacts : [0,1,2,3,4,5,6,7,8,9],
                   buttonRestClassName : buttonClassName,
                   buttonClickedClassName : "dragon-hidden"
     };
     this.showClickedButtonState = this.showClickedButtonState.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.handleLoadValidContact = this.handleLoadValidContact.bind(this);
+    this.handleLoadContact = this.handleLoadContact.bind(this);
 
   }
   
-  handleLoadValidContact(i, first, last, email, isValid) {
+  handleLoadContact(i, first, last, email, isValid) {
     var contact = { first : first, last : last, email : email, isValid : isValid};
-    var validContacts = this.state.validContacts;
-    validContacts[i] = contact;
+    var contacts = this.state.contacts;
+    contacts[i] = contact;
     this.setState({
-      validContacts: validContacts
+      contacts: contacts
     });    
     
   }
@@ -39,9 +39,9 @@ class AddContactsComponent extends React.Component {
   render() {
 
     var countArray = [0,1,2,3,4,5,6,7,8,9];
-    var handleLoadValidContact = this.handleLoadValidContact;
+    var handleLoadContact = this.handleLoadContact;
     var newContactsJsx = countArray.map((count, i) => {
-                return <NewContact i={i} handleLoadValidContact={handleLoadValidContact} />
+                return <NewContact i={i} handleLoadContact={handleLoadContact} />
         });
 
 
@@ -53,17 +53,15 @@ class AddContactsComponent extends React.Component {
         <div className="row">
           {organizationMenu}
           <div className="col-sm-10">
-            <h3>
-              <h3><i className='fa fa-address-book-o fa-fw'></i> {this.props.contactList.name}</h3>
-            </h3>
+            <h3><i className='fa fa-address-book-o fa-fw'></i> {this.props.contactList.name}</h3>
             
             <form onSubmit={this.handleSubmit}>
-              <div>
+              <div className="dragon-select-list">
                 {newContactsJsx}
               </div>
             
-              <input type="submit" className={this.state.buttonRestClassName} value="Save" />
-              <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Saving</div>
+              <input type="submit" className={this.state.buttonRestClassName} value="Add Contacts" />
+              <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Adding Contacts</div>
             </form>
             
           </div>
@@ -87,12 +85,51 @@ class AddContactsComponent extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     this.showClickedButtonState(true);
-    var validContacts = this.state.validContacts;
+    
+    
+    const organizationId = this.props.organizationId;
+    const contactListId = this.props.contactList.contactListId;
+    
+    var contacts = this.state.contacts;
     var myThis = this;
     
+    var validContacts = [];
     
-    alert(JSON.stringify(validContacts));
-    this.showClickedButtonState(false);
+    if (this.props.contactList.contacts != null) {
+      validContacts = this.props.contactList.contacts;
+    }
+    
+    
+    for (var i = 0; i < contacts.length; i++) {
+        contacts[i]
+        if (contacts[i].isValid) {
+          validContacts.push({first: contacts[i].first, last: contacts[i].last, email: contacts[i].email});
+        }
+    }
+
+    
+    var params = {
+            TableName:"ContactLists",
+            Key: {
+                organizationId : organizationId,
+                contactListId : contactListId
+            },
+            UpdateExpression: "set contacts = :contacts",
+            ExpressionAttributeValues:{
+                ":contacts":validContacts
+            },
+            ReturnValues:"UPDATED_NEW"
+        };
+    
+    
+
+    this.props.dbUpdate(params, function(result) {
+      myThis.showClickedButtonState(false);
+      myThis.props.handleLoadContacts(result.Attributes.contacts);
+      myThis.props.history.push('contactlist');    
+      
+    });
+    
     
   }
 
@@ -110,6 +147,7 @@ class NewContact extends React.Component {
     this.updateFirstNameValue = this.updateFirstNameValue.bind(this);
     this.updateLastNameValue = this.updateLastNameValue.bind(this);
     this.updateEmailValue = this.updateEmailValue.bind(this);
+    this.validateEmail = this.validateEmail.bind(this);
   }
 
   render() {
@@ -123,11 +161,19 @@ class NewContact extends React.Component {
     
     
     return (
-        <div className="form-inline">
-          <i className={validityIndicator}></i> 
-          <input value={this.state.firstName} onChange={this.updateFirstNameValue} className="form-control" placeholder="first name"/>
-          <input value={this.state.lastName} onChange={this.updateLastNameValue} className="form-control" placeholder="last name"/>
-          <input value={this.state.email} onChange={this.updateEmailValue} className="form-control" placeholder="email"/>
+        <div className="dragon-select-list-row">
+            <div className="dragon-select-list-form-cell">
+              <i className={validityIndicator}></i>
+            </div>
+            <div className="dragon-select-list-form-cell">
+              <input value={this.state.firstName} onChange={this.updateFirstNameValue} className="form-control" placeholder="first name"/>
+            </div>
+            <div className="dragon-select-list-form-cell">
+              <input value={this.state.lastName} onChange={this.updateLastNameValue} className="form-control" placeholder="last name"/>
+            </div>
+            <div className="dragon-select-list-form-cell">
+              <input value={this.state.email} onChange={this.updateEmailValue} className="form-control" placeholder="email"/>
+            </div>
         </div>
     );
   }
@@ -157,20 +203,20 @@ class NewContact extends React.Component {
 
     var firstNameIsValid = first.length > 0;
     var lastNameIsValid = last.length > 0;
-    var emailIsValid = email.length > 0;
+    var emailIsValid = this.validateEmail(email);
     var isValid = firstNameIsValid && lastNameIsValid && emailIsValid;
     this.setState({
       isValid: isValid
     });
     
-    this.props.handleLoadValidContact(this.props.i, first, last, email, isValid);
-    
-    
-    
+    this.props.handleLoadContact(this.props.i, first, last, email, isValid);
   }
   
   
-  
+  validateEmail(email) {
+      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+      return re.test(email);
+  }
 
 
 }

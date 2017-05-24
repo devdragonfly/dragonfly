@@ -35,8 +35,10 @@ class Main extends Component {
         this.handleLoadOrganization = this.handleLoadOrganization.bind(this);
         this.handleLoadContactLists = this.handleLoadContactLists.bind(this);
         this.handleLoadContactList = this.handleLoadContactList.bind(this);
+        this.handleLoadContacts = this.handleLoadContacts.bind(this);
         this.dbPut = this.dbPut.bind(this);
         this.dbQuery = this.dbQuery.bind(this);
+        this.dbUpdate = this.dbUpdate.bind(this);
     }
     
     
@@ -57,6 +59,11 @@ class Main extends Component {
         this.setState({contactList : contactList});
     } 
     
+    handleLoadContacts(contacts) {
+        var contactList = this.state.contactList;
+        contactList.contacts = contacts;
+        this.setState({contactList : contactList});
+    } 
     
     
     handleLoadOrganization(organizationId, organizationName) {
@@ -158,6 +165,18 @@ class Main extends Component {
         });        
     }
     
+    dbUpdate(params, callback) {
+
+        dragonfly.docClient.update(params, function(err, data) {
+          
+            if (err) {
+                alert(JSON.stringify(err));
+                callback(data);
+            } else {
+                callback(data);
+            }
+        });        
+    }
     
 
     handleSignOut() {
@@ -196,8 +215,10 @@ class Main extends Component {
            handleLoadOrganization: this.handleLoadOrganization,
            handleLoadContactLists: this.handleLoadContactLists,
            handleLoadContactList: this.handleLoadContactList,
+           handleLoadContacts: this.handleLoadContacts,
            dbPut: this.dbPut,
-           dbQuery: this.dbQuery
+           dbQuery: this.dbQuery,
+           dbUpdate: this.dbUpdate
          })
         );
         

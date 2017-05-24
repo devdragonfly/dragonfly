@@ -2,7 +2,7 @@ import React from 'react';
 import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 'react-router';
 
 
-const buttonClassName = "btn btn-primary btn-sm";
+const buttonClassName = "btn btn-primary";
 
 class NavOutsideComponent extends React.Component {
 
@@ -31,19 +31,18 @@ class NavOutsideComponent extends React.Component {
     return (
       <div className="row dragon-navbar">
         <div className="col-sm-6">
-          <img src="./images/insect-74x80.png" className="dragon-logo-img"/>
         </div>
         <div className="col-sm-6">
             <div className="dragon-login-box">
               <form className="form-inline" onSubmit={this.handleSubmit}>
                 
                 <div className="form-group">
-                  <input value={this.state.emailValue} onChange={this.updateEmailValue} placeholder="email" className="form-control input-sm"/>&nbsp;&nbsp;<br/>
+                  <input value={this.state.emailValue} onChange={this.updateEmailValue} placeholder="email" className="form-control"/>&nbsp;&nbsp;<br/>
                   <span>&nbsp;</span>
                 </div>
                 
                 <div className="form-group">
-                  <input type="password" value={this.state.passwordValue} onChange={this.updatePasswordValue} placeholder="password" className="form-control input-sm"/>&nbsp;&nbsp;<br/>
+                  <input type="password" value={this.state.passwordValue} onChange={this.updatePasswordValue} placeholder="password" className="form-control"/>&nbsp;&nbsp;<br/>
                   <Link to={`accessaccount`}>forgot password?</Link>
                 </div>
                 

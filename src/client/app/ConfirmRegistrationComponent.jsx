@@ -47,7 +47,7 @@ class ConfirmRegistrationComponent extends React.Component {
           <form onSubmit={this.handleSubmit}>
               <h1>Confirm Email Address</h1>
               A six-digit verification code was sent to the email address <br/><br/>
-              <i>{this.props.user.username}</i>. <br/><br/> 
+              <i>{this.props.email}</i>. <br/><br/> 
               Please enter that code here so we can verify this is your email.
               <br/><br/>
               <b>VERIFICATION CODE</b><br/>
@@ -91,7 +91,7 @@ class ConfirmRegistrationComponent extends React.Component {
     this.showClickedButtonState(true);
     
     
-    const email = this.props.user.username;
+    const email = this.props.email;
     const code = this.state.codeValue.trim();
     
     var userData = {

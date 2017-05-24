@@ -89,7 +89,7 @@ class AccessAccountComponent extends React.Component {
     };
     
     var cognitoUser = new CognitoUser(userData);
-    this.props.handleUserReceived(cognitoUser);
+    this.props.handleLoadEmail(email);
     var myThis = this;
     
     cognitoUser.forgotPassword({

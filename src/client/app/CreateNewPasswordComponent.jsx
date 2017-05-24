@@ -41,7 +41,7 @@ class CreateNewPasswordComponent extends React.Component {
           <form onSubmit={this.handleSubmit}>
               <h1>Create New Password</h1>
               A six-digit verification code was sent to the email address <br/><br/>
-              <i>{this.props.user.username}</i>. <br/><br/> 
+              <i>{this.props.email}</i>. <br/><br/> 
               Please enter that code here and create a new password.
               <br/><br/>
               <input value={this.state.codeValue} onChange={this.updateCodeValue} placeholder="code" className="form-control input-lg"/>

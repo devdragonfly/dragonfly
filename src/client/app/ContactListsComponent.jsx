@@ -28,8 +28,13 @@ class ContactListsComponent extends React.Component {
             contactListsJsx = function() {return 'No contact lists created yet.' }();
             
           } else {
+            var contactCount = 0;
             contactListsJsx = this.props.contactLists.map((contactList, i) => {
-                return <ContactList contactList={contactList} handleLoadContactList={handleLoadContactList} history={history}/>
+                contactCount = 0;
+                if (contactList.contacts != null) {
+                  contactCount = contactList.contacts.length;
+                }
+                return <ContactList contactList={contactList} handleLoadContactList={handleLoadContactList} contactCount={contactCount} history={history}/>
             });
           }
     }
@@ -50,6 +55,7 @@ class ContactListsComponent extends React.Component {
             <h3>
               Contact Lists
             </h3>
+            
             
             <div className="dragon-select-list">
               {contactListsJsx}
@@ -81,8 +87,16 @@ class ContactList extends React.Component {
 
   render() {
     return (
-        <div onClick={this.handleSelectContactList.bind(this, this.props.contactList)}>
-          <i className='fa fa-address-book-o fa-fw'></i> {this.props.contactList.name}
+        <div onClick={this.handleSelectContactList.bind(this, this.props.contactList)} className="dragon-select-list-row">
+          <div className="dragon-select-list-cell">
+            <i className='fa fa-address-book-o fa-fw'></i> 
+          </div>
+          <div className="dragon-select-list-cell">
+            {this.props.contactList.name}
+          </div>
+          <div className="dragon-select-list-cell">
+            Contacts ({this.props.contactCount})
+          </div>
         </div>
     );
   }

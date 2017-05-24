@@ -42,9 +42,11 @@ class SignUpComponent extends React.Component {
     return (
       <div className="row">
         <div className="col-sm-6">
-          Marketing text here...
+          <img src="./images/dragonfly-logo.png" className="dragon-logo"/>
         </div>
         <div className="col-sm-3">
+          
+        
           <form onSubmit={this.handleSubmit}>
               <h1>Sign Up</h1>
               <input value={this.state.emailValue} onChange={this.updateEmailValue} placeholder="email" className="form-control input-lg"/>
@@ -109,7 +111,7 @@ class SignUpComponent extends React.Component {
           return;
         }
       cognitoUser = result.user;
-      myThis.props.handleUserReceived(cognitoUser);
+      myThis.props.handleLoadEmail(email);
       myThis.props.history.push('confirmregistration');
     });
   }

@@ -21,7 +21,9 @@ class ContactListComponent extends React.Component {
     if (contacts == null){
       contactsJsx = function() {return 'No contacts added to this list yet.' }();
     } else {
-      contactsJsx = function() {return 'LIST OF CONTACTS' }();
+      contactsJsx = contacts.map((contact, i) => {
+          return <Contact contact={contact} />
+      });
       
     }
     
@@ -35,7 +37,6 @@ class ContactListComponent extends React.Component {
 
           <div className="col-sm-10">
             <h3><i className='fa fa-address-book-o fa-fw'></i> {this.props.contactList.name}</h3>
-            
             
             <div className="dragon-select-list">
               {contactsJsx}
@@ -56,5 +57,41 @@ class ContactListComponent extends React.Component {
 
 
 }
+
+
+
+
+class Contact extends React.Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+        <div className="dragon-select-list-row">
+          <div className="dragon-select-list-cell">
+            <i className='fa fa-address-card fa-fw'></i>
+          </div>
+          <div className="dragon-select-list-cell">
+            {this.props.contact.first}
+          </div>
+          <div className="dragon-select-list-cell">
+            {this.props.contact.last}
+          </div>
+          <div className="dragon-select-list-cell">
+            {this.props.contact.email}
+          </div>
+        </div>
+    );
+  }
+
+}
+
+
+
+
+
+
 
 export default ContactListComponent;

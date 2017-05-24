@@ -6,17 +6,14 @@
     color:white;
 }
 
-.dragon-logo-img {
-    -webkit-filter: brightness(1000000%); /* Safari 6.0 - 9.0 */
-    filter: brightness(1000000%);
-    width:58px;
-    padding:4px 0px 6px 0px;
+.dragon-logo{
+    margin:30px;
 }
 
 
 .dragon-login-box {
     margin:14px 0px 0px 0px;
-    font-size:11px;
+    font-size:12px;
 }
 
 .dragon-hidden {
@@ -68,7 +65,7 @@
 
 
 .dragon-org-menu {
-    width:200px;
+    width:250px;
     cursor:pointer;
     
 }
@@ -105,22 +102,37 @@
 
 .dragon-select-list {
     cursor:pointer;
-    margin:20px 0px;
+    margin:30px 0px;
+    width:700px;
+    display: table;
 }
 
-.dragon-select-list div {
+.dragon-select-list-row {
+    display:table-row;
+}
+
+.dragon-select-list-cell {
     padding:8px;
-    font-size:16px;
+    font-size:14px;
+    color:#606060;
+    display:table-cell;
     border-bottom:1px solid #d0d0d0;
-    max-width:600px;
 }
 
-.dragon-select-list div:hover{
+.dragon-select-list-form-cell {
+    padding:2px;
+    font-size:14px;
+    color:#606060;
+    display:table-cell;
+}
+
+.dragon-select-list-row:hover {
     background-color:#f0f0f0;
 }
 
+ 
 .dragon-gray { color:#d0d0d0;}
 .dragon-green { color:#00b200;}
-
-
+.dragon-fw-150 {width:150px;}
+.dragon-fw-50 {width:50px;}
 

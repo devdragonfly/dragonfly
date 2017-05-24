@@ -35,9 +35,20 @@ class LoadOrganizationsComponent extends React.Component {
 
   render() {
     return (
-      <div>
-          <i className='fa fa-circle-o-notch fa-spin'></i> Loading Organizations
+      <div className="row dragon-navbar">
+        <div className="col-sm-6">
+            <div className="dragon-org-menu">
+              <div className="dragon-org-name"><i className='fa fa-circle-o-notch fa-spin'></i> Loading Organizations</div>
+            </div>
+        </div>
+        <div className="col-sm-6">
+
+        </div>
       </div>
+      
+      
+      
+      
     );
   }
 
