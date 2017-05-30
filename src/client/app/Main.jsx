@@ -25,7 +25,9 @@ class Main extends Component {
                     organizationName: 'not found',
                     organizationId: 'not found',
                     contactLists: 'not found',
-                    contactList: 'not found'
+                    contactList: 'not found',
+                    sessions: 'not found',
+                    session: 'not found'
         };
         this.handleLoadEmail = this.handleLoadEmail.bind(this);
         this.handleAuthenticate = this.handleAuthenticate.bind(this);
@@ -36,6 +38,9 @@ class Main extends Component {
         this.handleLoadContactLists = this.handleLoadContactLists.bind(this);
         this.handleLoadContactList = this.handleLoadContactList.bind(this);
         this.handleLoadContacts = this.handleLoadContacts.bind(this);
+        this.handleLoadSessions = this.handleLoadSessions.bind(this);
+        this.handleLoadSession = this.handleLoadSession.bind(this);
+        this.handleLoadQuestions = this.handleLoadQuestions.bind(this);
         this.dbPut = this.dbPut.bind(this);
         this.dbQuery = this.dbQuery.bind(this);
         this.dbUpdate = this.dbUpdate.bind(this);
@@ -59,10 +64,26 @@ class Main extends Component {
         this.setState({contactList : contactList});
     } 
     
+    handleLoadSessions(result) {
+        this.setState({sessions : result.Items});
+    }
+    
+    handleLoadSession(session) {
+        this.setState({session : session});
+    }
+    
+
+    
     handleLoadContacts(contacts) {
         var contactList = this.state.contactList;
         contactList.contacts = contacts;
         this.setState({contactList : contactList});
+    } 
+    
+    handleLoadQuestions(questions) {
+        var session = this.state.session;
+        session.questions = questions;
+        this.setState({session : session});
     } 
     
     
@@ -70,6 +91,7 @@ class Main extends Component {
         this.setState({organizationId : organizationId});
         this.setState({organizationName : organizationName});
         this.setState({contactLists : 'not found'});
+        this.setState({sessions : 'not found'});
     }
     
     
@@ -186,6 +208,7 @@ class Main extends Component {
         this.setState({organizationName : 'not found'});
         this.setState({organizationId : 'not found'});
         this.setState({contactLists : 'not found'});
+        this.setState({sessions : 'not found'});
     }
     
     
@@ -209,6 +232,8 @@ class Main extends Component {
            organizationName: this.state.organizationName,
            contactLists: this.state.contactLists,
            contactList: this.state.contactList,
+           sessions: this.state.sessions,
+           session: this.state.session,
            handleLoadEmail: this.handleLoadEmail,
            handleUserIdReceived: this.handleUserIdReceived,
            handleLoadOrganizations: this.handleLoadOrganizations,
@@ -216,6 +241,9 @@ class Main extends Component {
            handleLoadContactLists: this.handleLoadContactLists,
            handleLoadContactList: this.handleLoadContactList,
            handleLoadContacts: this.handleLoadContacts,
+           handleLoadSessions: this.handleLoadSessions,
+           handleLoadSession: this.handleLoadSession,
+           handleLoadQuestions: this.handleLoadQuestions,
            dbPut: this.dbPut,
            dbQuery: this.dbQuery,
            dbUpdate: this.dbUpdate

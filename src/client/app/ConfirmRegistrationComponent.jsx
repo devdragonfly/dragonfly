@@ -21,7 +21,7 @@ const userPool = new CognitoUserPool({
 
 
 
-const buttonClassName = "btn btn-success btn-lg";
+const buttonClassName = "btn btn-primary btn-lg";
 
 class ConfirmRegistrationComponent extends React.Component {
 

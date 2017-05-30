@@ -136,3 +136,6 @@
 .dragon-fw-150 {width:150px;}
 .dragon-fw-50 {width:50px;}
 
+.dragon-error {
+    color:red;
+}

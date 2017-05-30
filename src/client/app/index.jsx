@@ -23,8 +23,10 @@ import OrganizationNameComponent from './OrganizationNameComponent.jsx';
 import LoadContactListsComponent from './LoadContactListsComponent.jsx';
 import ContactListComponent from './ContactListComponent.jsx';
 import AddContactsComponent from './AddContactsComponent.jsx';
-
-
+import LoadSessionsComponent from './LoadSessionsComponent.jsx';
+import CreateSessionComponent from './CreateSessionComponent.jsx';
+import SessionComponent from './SessionComponent.jsx';
+import AddQuestionComponent from './AddQuestionComponent.jsx';
 
 render(
     <Router>
@@ -51,6 +53,12 @@ render(
             <Route path="loadcontactlists" component={LoadContactListsComponent}/>
             <Route path="contactlist" component={ContactListComponent}/>
             <Route path="addcontacts" component={AddContactsComponent}/>
+            <Route path="loadsessions" component={LoadSessionsComponent}/>
+            <Route path="createsession" component={CreateSessionComponent}/>
+            <Route path="session" component={SessionComponent}/>
+            <Route path="addquestion" component={AddQuestionComponent}/>
+            
+            
             
             
         </Route>
