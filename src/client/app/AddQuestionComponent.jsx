@@ -31,8 +31,11 @@ class AddQuestionComponent extends React.Component {
   
   handleUpdateAnswer(answer) {
     var answers = this.state.answers;
-    if (answer.text != null) answer.isValid = true;
-    if ((answer.text == null) && (answer.IsCorrect)) answer.isValid = false;
+    var isValid = false;
+    if ((answer.text != null) && (answer.text != "")) {
+      isValid = true;
+    }
+    answer.isValid = isValid;
     for (var i = 0; i < 5; i++) {
         if (answers[i].letter === answer.letter) {
           answers[i] = answer;
