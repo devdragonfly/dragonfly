@@ -5,19 +5,13 @@ import AnswerComponent from './AnswerComponent.jsx';
 
 const buttonClassName = "btn btn-primary";
 
-class AddQuestionComponent extends React.Component {
+class EditQuestionComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    var answers = [
-      {letter: 'A', text: '', isCorrect: false, isValid: false},
-      {letter: 'B', text: '', isCorrect: false, isValid: false},
-      {letter: 'C', text: '', isCorrect: false, isValid: false},
-      {letter: 'D', text: '', isCorrect: false, isValid: false},
-      {letter: 'E', text: '', isCorrect: false, isValid: false},
-      ];
-    this.state = {titleValue : '',
-                  answers : answers,
+
+    this.state = {titleValue : props.question.title,
+                  answers : props.question.answers,
                   buttonRestClassName : buttonClassName,
                   buttonClickedClassName : "dragon-hidden",
                   errorMessage : ''
@@ -32,7 +26,6 @@ class AddQuestionComponent extends React.Component {
   handleUpdateAnswer(answer) {
     var answers = this.state.answers;
     if (answer.text != null) answer.isValid = true;
-    if ((answer.text == null) && (answer.IsCorrect)) answer.isValid = false;
     for (var i = 0; i < 5; i++) {
         if (answers[i].letter === answer.letter) {
           answers[i] = answer;
@@ -52,6 +45,7 @@ class AddQuestionComponent extends React.Component {
   }
 
   render() {
+    
     var answers = this.state.answers;
     var handleUpdateAnswer = this.handleUpdateAnswer;
     var answersJsx = answers.map((answer, i) => {
@@ -79,12 +73,11 @@ class AddQuestionComponent extends React.Component {
                 {answersJsx}
               </div>
             
-              <input type="submit" className={this.state.buttonRestClassName} value="Add Question" />
-              <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Adding Question</div>
+              <input type="submit" className={this.state.buttonRestClassName} value="Save" />
+              <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Saving</div>
               
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <Link to={`session`}>Cancel</Link>
-              
               
             </form>
             <span className="dragon-error">{this.state.errorMessage}</span>
@@ -123,10 +116,9 @@ class AddQuestionComponent extends React.Component {
     const title = this.state.titleValue;
     const organizationId = this.props.organizationId;
     const sessionId = this.props.session.sessionId;
+    const questionId = this.props.question.questionId;
     
     var answers = this.state.answers;
-    
-    
     var myThis = this;
     
     var validAnswersCount = 0;
@@ -163,20 +155,17 @@ class AddQuestionComponent extends React.Component {
       myThis.showClickedButtonState(false);
       return;
     }
-    
-    var questionId = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
-        return v.toString(16);
-    });
 
-    var question = { questionId: questionId, title : title, answers : answers };
-    var questions = [];
+
+    var question = { questionId:questionId, title : title, answers : answers };
+    var questions = this.props.session.questions;
     
-    if (this.props.session.questions != null) {
-      questions = this.props.session.questions;
+    for (var i = 0; i < questions.length; i++) {
+        if (questions[i].questionId === questionId) {
+          questions[i] = question;
+        }
     }
     
-    questions.push(question);
 
    
     var params = {
@@ -187,10 +176,11 @@ class AddQuestionComponent extends React.Component {
             },
             UpdateExpression: "set questions = :questions",
             ExpressionAttributeValues:{
-                ":questions" : questions
+                ":questions":questions
             },
             ReturnValues:"UPDATED_NEW"
         };
+    
     
 
     this.props.dbUpdate(params, function(result) {
@@ -208,4 +198,4 @@ class AddQuestionComponent extends React.Component {
 
 
 
-export default AddQuestionComponent;
+export default EditQuestionComponent;

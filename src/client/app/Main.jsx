@@ -27,7 +27,8 @@ class Main extends Component {
                     contactLists: 'not found',
                     contactList: 'not found',
                     sessions: 'not found',
-                    session: 'not found'
+                    session: 'not found',
+                    question: 'not found',
         };
         this.handleLoadEmail = this.handleLoadEmail.bind(this);
         this.handleAuthenticate = this.handleAuthenticate.bind(this);
@@ -41,6 +42,7 @@ class Main extends Component {
         this.handleLoadSessions = this.handleLoadSessions.bind(this);
         this.handleLoadSession = this.handleLoadSession.bind(this);
         this.handleLoadQuestions = this.handleLoadQuestions.bind(this);
+        this.handleLoadQuestion = this.handleLoadQuestion.bind(this);
         this.dbPut = this.dbPut.bind(this);
         this.dbQuery = this.dbQuery.bind(this);
         this.dbUpdate = this.dbUpdate.bind(this);
@@ -72,7 +74,9 @@ class Main extends Component {
         this.setState({session : session});
     }
     
-
+    handleLoadQuestion(question) {
+        this.setState({question : question});
+    }
     
     handleLoadContacts(contacts) {
         var contactList = this.state.contactList;
@@ -234,6 +238,7 @@ class Main extends Component {
            contactList: this.state.contactList,
            sessions: this.state.sessions,
            session: this.state.session,
+           question: this.state.question,
            handleLoadEmail: this.handleLoadEmail,
            handleUserIdReceived: this.handleUserIdReceived,
            handleLoadOrganizations: this.handleLoadOrganizations,
@@ -244,6 +249,7 @@ class Main extends Component {
            handleLoadSessions: this.handleLoadSessions,
            handleLoadSession: this.handleLoadSession,
            handleLoadQuestions: this.handleLoadQuestions,
+           handleLoadQuestion: this.handleLoadQuestion,
            dbPut: this.dbPut,
            dbQuery: this.dbQuery,
            dbUpdate: this.dbUpdate

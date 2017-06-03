@@ -13,8 +13,9 @@ class SessionComponent extends React.Component {
   }
 
   render() {
-    
+   var handleLoadQuestion = this.props.handleLoadQuestion;
     var questions = this.props.session.questions;
+    var history = this.props.history;
     
     var questionsJsx = function() {return '' }();
     var answerCount = 0;
@@ -23,7 +24,7 @@ class SessionComponent extends React.Component {
     } else {
       questionsJsx = questions.map((question, i) => {
           answerCount = question.answers.length;
-          return <Question question={question} answerCount={answerCount} />
+          return <Question question={question} answerCount={answerCount} handleLoadQuestion={handleLoadQuestion} history={history}/>
       });
       
     }
@@ -71,7 +72,7 @@ class Question extends React.Component {
 
   render() {
     return (
-        <div className="dragon-select-list-row">
+        <div onClick={this.handleSelectQuestion.bind(this, this.props.question)} className="dragon-select-list-row">
           <div className="dragon-select-list-cell">
             <i className='fa fa-question-circle fa-fw'></i>
           </div>
@@ -79,10 +80,16 @@ class Question extends React.Component {
             {this.props.question.title}
           </div>
           <div className="dragon-select-list-cell">
-            Answers ({this.props.answerCount})
+            <span className="label label-primary"><i className='fa fa-caret-square-o-up fa-fw'></i> insert breakpoint</span>
+            
           </div>
         </div>
     );
+  }
+  
+  handleSelectQuestion(question) {
+    this.props.handleLoadQuestion(question);
+    this.props.history.push('editquestion');
   }
 
 }

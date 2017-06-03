@@ -27,6 +27,7 @@ import LoadSessionsComponent from './LoadSessionsComponent.jsx';
 import CreateSessionComponent from './CreateSessionComponent.jsx';
 import SessionComponent from './SessionComponent.jsx';
 import AddQuestionComponent from './AddQuestionComponent.jsx';
+import EditQuestionComponent from './EditQuestionComponent.jsx';
 
 render(
     <Router>
@@ -57,7 +58,7 @@ render(
             <Route path="createsession" component={CreateSessionComponent}/>
             <Route path="session" component={SessionComponent}/>
             <Route path="addquestion" component={AddQuestionComponent}/>
-            
+            <Route path="editquestion" component={EditQuestionComponent}/>
             
             
             
