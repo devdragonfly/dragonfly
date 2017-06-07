@@ -71,7 +71,7 @@ class Contact extends React.Component {
     return (
         <div className="dragon-select-list-row">
           <div className="dragon-select-list-cell">
-            <i className='fa fa-address-card fa-fw'></i>
+            <i className='fa fa-address-card fa-fw fa-lg'></i>
           </div>
           <div className="dragon-select-list-cell">
             {this.props.contact.first}

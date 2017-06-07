@@ -87,9 +87,9 @@ class ContactList extends React.Component {
 
   render() {
     return (
-        <div onClick={this.handleSelectContactList.bind(this, this.props.contactList)} className="dragon-select-list-row">
+        <div onClick={this.handleSelectContactList.bind(this, this.props.contactList)} className="dragon-select-list-row dragon-pointer">
           <div className="dragon-select-list-cell">
-            <i className='fa fa-address-book-o fa-fw'></i> 
+            <i className='fa fa-address-book-o fa-fw fa-lg'></i> 
           </div>
           <div className="dragon-select-list-cell">
             {this.props.contactList.name}

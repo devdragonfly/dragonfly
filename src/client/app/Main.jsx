@@ -286,6 +286,8 @@ class Main extends Component {
                     {nav}
                 
                     {childrenWithProps}
+                    
+                    <br/><br/><br/><br/><br/>
             </div>
         );
     }
