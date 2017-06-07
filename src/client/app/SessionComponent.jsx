@@ -83,8 +83,9 @@ class Question extends React.Component {
             {this.props.question.title}&nbsp;
             <i className='fa fa-pencil fa-fw dragon-pointer' onClick={this.handleSelectQuestion.bind(this, this.props.question)}></i>
           </div>
-          <div className="dragon-select-list-cell">
-            <i className='fa fa-pause-circle fa-fw fa-lg'></i>
+          <div className="dragon-select-list-cell" onClick={this.handleSelectQuestion.bind(this, this.props.question)}>
+            <i className='fa fa-pause fa-fw dragon-pointer'></i>&nbsp;
+            00.00s
           </div>
           <div className="dragon-select-list-cell">
               <select className="form-control input-sm" value={this.state.weight}  onChange={this.updateWeight}>
