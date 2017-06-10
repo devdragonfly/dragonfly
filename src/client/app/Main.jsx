@@ -28,6 +28,7 @@ class Main extends Component {
                     contactList: 'not found',
                     sessions: 'not found',
                     session: 'not found',
+                    breakpoint: 'not found',
                     question: 'not found',
         };
         this.handleLoadEmail = this.handleLoadEmail.bind(this);
@@ -41,6 +42,7 @@ class Main extends Component {
         this.handleLoadContacts = this.handleLoadContacts.bind(this);
         this.handleLoadSessions = this.handleLoadSessions.bind(this);
         this.handleLoadSession = this.handleLoadSession.bind(this);
+        this.handleLoadBreakpoint = this.handleLoadBreakpoint.bind(this);
         this.handleLoadQuestions = this.handleLoadQuestions.bind(this);
         this.handleLoadQuestion = this.handleLoadQuestion.bind(this);
         this.dbPut = this.dbPut.bind(this);
@@ -72,6 +74,10 @@ class Main extends Component {
     
     handleLoadSession(session) {
         this.setState({session : session});
+    }
+    
+    handleLoadBreakpoint(breakpoint) {
+        this.setState({breakpoint : breakpoint});
     }
     
     handleLoadQuestion(question) {
@@ -238,6 +244,7 @@ class Main extends Component {
            contactList: this.state.contactList,
            sessions: this.state.sessions,
            session: this.state.session,
+           breakpoint: this.state.breakpoint,
            question: this.state.question,
            handleLoadEmail: this.handleLoadEmail,
            handleUserIdReceived: this.handleUserIdReceived,
@@ -248,6 +255,7 @@ class Main extends Component {
            handleLoadContacts: this.handleLoadContacts,
            handleLoadSessions: this.handleLoadSessions,
            handleLoadSession: this.handleLoadSession,
+           handleLoadBreakpoint: this.handleLoadBreakpoint,
            handleLoadQuestions: this.handleLoadQuestions,
            handleLoadQuestion: this.handleLoadQuestion,
            dbPut: this.dbPut,

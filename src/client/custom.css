@@ -101,9 +101,7 @@
 
 
 .dragon-select-list {
-
-    margin:30px 0px;
-    width:700px;
+    width:100%;
     display: table;
 }
 
@@ -117,21 +115,47 @@
 
 .dragon-select-list-cell {
     padding:8px;
-    font-size:14px;
-    color:#606060;
+    font-size:15px;
+    color:#303030;
     display:table-cell;
     border-bottom:1px solid #d0d0d0;
 }
 
 .dragon-select-list-form-cell {
     padding:2px;
-    font-size:14px;
-    color:#606060;
+    font-size:15px;
+    color:#303030;
     display:table-cell;
 }
 
 .dragon-select-list-row:hover {
     background-color:#f0f0f0;
+}
+
+.dragon-breakpoints {
+    display: table;
+    width:100%;
+}
+
+.dragon-breakpoint {
+    display:table-row;
+}
+
+.dragon-breakpoint-info {
+    display:table-cell;
+    padding:2px;
+    width:150px;
+}
+
+.dragon-breakpoint-info img {
+    padding:8px;
+    width:100%;
+}
+
+
+.dragon-breakpoint-questions {
+    padding:8px;
+    display:table-cell;
 }
 
  
@@ -143,6 +167,21 @@
 .dragon-error {
     color:red;
 }
+
+
+.dragon-stars {
+    color: #a0a0a0;
+}
+
+.dragon-stars:hover {
+    cursor:pointer;
+    color: #215FAA;
+}
+
+.dragon-question-cell i { opacity: 0; }
+.dragon-question-cell:hover i {  opacity: 1;}
+.dragon-question-cell:hover { color: #215FAA; cursor:pointer;}
+
 
 .dragonfly-blue {color: #215FAA;}
 .dragon-12px { font-size:12px;}

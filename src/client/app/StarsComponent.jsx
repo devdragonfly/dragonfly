@@ -22,7 +22,7 @@ class StarsComponent extends React.Component {
         });
     
     return (
-        <div>
+        <div className="dragon-stars">
           {starsJsx}
         </div>
     );
@@ -72,9 +72,9 @@ class Star extends React.Component {
   render() {
     
     var starValue = this.props.starValue;
-    var starClassName = "fa fa-star-o fa-fw dragonfly-blue";
-    if (starValue === 0.5) starClassName = "fa fa-star-half-o fa-fw dragonfly-blue";
-    if (starValue === 1) starClassName = "fa fa-star fa-fw dragonfly-blue";
+    var starClassName = "fa fa-star-o";
+    if (starValue === 0.5) starClassName = "fa fa-star-half-o";
+    if (starValue === 1) starClassName = "fa fa-star";
 
     return (
         <i className={starClassName} onClick={this.handleStarClicked.bind(this, this.props.star)}></i>

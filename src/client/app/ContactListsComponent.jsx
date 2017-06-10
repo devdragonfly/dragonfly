@@ -51,7 +51,7 @@ class ContactListsComponent extends React.Component {
 
         <div className="row">
           {organizationMenu}
-          <div className="col-sm-10">
+          <div className="col-sm-6">
             <h3>
               Contact Lists
             </h3>
@@ -61,10 +61,14 @@ class ContactListsComponent extends React.Component {
               {contactListsJsx}
             </div>
             
+            <br/>
             
             <Link to={`createcontactlist`} className="btn btn-primary"><i className='fa fa-plus'></i> Create Contact List</Link>
             
           </div>
+          <div className="col-sm-4">
+          </div>
+          
         </div>
 
 

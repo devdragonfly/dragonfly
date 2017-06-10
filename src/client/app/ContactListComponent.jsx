@@ -42,6 +42,7 @@ class ContactListComponent extends React.Component {
               {contactsJsx}
             </div>
             
+            <br/>
             
             <Link to={`addcontacts`} className="btn btn-primary"><i className='fa fa-plus'></i> Add Contacts</Link>
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

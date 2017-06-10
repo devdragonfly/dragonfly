@@ -172,14 +172,25 @@ class AddQuestionComponent extends React.Component {
         return v.toString(16);
     });
 
-    var question = { questionId: questionId, title : title, answers : answers };
-    var questions = [];
+    var session = this.props.session;
+    var breakpoints = this.props.session.breakpoints;
+    var breakpointId = this.props.breakpoint.breakpointId;
     
-    if (this.props.session.questions != null) {
-      questions = this.props.session.questions;
+    var breakpointPosition = 0;
+    for (var i = 0; i < breakpoints.length; i++) {
+      if (breakpoints[i].breakpointId === breakpointId) breakpointPosition = i;
     }
     
-    questions.push(question);
+    
+    var question = { questionId: questionId, title : title, answers : answers };
+    
+    if (breakpoints[breakpointPosition].questions != null) {
+      breakpoints[breakpointPosition].questions.push(question);
+    } else {
+      breakpoints[breakpointPosition].questions = [];
+      breakpoints[breakpointPosition].questions.push(question);
+    }
+
 
    
     var params = {
@@ -188,9 +199,9 @@ class AddQuestionComponent extends React.Component {
                 organizationId : organizationId,
                 sessionId : sessionId
             },
-            UpdateExpression: "set questions = :questions",
+            UpdateExpression: "set breakpoints = :breakpoints",
             ExpressionAttributeValues:{
-                ":questions" : questions
+                ":breakpoints" : breakpoints
             },
             ReturnValues:"UPDATED_NEW"
         };
@@ -198,7 +209,8 @@ class AddQuestionComponent extends React.Component {
 
     this.props.dbUpdate(params, function(result) {
       myThis.showClickedButtonState(false);
-      myThis.props.handleLoadQuestions(result.Attributes.questions);
+      session.breakpoints = breakpoints;
+      myThis.props.handleLoadSession(session);
       myThis.props.history.push('session');    
       
     });

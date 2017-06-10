@@ -52,7 +52,7 @@ class AddContactsComponent extends React.Component {
 
         <div className="row">
           {organizationMenu}
-          <div className="col-sm-10">
+          <div className="col-sm-6">
             <h3><i className='fa fa-address-book-o fa-fw'></i> {this.props.contactList.name}</h3>
             
             <form onSubmit={this.handleSubmit}>
@@ -60,10 +60,14 @@ class AddContactsComponent extends React.Component {
                 {newContactsJsx}
               </div>
             
+              <br/>
+            
               <input type="submit" className={this.state.buttonRestClassName} value="Add Contacts" />
               <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Adding Contacts</div>
             </form>
             
+          </div>
+          <div className="col-sm-4">
           </div>
         </div>
     );

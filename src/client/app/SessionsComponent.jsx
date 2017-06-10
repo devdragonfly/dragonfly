@@ -51,7 +51,7 @@ class SessionsComponent extends React.Component {
 
         <div className="row">
           {organizationMenu}
-          <div className="col-sm-10">
+          <div className="col-sm-6">
             <h3>
               Sessions
             </h3>
@@ -61,9 +61,12 @@ class SessionsComponent extends React.Component {
               {sessionsJsx}
             </div>
             
+            <br/>
             
             <Link to={`createsession`} className="btn btn-primary"><i className='fa fa-plus'></i> Create Session</Link>
             
+          </div>
+          <div className="col-sm-4">
           </div>
         </div>
 
