@@ -73,9 +73,13 @@ class EditQuestionComponent extends React.Component {
               
               <input value={this.state.titleValue} onChange={this.updateTitleValue} className="form-control" placeholder="question title"/>
             
+              <br/><br/>
+            
               <div className="dragon-select-list">
                 {answersJsx}
               </div>
+              
+              <br/><br/>
             
               <input type="submit" className={this.state.buttonRestClassName} value="Save" />
               <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Saving</div>
@@ -162,13 +166,18 @@ class EditQuestionComponent extends React.Component {
 
 
     var question = { questionId:questionId, title : title, answers : answers };
-    var questions = this.props.session.questions;
+
+    var session = this.props.session;
+    var breakpoints = this.props.session.breakpoints;
     
-    for (var i = 0; i < questions.length; i++) {
-        if (questions[i].questionId === questionId) {
-          questions[i] = question;
+    for (var i = 0; i < breakpoints.length; i++) {
+        if (breakpoints[i].questions != null) { 
+                  for (var j = 0; j < breakpoints[i].questions.length; j++) {
+                      if (breakpoints[i].questions[j].questionId === questionId) breakpoints[i].questions[j] = question;
+                  }
         }
     }
+    
    
     var params = {
             TableName:"Sessions",
@@ -176,20 +185,19 @@ class EditQuestionComponent extends React.Component {
                 organizationId : organizationId,
                 sessionId : sessionId
             },
-            UpdateExpression: "set questions = :questions",
+            UpdateExpression: "set breakpoints = :breakpoints",
             ExpressionAttributeValues:{
-                ":questions":questions
+                ":breakpoints":breakpoints
             },
             ReturnValues:"UPDATED_NEW"
         };
-    
-    
+
 
     this.props.dbUpdate(params, function(result) {
       myThis.showClickedButtonState(false);
-      myThis.props.handleLoadQuestions(result.Attributes.questions);
-      myThis.props.history.push('session');    
-      
+      session.breakpoints = breakpoints;
+      myThis.props.handleLoadSession(session);
+      myThis.props.history.push('session'); 
     });
     
     

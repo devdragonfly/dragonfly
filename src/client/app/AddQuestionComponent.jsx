@@ -78,9 +78,13 @@ class AddQuestionComponent extends React.Component {
               
               <input value={this.state.titleValue} onChange={this.updateTitleValue} className="form-control" placeholder="question title"/>
             
+              <br/><br/>
+            
               <div className="dragon-select-list">
                 {answersJsx}
               </div>
+            
+              <br/><br/>
             
               <input type="submit" className={this.state.buttonRestClassName} value="Add Question" />
               <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Adding Question</div>

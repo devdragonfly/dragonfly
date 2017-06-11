@@ -28,13 +28,13 @@ class SessionsComponent extends React.Component {
             sessionsJsx = function() {return 'No sessions created yet.' }();
             
           } else {
-            var questionCount = 0;
+            var breakpointCount = 0;
             sessionsJsx = this.props.sessions.map((session, i) => {
-                questionCount = 0;
-                if (session.questions != null) {
-                  questionCount = session.questions.length;
+                breakpointCount = 0;
+                if (session.breakpoints != null) {
+                  breakpointCount = session.breakpoints.length;
                 }
-                return <Session session={session} handleLoadSession={handleLoadSession} questionCount={questionCount} history={history}/>
+                return <Session session={session} handleLoadSession={handleLoadSession} breakpointCount={breakpointCount} history={history}/>
             });
           }
     }
@@ -98,7 +98,7 @@ class Session extends React.Component {
             {this.props.session.name}
           </div>
           <div className="dragon-select-list-cell">
-            Questions ({this.props.questionCount})
+            Breakpoints ({this.props.breakpointCount})
           </div>
         </div>
     );

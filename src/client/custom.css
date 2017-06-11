@@ -178,6 +178,7 @@
     color: #215FAA;
 }
 
+.dragon-link { cursor:pointer; color: #215FAA; text-decoration:none;}
 .dragon-question-cell i { opacity: 0; }
 .dragon-question-cell:hover i {  opacity: 1;}
 .dragon-question-cell:hover { color: #215FAA; cursor:pointer;}

@@ -43,7 +43,6 @@ class Main extends Component {
         this.handleLoadSessions = this.handleLoadSessions.bind(this);
         this.handleLoadSession = this.handleLoadSession.bind(this);
         this.handleLoadBreakpoint = this.handleLoadBreakpoint.bind(this);
-        this.handleLoadQuestions = this.handleLoadQuestions.bind(this);
         this.handleLoadQuestion = this.handleLoadQuestion.bind(this);
         this.dbPut = this.dbPut.bind(this);
         this.dbQuery = this.dbQuery.bind(this);
@@ -88,12 +87,6 @@ class Main extends Component {
         var contactList = this.state.contactList;
         contactList.contacts = contacts;
         this.setState({contactList : contactList});
-    } 
-    
-    handleLoadQuestions(questions) {
-        var session = this.state.session;
-        session.questions = questions;
-        this.setState({session : session});
     } 
     
     
@@ -256,7 +249,6 @@ class Main extends Component {
            handleLoadSessions: this.handleLoadSessions,
            handleLoadSession: this.handleLoadSession,
            handleLoadBreakpoint: this.handleLoadBreakpoint,
-           handleLoadQuestions: this.handleLoadQuestions,
            handleLoadQuestion: this.handleLoadQuestion,
            dbPut: this.dbPut,
            dbQuery: this.dbQuery,

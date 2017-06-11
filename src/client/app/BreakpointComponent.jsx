@@ -43,7 +43,7 @@ class BreakpointComponent extends React.Component {
               {questionsJsx}
             </div>
           
-            <span onClick={this.handleSelectAddQuestion.bind(this, this.props.breakpoint)} ><i className='fa fa-plus-circle'></i> Add Question</span>
+            <span onClick={this.handleSelectAddQuestion.bind(this, this.props.breakpoint)} className="dragon-link" ><i className='fa fa-plus-circle'></i> Add Question</span>
           </div>
         </div>
         
@@ -51,9 +51,7 @@ class BreakpointComponent extends React.Component {
   }
   
   handleSelectAddQuestion(breakpoint) {
-    alert(1);
     this.props.handleLoadBreakpoint(breakpoint);
-    alert(2);
     this.props.history.push('addquestion');
   }
 
