@@ -28,6 +28,7 @@ import CreateSessionComponent from './CreateSessionComponent.jsx';
 import SessionComponent from './SessionComponent.jsx';
 import AddQuestionComponent from './AddQuestionComponent.jsx';
 import EditQuestionComponent from './EditQuestionComponent.jsx';
+import UploadVideoComponent from './UploadVideoComponent.jsx';
 
 render(
     <Router>
@@ -59,9 +60,7 @@ render(
             <Route path="session" component={SessionComponent}/>
             <Route path="addquestion" component={AddQuestionComponent}/>
             <Route path="editquestion" component={EditQuestionComponent}/>
-            
-            
-            
+            <Route path="uploadvideo" component={UploadVideoComponent}/>
         </Route>
     </Router>,
     document.getElementById('container')

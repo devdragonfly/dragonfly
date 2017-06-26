@@ -47,6 +47,7 @@ class Main extends Component {
         this.dbPut = this.dbPut.bind(this);
         this.dbQuery = this.dbQuery.bind(this);
         this.dbUpdate = this.dbUpdate.bind(this);
+        this.s3Upload = this.s3Upload.bind(this);
     }
     
     
@@ -128,6 +129,7 @@ class Main extends Component {
                 
                 dragonfly.docClient = new AWS.DynamoDB.DocumentClient();
                 dragonfly.cognitoUser = cognitoUser;
+                dragonfly.s3 = new AWS.S3({ apiVersion: '2006-03-01', params: {Bucket: 'dragonfly-videos'} });
                 myThis.handleLoadAttributes(callback);
               },
        
@@ -203,6 +205,20 @@ class Main extends Component {
         });        
     }
     
+    
+    
+    s3Upload(params, callback) {
+
+        dragonfly.s3.upload(params, function(err, data) {
+          
+            if (err) {
+                alert(JSON.stringify(err));
+                callback(data);
+            } else {
+                callback(data);
+            }
+        });        
+    }
 
     handleSignOut() {
         this.setState({email : ''});
@@ -252,7 +268,8 @@ class Main extends Component {
            handleLoadQuestion: this.handleLoadQuestion,
            dbPut: this.dbPut,
            dbQuery: this.dbQuery,
-           dbUpdate: this.dbUpdate
+           dbUpdate: this.dbUpdate,
+           s3Upload: this.s3Upload
          })
         );
         
