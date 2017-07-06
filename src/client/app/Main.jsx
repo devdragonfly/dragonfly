@@ -5,6 +5,8 @@ import { Router, Route, Link, browserHistory } from 'react-router';
 import NavOutsideComponent from './NavOutsideComponent.jsx';
 import NavInsideComponent from './NavInsideComponent.jsx';
 import appconfig from "./appconfig";
+//const fs = require('file-system');
+//const zlib = require("zlib");
 
 var AWS = require("aws-sdk");
 AWS.config.region = 'us-west-2';
@@ -30,6 +32,9 @@ class Main extends Component {
                     session: 'not found',
                     breakpoint: 'not found',
                     question: 'not found',
+                    percent: 'not found',
+                    videos: 'not found',
+                    video: 'not found'
         };
         this.handleLoadEmail = this.handleLoadEmail.bind(this);
         this.handleAuthenticate = this.handleAuthenticate.bind(this);
@@ -44,6 +49,8 @@ class Main extends Component {
         this.handleLoadSession = this.handleLoadSession.bind(this);
         this.handleLoadBreakpoint = this.handleLoadBreakpoint.bind(this);
         this.handleLoadQuestion = this.handleLoadQuestion.bind(this);
+        this.handleLoadVideos = this.handleLoadVideos.bind(this);
+        this.handleLoadVideo = this.handleLoadVideo.bind(this);
         this.dbPut = this.dbPut.bind(this);
         this.dbQuery = this.dbQuery.bind(this);
         this.dbUpdate = this.dbUpdate.bind(this);
@@ -72,8 +79,16 @@ class Main extends Component {
         this.setState({sessions : result.Items});
     }
     
+    handleLoadVideos(result) {
+        this.setState({videos : result.Items});
+    }   
+    
     handleLoadSession(session) {
         this.setState({session : session});
+    }
+    
+    handleLoadVideo(video) {
+        this.setState({video : video});
     }
     
     handleLoadBreakpoint(breakpoint) {
@@ -96,6 +111,7 @@ class Main extends Component {
         this.setState({organizationName : organizationName});
         this.setState({contactLists : 'not found'});
         this.setState({sessions : 'not found'});
+        this.setState({videos : 'not found'});
     }
     
     
@@ -129,7 +145,7 @@ class Main extends Component {
                 
                 dragonfly.docClient = new AWS.DynamoDB.DocumentClient();
                 dragonfly.cognitoUser = cognitoUser;
-                dragonfly.s3 = new AWS.S3({ apiVersion: '2006-03-01', params: {Bucket: 'dragonfly-videos'} });
+                dragonfly.s3 = new AWS.S3({ apiVersion: '2006-03-01', params: {Bucket: 'dragonfly-videos'},   httpOptions: { timeout: 1000000 } });
                 myThis.handleLoadAttributes(callback);
               },
        
@@ -206,9 +222,47 @@ class Main extends Component {
     }
     
     
-    
-    s3Upload(params, callback) {
+    s3Upload(file, key, videoUploadFailedCallback, videoUploadedCallback) {
+        var myThis = this;
+        var size = file.size;
+        
+        var params = {Key: key, ContentType: file.type, Body: file};
+        
+        /*
+        dragonfly.s3.upload(params, function (err, data) {
+            if (err) {
+                alert(JSON.stringify(err));
+                callback(data);
+            } else {
+                callback(data);
+            }
+        });
+        */
+        
+        var request = dragonfly.s3.putObject(params);
+        var percent = 0;
+        
+        request.
+          on('httpUploadProgress', function(progress, response) {
+            percent = Math.round((progress.loaded / size) * 100, -2);
+            myThis.setState({percent: percent});
+          }).
+          on('success', function(response) {
+              alert("inside Main, success triggered");
+            videoUploadedCallback();
+          }).
+          on('error', function(response) {
+            alert("inside Main, error triggered");
+            videoUploadFailedCallback();
+          }).
+          on('complete', function(response) {
+            myThis.setState({percent: 'not found'});
+          }).
+          send();
+          
+        
 
+/*
         dragonfly.s3.upload(params, function(err, data) {
           
             if (err) {
@@ -217,7 +271,7 @@ class Main extends Component {
             } else {
                 callback(data);
             }
-        });        
+        });        */
     }
 
     handleSignOut() {
@@ -228,6 +282,7 @@ class Main extends Component {
         this.setState({organizationId : 'not found'});
         this.setState({contactLists : 'not found'});
         this.setState({sessions : 'not found'});
+        this.setState({videos : 'not found'});
     }
     
     
@@ -255,6 +310,7 @@ class Main extends Component {
            session: this.state.session,
            breakpoint: this.state.breakpoint,
            question: this.state.question,
+           videos: this.state.videos,
            handleLoadEmail: this.handleLoadEmail,
            handleUserIdReceived: this.handleUserIdReceived,
            handleLoadOrganizations: this.handleLoadOrganizations,
@@ -266,6 +322,7 @@ class Main extends Component {
            handleLoadSession: this.handleLoadSession,
            handleLoadBreakpoint: this.handleLoadBreakpoint,
            handleLoadQuestion: this.handleLoadQuestion,
+           handleLoadVideos: this.handleLoadVideos,
            dbPut: this.dbPut,
            dbQuery: this.dbQuery,
            dbUpdate: this.dbUpdate,
@@ -274,7 +331,8 @@ class Main extends Component {
         );
         
         var email = this.state.email;
-        var userId = this.state.userId;  
+        var userId = this.state.userId;
+        var percent = this.state.percent;
         var organizations = this.state.organizations;
         var organizationName = this.state.organizationName;
         var handleSignOut = this.handleSignOut;
@@ -292,7 +350,7 @@ class Main extends Component {
         }
         
         if (organizationName !== 'not found') {
-            nav = function() {return <NavInsideComponent handleLoadOrganization={handleLoadOrganization} organizationName={organizationName}  organizations={organizations} userId={userId} email={email}   handleSignOut={handleSignOut}  history={history} /> }();
+            nav = function() {return <NavInsideComponent handleLoadOrganization={handleLoadOrganization} organizationName={organizationName}  organizations={organizations} userId={userId} email={email}   handleSignOut={handleSignOut}  history={history} percent={percent}/> }();
         }
         
         

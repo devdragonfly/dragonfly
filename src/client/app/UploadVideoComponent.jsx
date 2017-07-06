@@ -9,13 +9,26 @@ class UploadVideoComponent extends React.Component {
 
   constructor(props) {
     super(props);
+    
+    var videoId = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+        var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+        return v.toString(16);
+    });
+    
     this.state = {file : null,
+                  nameValue : '',
                   buttonRestClassName : buttonClassName,
-                  buttonClickedClassName : "dragon-hidden"
+                  buttonClickedClassName : "dragon-hidden",
+                  videoId : videoId
     };
+    this.updateNameValue = this.updateNameValue.bind(this);
     this.handleFile = this.handleFile.bind(this);
     this.showClickedButtonState = this.showClickedButtonState.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.videoUploadFailedCallback = this.videoUploadFailedCallback.bind(this);
+    this.videoUploadedCallback = this.videoUploadedCallback.bind(this);
+    this.updateVideoUploadStatus = this.updateVideoUploadStatus.bind(this);
+    
   }
 
   render() {
@@ -26,19 +39,26 @@ class UploadVideoComponent extends React.Component {
       
         <div className="row">
           {organizationMenu}
-          <div className="col-sm-6">
-            <form onSubmit={this.handleSubmit}>
-                <h3><i className='fa fa-file-video-o fa-fw'></i> {this.props.session.name}</h3>
-                
-                <br/><br/>
-                
-                <input type="file" onChange={this.handleFile} className="form-control input-lg" placeholder="video file"/>
-                <br/>
+          <div className="col-sm-4">
+
+            <h3><i className='fa fa-file-video-o fa-fw'></i> Upload Video</h3>
+            <form ref='uploadForm' onSubmit={this.handleSubmit}>
+            
+              <br/>
+              <input value={this.state.nameValue} onChange={this.updateNameValue} className="form-control" placeholder="name of video"/>
+              
+              <br/>
+              
+              <input type="file" onChange={this.handleFile} className="form-control" placeholder="video file"/>
+              
+              <br/>
+              
               <input type="submit" className={this.state.buttonRestClassName} value="Upload" />
               <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Uploading</div>
-            </form>
+            </form>  
+            
           </div> 
-          <div className="col-sm-4">
+          <div className="col-sm-6">
           </div>
         </div>
 
@@ -56,6 +76,12 @@ class UploadVideoComponent extends React.Component {
     }
   }
   
+  updateNameValue(e) {
+    this.setState({
+      nameValue: e.target.value
+    });
+  }
+  
   handleFile(e) {
     var file = e.target.files[0];
     this.setState({ file: file });
@@ -65,34 +91,81 @@ class UploadVideoComponent extends React.Component {
     e.preventDefault();
     this.showClickedButtonState(true);
     var myThis = this;
-    
-    var sessionId = this.props.session.sessionId;
+    const nameValue = this.state.nameValue.trim();
+    const organizationId = this.props.organizationId;
+    const videoId = this.state.videoId;
     var file = this.state.file;
+
+    if (nameValue == null) {
+      this.showClickedButtonState(false);
+      alert("Please enter a name for your video.");
+      return;
+    }
     
     if (file == null) {
       this.showClickedButtonState(false);
       alert("Please select a file");
+      return;
     }
     
-    var filename = file.name;
-    var filetype = file.type;
-    alert("filename: " + filename + " and filetype: " + filetype);
+    var utc = new Date().getTime();
     
     var params = {
-      Key: sessionId,
-      Body: file,
-      ACL: 'public-read'
+        TableName:"Videos",
+        Item:{
+            organizationId : organizationId,
+            videoId : videoId,
+            name : nameValue,
+            uploadStatus : 'Uploading',
+            utc : utc
+        }
     };
+
+    this.props.s3Upload(file, videoId, myThis.videoUploadFailedCallback, myThis.videoUploadedCallback);
     
-    //alert(JSON.stringify(params));
-    
-    this.props.s3Upload(params, function(result){
-      myThis.showClickedButtonState(false);
+    this.props.dbPut(params, function(result){ 
+      myThis.showClickedButtonState(false); 
+      myThis.props.history.push('loadvideos');
     });
-    
+
   }
   
+ videoUploadFailedCallback() {
+    this.updateVideoUploadStatus("Upload Failed");
+  }
+  
+ videoUploadedCallback() {
+    this.updateVideoUploadStatus("Processing");
+  }
+
+ updateVideoUploadStatus(uploadStatus) {
+    var myThis = this;
+    const organizationId = this.props.organizationId;
+    const videoId = this.state.videoId;
+    var utc = new Date().getTime();
+    var params = {
+        TableName:"Videos",
+        Key: {
+            organizationId : organizationId,
+            videoId : videoId
+        },
+        UpdateExpression: "set uploadStatus = :uploadStatus, utc = :utc",
+        ExpressionAttributeValues:{
+            ":uploadStatus" : uploadStatus,
+            ":utc":utc
+        },
+        ReturnValues:"UPDATED_NEW"
+    };
+
+
+    this.props.dbUpdate(params, function(result) {
+      alert("video uploadStatus changed to Processing");
+    });
+  }
   
 }
+
+
+
 
 export default UploadVideoComponent;

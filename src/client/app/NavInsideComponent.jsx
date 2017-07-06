@@ -27,6 +27,7 @@ class NavInsideComponent extends React.Component {
   render() {
     var handleLoadOrganization = this.props.handleLoadOrganization;
     var handleSignOut = this.props.handleSignOut;
+    var percent = this.props.percent;
     var email = this.props.email;
     var history = this.props.history;
     var mouseOut = this.mouseOut;
@@ -36,10 +37,14 @@ class NavInsideComponent extends React.Component {
     
     var userDropdown = function() {return <UserDropdownComponent handleSignOut={handleSignOut} email={email} history={history} /> }();
     
+    var progressBar = function() { return '' }();
+    if (percent != 'not found') {
+      progressBar = function() {return <ProgressBar percent={percent} /> }();
+    }
     
     return (
       <div className="row dragon-navbar">
-        <div className="col-sm-6">
+        <div className="col-sm-2">
             <div onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} className="dragon-org-menu">
               <div className="dragon-org-name">{this.props.organizationName} <i className="fa fa-caret-down"></i></div>
               <div className={this.state.menuClass}>
@@ -48,7 +53,10 @@ class NavInsideComponent extends React.Component {
               </div>
             </div>
         </div>
-        <div className="col-sm-6">
+        <div className="col-sm-2">
+          {progressBar}
+        </div>
+        <div className="col-sm-8">
             {userDropdown}
         </div>
       </div>
@@ -89,6 +97,28 @@ class Organization extends React.Component {
     this.props.history.push('loadorganization');
   }
 
+
+}
+
+
+class ProgressBar extends React.Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    var percent = this.props.percent;
+    var width = percent + "%";
+    
+    return (
+      <div className="progress dragonfly-progress">
+        <div className="progress-bar" role="progressbar" aria-valuenow={percent} aria-valuemin="0" aria-valuemax="100" style={{width: width}}>
+          {percent}%
+        </div>
+      </div>
+    );
+  }
 
 }
 

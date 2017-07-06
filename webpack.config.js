@@ -22,7 +22,12 @@ var config = {
         loader: 'json-loader'
       }
     ]
+  },
+  
+  node: {
+     fs: "empty"
   }
+  
 };
 
 module.exports = config;

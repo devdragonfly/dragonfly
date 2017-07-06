@@ -15,11 +15,13 @@ class OrganizationMenuComponent extends React.Component {
     
     var campaignsClass = "dragon-left-menu-item";
     var sessionsClass = "dragon-left-menu-item";
+    var videosClass = "dragon-left-menu-item";
     var contactlistsClass = "dragon-left-menu-item";
     var settingsClass = "dragon-left-menu-item";
     
     if (current === "campaigns") { campaignsClass = "dragon-left-menu-item-current"; }
     if (current === "sessions") { sessionsClass = "dragon-left-menu-item-current"; }
+    if (current === "videos") { videosClass = "dragon-left-menu-item-current"; }
     if (current === "contactlists") { contactlistsClass = "dragon-left-menu-item-current"; }
     if (current === "settings") { settingsClass = "dragon-left-menu-item-current"; }
     
@@ -30,6 +32,7 @@ class OrganizationMenuComponent extends React.Component {
             <div className="dragon-left-menu">
               <div className={campaignsClass}><Link to={`campaigns`}>Campaigns</Link></div>
               <div className={sessionsClass}><Link to={`sessions`}>Sessions</Link></div>
+              <div className={videosClass}><Link to={`videos`}>Videos</Link></div>
               <div className={contactlistsClass}><Link to={`contactlists`}>Contact Lists</Link></div>
               <div className={settingsClass}><Link to={`settings`}>Settings</Link></div>
             </div>

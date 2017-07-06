@@ -29,6 +29,8 @@ import SessionComponent from './SessionComponent.jsx';
 import AddQuestionComponent from './AddQuestionComponent.jsx';
 import EditQuestionComponent from './EditQuestionComponent.jsx';
 import UploadVideoComponent from './UploadVideoComponent.jsx';
+import VideosComponent from './VideosComponent.jsx';
+import LoadVideosComponent from './LoadVideosComponent.jsx';
 
 render(
     <Router>
@@ -48,6 +50,7 @@ render(
             <Route path="profile" component={ProfileComponent}/>
             <Route path="campaigns" component={CampaignsComponent}/>
             <Route path="sessions" component={SessionsComponent}/>
+            <Route path="videos" component={VideosComponent}/>
             <Route path="contactlists" component={ContactListsComponent}/>
             <Route path="settings" component={SettingsComponent}/>
             <Route path="createcontactlist" component={CreateContactListComponent}/>
@@ -61,6 +64,7 @@ render(
             <Route path="addquestion" component={AddQuestionComponent}/>
             <Route path="editquestion" component={EditQuestionComponent}/>
             <Route path="uploadvideo" component={UploadVideoComponent}/>
+            <Route path="loadvideos" component={LoadVideosComponent}/>
         </Route>
     </Router>,
     document.getElementById('container')

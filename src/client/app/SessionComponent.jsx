@@ -68,10 +68,6 @@ class SessionComponent extends React.Component {
               <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Adding Breakpoint</div>
             </form>
             
-            <br/><br/><br/>
-            <Link to={`uploadvideo`}>+ Upload Video</Link>
-            
-            
           </div> 
           
           
