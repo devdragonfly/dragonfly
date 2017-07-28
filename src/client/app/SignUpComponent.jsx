@@ -43,6 +43,7 @@ class SignUpComponent extends React.Component {
       <div className="row">
         <div className="col-sm-6">
           <img src="./images/dragonfly-logo.png" className="dragon-logo"/>
+          
         </div>
         <div className="col-sm-3">
           

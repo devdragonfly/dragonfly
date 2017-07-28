@@ -31,6 +31,7 @@ import EditQuestionComponent from './EditQuestionComponent.jsx';
 import UploadVideoComponent from './UploadVideoComponent.jsx';
 import VideosComponent from './VideosComponent.jsx';
 import LoadVideosComponent from './LoadVideosComponent.jsx';
+import VideoComponent from './VideoComponent.jsx';
 
 render(
     <Router>
@@ -51,6 +52,7 @@ render(
             <Route path="campaigns" component={CampaignsComponent}/>
             <Route path="sessions" component={SessionsComponent}/>
             <Route path="videos" component={VideosComponent}/>
+            <Route path="video" component={VideoComponent}/>
             <Route path="contactlists" component={ContactListsComponent}/>
             <Route path="settings" component={SettingsComponent}/>
             <Route path="createcontactlist" component={CreateContactListComponent}/>

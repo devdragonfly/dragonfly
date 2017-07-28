@@ -20,6 +20,7 @@ class CampaignsComponent extends React.Component {
           {organizationMenu}
           <div className="col-sm-10">
             <h3>Campaigns</h3>
+            
           </div>
         </div>
 

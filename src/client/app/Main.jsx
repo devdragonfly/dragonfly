@@ -51,6 +51,7 @@ class Main extends Component {
         this.handleLoadQuestion = this.handleLoadQuestion.bind(this);
         this.handleLoadVideos = this.handleLoadVideos.bind(this);
         this.handleLoadVideo = this.handleLoadVideo.bind(this);
+        this.handleVideoStatusUpdate = this.handleVideoStatusUpdate.bind(this);
         this.dbPut = this.dbPut.bind(this);
         this.dbQuery = this.dbQuery.bind(this);
         this.dbUpdate = this.dbUpdate.bind(this);
@@ -89,6 +90,17 @@ class Main extends Component {
     
     handleLoadVideo(video) {
         this.setState({video : video});
+    }
+    
+    handleVideoStatusUpdate(videoId, status) {
+        var videos = this.state.videos;
+        for (var i = 0; i < videos.length; i++) {
+            if (videos[i].videoId == videoId) {
+                videos[i].uploadStatus = status;
+            }
+        }
+        this.setState({videos : videos});
+        
     }
     
     handleLoadBreakpoint(breakpoint) {
@@ -248,11 +260,9 @@ class Main extends Component {
             myThis.setState({percent: percent});
           }).
           on('success', function(response) {
-              alert("inside Main, success triggered");
             videoUploadedCallback();
           }).
           on('error', function(response) {
-            alert("inside Main, error triggered");
             videoUploadFailedCallback();
           }).
           on('complete', function(response) {
@@ -311,6 +321,7 @@ class Main extends Component {
            breakpoint: this.state.breakpoint,
            question: this.state.question,
            videos: this.state.videos,
+           video: this.state.video,
            handleLoadEmail: this.handleLoadEmail,
            handleUserIdReceived: this.handleUserIdReceived,
            handleLoadOrganizations: this.handleLoadOrganizations,
@@ -323,6 +334,8 @@ class Main extends Component {
            handleLoadBreakpoint: this.handleLoadBreakpoint,
            handleLoadQuestion: this.handleLoadQuestion,
            handleLoadVideos: this.handleLoadVideos,
+           handleLoadVideo: this.handleLoadVideo,
+           handleVideoStatusUpdate: this.handleVideoStatusUpdate,
            dbPut: this.dbPut,
            dbQuery: this.dbQuery,
            dbUpdate: this.dbUpdate,

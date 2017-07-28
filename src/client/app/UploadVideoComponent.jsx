@@ -94,6 +94,7 @@ class UploadVideoComponent extends React.Component {
     const nameValue = this.state.nameValue.trim();
     const organizationId = this.props.organizationId;
     const videoId = this.state.videoId;
+    var videos = this.props.videos;
     var file = this.state.file;
 
     if (nameValue == null) {
@@ -159,7 +160,7 @@ class UploadVideoComponent extends React.Component {
 
 
     this.props.dbUpdate(params, function(result) {
-      alert("video uploadStatus changed to Processing");
+      myThis.props.handleVideoStatusUpdate(videoId, uploadStatus);
     });
   }
   
