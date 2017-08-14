@@ -33,7 +33,7 @@ class UploadVideoComponent extends React.Component {
 
   render() {
     
-    var organizationMenu = function() {return <OrganizationMenuComponent current="sessions" /> }();
+    var organizationMenu = function() {return <OrganizationMenuComponent current="videos" /> }();
     
     return (
       

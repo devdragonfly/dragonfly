@@ -24,8 +24,10 @@ class LoadVideosComponent extends React.Component {
     };
 
     this.props.dbQuery(params, function(result) {
+      var next = myThis.props.next;
+      
       myThis.props.handleLoadVideos(result);
-      myThis.props.history.push('videos');    
+      myThis.props.history.push(next);    
       
     });
     

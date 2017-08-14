@@ -12,6 +12,7 @@ class VideosComponent extends React.Component {
   componentWillMount() {
     var videos = this.props.videos;
     if (videos === 'not found') {
+      this.props.handleLoadNext('videos');
       this.props.history.push('loadvideos');
     }
   }

@@ -34,7 +34,8 @@ class Main extends Component {
                     question: 'not found',
                     percent: 'not found',
                     videos: 'not found',
-                    video: 'not found'
+                    video: 'not found',
+                    next: 'not found'
         };
         this.handleLoadEmail = this.handleLoadEmail.bind(this);
         this.handleAuthenticate = this.handleAuthenticate.bind(this);
@@ -56,6 +57,8 @@ class Main extends Component {
         this.dbQuery = this.dbQuery.bind(this);
         this.dbUpdate = this.dbUpdate.bind(this);
         this.s3Upload = this.s3Upload.bind(this);
+        this.s3ListObjects = this.s3ListObjects.bind(this);
+        this.handleLoadNext = this.handleLoadNext.bind(this);
     }
     
     
@@ -116,6 +119,11 @@ class Main extends Component {
         contactList.contacts = contacts;
         this.setState({contactList : contactList});
     } 
+    
+    
+    handleLoadNext(next) {
+        this.setState({next : next});
+    }
     
     
     handleLoadOrganization(organizationId, organizationName) {
@@ -240,17 +248,6 @@ class Main extends Component {
         
         var params = {Key: key, ContentType: file.type, Body: file};
         
-        /*
-        dragonfly.s3.upload(params, function (err, data) {
-            if (err) {
-                alert(JSON.stringify(err));
-                callback(data);
-            } else {
-                callback(data);
-            }
-        });
-        */
-        
         var request = dragonfly.s3.putObject(params);
         var percent = 0;
         
@@ -270,20 +267,17 @@ class Main extends Component {
           }).
           send();
           
-        
-
-/*
-        dragonfly.s3.upload(params, function(err, data) {
-          
-            if (err) {
-                alert(JSON.stringify(err));
-                callback(data);
-            } else {
-                callback(data);
-            }
-        });        */
     }
-
+    
+    
+    s3ListObjects(params, callback) {
+        dragonfly.s3.listObjects(params, function (err, data) {
+         if(err) { alert(JSON.stringify(err)) }
+         alert(JSON.stringify(data));
+        });
+    }
+    
+    
     handleSignOut() {
         this.setState({email : ''});
         this.setState({userId : 'not found'});
@@ -322,6 +316,7 @@ class Main extends Component {
            question: this.state.question,
            videos: this.state.videos,
            video: this.state.video,
+           next: this.state.next,
            handleLoadEmail: this.handleLoadEmail,
            handleUserIdReceived: this.handleUserIdReceived,
            handleLoadOrganizations: this.handleLoadOrganizations,
@@ -336,10 +331,12 @@ class Main extends Component {
            handleLoadVideos: this.handleLoadVideos,
            handleLoadVideo: this.handleLoadVideo,
            handleVideoStatusUpdate: this.handleVideoStatusUpdate,
+           handleLoadNext: this.handleLoadNext,
            dbPut: this.dbPut,
            dbQuery: this.dbQuery,
            dbUpdate: this.dbUpdate,
-           s3Upload: this.s3Upload
+           s3Upload: this.s3Upload,
+           s3ListObjects: this.s3ListObjects
          })
         );
         

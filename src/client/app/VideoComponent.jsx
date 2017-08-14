@@ -8,6 +8,17 @@ class VideoComponent extends React.Component {
 
   constructor(props) {
     super(props);
+    
+    var videoId = this.props.video.videoId;
+    alert(videoId);
+    var prefix = videoId + '/';
+    var params = {
+         Bucket: 'dragonfly-videos-thumbnails',
+         Delimiter: '/',
+         Prefix: prefix
+    };
+    
+    this.props.s3ListObjects(params);
   }
 
   render() {
@@ -22,8 +33,7 @@ class VideoComponent extends React.Component {
           {organizationMenu}
 
           <div className="col-sm-10">
-            <h3><i className='fa fa-video-o fa-fw'></i> {this.props.video.name}</h3>
-            
+            <h3><i className='fa fa-file-video-o fa-fw'></i> {this.props.video.name}</h3>
             <br/>
             <video
                 id="my-player"

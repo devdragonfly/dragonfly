@@ -1,56 +1,58 @@
 import React from 'react';
 import { Link } from 'react-router';
 import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
-import BreakpointComponent from './BreakpointComponent.jsx';
-import MillisecondsComponent from './MillisecondsComponent.jsx';
 
 
 const buttonClassName = "btn btn-primary";
 
-class SessionComponent extends React.Component {
+class SelectVideoComponent extends React.Component {
 
   constructor(props) {
     super(props);
     
     var video = props.session.video;
-    
-    if (video == null) {
-      video = {name:"No Video Selected", videoId:"not found"}
+    var videoId = 'not found';
+    if (video != null) {
+      videoId = video.videoId;
     }
-    
-    this.state = {milliseconds : 0,
-                  video: video,
+
+    this.state = {videoId: videoId,
                   buttonRestClassName : buttonClassName,
                   buttonClickedClassName : "dragon-hidden"
     };
-    this.updateMilliseconds = this.updateMilliseconds.bind(this);
     this.showClickedButtonState = this.showClickedButtonState.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.updateVideo = this.updateVideo.bind(this);
+  }
+  
+  componentWillMount() {
+    var videos = this.props.videos;
+    if (videos === 'not found') {
+      this.props.handleLoadNext('selectvideo');
+      this.props.history.push('loadvideos');
+    }
   }
   
 
   render() {
-    var breakpoints = this.props.session.breakpoints;
-    var history = this.props.history;
-    var milliseconds = this.state.milliseconds;
-    var handleLoadBreakpoint = this.props.handleLoadBreakpoint;
-    var handleLoadQuestion = this.props.handleLoadQuestion;
+    var videos = this.props.videos;
     
+    var videoOptions = function() {return '' }();
 
-    
-    var breakpointsJsx = function() {return '' }();
-
-    if (breakpoints == null){
-      breakpointsJsx = function() {return 'No breakpoints added to this session yet.' }();
-    } else {
-      breakpointsJsx = breakpoints.map((breakpoint, i) => {
-          return <BreakpointComponent breakpoint={breakpoint} handleLoadBreakpoint={handleLoadBreakpoint} handleLoadQuestion={handleLoadQuestion} history={history}/>;
-      });
-      
+    if (videos !== 'not found') {
+          if (videos.length === 0) {
+            videoOptions = function() {return 'No videos uploaded yet.' }();
+            
+          } else {
+            videoOptions = videos.map((video, i) => {
+                return <VideoOption video={video}/>;
+            });
+          }
     }
+
+
     
     var organizationMenu = function() {return <OrganizationMenuComponent current="sessions" /> }();
-    var millisecondsJsx = function() {return <MillisecondsComponent milliseconds={milliseconds} /> }();
 
     return (
 
@@ -63,22 +65,12 @@ class SessionComponent extends React.Component {
             <form onSubmit={this.handleSubmit}>
                 <h3><i className='fa fa-file-video-o fa-fw'></i> {this.props.session.name}</h3>
                 
-                <div className="dragon-breakpoints">
-                  {breakpointsJsx}
-                </div>
+                <select className="form-control" onChange={this.updateVideo}>
+                  {videoOptions}
+                </select>
                 
                 <br/><br/>
-                
-                {this.state.video.name}
-                &nbsp;
-                <Link to={`selectvideo`}>Select Video</Link>
-                <br/><br/>
-                
-                {millisecondsJsx}
-                <br/>
-                
-                <input type="range" min="0" max="100000" step="1" value={this.state.milliseconds} onChange={this.updateMilliseconds}/>
-                <br/>
+
                 
               <input type="submit" className={this.state.buttonRestClassName} value="Add Breakpoint" />
               <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Adding Breakpoint</div>
@@ -107,36 +99,25 @@ class SessionComponent extends React.Component {
     }
   }
   
-  updateMilliseconds(e) {
+  
+  updateVideo(e) {
+    alert(e.target.value);
     this.setState({
-      milliseconds: e.target.value
+      videoId: e.target.value
     });
   }
   
+
   handleSubmit(e) {
     e.preventDefault();
     this.showClickedButtonState(true);
     var myThis = this;
-    const milliseconds = this.state.milliseconds;
+    
     const organizationId = this.props.organizationId;
     const sessionId = this.props.session.sessionId;
     var session = this.props.session;
-    
-    var breakpointId = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
-        return v.toString(16);
-    });
-    
 
-    
-    var breakpoint = { breakpointId: breakpointId, milliseconds : milliseconds};
-    var breakpoints = [];
-    
-    if (this.props.session.breakpoints != null) {
-      breakpoints = this.props.session.breakpoints;
-    }
-    
-    breakpoints.push(breakpoint);
+    var video = {videoName: "video name", videoId: "video Id"}
    
     var params = {
             TableName:"Sessions",
@@ -144,9 +125,9 @@ class SessionComponent extends React.Component {
                 organizationId : organizationId,
                 sessionId : sessionId
             },
-            UpdateExpression: "set breakpoints = :breakpoints",
+            UpdateExpression: "set video = :video",
             ExpressionAttributeValues:{
-                ":breakpoints" : breakpoints
+                ":video" : video
             },
             ReturnValues:"UPDATED_NEW"
         };
@@ -154,19 +135,33 @@ class SessionComponent extends React.Component {
 
     this.props.dbUpdate(params, function(result) {
       myThis.showClickedButtonState(false);
-      session.breakpoints = breakpoints;
+      session.video = video;
       myThis.props.handleLoadSession(session);
     });
     
   }
 
+}
 
 
 
+class VideoOption extends React.Component {
 
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+
+    return (
+      <option value={this.props.video.videoId} name={this.props.video.name}>{this.props.video.name}</option>
+    );
+  }
 
 }
 
 
 
-export default SessionComponent;
+
+
+export default SelectVideoComponent;
