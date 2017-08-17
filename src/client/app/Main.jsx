@@ -88,6 +88,15 @@ class Main extends Component {
     }   
     
     handleLoadSession(session) {
+        if (session.video == null ){
+            session.video = {name:"No Video Selected", videoId:"not found"};
+            session.thumbnails = [];
+            session.thumbnailState = "none";
+        }
+        if (session.thumbnails == null) {
+            session.thumbnails = [];
+            session.thumbnailState = "unknown";
+        }
         this.setState({session : session});
     }
     
@@ -272,8 +281,7 @@ class Main extends Component {
     
     s3ListObjects(params, callback) {
         dragonfly.s3.listObjects(params, function (err, data) {
-         if(err) { alert(JSON.stringify(err)) }
-         alert(JSON.stringify(data));
+            callback(err,data);
         });
     }
     

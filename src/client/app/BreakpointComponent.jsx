@@ -9,14 +9,17 @@ class BreakpointComponent extends React.Component {
   constructor(props) {
     super(props);
 
+
   }
 
   render() {
     var handleLoadQuestion = this.props.handleLoadQuestion;
     var breakpoint = this.props.breakpoint;
     var questions = breakpoint.questions;
-    var milliseconds = breakpoint.milliseconds;
     var history = this.props.history;
+    
+    var milliseconds = breakpoint.milliseconds;
+    var thumbnailUrl = this.props.thumbnailUrl;
     
     var questionsJsx = function() {return '' }();
     if (questions == null){
@@ -33,7 +36,7 @@ class BreakpointComponent extends React.Component {
     return (
         <div className="dragon-breakpoint">
           <div className="dragon-breakpoint-info">
-            <img src="./images/video-play.jpg"/>
+            <img src={thumbnailUrl}/>
             <br/>
             {millisecondsJsx}
             <br/><br/>
@@ -54,6 +57,7 @@ class BreakpointComponent extends React.Component {
     this.props.handleLoadBreakpoint(breakpoint);
     this.props.history.push('addquestion');
   }
+
 
 
 }

@@ -33,6 +33,7 @@ import VideosComponent from './VideosComponent.jsx';
 import LoadVideosComponent from './LoadVideosComponent.jsx';
 import VideoComponent from './VideoComponent.jsx';
 import SelectVideoComponent from './SelectVideoComponent.jsx';
+import LoadThumbnailsComponent from './LoadThumbnailsComponent.jsx';
 
 render(
     <Router>
@@ -69,6 +70,7 @@ render(
             <Route path="uploadvideo" component={UploadVideoComponent}/>
             <Route path="loadvideos" component={LoadVideosComponent}/>
             <Route path="selectvideo" component={SelectVideoComponent}/>
+            <Route path="loadthumbnails" component={LoadThumbnailsComponent}/>
         </Route>
     </Router>,
     document.getElementById('container')

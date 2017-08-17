@@ -10,11 +10,7 @@ class SelectVideoComponent extends React.Component {
   constructor(props) {
     super(props);
     
-    var video = props.session.video;
-    var videoId = 'not found';
-    if (video != null) {
-      videoId = video.videoId;
-    }
+    var videoId = props.session.videoId;
 
     this.state = {videoId: videoId,
                   buttonRestClassName : buttonClassName,
@@ -22,7 +18,7 @@ class SelectVideoComponent extends React.Component {
     };
     this.showClickedButtonState = this.showClickedButtonState.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.updateVideo = this.updateVideo.bind(this);
+    this.updateVideoId = this.updateVideoId.bind(this);
   }
   
   componentWillMount() {
@@ -61,25 +57,27 @@ class SelectVideoComponent extends React.Component {
           
           
           
-          <div className="col-sm-6">
+          <div className="col-sm-4">
             <form onSubmit={this.handleSubmit}>
                 <h3><i className='fa fa-file-video-o fa-fw'></i> {this.props.session.name}</h3>
                 
-                <select className="form-control" onChange={this.updateVideo}>
+                <br/><br/>
+                
+                <select className="form-control" onChange={this.updateVideoId}>
                   {videoOptions}
                 </select>
                 
-                <br/><br/>
+                <br/>
 
                 
-              <input type="submit" className={this.state.buttonRestClassName} value="Add Breakpoint" />
-              <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Adding Breakpoint</div>
+              <input type="submit" className={this.state.buttonRestClassName} value="Save" />
+              <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Saving</div>
             </form>
             
           </div> 
           
           
-          <div className="col-sm-4">
+          <div className="col-sm-6">
           </div>
 
         </div>
@@ -100,8 +98,7 @@ class SelectVideoComponent extends React.Component {
   }
   
   
-  updateVideo(e) {
-    alert(e.target.value);
+  updateVideoId(e) {
     this.setState({
       videoId: e.target.value
     });
@@ -116,8 +113,13 @@ class SelectVideoComponent extends React.Component {
     const organizationId = this.props.organizationId;
     const sessionId = this.props.session.sessionId;
     var session = this.props.session;
-
-    var video = {videoName: "video name", videoId: "video Id"}
+    var videos = this.props.videos;
+    var videoId = this.state.videoId;
+    var video = "not found";
+    
+    for (var i = 0; i < videos.length; i++) {
+          if(videos[i].videoId === videoId) { video = videos[i] }
+    }
    
     var params = {
             TableName:"Sessions",
@@ -136,7 +138,10 @@ class SelectVideoComponent extends React.Component {
     this.props.dbUpdate(params, function(result) {
       myThis.showClickedButtonState(false);
       session.video = video;
+      session.thumbnailState = "unknown";
       myThis.props.handleLoadSession(session);
+      myThis.props.handleLoadVideo(video);
+      myThis.props.history.push('session');
     });
     
   }

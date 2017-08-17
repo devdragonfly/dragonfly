@@ -12,39 +12,64 @@ class SessionComponent extends React.Component {
   constructor(props) {
     super(props);
     
-    var video = props.session.video;
+    var thumbnails = [];
+    var currentThumbnailUrl = "./images/video-play.jpg";
     
-    if (video == null) {
-      video = {name:"No Video Selected", videoId:"not found"}
+    if (props.session.thumbnailState === "loaded") { 
+      thumbnails = props.session.thumbnails;
+      var key = thumbnails[0].Key;
+      currentThumbnailUrl = "https://s3-us-west-2.amazonaws.com/dragonfly-videos-thumbnails/" + key;
     }
     
-    this.state = {milliseconds : 0,
-                  video: video,
+    this.state = {seconds : 0,
+                  currentThumbnailUrl: currentThumbnailUrl,
+                  thumbnails: thumbnails,
                   buttonRestClassName : buttonClassName,
                   buttonClickedClassName : "dragon-hidden"
     };
-    this.updateMilliseconds = this.updateMilliseconds.bind(this);
+    this.updateSeconds = this.updateSeconds.bind(this);
+    this.updateCurrentThumbnailUrl = this.updateCurrentThumbnailUrl.bind(this);
     this.showClickedButtonState = this.showClickedButtonState.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
   
+  
+  componentWillMount() {
+    var thumbnailState = this.props.session.thumbnailState;
+    if (thumbnailState === "unknown") {
+      this.props.handleLoadNext('session');
+      this.props.history.push('loadthumbnails');
+    }
+  }
+  
 
   render() {
+    var myThis = this;
     var breakpoints = this.props.session.breakpoints;
     var history = this.props.history;
-    var milliseconds = this.state.milliseconds;
+    var milliseconds = this.state.seconds * 1000;
     var handleLoadBreakpoint = this.props.handleLoadBreakpoint;
     var handleLoadQuestion = this.props.handleLoadQuestion;
-    
-
+    var thumbnails = this.state.thumbnails;
     
     var breakpointsJsx = function() {return '' }();
 
+
+    var thumbnailUrl = "./images/video-play.jpg";
+    var second = 0;
+    
     if (breakpoints == null){
       breakpointsJsx = function() {return 'No breakpoints added to this session yet.' }();
     } else {
       breakpointsJsx = breakpoints.map((breakpoint, i) => {
-          return <BreakpointComponent breakpoint={breakpoint} handleLoadBreakpoint={handleLoadBreakpoint} handleLoadQuestion={handleLoadQuestion} history={history}/>;
+          if (thumbnails.length !== 0) {
+            second = Math.round(breakpoint.milliseconds / 1000);
+            if (second >= thumbnails.length - 1) { second = thumbnails.length - 1; }
+            var key = thumbnails[second].Key;
+            thumbnailUrl = "https://s3-us-west-2.amazonaws.com/dragonfly-videos-thumbnails/" + key;
+          }
+        
+          return <BreakpointComponent breakpoint={breakpoint} thumbnailUrl={thumbnailUrl} handleLoadBreakpoint={handleLoadBreakpoint} handleLoadQuestion={handleLoadQuestion} history={history}/>;
       });
       
     }
@@ -60,7 +85,7 @@ class SessionComponent extends React.Component {
           
           
           <div className="col-sm-6">
-            <form onSubmit={this.handleSubmit}>
+            
                 <h3><i className='fa fa-file-video-o fa-fw'></i> {this.props.session.name}</h3>
                 
                 <div className="dragon-breakpoints">
@@ -69,21 +94,35 @@ class SessionComponent extends React.Component {
                 
                 <br/><br/>
                 
-                {this.state.video.name}
-                &nbsp;
-                <Link to={`selectvideo`}>Select Video</Link>
-                <br/><br/>
                 
-                {millisecondsJsx}
-                <br/>
-                
-                <input type="range" min="0" max="100000" step="1" value={this.state.milliseconds} onChange={this.updateMilliseconds}/>
-                <br/>
-                
-              <input type="submit" className={this.state.buttonRestClassName} value="Add Breakpoint" />
-              <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Adding Breakpoint</div>
-            </form>
-            
+                <div className="dragon-breakpoint">
+                  <div className="dragon-breakpoint-info">
+                    <img src={this.state.currentThumbnailUrl}/>
+                    <br/>
+                    {millisecondsJsx}
+                    <br/>
+                  </div>
+                  <div className="dragon-breakpoint-questions">
+                    <div className="dragon-select-list">
+                      {this.props.session.video.name}
+                      &nbsp;
+                      <Link to={`selectvideo`}>Select Video</Link>
+                      
+                      
+                      <form onSubmit={this.handleSubmit}>
+                          <input type="range" min="0" max={thumbnails.length} step="0.5" value={this.state.seconds} onChange={this.updateSeconds}/>
+                          <br/>
+                          
+                        <input type="submit" className={this.state.buttonRestClassName} value="Add Breakpoint" />
+                        <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Adding Breakpoint</div>
+                      </form>
+                      
+                      
+                    </div>
+                  
+                  </div>
+                </div>
+
           </div> 
           
           
@@ -107,9 +146,23 @@ class SessionComponent extends React.Component {
     }
   }
   
-  updateMilliseconds(e) {
+  updateSeconds(e) {
     this.setState({
-      milliseconds: e.target.value
+      seconds: e.target.value
+    });
+    var thumbnails = this.state.thumbnails;
+    if (thumbnails.length > 0) {
+      var second = Math.round(e.target.value);
+      var key = thumbnails[second].Key;
+      var thumbnailUrl = "https://s3-us-west-2.amazonaws.com/dragonfly-videos-thumbnails/" + key;
+      this.updateCurrentThumbnailUrl(thumbnailUrl);
+    }
+  }
+  
+  
+  updateCurrentThumbnailUrl(currentThumbnailUrl) {
+    this.setState({
+      currentThumbnailUrl: currentThumbnailUrl
     });
   }
   
@@ -117,7 +170,7 @@ class SessionComponent extends React.Component {
     e.preventDefault();
     this.showClickedButtonState(true);
     var myThis = this;
-    const milliseconds = this.state.milliseconds;
+    const milliseconds = this.state.seconds * 1000;
     const organizationId = this.props.organizationId;
     const sessionId = this.props.session.sessionId;
     var session = this.props.session;
