@@ -35,6 +35,12 @@ class SessionComponent extends React.Component {
   
   
   componentWillMount() {
+    var video = this.props.session.video;
+    if (video.videoId == "not found") {
+      this.props.history.push('selectvideo');
+    }
+    
+    
     var thumbnailState = this.props.session.thumbnailState;
     if (thumbnailState === "unknown") {
       this.props.handleLoadNext('session');
@@ -106,7 +112,7 @@ class SessionComponent extends React.Component {
                     <div className="dragon-select-list">
                       {this.props.session.video.name}
                       &nbsp;
-                      <Link to={`selectvideo`}>Select Video</Link>
+                      <Link to={`selectvideo`}><i className='fa fa-edit fa-fw'></i></Link>
                       
                       
                       <form onSubmit={this.handleSubmit}>

@@ -88,7 +88,7 @@ class Main extends Component {
     }   
     
     handleLoadSession(session) {
-        if (session.video == null ){
+        if ((session.video == null) || (session.video == "not found")) {
             session.video = {name:"No Video Selected", videoId:"not found"};
             session.thumbnails = [];
             session.thumbnailState = "none";

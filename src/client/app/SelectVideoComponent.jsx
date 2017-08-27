@@ -61,7 +61,10 @@ class SelectVideoComponent extends React.Component {
             <form onSubmit={this.handleSubmit}>
                 <h3><i className='fa fa-file-video-o fa-fw'></i> {this.props.session.name}</h3>
                 
-                <br/><br/>
+                <br/>
+                
+                Select a video for this session:
+                <br/>
                 
                 <select className="form-control" onChange={this.updateVideoId}>
                   {videoOptions}
