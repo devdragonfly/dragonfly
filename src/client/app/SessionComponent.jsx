@@ -112,7 +112,7 @@ class SessionComponent extends React.Component {
                     <div className="dragon-select-list">
                       {this.props.session.video.name}
                       &nbsp;
-                      <Link to={`selectvideo`}><i className='fa fa-edit fa-fw'></i></Link>
+                      <Link to={'selectvideo'}><i className='fa fa-edit fa-fw'></i></Link>
                       
                       
                       <form onSubmit={this.handleSubmit}>
@@ -128,6 +128,9 @@ class SessionComponent extends React.Component {
                   
                   </div>
                 </div>
+                
+                
+                <Link to={'preview'}>PREVIEW SESSION</Link>
 
           </div> 
           
