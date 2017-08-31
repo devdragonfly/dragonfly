@@ -31,6 +31,9 @@ class SessionComponent extends React.Component {
     this.updateCurrentThumbnailUrl = this.updateCurrentThumbnailUrl.bind(this);
     this.showClickedButtonState = this.showClickedButtonState.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    
+    var preview = { currentTime: 0 };
+    props.handleLoadPreview(preview);
   }
   
   

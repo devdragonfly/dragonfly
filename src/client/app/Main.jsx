@@ -35,7 +35,8 @@ class Main extends Component {
                     percent: 'not found',
                     videos: 'not found',
                     video: 'not found',
-                    next: 'not found'
+                    next: 'not found',
+                    preview: 'not found',
         };
         this.handleLoadEmail = this.handleLoadEmail.bind(this);
         this.handleAuthenticate = this.handleAuthenticate.bind(this);
@@ -52,6 +53,7 @@ class Main extends Component {
         this.handleLoadQuestion = this.handleLoadQuestion.bind(this);
         this.handleLoadVideos = this.handleLoadVideos.bind(this);
         this.handleLoadVideo = this.handleLoadVideo.bind(this);
+        this.handleLoadPreview = this.handleLoadPreview.bind(this);
         this.handleVideoStatusUpdate = this.handleVideoStatusUpdate.bind(this);
         this.dbPut = this.dbPut.bind(this);
         this.dbQuery = this.dbQuery.bind(this);
@@ -85,6 +87,10 @@ class Main extends Component {
     
     handleLoadVideos(result) {
         this.setState({videos : result.Items});
+    }   
+    
+    handleLoadPreview(preview) {
+        this.setState({preview : preview});
     }   
     
     handleLoadSession(session) {
@@ -325,6 +331,7 @@ class Main extends Component {
            videos: this.state.videos,
            video: this.state.video,
            next: this.state.next,
+           preview: this.state.preview,
            handleLoadEmail: this.handleLoadEmail,
            handleUserIdReceived: this.handleUserIdReceived,
            handleLoadOrganizations: this.handleLoadOrganizations,
@@ -340,6 +347,7 @@ class Main extends Component {
            handleLoadVideo: this.handleLoadVideo,
            handleVideoStatusUpdate: this.handleVideoStatusUpdate,
            handleLoadNext: this.handleLoadNext,
+           handleLoadPreview: this.handleLoadPreview,
            dbPut: this.dbPut,
            dbQuery: this.dbQuery,
            dbUpdate: this.dbUpdate,
