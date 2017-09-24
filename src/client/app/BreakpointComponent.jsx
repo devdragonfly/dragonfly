@@ -8,12 +8,13 @@ class BreakpointComponent extends React.Component {
 
   constructor(props) {
     super(props);
-
+    this.handleStarsUpdate = this.handleStarsUpdate.bind(this);
 
   }
 
   render() {
     var handleLoadQuestion = this.props.handleLoadQuestion;
+    var handleStarsUpdate = this.handleStarsUpdate;
     var breakpoint = this.props.breakpoint;
     var questions = breakpoint.questions;
     var history = this.props.history;
@@ -26,7 +27,8 @@ class BreakpointComponent extends React.Component {
       questionsJsx = function() {return 'No questions added to this breakpoint yet.' }();
     } else {
       questionsJsx = questions.map((question, i) => {
-          return <Question question={question} handleLoadQuestion={handleLoadQuestion} history={history}/>
+          if (question.weight == null) question.weight = 5;
+          return <Question question={question} handleLoadQuestion={handleLoadQuestion} handleStarsUpdate={handleStarsUpdate} history={history}/>
       });
       
     }
@@ -58,7 +60,46 @@ class BreakpointComponent extends React.Component {
     this.props.history.push('addquestion');
   }
 
+  handleStarsUpdate(questionId, stars) {
+    var myThis = this;
+    var session = this.props.session;
+    var sessionId = session.sessionId;
+    var organizationId = this.props.organizationId;
+    var breakpoints = this.props.session.breakpoints;
+    
+    for (var i = 0; i < breakpoints.length; i++) {
+        if (breakpoints[i].questions != null) { 
+                  for (var j = 0; j < breakpoints[i].questions.length; j++) {
+                      if (breakpoints[i].questions[j].questionId === questionId) breakpoints[i].questions[j].weight = stars * 2;
+                  }
+        }
+    }
+    
+    var params = {
+            TableName:"Sessions",
+            Key: {
+                organizationId : organizationId,
+                sessionId : sessionId
+            },
+            UpdateExpression: "set breakpoints = :breakpoints",
+            ExpressionAttributeValues:{
+                ":breakpoints":breakpoints
+            },
+            ReturnValues:"UPDATED_NEW"
+        };
 
+
+    this.props.dbUpdate(params, function(result) {
+      myThis.showClickedButtonState(false);
+      session.breakpoints = breakpoints;
+      myThis.props.handleLoadSession(session);
+      myThis.props.history.push('session'); 
+    });
+    
+    
+    
+    
+  }
 
 }
 
@@ -71,13 +112,14 @@ class Question extends React.Component {
     super(props);
     this.state = {weight : 10
     };
-    this.updateWeight = this.updateWeight.bind(this);
+    this.handleStarsUpdate = this.handleStarsUpdate.bind(this);
   }
   
 
   render() {
-    
-    var stars = function() {return <StarsComponent count="3.5" /> }();
+    var handleStarsUpdate = this.handleStarsUpdate;
+    var currentStars = this.props.question.weight / 2;
+    var stars = function() {return <StarsComponent count={currentStars} handleStarsUpdate={handleStarsUpdate} /> }();
     
     return (
         <div className="dragon-select-list-row">
@@ -101,10 +143,9 @@ class Question extends React.Component {
   }
   
   
-  updateWeight(e) {
-    this.setState({
-      weight: e.target.value
-    });
+  handleStarsUpdate(stars) {
+    var questionId = this.props.question.questionId;
+    this.props.handleStarsUpdate(questionId, stars);
   }
   
 

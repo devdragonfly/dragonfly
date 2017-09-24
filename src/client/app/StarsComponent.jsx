@@ -10,7 +10,7 @@ class StarsComponent extends React.Component {
     this.state = {starsArray: starsArray};
     this.getStarsArray = this.getStarsArray.bind(this);
     this.handleStarClicked = this.handleStarClicked.bind(this);
-    
+
   }
 
   render() {
@@ -52,7 +52,12 @@ class StarsComponent extends React.Component {
     var newStarsArray = this.getStarsArray(count);
     this.setState({
       starsArray: newStarsArray
-    });    
+    });
+    starsArray = newStarsArray;
+    var starCount = starsArray[0] + starsArray[1] + starsArray[2] + starsArray[3] + starsArray[4];
+
+    this.props.handleStarsUpdate(starCount);
+    
   }
 
 

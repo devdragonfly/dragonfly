@@ -54,6 +54,10 @@ class SessionComponent extends React.Component {
 
   render() {
     var myThis = this;
+    var dbUpdate = this.props.dbUpdate;
+    var handleLoadSession = this.props.handleLoadSession;
+    var organizationId = this.props.organizationId;
+    var session = this.props.session;
     var breakpoints = this.props.session.breakpoints;
     var history = this.props.history;
     var milliseconds = this.state.seconds * 1000;
@@ -78,7 +82,10 @@ class SessionComponent extends React.Component {
             thumbnailUrl = "https://s3-us-west-2.amazonaws.com/dragonfly-videos-thumbnails/" + key;
           }
         
-          return <BreakpointComponent breakpoint={breakpoint} thumbnailUrl={thumbnailUrl} handleLoadBreakpoint={handleLoadBreakpoint} handleLoadQuestion={handleLoadQuestion} history={history}/>;
+          return <BreakpointComponent organizationId={organizationId} dbUpdate={dbUpdate} handleLoadSession={handleLoadSession} 
+                                      session={session} breakpoint={breakpoint} thumbnailUrl={thumbnailUrl} 
+                                      handleLoadBreakpoint={handleLoadBreakpoint} 
+                                      handleLoadQuestion={handleLoadQuestion} history={history}/>;
       });
       
     }
