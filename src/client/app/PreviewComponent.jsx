@@ -15,10 +15,24 @@ class PreviewComponent extends React.Component {
     var breakpoints = props.session.breakpoints;
     var breakpointsLength = breakpoints.length;
     var nextBreakpoint = breakpoints[0];
+    var totalWeight = 0;
     for (var i = 0; i < breakpointsLength; i++) {
-      if ((breakpoints[i].milliseconds > currentMs) && (breakpoints[i].milliseconds < nextBreakpoint.milliseconds)) {
+      var breakpoint = breakpoints[i];
+      
+      if ((breakpoint.milliseconds > currentMs) && (breakpoint.milliseconds < nextBreakpoint.milliseconds)) {
        nextBreakpoint = breakpoints[i]; 
       }
+      
+      var questions = breakpoint.questions;
+      
+      if (questions != null) {
+          var questionsLength = questions.length;
+          for (var j = 0; j < questionsLength; j++) {
+            totalWeight = totalWeight + questions[j].weight;
+          }        
+        
+      }
+
     }
     
     var startPos = Math.round(currentMs / 1000);
@@ -32,7 +46,8 @@ class PreviewComponent extends React.Component {
     var urlTime = "#t=" + startPos + "," + endPos;
     this.state = {
           urlTime : urlTime,
-          breakpoint: nextBreakpoint
+          breakpoint: nextBreakpoint,
+          totalWeight: totalWeight
     };
   }
 
@@ -44,7 +59,13 @@ class PreviewComponent extends React.Component {
     
     var videoId = this.props.session.video.videoId;
     var videoUrl = "https://s3-us-west-2.amazonaws.com/dragonfly-videos-transcoded/" + videoId + "/mp4-" + videoId + ".mp4" + this.state.urlTime;
-    var thumbnailUrl = "https://s3-us-west-2.amazonaws.com/dragonfly-videos-thumbnails/" + this.props.session.thumbnails[0].Key;
+
+    var thumbnailUrl = "./images/Loading_icon.gif";
+    
+    if (this.props.preview.currentTime == 0) {
+      thumbnailUrl = "https://s3-us-west-2.amazonaws.com/dragonfly-videos-thumbnails/" + this.props.session.thumbnails[0].Key;
+    }
+    
     
     return (
 
@@ -94,9 +115,10 @@ class PreviewComponent extends React.Component {
   handleClipDone(video) {
     video.style.display = "none";
     var breakpoint = this.state.breakpoint;
+    var totalWeight = this.state.totalWeight;
     
     var currentTime = Math.round(breakpoint.milliseconds / 1000);
-    var preview = { currentTime: currentTime, breakpoint: breakpoint };
+    var preview = { currentTime: currentTime, breakpoint: breakpoint, totalWeight: totalWeight };
     this.props.handleLoadPreview(preview);
     this.props.history.push('previewquestion');
   }

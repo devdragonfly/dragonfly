@@ -34,7 +34,9 @@ class PreviewQuestionComponent extends React.Component {
     var organizationMenu = function() {return <OrganizationMenuComponent current="sessions" /> }();
     var question = this.state.question;
     var answersJsx = question.answers.map((answer, i) => {
-        return <AnswerComponent i={i} answer={answer} />
+        if (answer.isValid) {
+          return <AnswerComponent i={i} answer={answer} />;
+        }
     });
     
     return (
@@ -57,6 +59,12 @@ class PreviewQuestionComponent extends React.Component {
               
               {answersJsx}
               
+              <br/>
+              
+              WEIGHTING: {question.weight}
+              
+              <br/>
+              TOTAL WEIGHT: {this.props.preview.totalWeight}
               <br/>
               
               <input type="submit" className="btn btn-primary" value="Continue" />
@@ -117,17 +125,43 @@ class AnswerComponent extends React.Component {
 
   constructor(props) {
     super(props);
+    var answer = this.props.answer;
+    answer.isSelected = false;
+    this.state = {answer: answer};
   }
 
   render() {
 
     
     return (
-        <div>
-          {this.props.answer.text}
+        <div className="dragon-select-list-row" onClick={this.updateSelectAnswer}>
+        
+            <div className="dragon-select-list-form-cell">
+              <input type="checkbox" onChange={this.updateSelectAnswer} value={this.state.answer.isSelected} checked={this.state.answer.isSelected} />
+            </div>
+            <div className="dragon-select-list-form-cell">
+              {this.props.answer.letter}.
+            </div>
+            <div className="dragon-select-list-form-cell">
+              {this.props.answer.text}
+            </div>
         </div>
     );
   }
+
+
+
+  updateSelectAnswer(e) {
+    var answer = this.state.answer;
+    var isSelected = answer.isSelected;
+    answer.isSelected = !isSelected;
+    this.setState({
+      answer: answer
+    });
+    
+  } 
+
+
 
 }
 
