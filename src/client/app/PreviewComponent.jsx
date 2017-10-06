@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
-
+import ResultsComponent from './ResultsComponent.jsx';
 
 
 class PreviewComponent extends React.Component {
@@ -55,7 +55,10 @@ class PreviewComponent extends React.Component {
 
 
   render() {
+    var results = this.props.preview.results;
+    
     var organizationMenu = function() {return <OrganizationMenuComponent current="sessions" /> }();
+    var resultsComponent = function() {return <ResultsComponent results={results} /> }();
     
     var videoId = this.props.session.video.videoId;
     var videoUrl = "https://s3-us-west-2.amazonaws.com/dragonfly-videos-transcoded/" + videoId + "/mp4-" + videoId + ".mp4" + this.state.urlTime;
@@ -72,10 +75,9 @@ class PreviewComponent extends React.Component {
         <div className="row">
           {organizationMenu}
 
-          <div className="col-sm-10">
-            <h3><i className='fa fa-file-video-o fa-fw'></i> {this.props.session.name}</h3>
+          <div className="col-sm-5">
+            <h3><i className='fa fa-file-video-o fa-fw'></i> {this.props.session.name} (preview)</h3>
             <br/>
-            PREVIEW SESSION:
             <br/>
             <video
                 id="my-player"
@@ -93,9 +95,12 @@ class PreviewComponent extends React.Component {
                 </a>
               </p>
             </video>
-
+            <br/><br/>
+            
           </div>
-          
+          <div className="col-sm-5">
+            {resultsComponent}
+          </div>
         </div>
 
     );
@@ -116,9 +121,13 @@ class PreviewComponent extends React.Component {
     video.style.display = "none";
     var breakpoint = this.state.breakpoint;
     var totalWeight = this.state.totalWeight;
+    var preview = this.props.preview;
     
     var currentTime = Math.round(breakpoint.milliseconds / 1000);
-    var preview = { currentTime: currentTime, breakpoint: breakpoint, totalWeight: totalWeight };
+
+    preview.currentTime = currentTime;
+    preview.breakpoint = breakpoint;
+    preview.totalWeight = totalWeight;
     this.props.handleLoadPreview(preview);
     this.props.history.push('previewquestion');
   }

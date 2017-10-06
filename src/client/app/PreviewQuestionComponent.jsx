@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
-
+import ResultsComponent from './ResultsComponent.jsx';
 
 
 class PreviewQuestionComponent extends React.Component {
@@ -18,42 +18,58 @@ class PreviewQuestionComponent extends React.Component {
     if (questions != null) {
       question = questions[0];
     } 
+    
+    question.answers[0].isSelected = false;
+    question.answers[1].isSelected = false;
+    question.answers[2].isSelected = false;
+    question.answers[3].isSelected = false;
+    question.answers[4].isSelected = false;
 
     this.state = {
           currentQuestion: 0,
           breakpoint: breakpoint,
-          question: question
+          question: question,
+          answers: question.answers
     };
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleUpdateAnswer = this.handleUpdateAnswer.bind(this);
   }
 
 
 
 
   render() {
+    var results = this.props.preview.results;
+    
     var organizationMenu = function() {return <OrganizationMenuComponent current="sessions" /> }();
+    var resultsComponent = function() {return <ResultsComponent results={results} /> }();
+    
     var question = this.state.question;
-    var answersJsx = question.answers.map((answer, i) => {
+    var answers = this.state.answers;
+    var handleUpdateAnswer = this.handleUpdateAnswer;
+    
+    var answersJsx = answers.map((answer, i) => {
         if (answer.isValid) {
-          return <AnswerComponent i={i} answer={answer} />;
+          return <AnswerComponent i={i} handleUpdateAnswer={handleUpdateAnswer} answer={answer} />;
         }
     });
+    
+    var percentWeighting = question.weight / this.props.preview.totalWeight;
+    percentWeighting = Math.round(percentWeighting * 100, 2);
     
     return (
 
         <div className="row">
           {organizationMenu}
 
-          <div className="col-sm-10">
-            <h3><i className='fa fa-file-video-o fa-fw'></i> {this.props.session.name}</h3>
-            <br/>
-            PREVIEW SESSION:
+          <div className="col-sm-5">
+            <h3><i className='fa fa-file-video-o fa-fw'></i> {this.props.session.name} (preview)</h3>
             <br/>
             
             <form ref='uploadForm' onSubmit={this.handleSubmit}>
             
               <br/><br/>
-              <h2>{question.title}</h2>
+              <h4>{question.title}</h4>
               
               <br/>
               
@@ -61,29 +77,82 @@ class PreviewQuestionComponent extends React.Component {
               
               <br/>
               
-              WEIGHTING: {question.weight}
-              
-              <br/>
-              TOTAL WEIGHT: {this.props.preview.totalWeight}
-              <br/>
-              
               <input type="submit" className="btn btn-primary" value="Continue" />
+              
+              <br/><br/>
+              (correct answer worth ${percentWeighting})
             </form>  
           </div> 
-          <div className="col-sm-6">
+          <div className="col-sm-5">
+            {resultsComponent}
           </div>
         </div>
 
     );
   }
-  
+
+
+  handleUpdateAnswer(answer) {
+    var answers = this.state.answers;
+
+    for (var i = 0; i < 5; i++) {
+        if (answers[i].letter === answer.letter) {
+          answers[i] = answer;
+        }
+    }
+    this.setState({
+      answers: answers
+    });  
+    
+    
+  }
   
   handleSubmit(e) {
     e.preventDefault();
     var myThis = this;
     var currentQuestion = this.state.currentQuestion;
     var breakpoint = this.state.breakpoint;
+    var question = this.state.question;
     var questions = breakpoint.questions;
+    var answers = this.state.answers;
+    var preview = this.props.preview;
+    
+    var correct = true;
+    var correctAnswers = "";
+    //check if answer is correct
+    for (var i = 0; i < 5; i++) {
+        if (answers[i].isCorrect) {
+          correctAnswers = correctAnswers + answers[i].letter;
+        }
+        if (answers[i].isCorrect && !answers[i].isSelected) {
+          correct = false;
+        }
+        if (!answers[i].isCorrect && answers[i].isSelected) {
+          correct = false;
+        }
+    }
+    
+    correctAnswers =  correctAnswers.split("").join(" and ");
+    
+    var resultText = correctAnswers + " was correct!";
+    if (correct) {
+      if (correctAnswers.length > 1) { resultText = correctAnswers + " were correct!"; } 
+    } else {
+      resultText = "Sorry, the correct answer was " + correctAnswers + ".";
+      if (correctAnswers.length > 1) { resultText = "Sorry, the correct answers were " + correctAnswers + "."; } 
+    }
+    
+    var percentWeighting = question.weight / preview.totalWeight;
+    percentWeighting = Math.round(percentWeighting * 100, 2);
+    
+    var value = percentWeighting;
+    var earned = 0;
+    if (correct) earned = percentWeighting;
+
+    var result = {correct: correct, resultText: resultText, value:value, earned: earned};
+    preview.results.push(result);
+    this.props.handleLoadPreview(preview);
+    
     
     // if there were no questions in the first place, go back to video
     if (questions == null) {
@@ -99,8 +168,17 @@ class PreviewQuestionComponent extends React.Component {
     
     // if not last question, advance question and remain here
     var question = questions[currentQuestion];
+    question.answers[0].isSelected = false;
+    question.answers[1].isSelected = false;
+    question.answers[2].isSelected = false;
+    question.answers[3].isSelected = false;
+    question.answers[4].isSelected = false;
+    
+    
     this.setState({
-      currentQuestion:currentQuestion, question:question
+      currentQuestion:currentQuestion, 
+      question:question,
+      answers: question.answers
     });
  
   }
@@ -125,9 +203,7 @@ class AnswerComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    var answer = this.props.answer;
-    answer.isSelected = false;
-    this.state = {answer: answer};
+    this.updateSelectAnswer = this.updateSelectAnswer.bind(this);
   }
 
   render() {
@@ -137,7 +213,7 @@ class AnswerComponent extends React.Component {
         <div className="dragon-select-list-row" onClick={this.updateSelectAnswer}>
         
             <div className="dragon-select-list-form-cell">
-              <input type="checkbox" onChange={this.updateSelectAnswer} value={this.state.answer.isSelected} checked={this.state.answer.isSelected} />
+              <input type="checkbox" value={this.props.answer.isSelected} checked={this.props.answer.isSelected} />
             </div>
             <div className="dragon-select-list-form-cell">
               {this.props.answer.letter}.
@@ -152,12 +228,10 @@ class AnswerComponent extends React.Component {
 
 
   updateSelectAnswer(e) {
-    var answer = this.state.answer;
+    var answer = this.props.answer;
     var isSelected = answer.isSelected;
     answer.isSelected = !isSelected;
-    this.setState({
-      answer: answer
-    });
+    this.props.handleUpdateAnswer(answer);
     
   } 
 

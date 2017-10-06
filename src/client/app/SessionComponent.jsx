@@ -32,7 +32,7 @@ class SessionComponent extends React.Component {
     this.showClickedButtonState = this.showClickedButtonState.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     
-    var preview = { currentTime: 0 };
+    var preview = { currentTime: 0, results: [] };
     props.handleLoadPreview(preview);
   }
   
