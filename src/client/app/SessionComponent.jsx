@@ -102,7 +102,7 @@ class SessionComponent extends React.Component {
           
           <div className="col-sm-6">
             
-                <h3><i className='fa fa-file-video-o fa-fw'></i> {this.props.session.name}</h3>
+                <h3><i className='fa fa-graduation-cap fa-fw'></i> {this.props.session.name}</h3>
                 
                 <div className="dragon-breakpoints">
                   {breakpointsJsx}

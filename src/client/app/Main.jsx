@@ -26,6 +26,7 @@ class Main extends Component {
                     organizations: 'not found',
                     organizationName: 'not found',
                     organizationId: 'not found',
+                    campaigns: 'not found',
                     contactLists: 'not found',
                     contactList: 'not found',
                     sessions: 'not found',
@@ -55,6 +56,7 @@ class Main extends Component {
         this.handleLoadVideo = this.handleLoadVideo.bind(this);
         this.handleLoadPreview = this.handleLoadPreview.bind(this);
         this.handleVideoStatusUpdate = this.handleVideoStatusUpdate.bind(this);
+        this.handleLoadCampaigns = this.handleLoadCampaigns.bind(this);
         this.dbPut = this.dbPut.bind(this);
         this.dbQuery = this.dbQuery.bind(this);
         this.dbUpdate = this.dbUpdate.bind(this);
@@ -83,6 +85,10 @@ class Main extends Component {
     
     handleLoadSessions(result) {
         this.setState({sessions : result.Items});
+    }
+    
+    handleLoadCampaigns(result) {
+        this.setState({campaigns : result.Items});
     }
     
     handleLoadVideos(result) {
@@ -144,6 +150,7 @@ class Main extends Component {
     handleLoadOrganization(organizationId, organizationName) {
         this.setState({organizationId : organizationId});
         this.setState({organizationName : organizationName});
+        this.setState({campaigns : 'not found'});
         this.setState({contactLists : 'not found'});
         this.setState({sessions : 'not found'});
         this.setState({videos : 'not found'});
@@ -298,6 +305,7 @@ class Main extends Component {
         this.setState({organizations : 'not found'});
         this.setState({organizationName : 'not found'});
         this.setState({organizationId : 'not found'});
+        this.setState({campaigns : 'not found'});
         this.setState({contactLists : 'not found'});
         this.setState({sessions : 'not found'});
         this.setState({videos : 'not found'});
@@ -322,6 +330,7 @@ class Main extends Component {
            organizations: this.state.organizations,
            organizationId: this.state.organizationId,
            organizationName: this.state.organizationName,
+           campaigns: this.state.campaigns,
            contactLists: this.state.contactLists,
            contactList: this.state.contactList,
            sessions: this.state.sessions,
@@ -336,6 +345,7 @@ class Main extends Component {
            handleUserIdReceived: this.handleUserIdReceived,
            handleLoadOrganizations: this.handleLoadOrganizations,
            handleLoadOrganization: this.handleLoadOrganization,
+           handleLoadCampaigns: this.handleLoadCampaigns,
            handleLoadContactLists: this.handleLoadContactLists,
            handleLoadContactList: this.handleLoadContactList,
            handleLoadContacts: this.handleLoadContacts,

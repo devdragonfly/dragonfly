@@ -76,7 +76,7 @@ class PreviewComponent extends React.Component {
           {organizationMenu}
 
           <div className="col-sm-5">
-            <h3><i className='fa fa-file-video-o fa-fw'></i> {this.props.session.name} (preview)</h3>
+            <h3><i className='fa fa-graduation-cap fa-fw'></i> {this.props.session.name} (preview)</h3>
             <br/>
             <br/>
             <video

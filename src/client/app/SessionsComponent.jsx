@@ -92,7 +92,7 @@ class Session extends React.Component {
     return (
         <div onClick={this.handleSelectSession.bind(this, this.props.session)} className="dragon-select-list-row dragon-pointer">
           <div className="dragon-select-list-cell">
-            <i className='fa fa-file-video-o fa-fw fa-lg'></i> 
+            <i className='fa fa-graduation-cap fa-fw fa-lg'></i> 
           </div>
           <div className="dragon-select-list-cell">
             {this.props.session.name}

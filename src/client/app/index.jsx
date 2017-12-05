@@ -36,6 +36,8 @@ import SelectVideoComponent from './SelectVideoComponent.jsx';
 import LoadThumbnailsComponent from './LoadThumbnailsComponent.jsx';
 import PreviewComponent from './PreviewComponent.jsx';
 import PreviewQuestionComponent from './PreviewQuestionComponent.jsx';
+import CreateCampaignComponent from './CreateCampaignComponent.jsx';
+import LoadCampaignsComponent from './LoadCampaignsComponent.jsx';
 
 render(
     <Router>
@@ -75,6 +77,9 @@ render(
             <Route path="loadthumbnails" component={LoadThumbnailsComponent}/>
             <Route path="preview" component={PreviewComponent}/>
             <Route path="previewquestion" component={PreviewQuestionComponent}/>
+            <Route path="createcampaign" component={CreateCampaignComponent}/>
+            <Route path="loadcampaigns" component={LoadCampaignsComponent}/>
+            
         </Route>
     </Router>,
     document.getElementById('container')
