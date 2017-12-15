@@ -38,6 +38,12 @@ import PreviewComponent from './PreviewComponent.jsx';
 import PreviewQuestionComponent from './PreviewQuestionComponent.jsx';
 import CreateCampaignComponent from './CreateCampaignComponent.jsx';
 import LoadCampaignsComponent from './LoadCampaignsComponent.jsx';
+import CampaignComponent from './CampaignComponent.jsx';
+import CampaignSelectSessionComponent from './CampaignSelectSessionComponent.jsx';
+import CampaignNoSessionsComponent from './CampaignNoSessionsComponent.jsx';
+import CampaignSelectContactListComponent from './CampaignSelectContactListComponent.jsx';
+import CampaignNoContactListsComponent from './CampaignNoContactListsComponent.jsx';
+
 
 render(
     <Router>
@@ -79,6 +85,13 @@ render(
             <Route path="previewquestion" component={PreviewQuestionComponent}/>
             <Route path="createcampaign" component={CreateCampaignComponent}/>
             <Route path="loadcampaigns" component={LoadCampaignsComponent}/>
+            <Route path="campaign" component={CampaignComponent}/>
+            <Route path="campaignselectsession" component={CampaignSelectSessionComponent}/>
+            <Route path="campaignnosessions" component={CampaignNoSessionsComponent}/>
+            <Route path="campaignselectcontactlist" component={CampaignSelectContactListComponent}/>
+            <Route path="campaignnocontactlists" component={CampaignNoContactListsComponent}/>
+            
+            
             
         </Route>
     </Router>,

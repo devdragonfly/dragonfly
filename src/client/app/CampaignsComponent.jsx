@@ -19,7 +19,7 @@ class CampaignsComponent extends React.Component {
 
   render() {
     var campaigns = this.props.campaigns;
-    var handleLoadCampaign = this.props.handleLoadSession;
+    var handleLoadCampaign = this.props.handleLoadCampaign;
     var history = this.props.history;
     
     var campaignsJsx = function() {return '' }();
@@ -35,10 +35,6 @@ class CampaignsComponent extends React.Component {
           }
     }
     
-    if (campaigns.length === 0) {
-      
-      
-    }
     var organizationMenu = function() {return <OrganizationMenuComponent current="campaigns" /> }();
     
     

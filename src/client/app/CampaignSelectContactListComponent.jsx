@@ -1,26 +1,37 @@
 import React from 'react';
-import {Link} from 'react-router';
+import { Link } from 'react-router';
 import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
 
-class ContactListsComponent extends React.Component {
+
+
+class CampaignSelectContactListComponent extends React.Component {
 
   constructor(props) {
     super(props);
-
+    this.handleSelectContactList = this.handleSelectContactList.bind(this);
   }
   
   componentWillMount() {
     var contactLists = this.props.contactLists;
-    if (contactLists === 'not found') {
-      this.props.handleLoadNext('contactlists');
+    if (contactLists == 'not found') {
+      this.props.handleLoadNext('campaignselectcontactlist');
       this.props.history.push('loadcontactlists');
     }
+    if (contactLists.length === 0) {
+      this.props.history.push('campaignnocontactlists');
+    }
+    
+    
   }
 
   render() {
+    var organizationMenu = function() {return <OrganizationMenuComponent current="campaigns" /> }();
     var contactLists = this.props.contactLists;
-    var handleLoadContactList = this.props.handleLoadContactList;
+    var handleSelectContactList = this.handleSelectContactList;
     var history = this.props.history;
+    
+
+    
     
     var contactListsJsx = function() {return '' }();
     
@@ -35,44 +46,50 @@ class ContactListsComponent extends React.Component {
                 if (contactList.contacts != null) {
                   contactCount = contactList.contacts.length;
                 }
-                return <ContactList contactList={contactList} handleLoadContactList={handleLoadContactList} contactCount={contactCount} history={history}/>
+                return <ContactList contactList={contactList} handleSelectContactList={handleSelectContactList} contactCount={contactCount} />
             });
           }
     }
-    
-
-    var organizationMenu = function() {return <OrganizationMenuComponent current="contactlists" /> }();
-    
     
     return (
 
         <div className="row">
           {organizationMenu}
+
           <div className="col-sm-6">
-            <h3>
-              Contact Lists
-            </h3>
-            
+            <h3><i className='fa fa-line-chart fa-fw'></i> {this.props.campaign.name}</h3>
+            <br/><br/>
+            Select a Contact List for this Campaign:
+            <br/><br/>
             
             <div className="dragon-select-list">
               {contactListsJsx}
             </div>
-            
-            <br/>
-            
-            <Link to={`createcontactlist`} className="btn btn-primary"><i className='fa fa-plus'></i> Create Contact List</Link>
+          
+          <br/><br/>
+            If you have not created the Contact List for this Campaign yet, &nbsp;
+            <Link to={`createcontactlist`}>click here</Link>
+            &nbsp; to create it now.
+          <br/><br/>
             
           </div>
           <div className="col-sm-4">
           </div>
-          
         </div>
-
-
 
     );
   }
+  
 
+
+
+
+  handleSelectContactList(contactList) {
+    var campaign = this.props.campaign;
+    campaign.contactList = contactList;
+    this.props.handleLoadCampaign(campaign);
+    this.props.history.push('campaign');
+  }
 
 }
 
@@ -88,7 +105,7 @@ class ContactList extends React.Component {
 
   render() {
     return (
-        <div onClick={this.handleSelectContactList.bind(this, this.props.contactList)} className="dragon-select-list-row dragon-pointer">
+        <div onClick={this.selectContactList.bind(this, this.props.contactList)} className="dragon-select-list-row dragon-pointer">
           <div className="dragon-select-list-cell">
             <i className='fa fa-address-book-o fa-fw fa-lg'></i> 
           </div>
@@ -102,14 +119,12 @@ class ContactList extends React.Component {
     );
   }
   
-  handleSelectContactList(contactList) {
-    this.props.handleLoadContactList(contactList);
-    this.props.history.push('contactlist');
+  selectContactList(contactList) {
+    this.props.handleSelectContactList(contactList);
   }
 
 }
 
 
 
-
-export default ContactListsComponent;
+export default CampaignSelectContactListComponent;

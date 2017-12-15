@@ -35,7 +35,7 @@ class ContactListComponent extends React.Component {
         <div className="row">
           {organizationMenu}
 
-          <div className="col-sm-10">
+          <div className="col-sm-6">
             <h3><i className='fa fa-address-book-o fa-fw'></i> {this.props.contactList.name}</h3>
             
             <div className="dragon-select-list">
@@ -48,7 +48,8 @@ class ContactListComponent extends React.Component {
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <Link to={`importcontacts`}><i className='fa fa-file-excel-o'></i> Import Contacts</Link>
           </div>
-          
+          <div className="col-sm-4">
+          </div>
         </div>
 
 

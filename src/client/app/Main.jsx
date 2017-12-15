@@ -27,6 +27,7 @@ class Main extends Component {
                     organizationName: 'not found',
                     organizationId: 'not found',
                     campaigns: 'not found',
+                    campaign: 'not found',
                     contactLists: 'not found',
                     contactList: 'not found',
                     sessions: 'not found',
@@ -57,6 +58,7 @@ class Main extends Component {
         this.handleLoadPreview = this.handleLoadPreview.bind(this);
         this.handleVideoStatusUpdate = this.handleVideoStatusUpdate.bind(this);
         this.handleLoadCampaigns = this.handleLoadCampaigns.bind(this);
+        this.handleLoadCampaign = this.handleLoadCampaign.bind(this);
         this.dbPut = this.dbPut.bind(this);
         this.dbQuery = this.dbQuery.bind(this);
         this.dbUpdate = this.dbUpdate.bind(this);
@@ -89,6 +91,10 @@ class Main extends Component {
     
     handleLoadCampaigns(result) {
         this.setState({campaigns : result.Items});
+    }
+    
+    handleLoadCampaign(campaign) {
+        this.setState({campaign : campaign});
     }
     
     handleLoadVideos(result) {
@@ -331,6 +337,7 @@ class Main extends Component {
            organizationId: this.state.organizationId,
            organizationName: this.state.organizationName,
            campaigns: this.state.campaigns,
+           campaign: this.state.campaign,
            contactLists: this.state.contactLists,
            contactList: this.state.contactList,
            sessions: this.state.sessions,
@@ -346,6 +353,7 @@ class Main extends Component {
            handleLoadOrganizations: this.handleLoadOrganizations,
            handleLoadOrganization: this.handleLoadOrganization,
            handleLoadCampaigns: this.handleLoadCampaigns,
+           handleLoadCampaign: this.handleLoadCampaign,
            handleLoadContactLists: this.handleLoadContactLists,
            handleLoadContactList: this.handleLoadContactList,
            handleLoadContacts: this.handleLoadContacts,

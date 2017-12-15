@@ -1,25 +1,32 @@
 import React from 'react';
-import {Link} from 'react-router';
+import { Link } from 'react-router';
 import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
 
-class SessionsComponent extends React.Component {
+
+
+class CampaignSelectSessionComponent extends React.Component {
 
   constructor(props) {
     super(props);
-
+    this.handleSelectSession = this.handleSelectSession.bind(this);
   }
   
   componentWillMount() {
     var sessions = this.props.sessions;
-    if (sessions === 'not found') {
-      this.props.handleLoadNext('sessions');
+    if (sessions == 'not found') {
+      this.props.handleLoadNext('campaignselectsession');
       this.props.history.push('loadsessions');
     }
+    if (sessions.length === 0) {
+      this.props.history.push('campaignnosessions');
+    }
+    
   }
 
   render() {
+    var organizationMenu = function() {return <OrganizationMenuComponent current="campaigns" /> }();
     var sessions = this.props.sessions;
-    var handleLoadSession = this.props.handleLoadSession;
+    var handleSelectSession = this.handleSelectSession;
     var history = this.props.history;
     
     var sessionsJsx = function() {return '' }();
@@ -35,44 +42,52 @@ class SessionsComponent extends React.Component {
                 if (session.breakpoints != null) {
                   breakpointCount = session.breakpoints.length;
                 }
-                return <Session session={session} handleLoadSession={handleLoadSession} breakpointCount={breakpointCount} history={history}/>
+                return <Session session={session} handleSelectSession={handleSelectSession} breakpointCount={breakpointCount}/>
             });
           }
     }
-
-    var organizationMenu = function() {return <OrganizationMenuComponent current="sessions" /> }();
-    
     
     return (
 
         <div className="row">
           {organizationMenu}
+
           <div className="col-sm-6">
-            <h3>
-              Sessions
-            </h3>
+            <h3><i className='fa fa-line-chart fa-fw'></i> {this.props.campaign.name}</h3>
+            <br/><br/>
+            Select a Session for the Campaign:
+            <br/><br/>
             
-            
-            <div className="dragon-select-list">
+          <div className="dragon-select-list">
               {sessionsJsx}
-            </div>
-            
-            <br/>
-            
-            <Link to={`createsession`} className="btn btn-primary"><i className='fa fa-plus'></i> Create Session</Link>
+          </div>
+          
+          <br/><br/>
+            If you have not created the Session for this Campaign yet, &nbsp;
+            <Link to={`createsession`}>click here</Link>
+            &nbsp; to create it now.
+          <br/><br/>
             
           </div>
           <div className="col-sm-4">
           </div>
         </div>
 
-
-
     );
   }
+  
 
+
+  handleSelectSession(session) {
+    var campaign = this.props.campaign;
+    campaign.session = session;
+    this.props.handleLoadCampaign(campaign);
+    this.props.history.push('campaign');
+  }
+  
 
 }
+
 
 
 
@@ -86,7 +101,7 @@ class Session extends React.Component {
 
   render() {
     return (
-        <div onClick={this.handleSelectSession.bind(this, this.props.session)} className="dragon-select-list-row dragon-pointer">
+        <div onClick={this.selectSession.bind(this, this.props.session)} className="dragon-select-list-row dragon-pointer">
           <div className="dragon-select-list-cell">
             <i className='fa fa-graduation-cap fa-fw fa-lg'></i> 
           </div>
@@ -100,14 +115,12 @@ class Session extends React.Component {
     );
   }
   
-  handleSelectSession(session) {
-    this.props.handleLoadSession(session);
-    this.props.history.push('session');
+  selectSession(session) {
+    this.props.handleSelectSession(session);
   }
 
 }
 
 
 
-
-export default SessionsComponent;
+export default CampaignSelectSessionComponent;

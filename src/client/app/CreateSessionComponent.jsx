@@ -98,6 +98,7 @@ class CreateSessionComponent extends React.Component {
     };
     
     this.props.dbPut(params, function(result){ 
+      myThis.props.handleLoadNext('sessions');
       myThis.showClickedButtonState(false); 
       myThis.props.history.push('loadsessions');
     });
