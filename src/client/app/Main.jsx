@@ -28,6 +28,7 @@ class Main extends Component {
                     organizationId: 'not found',
                     campaigns: 'not found',
                     campaign: 'not found',
+                    results: 'not found',
                     contactLists: 'not found',
                     contactList: 'not found',
                     sessions: 'not found',
@@ -59,7 +60,9 @@ class Main extends Component {
         this.handleVideoStatusUpdate = this.handleVideoStatusUpdate.bind(this);
         this.handleLoadCampaigns = this.handleLoadCampaigns.bind(this);
         this.handleLoadCampaign = this.handleLoadCampaign.bind(this);
+        this.handleLoadResults = this.handleLoadResults.bind(this);
         this.dbPut = this.dbPut.bind(this);
+        this.dbBatchWrite = this.dbBatchWrite.bind(this);
         this.dbQuery = this.dbQuery.bind(this);
         this.dbUpdate = this.dbUpdate.bind(this);
         this.s3Upload = this.s3Upload.bind(this);
@@ -96,6 +99,12 @@ class Main extends Component {
     handleLoadCampaign(campaign) {
         this.setState({campaign : campaign});
     }
+    
+    
+    handleLoadResults(results) {
+        this.setState({results : results});
+    }    
+    
     
     handleLoadVideos(result) {
         this.setState({videos : result.Items});
@@ -242,6 +251,21 @@ class Main extends Component {
     }
     
     
+     dbBatchWrite(params, callback) {
+
+        dragonfly.docClient.batchWrite(params, function(err, data) {
+          
+            if (err) {
+                alert(JSON.stringify(err));
+                callback();
+            } else {
+                callback(data);
+            }
+        });        
+    }   
+
+    
+    
     
     dbQuery(params, callback) {
 
@@ -338,6 +362,7 @@ class Main extends Component {
            organizationName: this.state.organizationName,
            campaigns: this.state.campaigns,
            campaign: this.state.campaign,
+           results: this.state.results,
            contactLists: this.state.contactLists,
            contactList: this.state.contactList,
            sessions: this.state.sessions,
@@ -354,6 +379,7 @@ class Main extends Component {
            handleLoadOrganization: this.handleLoadOrganization,
            handleLoadCampaigns: this.handleLoadCampaigns,
            handleLoadCampaign: this.handleLoadCampaign,
+           handleLoadResults: this.handleLoadResults,
            handleLoadContactLists: this.handleLoadContactLists,
            handleLoadContactList: this.handleLoadContactList,
            handleLoadContacts: this.handleLoadContacts,
@@ -367,6 +393,7 @@ class Main extends Component {
            handleLoadNext: this.handleLoadNext,
            handleLoadPreview: this.handleLoadPreview,
            dbPut: this.dbPut,
+           dbBatchWrite: this.dbBatchWrite,
            dbQuery: this.dbQuery,
            dbUpdate: this.dbUpdate,
            s3Upload: this.s3Upload,

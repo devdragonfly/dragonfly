@@ -43,7 +43,8 @@ import CampaignSelectSessionComponent from './CampaignSelectSessionComponent.jsx
 import CampaignNoSessionsComponent from './CampaignNoSessionsComponent.jsx';
 import CampaignSelectContactListComponent from './CampaignSelectContactListComponent.jsx';
 import CampaignNoContactListsComponent from './CampaignNoContactListsComponent.jsx';
-
+import LoadResultsComponent from './LoadResultsComponent.jsx';
+import GenerateDragonfliesComponent from './GenerateDragonfliesComponent.jsx';
 
 render(
     <Router>
@@ -90,6 +91,9 @@ render(
             <Route path="campaignnosessions" component={CampaignNoSessionsComponent}/>
             <Route path="campaignselectcontactlist" component={CampaignSelectContactListComponent}/>
             <Route path="campaignnocontactlists" component={CampaignNoContactListsComponent}/>
+            <Route path="loadresults" component={LoadResultsComponent}/>
+            <Route path="generatedragonflies" component={GenerateDragonfliesComponent}/>
+            
             
             
             

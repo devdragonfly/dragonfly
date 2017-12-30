@@ -11,6 +11,7 @@ class CampaignsComponent extends React.Component {
   
   
   componentWillMount() {
+    this.props.handleLoadResults("not found");
     var campaigns = this.props.campaigns;
     if (campaigns === 'not found') {
       this.props.history.push('loadcampaigns');
@@ -92,7 +93,7 @@ class Campaign extends React.Component {
   
   handleSelectCampaign(campaign) {
     this.props.handleLoadCampaign(campaign);
-    this.props.history.push('campaign');
+    this.props.history.push('loadresults');
   }
 
 }

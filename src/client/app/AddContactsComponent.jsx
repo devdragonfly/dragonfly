@@ -105,7 +105,6 @@ class AddContactsComponent extends React.Component {
     
     
     for (var i = 0; i < contacts.length; i++) {
-        contacts[i]
         if (contacts[i].isValid) {
           validContacts.push({first: contacts[i].first, last: contacts[i].last, email: contacts[i].email});
         }
