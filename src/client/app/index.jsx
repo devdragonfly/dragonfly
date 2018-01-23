@@ -45,6 +45,7 @@ import CampaignSelectContactListComponent from './CampaignSelectContactListCompo
 import CampaignNoContactListsComponent from './CampaignNoContactListsComponent.jsx';
 import LoadResultsComponent from './LoadResultsComponent.jsx';
 import GenerateDragonfliesComponent from './GenerateDragonfliesComponent.jsx';
+import ViewComponent from './ViewComponent.jsx';
 
 render(
     <Router>
@@ -93,6 +94,7 @@ render(
             <Route path="campaignnocontactlists" component={CampaignNoContactListsComponent}/>
             <Route path="loadresults" component={LoadResultsComponent}/>
             <Route path="generatedragonflies" component={GenerateDragonfliesComponent}/>
+            <Route path="view" component={ViewComponent}/>
             
             
             

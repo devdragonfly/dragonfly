@@ -85,7 +85,7 @@ class Dragonfly extends React.Component {
 
   render() {
     var path = this.props.path;
-    var dragonflyPath = path + "/" + this.props.dragonfly.dragonflyId;
+    var dragonflyPath = path + "/#/view?id=" + this.props.dragonfly.dragonflyId;
     return (
         <div className="dragon-select-list-row dragon-pointer">
           <div className="dragon-select-list-cell">

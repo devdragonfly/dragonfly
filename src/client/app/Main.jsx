@@ -40,6 +40,7 @@ class Main extends Component {
                     video: 'not found',
                     next: 'not found',
                     preview: 'not found',
+                    dragonfly: 'not found'
         };
         this.handleLoadEmail = this.handleLoadEmail.bind(this);
         this.handleAuthenticate = this.handleAuthenticate.bind(this);
@@ -61,6 +62,7 @@ class Main extends Component {
         this.handleLoadCampaigns = this.handleLoadCampaigns.bind(this);
         this.handleLoadCampaign = this.handleLoadCampaign.bind(this);
         this.handleLoadResults = this.handleLoadResults.bind(this);
+        this.handleLoadDragonfly = this.handleLoadDragonfly.bind(this);
         this.dbPut = this.dbPut.bind(this);
         this.dbBatchWrite = this.dbBatchWrite.bind(this);
         this.dbQuery = this.dbQuery.bind(this);
@@ -105,6 +107,9 @@ class Main extends Component {
         this.setState({results : results});
     }    
     
+    handleLoadDragonfly(dragonfly) {
+        this.setState({dragonfly : dragonfly});
+    } 
     
     handleLoadVideos(result) {
         this.setState({videos : result.Items});
@@ -363,6 +368,7 @@ class Main extends Component {
            campaigns: this.state.campaigns,
            campaign: this.state.campaign,
            results: this.state.results,
+           dragonfly: this.state.dragonfly,
            contactLists: this.state.contactLists,
            contactList: this.state.contactList,
            sessions: this.state.sessions,
@@ -392,6 +398,7 @@ class Main extends Component {
            handleVideoStatusUpdate: this.handleVideoStatusUpdate,
            handleLoadNext: this.handleLoadNext,
            handleLoadPreview: this.handleLoadPreview,
+           handleLoadDragonfly: this.handleLoadDragonfly,
            dbPut: this.dbPut,
            dbBatchWrite: this.dbBatchWrite,
            dbQuery: this.dbQuery,
@@ -401,6 +408,7 @@ class Main extends Component {
          })
         );
         
+        var dragonfly = this.state.dragonfly;
         var email = this.state.email;
         var userId = this.state.userId;
         var percent = this.state.percent;
@@ -424,7 +432,9 @@ class Main extends Component {
             nav = function() {return <NavInsideComponent handleLoadOrganization={handleLoadOrganization} organizationName={organizationName}  organizations={organizations} userId={userId} email={email}   handleSignOut={handleSignOut}  history={history} percent={percent}/> }();
         }
         
-        
+        if (dragonfly !== 'not found') {
+            nav = function() { return '' }();
+        }
         
         return(
             <div class="container-fluid">
