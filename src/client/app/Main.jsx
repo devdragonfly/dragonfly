@@ -8,14 +8,23 @@ import appconfig from "./appconfig";
 //const fs = require('file-system');
 //const zlib = require("zlib");
 
+var AWS_unauth = require("aws-sdk");
+var dragonfly_unauth = {};
+const userPool_unauth = new CognitoUserPool({ UserPoolId: appconfig.UserPoolId, ClientId: appconfig.ClientId});
+AWS_unauth.config.region = 'us-west-2';
+AWS_unauth.config.credentials = new AWS_unauth.CognitoIdentityCredentials({
+    AccountId: '698305963744',
+    RoleArn: 'arn:aws:iam::698305963744:role/Cognito_dragonflyUnauth_Role', 
+    IdentityPoolId : 'us-west-2:b6311e4b-9082-4058-883c-19d23e34802b'
+});
+dragonfly_unauth.docClient = new AWS_unauth.DynamoDB.DocumentClient();
+
+
 var AWS = require("aws-sdk");
-AWS.config.region = 'us-west-2';
-
-
-const userPool = new CognitoUserPool({ UserPoolId: appconfig.UserPoolId, ClientId: appconfig.ClientId});
-const AWSLogin = 'cognito-idp.' + appconfig.region + '.amazonaws.com/' + appconfig.UserPoolId;
-const AWSIdentityPoolId = appconfig.IdentityPoolId;
 var dragonfly = {};
+const userPool = new CognitoUserPool({ UserPoolId: appconfig.UserPoolId, ClientId: appconfig.ClientId});
+
+
 
 class Main extends Component {
 
@@ -40,6 +49,7 @@ class Main extends Component {
                     video: 'not found',
                     next: 'not found',
                     preview: 'not found',
+                    dragonflyId: 'not found',
                     dragonfly: 'not found'
         };
         this.handleLoadEmail = this.handleLoadEmail.bind(this);
@@ -62,10 +72,12 @@ class Main extends Component {
         this.handleLoadCampaigns = this.handleLoadCampaigns.bind(this);
         this.handleLoadCampaign = this.handleLoadCampaign.bind(this);
         this.handleLoadResults = this.handleLoadResults.bind(this);
+        this.handleLoadDragonflyId = this.handleLoadDragonflyId.bind(this);
         this.handleLoadDragonfly = this.handleLoadDragonfly.bind(this);
         this.dbPut = this.dbPut.bind(this);
         this.dbBatchWrite = this.dbBatchWrite.bind(this);
         this.dbQuery = this.dbQuery.bind(this);
+        this.dbQueryUnauth = this.dbQueryUnauth.bind(this);
         this.dbUpdate = this.dbUpdate.bind(this);
         this.s3Upload = this.s3Upload.bind(this);
         this.s3ListObjects = this.s3ListObjects.bind(this);
@@ -106,9 +118,13 @@ class Main extends Component {
     handleLoadResults(results) {
         this.setState({results : results});
     }    
+
+    handleLoadDragonflyId(dragonflyId) {
+        this.setState({dragonflyId : dragonflyId});
+    } 
     
-    handleLoadDragonfly(dragonfly) {
-        this.setState({dragonfly : dragonfly});
+    handleLoadDragonfly(result) {
+        this.setState({dragonfly : result.Items});
     } 
     
     handleLoadVideos(result) {
@@ -285,6 +301,25 @@ class Main extends Component {
         });        
     }
     
+    dbQueryUnauth(params, callback, doNotRetry) {
+        var myThis = this;
+        dragonfly_unauth.docClient.query(params, function(err, data) {
+          
+            if (err) {
+                if (doNotRetry) {
+                    alert(JSON.stringify(err));
+                    callback(data);
+                } else {
+                    myThis.dbQueryUnauth(params, callback, true);
+                }
+                
+                
+            } else {
+                callback(data);
+            }
+        });        
+    }
+    
     dbUpdate(params, callback) {
 
         dragonfly.docClient.update(params, function(err, data) {
@@ -344,6 +379,7 @@ class Main extends Component {
         this.setState({contactLists : 'not found'});
         this.setState({sessions : 'not found'});
         this.setState({videos : 'not found'});
+        this.setState({dragonflyId : 'not found'});
     }
     
     
@@ -368,6 +404,7 @@ class Main extends Component {
            campaigns: this.state.campaigns,
            campaign: this.state.campaign,
            results: this.state.results,
+           dragonflyId: this.state.dragonflyId,
            dragonfly: this.state.dragonfly,
            contactLists: this.state.contactLists,
            contactList: this.state.contactList,
@@ -398,17 +435,20 @@ class Main extends Component {
            handleVideoStatusUpdate: this.handleVideoStatusUpdate,
            handleLoadNext: this.handleLoadNext,
            handleLoadPreview: this.handleLoadPreview,
+           handleLoadDragonflyId: this.handleLoadDragonflyId,
            handleLoadDragonfly: this.handleLoadDragonfly,
+           handleSignOut: this.handleSignOut,
            dbPut: this.dbPut,
            dbBatchWrite: this.dbBatchWrite,
            dbQuery: this.dbQuery,
+           dbQueryUnauth: this.dbQueryUnauth,
            dbUpdate: this.dbUpdate,
            s3Upload: this.s3Upload,
            s3ListObjects: this.s3ListObjects
          })
         );
         
-        var dragonfly = this.state.dragonfly;
+        var dragonflyId = this.state.dragonflyId;
         var email = this.state.email;
         var userId = this.state.userId;
         var percent = this.state.percent;
@@ -418,7 +458,6 @@ class Main extends Component {
         var handleAuthenticate = this.handleAuthenticate;
         var handleLoadEmail = this.handleLoadEmail;
         var handleLoadOrganization = this.handleLoadOrganization;
-        var dbQuery = this.dbQuery;
         var history = this.props.history;
         
         
@@ -432,7 +471,7 @@ class Main extends Component {
             nav = function() {return <NavInsideComponent handleLoadOrganization={handleLoadOrganization} organizationName={organizationName}  organizations={organizations} userId={userId} email={email}   handleSignOut={handleSignOut}  history={history} percent={percent}/> }();
         }
         
-        if (dragonfly !== 'not found') {
+        if (dragonflyId !== 'not found') {
             nav = function() { return '' }();
         }
         

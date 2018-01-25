@@ -10,14 +10,13 @@ class ViewComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {unused : "not found"
-    };
     this.getParameterByName = this.getParameterByName.bind(this);
   }
   
   componentWillMount() {
     var dragonflyId = this.getParameterByName("id");
-    this.props.handleLoadDragonfly(dragonflyId);
+    this.props.handleLoadDragonflyId(dragonflyId);
+    this.props.history.push('loaddragonfly'); 
   }
 
   render() {
@@ -27,7 +26,7 @@ class ViewComponent extends React.Component {
           
         </div>
         <div className="col-sm-6">
-              {this.props.dragonfly}
+              <i className='fa fa-circle-o-notch fa-spin'></i> Loading Dragonfly
         </div>
         <div className="col-sm-3">
         </div>

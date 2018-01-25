@@ -27,6 +27,7 @@ class SignUpComponent extends React.Component {
 
   constructor(props) {
     super(props);
+    this.props.handleSignOut();
     this.state = {emailValue : props.email, 
                   passwordValue : '',
                   buttonRestClassName : buttonClassName,

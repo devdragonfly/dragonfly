@@ -46,6 +46,10 @@ import CampaignNoContactListsComponent from './CampaignNoContactListsComponent.j
 import LoadResultsComponent from './LoadResultsComponent.jsx';
 import GenerateDragonfliesComponent from './GenerateDragonfliesComponent.jsx';
 import ViewComponent from './ViewComponent.jsx';
+import LoadDragonflyComponent from './LoadDragonflyComponent.jsx';
+import PlayComponent from './PlayComponent.jsx';
+
+
 
 render(
     <Router>
@@ -95,10 +99,10 @@ render(
             <Route path="loadresults" component={LoadResultsComponent}/>
             <Route path="generatedragonflies" component={GenerateDragonfliesComponent}/>
             <Route path="view" component={ViewComponent}/>
-            
-            
-            
-            
+            <Route path="loaddragonfly" component={LoadDragonflyComponent}/>
+            <Route path="play" component={PlayComponent}/>
+
+
         </Route>
     </Router>,
     document.getElementById('container')
