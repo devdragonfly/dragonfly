@@ -15,13 +15,43 @@ class PlayComponent extends React.Component {
   }
 
   render() {
+    var dragonfly = this.props.dragonfly;
+    var contact = dragonfly.contact;
+    var first = contact.first; 
+    var last = contact.last; 
+    var email = contact.email;
+    
+    
     return (
       <div className="row">
         <div className="col-sm-3">
           
         </div>
         <div className="col-sm-6">
-              {JSON.stringify(this.props.dragonfly)}
+              
+              <br/><br/>
+        
+              Hello {first} {last},
+              
+              <br/><br/>
+              
+              The video you are about to watch is XX minutes long and you will be presented 5 questions at various points throughout it.
+              
+              <br/><br/>
+              
+              You have the opportunity to earn up to $XX.XX based on how much information you retain measured by how many questions you get right.
+              
+              <br/><br/>
+              
+              On completion of this tutorial, you will receive an email at {email}
+              
+              with instructions on how to claim your reward.
+              
+              <br/><br/>
+            
+              <Link to={`preview`} className="btn btn-primary"><i className='fa fa-plus'></i> Start Now </Link>
+              
+              
         </div>
         <div className="col-sm-3">
         </div>

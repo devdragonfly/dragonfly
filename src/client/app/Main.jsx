@@ -124,7 +124,12 @@ class Main extends Component {
     } 
     
     handleLoadDragonfly(result) {
-        this.setState({dragonfly : result.Items});
+        var dragonfly = result.Items[0];
+        this.setState({dragonfly : dragonfly});
+        this.setState({session : dragonfly.session});
+        var preview = { currentTime: 0, results: [] };
+        this.setState({preview : preview});
+        
     } 
     
     handleLoadVideos(result) {

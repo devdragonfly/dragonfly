@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router';
-import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
 import ResultsComponent from './ResultsComponent.jsx';
 
 
@@ -40,8 +39,6 @@ class PreviewQuestionComponent extends React.Component {
 
   render() {
     var results = this.props.preview.results;
-    
-    var organizationMenu = function() {return <OrganizationMenuComponent current="sessions" /> }();
     var resultsComponent = function() {return <ResultsComponent results={results} /> }();
     
     var question = this.state.question;
@@ -60,9 +57,9 @@ class PreviewQuestionComponent extends React.Component {
     return (
 
         <div className="row">
-          {organizationMenu}
-
-          <div className="col-sm-5">
+          <div className="col-sm-3">
+          </div>
+          <div className="col-sm-3">
             <h3><i className='fa fa-graduation-cap fa-fw'></i> {this.props.session.name} (preview)</h3>
             <br/>
             
@@ -83,8 +80,10 @@ class PreviewQuestionComponent extends React.Component {
               (correct answer worth ${percentWeighting})
             </form>  
           </div> 
-          <div className="col-sm-5">
+          <div className="col-sm-3">
             {resultsComponent}
+          </div>
+          <div className="col-sm-3">
           </div>
         </div>
 

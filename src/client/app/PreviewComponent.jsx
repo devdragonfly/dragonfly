@@ -1,12 +1,12 @@
 import React from 'react';
 import { Link } from 'react-router';
-import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
 import ResultsComponent from './ResultsComponent.jsx';
 
 
 class PreviewComponent extends React.Component {
 
   constructor(props) {
+
     super(props);
     this.handleClickPlay = this.handleClickPlay.bind(this);
     this.handleClipDone = this.handleClipDone.bind(this);
@@ -14,6 +14,7 @@ class PreviewComponent extends React.Component {
     var currentMs = props.preview.currentTime * 1000;
     var breakpoints = props.session.breakpoints;
     var breakpointsLength = breakpoints.length;
+    
     var nextBreakpoint = breakpoints[0];
     var totalWeight = 0;
     for (var i = 0; i < breakpointsLength; i++) {
@@ -24,6 +25,8 @@ class PreviewComponent extends React.Component {
       }
       
       var questions = breakpoint.questions;
+      
+      
       
       if (questions != null) {
           var questionsLength = questions.length;
@@ -49,6 +52,7 @@ class PreviewComponent extends React.Component {
           breakpoint: nextBreakpoint,
           totalWeight: totalWeight
     };
+
   }
 
 
@@ -57,27 +61,20 @@ class PreviewComponent extends React.Component {
   render() {
     var results = this.props.preview.results;
     
-    var organizationMenu = function() {return <OrganizationMenuComponent current="sessions" /> }();
     var resultsComponent = function() {return <ResultsComponent results={results} /> }();
     
     var videoId = this.props.session.video.videoId;
     var videoUrl = "https://s3-us-west-2.amazonaws.com/dragonfly-videos-transcoded/" + videoId + "/mp4-" + videoId + ".mp4" + this.state.urlTime;
 
-    var thumbnailUrl = "./images/Loading_icon.gif";
-    
-    if (this.props.preview.currentTime == 0) {
-      thumbnailUrl = "https://s3-us-west-2.amazonaws.com/dragonfly-videos-thumbnails/" + this.props.session.thumbnails[0].Key;
-    }
-    
-    
+    var thumbnailUrl = "./images/play.png";
     return (
 
         <div className="row">
-          {organizationMenu}
+          <div className="col-sm-3">
+            
+          </div>
 
-          <div className="col-sm-5">
-            <h3><i className='fa fa-graduation-cap fa-fw'></i> {this.props.session.name} (preview)</h3>
-            <br/>
+          <div className="col-sm-3">
             <br/>
             <video
                 id="my-player"
@@ -96,10 +93,11 @@ class PreviewComponent extends React.Component {
               </p>
             </video>
             <br/><br/>
-            
           </div>
-          <div className="col-sm-5">
+          <div className="col-sm-3">
             {resultsComponent}
+          </div>
+          <div className="col-sm-3">
           </div>
         </div>
 
