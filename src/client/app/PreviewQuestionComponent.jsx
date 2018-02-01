@@ -28,26 +28,43 @@ class PreviewQuestionComponent extends React.Component {
           currentQuestion: 0,
           breakpoint: breakpoint,
           question: question,
-          answers: question.answers
+          answers: question.answers,
+          isDisabled: false,
+          button1Class: "btn btn-primary btn-lg",
+          button2Class: "dragon-hidden",
+          resultText: ""
     };
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleUpdateAnswer = this.handleUpdateAnswer.bind(this);
+    this.handleAdvance = this.handleAdvance.bind(this);
   }
+  
 
 
-
+  componentDidMount() {
+    if (typeof window !== 'undefined') {
+      var path = window.location.protocol + '//' + window.location.host; 
+      this.setState({path : path});
+    } else {
+      // work out what you want to do server-side...
+    }
+  }
+  
+  
 
   render() {
     var results = this.props.preview.results;
-    var resultsComponent = function() {return <ResultsComponent results={results} /> }();
+    var earned = this.props.preview.earned;
+    var resultsComponent = function() {return <ResultsComponent results={results} earned={earned} /> }();
     
     var question = this.state.question;
     var answers = this.state.answers;
+    var isDisabled = this.state.isDisabled;
     var handleUpdateAnswer = this.handleUpdateAnswer;
     
     var answersJsx = answers.map((answer, i) => {
         if (answer.isValid) {
-          return <AnswerComponent i={i} handleUpdateAnswer={handleUpdateAnswer} answer={answer} />;
+          return <AnswerComponent i={i} handleUpdateAnswer={handleUpdateAnswer} answer={answer} isDisabled={isDisabled} />;
         }
     });
     
@@ -55,37 +72,49 @@ class PreviewQuestionComponent extends React.Component {
     percentWeighting = Math.round(percentWeighting * 100, 2);
     
     return (
-
-        <div className="row">
-          <div className="col-sm-3">
-          </div>
-          <div className="col-sm-3">
-            <h3><i className='fa fa-graduation-cap fa-fw'></i> {this.props.session.name} (preview)</h3>
-            <br/>
-            
-            <form ref='uploadForm' onSubmit={this.handleSubmit}>
-            
-              <br/><br/>
-              <h4>{question.title}</h4>
-              
-              <br/>
-              
-              {answersJsx}
-              
-              <br/>
-              
-              <input type="submit" className="btn btn-primary" value="Continue" />
-              
-              <br/><br/>
-              (correct answer worth ${percentWeighting})
-            </form>  
-          </div> 
-          <div className="col-sm-3">
-            {resultsComponent}
-          </div>
-          <div className="col-sm-3">
-          </div>
+      <div className="row">
+        <div className="col-sm-2">
+          
         </div>
+        <div className="col-sm-8">
+              
+              {resultsComponent}
+              
+              <br/><br/>
+              
+              <div className="jumbotron">
+                      
+                      <form ref='uploadForm' onSubmit={this.handleSubmit}>
+                        <h2>{question.title}</h2>
+                        
+                        <br/>
+                        
+                        {answersJsx}
+                        
+                        <br/>
+                        
+                        <b>{this.state.resultText}</b>
+                        
+                        <br/>
+                        <input type="submit" className={this.state.button1Class} value="Submit Answer" />
+                        <div onClick={this.handleAdvance} className={this.state.button2Class}>Continue <i className='fa fa-chevron-circle-right'></i></div>
+                        <br/><br/>
+                        (correct answer worth ${percentWeighting})
+                      </form>  
+                      
+              </div>
+              <a href={this.state.path} target="_blank">
+              <div className="dragon-powered-by pull-right"><div>powered by</div> <img src="./images/dragonfly-logo.png" /></div>
+              </a>
+              
+        </div>
+        <div className="col-sm-2">
+        </div>
+      </div>
+      
+      
+
+
 
     );
   }
@@ -108,11 +137,11 @@ class PreviewQuestionComponent extends React.Component {
   
   handleSubmit(e) {
     e.preventDefault();
-    var myThis = this;
-    var currentQuestion = this.state.currentQuestion;
-    var breakpoint = this.state.breakpoint;
+    this.setState({isDisabled : "disabled"});
+    this.setState({button1Class : "dragon-hidden"});
+    this.setState({button2Class : "btn btn-primary btn-lg"});
+    
     var question = this.state.question;
-    var questions = breakpoint.questions;
     var answers = this.state.answers;
     var preview = this.props.preview;
     
@@ -141,6 +170,8 @@ class PreviewQuestionComponent extends React.Component {
       if (correctAnswers.length > 1) { resultText = "Sorry, the correct answers were " + correctAnswers + "."; } 
     }
     
+    this.setState({resultText : resultText});
+    
     var percentWeighting = question.weight / preview.totalWeight;
     percentWeighting = Math.round(percentWeighting * 100, 2);
     
@@ -150,8 +181,25 @@ class PreviewQuestionComponent extends React.Component {
 
     var result = {correct: correct, resultText: resultText, value:value, earned: earned};
     preview.results.push(result);
+    preview.earned = preview.earned + earned;
     this.props.handleLoadPreview(preview);
+  }
+  
+  
+  
     
+  handleAdvance(e) {
+    this.setState({isDisabled : false});
+    this.setState({button1Class : "btn btn-primary btn-lg"});
+    this.setState({button2Class : "dragon-hidden"});
+    this.setState({resultText : ""});
+
+    
+    
+    var currentQuestion = this.state.currentQuestion;
+    var breakpoint = this.state.breakpoint;
+    var questions = breakpoint.questions;
+    var question = this.state.question;
     
     // if there were no questions in the first place, go back to video
     if (questions == null) {
@@ -166,7 +214,7 @@ class PreviewQuestionComponent extends React.Component {
     }
     
     // if not last question, advance question and remain here
-    var question = questions[currentQuestion];
+    question = questions[currentQuestion];
     question.answers[0].isSelected = false;
     question.answers[1].isSelected = false;
     question.answers[2].isSelected = false;
@@ -211,13 +259,13 @@ class AnswerComponent extends React.Component {
     return (
         <div className="dragon-select-list-row" onClick={this.updateSelectAnswer}>
         
-            <div className="dragon-select-list-form-cell">
-              <input type="checkbox" value={this.props.answer.isSelected} checked={this.props.answer.isSelected} />
+            <div className="dragon-select-list-form-cell-lg">
+              <input type="checkbox" value={this.props.answer.isSelected} checked={this.props.answer.isSelected} disabled={this.props.isDisabled} />
             </div>
-            <div className="dragon-select-list-form-cell">
+            <div className="dragon-select-list-form-cell-lg">
               {this.props.answer.letter}.
             </div>
-            <div className="dragon-select-list-form-cell">
+            <div className="dragon-select-list-form-cell-lg">
               {this.props.answer.text}
             </div>
         </div>

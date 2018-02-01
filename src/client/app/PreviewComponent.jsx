@@ -2,7 +2,6 @@ import React from 'react';
 import { Link } from 'react-router';
 import ResultsComponent from './ResultsComponent.jsx';
 
-
 class PreviewComponent extends React.Component {
 
   constructor(props) {
@@ -50,56 +49,83 @@ class PreviewComponent extends React.Component {
     this.state = {
           urlTime : urlTime,
           breakpoint: nextBreakpoint,
-          totalWeight: totalWeight
+          totalWeight: totalWeight,
+          path: 'not found'
     };
 
   }
 
 
-
+  componentDidMount() {
+    if (typeof window !== 'undefined') {
+      var path = window.location.protocol + '//' + window.location.host; 
+      this.setState({path : path});
+    } else {
+      // work out what you want to do server-side...
+    }
+  }
 
   render() {
     var results = this.props.preview.results;
-    
-    var resultsComponent = function() {return <ResultsComponent results={results} /> }();
+    var earned = this.props.preview.earned;
+    var resultsComponent = function() {return <ResultsComponent results={results} earned={earned} /> }();
     
     var videoId = this.props.session.video.videoId;
     var videoUrl = "https://s3-us-west-2.amazonaws.com/dragonfly-videos-transcoded/" + videoId + "/mp4-" + videoId + ".mp4" + this.state.urlTime;
 
     var thumbnailUrl = "./images/play.png";
     return (
-
-        <div className="row">
-          <div className="col-sm-3">
-            
-          </div>
-
-          <div className="col-sm-3">
-            <br/>
-            <video
-                id="my-player"
-                class="video-js"
-                preload="auto"
-                poster={thumbnailUrl}
-                data-setup='{}'
-                onClick={this.handleClickPlay}>
-              <source src={videoUrl} type="video/mp4"></source>
-              <p class="vjs-no-js">
-                To view this video please enable JavaScript, and consider upgrading to a
-                web browser that
-                <a href="http://videojs.com/html5-video-support/" target="_blank">
-                  supports HTML5 video
-                </a>
-              </p>
-            </video>
-            <br/><br/>
-          </div>
-          <div className="col-sm-3">
-            {resultsComponent}
-          </div>
-          <div className="col-sm-3">
-          </div>
+      <div className="row">
+        <div className="col-sm-2">
+          
         </div>
+        <div className="col-sm-8">
+              
+              {resultsComponent}
+              
+              <br/><br/>
+              
+              <div className="jumbotron dragon-enlarge">
+
+                          <video
+                              id="my-player"
+                              class="video-js"
+                              preload="auto"
+                              poster={thumbnailUrl}
+                              data-setup='{}'
+                              onClick={this.handleClickPlay}>
+                            <source src={videoUrl} type="video/mp4"></source>
+                            <p class="vjs-no-js">
+                              To view this video please enable JavaScript, and consider upgrading to a
+                              web browser that
+                              <a href="http://videojs.com/html5-video-support/" target="_blank">
+                                supports HTML5 video
+                              </a>
+                            </p>
+                          </video>
+
+              </div>
+              
+              <a href={this.state.path} target="_blank">
+              <div className="dragon-powered-by pull-right"><div>powered by</div> <img src="./images/dragonfly-logo.png" /></div>
+              </a>
+              
+        </div>
+        <div className="col-sm-2">
+        </div>
+      </div>
+      
+      
+      
+      
+      
+      
+      
+      
+      
+      
+
+
 
     );
   }

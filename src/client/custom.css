@@ -30,9 +30,53 @@
     padding:8px;
 }
 
+
+.dragon-results-menu {
+    width:600px;
+    color:black;
+    cursor:pointer;
+    padding:8px;
+    text-align:right;
+}
+
+.dragon-earned {
+    font-size:20px;
+}
+
+
+.dragon-enlarge { font-size:125%; }
+.dragon-enlarge-xx { font-size:200%; }
+
+.dragon-powered-by {
+    width:250px;
+    padding-right:20px;
+}
+.dragon-powered-by div {
+    position: absolute;
+    bottom: 10px;
+    color: #215FAA;
+    font-weight:bold;
+}
+.dragon-powered-by img {
+    width:150px;
+    float:right;
+}
+
 .dragon-menu-visible {
     position:absolute;
     width:200px;
+    overflow:hidden;
+    background-color:white;
+    color:#303030;
+    border-radius: 3px;
+    border:1px solid #d0d0d0;
+    z-index: 10000000;
+}
+
+
+.dragon-menu-visible-wide {
+    position:absolute;
+    width:600px;
     overflow:hidden;
     background-color:white;
     color:#303030;
@@ -127,6 +171,13 @@
 .dragon-select-list-form-cell {
     padding:2px;
     font-size:15px;
+    color:#303030;
+    display:table-cell;
+}
+
+.dragon-select-list-form-cell-lg {
+    padding:2px;
+    font-size:20px;
     color:#303030;
     display:table-cell;
 }

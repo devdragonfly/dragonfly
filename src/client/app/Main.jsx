@@ -127,7 +127,7 @@ class Main extends Component {
         var dragonfly = result.Items[0];
         this.setState({dragonfly : dragonfly});
         this.setState({session : dragonfly.session});
-        var preview = { currentTime: 0, results: [] };
+        var preview = { currentTime: 0, results: [], earned: 0 };
         this.setState({preview : preview});
         
     } 
