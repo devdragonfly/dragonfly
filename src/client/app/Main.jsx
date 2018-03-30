@@ -203,7 +203,7 @@ class Main extends Component {
     
     
     
-    handleAuthenticate(email, password, callback) {
+    handleAuthenticate(email, password, callback, errorCallback) {
         
         var myThis = this;
         var authenticationData = {Username : email, Password : password};
@@ -235,8 +235,9 @@ class Main extends Component {
               onFailure: function(err) {
                   if (err.code === "UserNotConfirmedException") {
                     myThis.props.history.push('confirmregistration');
+                  } else {
+                    errorCallback();
                   }
-                  alert(err.message);
               }
           });
         

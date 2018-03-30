@@ -99,6 +99,9 @@ class NavOutsideComponent extends React.Component {
     this.props.handleAuthenticate(email, password, function(){
       myThis.showClickedButtonState(false);
       myThis.props.history.push('loadorganizations');
+    }, function(){
+      myThis.showClickedButtonState(false);
+      alert("Sorry, your email or password were incorrect.");
     });
     
 
