@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 
 
 
-class PlayComponent extends React.Component {
+class DragonflyCompleteComponent extends React.Component {
 
   constructor(props) {
     super(props);
@@ -29,6 +29,7 @@ class PlayComponent extends React.Component {
     var last = this.titleCase(contact.last); 
     var email = contact.email;
     var reward = Number(dragonfly.reward).toFixed(2);
+    var earned = Number(this.props.preview.earned).toFixed(2);
     
     return (
       <div className="row">
@@ -41,28 +42,24 @@ class PlayComponent extends React.Component {
               
               <div className="jumbotron dragon-enlarge">
 
-                <h2>Hello {first} {last},</h2>
+                <h2>Congratulations {first}!</h2>
                 
                 <br/>
                 
-                Thank you for your time.
+                Your session is complete.
                 
                 <br/><br/>
                 
-                The video you are about to watch is XX minutes long and you will be presented 5 questions at various points throughout it.
+                You have earned ${earned}.
                 
                 <br/><br/>
                 
-                You have the opportunity to earn up to ${reward} based on how many questions you get right.
+                An email has been sent to <b>{email}</b> with instructions on accessing your reward.
                 
                 <br/><br/>
                 
-                On completion of this tutorial, you will receive an email at <b>{email}</b> with instructions on how to claim your reward.
+                If you do not receive this email in the next 5 minutes, please contact us at <b>support@dragonfly.com</b>.
                 
-                <br/><br/><br/>
-              
-                <Link to={`preview`} className="btn btn-primary btn-lg">Start Now <i className='fa fa-chevron-circle-right'></i></Link>
-              
               </div>
               <a href={this.state.path} target="_blank">
               <div className="dragon-powered-by pull-right"><div>powered by</div> <img src="./images/dragonfly-logo.png" /></div>
@@ -88,4 +85,4 @@ class PlayComponent extends React.Component {
 
 }
 
-export default PlayComponent;
+export default DragonflyCompleteComponent;

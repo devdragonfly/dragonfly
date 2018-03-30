@@ -107,6 +107,9 @@ class Dragonfly extends React.Component {
           <div className="dragon-select-list-cell">
             {dragonflyPath}
           </div>
+          <div className="dragon-select-list-cell">
+            {this.props.dragonfly.reward}
+          </div>
         </div>
     );
   }

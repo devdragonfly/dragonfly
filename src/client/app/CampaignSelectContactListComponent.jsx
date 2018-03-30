@@ -21,6 +21,17 @@ class CampaignSelectContactListComponent extends React.Component {
       this.props.history.push('campaignnocontactlists');
     }
     
+    var atLeastOneHasContacts = false;
+    for (var i = 0; i < contactLists.length; i++) {
+        if (contactLists[i].contacts != null) { 
+          atLeastOneHasContacts = true;
+        }
+    }
+    
+    if (!atLeastOneHasContacts) {
+      this.props.history.push('campaignnocontactlists');
+    }
+    
     
   }
 
@@ -45,7 +56,8 @@ class CampaignSelectContactListComponent extends React.Component {
                 contactCount = 0;
                 if (contactList.contacts != null) {
                   contactCount = contactList.contacts.length;
-                }
+                } else 
+                { return null;}
                 return <ContactList contactList={contactList} handleSelectContactList={handleSelectContactList} contactCount={contactCount} />
             });
           }

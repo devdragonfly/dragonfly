@@ -43,6 +43,12 @@
     font-size:20px;
 }
 
+.dragon-validation-message {
+    width:100%;
+    color:red;
+    padding:10px 0px;
+}
+
 
 .dragon-enlarge { font-size:125%; }
 .dragon-enlarge-xx { font-size:200%; }

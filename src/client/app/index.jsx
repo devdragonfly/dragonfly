@@ -48,6 +48,8 @@ import GenerateDragonfliesComponent from './GenerateDragonfliesComponent.jsx';
 import ViewComponent from './ViewComponent.jsx';
 import LoadDragonflyComponent from './LoadDragonflyComponent.jsx';
 import PlayComponent from './PlayComponent.jsx';
+import DragonflyCompleteComponent from './DragonflyCompleteComponent.jsx';
+
 
 
 
@@ -101,6 +103,7 @@ render(
             <Route path="view" component={ViewComponent}/>
             <Route path="loaddragonfly" component={LoadDragonflyComponent}/>
             <Route path="play" component={PlayComponent}/>
+            <Route path="dragonflycomplete" component={DragonflyCompleteComponent}/>
 
 
         </Route>

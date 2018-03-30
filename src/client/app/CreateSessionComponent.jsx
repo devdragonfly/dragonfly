@@ -11,12 +11,14 @@ class CreateSessionComponent extends React.Component {
   constructor(props) {
     super(props);
     this.state = {nameValue : '',
+                  validationMessage : '',
                   buttonRestClassName : buttonClassName,
                   buttonClickedClassName : "dragon-hidden"
     };
     this.updateNameValue = this.updateNameValue.bind(this);
     this.showClickedButtonState = this.showClickedButtonState.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.validate = this.validate.bind(this);
   }
 
   render() {
@@ -36,7 +38,7 @@ class CreateSessionComponent extends React.Component {
                 <br/><br/>
                 
                 <input value={this.state.nameValue} onChange={this.updateNameValue} className="form-control input-lg" placeholder="name of session"/>
-                <br/>
+                <div className="dragon-validation-message">{this.state.validationMessage}</div>
               <input type="submit" className={this.state.buttonRestClassName} value="Save" />
               <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Saving</div>
             </form>
@@ -74,11 +76,32 @@ class CreateSessionComponent extends React.Component {
     });
   }
   
+  
+  
+  
+  validate(name) {
+    name = name.trim();
+    if (name.length === 0) {
+      this.setState({ validationMessage: "Please enter a name for your Session." });
+      return false;
+    }
+    
+    return true;
+  }
+  
+  
+  
   handleSubmit(e) {
     e.preventDefault();
+    const nameValue = this.state.nameValue.trim();
+    
+    var isValid = this.validate(nameValue);
+    if (!isValid) return;
+    
+    
     this.showClickedButtonState(true);
     var myThis = this;
-    const nameValue = this.state.nameValue.trim();
+    
     const organizationIdValue = this.props.organizationId;
     
     var sessionIdValue = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
