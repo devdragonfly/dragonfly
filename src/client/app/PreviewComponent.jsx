@@ -5,7 +5,6 @@ import ResultsComponent from './ResultsComponent.jsx';
 class PreviewComponent extends React.Component {
 
   constructor(props) {
-
     super(props);
     this.handleClickPlay = this.handleClickPlay.bind(this);
     this.handleClipDone = this.handleClipDone.bind(this);
@@ -15,20 +14,20 @@ class PreviewComponent extends React.Component {
     var breakpointsLength = breakpoints.length;
     
     var nextBreakpoint = breakpoints[0];
-    var isLastBreakpoint = true;
     var totalWeight = 0;
+    
     for (var i = 0; i < breakpointsLength; i++) {
       var breakpoint = breakpoints[i];
-      
-      if ((breakpoint.milliseconds > currentMs) && (breakpoint.milliseconds < nextBreakpoint.milliseconds)) {
+      if ((breakpoint.milliseconds > currentMs) && (breakpoint.milliseconds <= nextBreakpoint.milliseconds)) {
        nextBreakpoint = breakpoints[i]; 
-       isLastBreakpoint = false;
       }
+      if ((nextBreakpoint.milliseconds <= currentMs) && (breakpoint.milliseconds > nextBreakpoint.milliseconds)) {
+       nextBreakpoint = breakpoints[i]; 
+      }
+
       
       var questions = breakpoint.questions;
-      
-      
-      
+
       if (questions != null) {
           var questionsLength = questions.length;
           for (var j = 0; j < questionsLength; j++) {
@@ -39,17 +38,25 @@ class PreviewComponent extends React.Component {
 
     }
     
+    if (currentMs == nextBreakpoint.milliseconds) {
+      // the last breakpoint is complete, go to the dragonefly complete page
+      this.props.history.push('dragonflycomplete');
+    }
+
+      
     var startPos = Math.round(currentMs / 1000);
     var endPos = Math.round(nextBreakpoint.milliseconds / 1000);
     var urlTime = "#t=" + startPos + "," + endPos;
+    
+    
     
     this.state = {
           urlTime : urlTime,
           breakpoint: nextBreakpoint,
           totalWeight: totalWeight,
-          path: 'not found',
-          isLastBreakpoint: isLastBreakpoint
+          path: 'not found'
     };
+    
 
   }
 
@@ -130,21 +137,16 @@ class PreviewComponent extends React.Component {
   
   handleClipDone(video) {
     video.style.display = "none";
-    var isLastBreakpoint = this.state.isLastBreakpoint;
     
-    if (isLastBreakpoint) {
-      this.props.history.push('dragonflycomplete'); 
-    } else {
-      var breakpoint = this.state.breakpoint;
-      var totalWeight = this.state.totalWeight;
-      var preview = this.props.preview;
-      var currentTime = Math.round(breakpoint.milliseconds / 1000);
-      preview.currentTime = currentTime;
-      preview.breakpoint = breakpoint;
-      preview.totalWeight = totalWeight;
-      this.props.handleLoadPreview(preview);
-      this.props.history.push('previewquestion');
-    }
+    var breakpoint = this.state.breakpoint;
+    var totalWeight = this.state.totalWeight;
+    var preview = this.props.preview;
+    var currentTime = Math.round(breakpoint.milliseconds / 1000);
+    preview.currentTime = currentTime;
+    preview.breakpoint = breakpoint;
+    preview.totalWeight = totalWeight;
+    this.props.handleLoadPreview(preview);
+    this.props.history.push('previewquestion');
   }
 
 

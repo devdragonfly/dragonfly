@@ -13,6 +13,34 @@ class DragonflyCompleteComponent extends React.Component {
     this.titleCase = this.titleCase.bind(this);
   }
   
+  
+  componentWillMount() {
+    var campaignId = this.props.dragonfly.campaignId;
+    var dragonflyId = this.props.dragonfly.dragonflyId;
+    var results = this.props.preview.results;
+    var myThis = this;
+    
+    var params = {
+            TableName:"Results",
+            Key: {
+                campaignId  : campaignId,
+                dragonflyId : dragonflyId
+            },
+            UpdateExpression: "set results = :results",
+            ExpressionAttributeValues:{
+                ":results":results
+            },
+            ReturnValues:"UPDATED_NEW"
+        };
+
+
+    this.props.dbUpdateUnauth(params, function(result) {
+      // results successfully saved
+    });
+
+
+  }
+  
   componentDidMount() {
     if (typeof window !== 'undefined') {
       var path = window.location.protocol + '//' + window.location.host; 

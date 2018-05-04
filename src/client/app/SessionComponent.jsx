@@ -139,8 +139,6 @@ class SessionComponent extends React.Component {
                   </div>
                 </div>
                 
-                
-                <Link to={'preview'}>PREVIEW SESSION</Link>
 
           </div> 
           

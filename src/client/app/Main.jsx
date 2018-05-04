@@ -79,6 +79,7 @@ class Main extends Component {
         this.dbQuery = this.dbQuery.bind(this);
         this.dbQueryUnauth = this.dbQueryUnauth.bind(this);
         this.dbUpdate = this.dbUpdate.bind(this);
+        this.dbUpdateUnauth = this.dbUpdateUnauth.bind(this);
         this.s3Upload = this.s3Upload.bind(this);
         this.s3ListObjects = this.s3ListObjects.bind(this);
         this.handleLoadNext = this.handleLoadNext.bind(this);
@@ -338,6 +339,21 @@ class Main extends Component {
             }
         });        
     }
+ 
+ 
+     dbUpdateUnauth(params, callback) {
+
+        dragonfly_unauth.docClient.update(params, function(err, data) {
+          
+            if (err) {
+                alert(JSON.stringify(err));
+                callback(data);
+            } else {
+                callback(data);
+            }
+        });        
+    }
+ 
     
     
     s3Upload(file, key, videoUploadFailedCallback, videoUploadedCallback) {
@@ -449,6 +465,7 @@ class Main extends Component {
            dbQuery: this.dbQuery,
            dbQueryUnauth: this.dbQueryUnauth,
            dbUpdate: this.dbUpdate,
+           dbUpdateUnauth: this.dbUpdateUnauth,
            s3Upload: this.s3Upload,
            s3ListObjects: this.s3ListObjects
          })

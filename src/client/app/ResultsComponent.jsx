@@ -12,6 +12,10 @@ class ResultsComponent extends React.Component {
 
   }
   
+  
+  
+
+  
   mouseOver() {
       this.setState({menuClass: "dragon-menu-visible-wide dragon-menu-right"});
       
