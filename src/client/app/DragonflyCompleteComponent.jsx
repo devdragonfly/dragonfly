@@ -8,16 +8,27 @@ class DragonflyCompleteComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {path : "not found"
+    this.state = {earned: this.props.preview.earned,
+                  path : "not found"
     };
     this.titleCase = this.titleCase.bind(this);
   }
   
   
   componentWillMount() {
+    
+    
+    var organizationId = this.props.dragonfly.organizationId;
     var campaignId = this.props.dragonfly.campaignId;
     var dragonflyId = this.props.dragonfly.dragonflyId;
     var results = this.props.preview.results;
+    var earned = this.props.preview.earned;
+    
+    if (this.props.dragonfly.results != null) {
+      this.setState({earned : this.props.dragonfly.earned });
+      return;
+    }
+    
     var myThis = this;
     
     var params = {
@@ -26,15 +37,35 @@ class DragonflyCompleteComponent extends React.Component {
                 campaignId  : campaignId,
                 dragonflyId : dragonflyId
             },
-            UpdateExpression: "set results = :results",
+            UpdateExpression: "set results = :results, earned = :earned",
             ExpressionAttributeValues:{
-                ":results":results
+                ":results":results, ":earned":earned
             },
             ReturnValues:"UPDATED_NEW"
         };
 
 
     this.props.dbUpdateUnauth(params, function(result) {
+      // results successfully saved
+    });
+    
+    
+    
+
+    var params2 = {
+            TableName:"Dragonflies",
+            Key: {
+                organizationId  : organizationId,
+                dragonflyId : dragonflyId
+            },
+            UpdateExpression: "set results = :results, earned = :earned",
+            ExpressionAttributeValues:{
+                ":results":results, ":earned":earned
+            },
+            ReturnValues:"UPDATED_NEW"
+        };
+        
+    this.props.dbUpdateUnauth(params2, function(result) {
       // results successfully saved
     });
 
@@ -57,7 +88,7 @@ class DragonflyCompleteComponent extends React.Component {
     var last = this.titleCase(contact.last); 
     var email = contact.email;
     var reward = Number(dragonfly.reward).toFixed(2);
-    var earned = Number(this.props.preview.earned).toFixed(2);
+    var earned = Number(this.state.earned).toFixed(2);
     
     return (
       <div className="row">

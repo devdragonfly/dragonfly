@@ -13,6 +13,16 @@ class PlayComponent extends React.Component {
     this.titleCase = this.titleCase.bind(this);
   }
   
+  
+  componentWillMount() {
+    var results = this.props.dragonfly.results;
+    if (results != null) {
+      this.props.history.push('dragonflycomplete');
+      
+    }
+    
+  }
+  
   componentDidMount() {
     if (typeof window !== 'undefined') {
       var path = window.location.protocol + '//' + window.location.host; 

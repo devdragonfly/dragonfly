@@ -18,6 +18,10 @@ class PreviewComponent extends React.Component {
     
     for (var i = 0; i < breakpointsLength; i++) {
       var breakpoint = breakpoints[i];
+      var questions = breakpoint.questions;
+      
+      if (questions == null) { continue; }
+      
       if ((breakpoint.milliseconds > currentMs) && (breakpoint.milliseconds <= nextBreakpoint.milliseconds)) {
        nextBreakpoint = breakpoints[i]; 
       }
@@ -26,19 +30,18 @@ class PreviewComponent extends React.Component {
       }
 
       
-      var questions = breakpoint.questions;
 
-      if (questions != null) {
-          var questionsLength = questions.length;
-          for (var j = 0; j < questionsLength; j++) {
-            totalWeight = totalWeight + questions[j].weight;
-          }        
-        
-      }
+      var questionsLength = questions.length;
+      for (var j = 0; j < questionsLength; j++) {
+        totalWeight = totalWeight + questions[j].weight;
+      }        
+
 
     }
     
-    if (currentMs == nextBreakpoint.milliseconds) {
+
+    
+    if ((currentMs == nextBreakpoint.milliseconds) || (nextBreakpoint.questions == null)) {
       // the last breakpoint is complete, go to the dragonefly complete page
       this.props.history.push('dragonflycomplete');
     }
