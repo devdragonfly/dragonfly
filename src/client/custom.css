@@ -257,3 +257,11 @@
 .dragon-18px { font-size:18px;}
 .dragon-19px { font-size:19px;}
 .dragon-20px { font-size:20px;}
+
+
+
+#questionResultsChart { 
+   width: 500px;
+   height: 400px;
+}
+

@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
-
+import Chart from 'chart.js';
 
 class CampaignComponent extends React.Component {
 
@@ -26,6 +26,8 @@ class CampaignComponent extends React.Component {
     if (results.Count == 0) {
       this.props.history.push('generatedragonflies');
     }
+    
+    
   }
   
   componentDidMount() {
@@ -56,6 +58,21 @@ class CampaignComponent extends React.Component {
     }
     
     
+    
+    var ctx = document.getElementById('questionResultsChart').getContext('2d');
+    var myChart = new Chart(ctx, {
+      type: 'line',
+      data: {
+        labels: ['Q1', 'Q2', 'Q3', 'Q4'],
+        datasets: [{
+          label: 'Campaign Results',
+          data: totals,
+          backgroundColor: "rgba(33, 95, 170, 0.3)"
+        }]
+      }
+    });
+    
+    
     this.setState({totals : totals});
     
   }
@@ -67,6 +84,7 @@ class CampaignComponent extends React.Component {
     
     
     var dragonflies = this.props.results;
+    var sessionName = "session name";
     
     var dragonfliesJsx = function() {return '' }();
     
@@ -77,7 +95,9 @@ class CampaignComponent extends React.Component {
             
           } else {
             dragonfliesJsx = dragonflies.map((dragonfly, i) => {
+                sessionName = dragonfly.session.name;
                 return <Dragonfly dragonfly={dragonfly} path={path}/>
+                
             });
           }
     }
@@ -88,18 +108,27 @@ class CampaignComponent extends React.Component {
         <div className="row">
           {organizationMenu}
 
-          <div className="col-sm-10">
+          <div className="col-sm-8">
+          
             <h3><i className='fa fa-line-chart fa-fw'></i> {this.props.campaign.name}</h3>
+
             <br/><br/>
+            <h4>Session</h4>
+            <i className='fa fa-graduation-cap fa-fw'></i> 
+            {sessionName}
             
+            <br/><br/>
+            <h4>Results</h4>
+            <canvas id="questionResultsChart"></canvas>
+            
+            <br/><br/>
+            <h4>Dragonflies</h4>            
             {dragonfliesJsx}
             
-            <br/><br/>
-            
-            {JSON.stringify(this.state.totals)}
             
           </div>
-          
+          <div className="col-sm-2">
+          </div>
         </div>
 
     );
@@ -128,19 +157,17 @@ class Dragonfly extends React.Component {
           </div>
           <div className="dragon-select-list-cell">
             {this.props.dragonfly.contact.first}
-            
+            &nbsp;
             {this.props.dragonfly.contact.last}
-            <br/>
+          </div>
+          <div className="dragon-select-list-cell">
             {this.props.dragonfly.contact.email}
           </div>
           <div className="dragon-select-list-cell">
-            <i className='fa fa-graduation-cap fa-fw'></i> 
-          </div>
-          <div className="dragon-select-list-cell">
-            {this.props.dragonfly.session.name}
-          </div>
-          <div className="dragon-select-list-cell">
-            {dragonflyPath}
+            <span onClick={this.copyToClipboard.bind(this, dragonflyPath)}>
+            <i className='fa fa-clipboard fa-fw'></i>
+            Copy URL
+            </span>
           </div>
           <div className="dragon-select-list-cell">
             {this.props.dragonfly.reward}
@@ -150,6 +177,17 @@ class Dragonfly extends React.Component {
           </div>
         </div>
     );
+  }
+  
+  
+  copyToClipboard(url) {
+    const el = document.createElement('textarea');
+    el.value = url;
+    document.body.appendChild(el);
+    el.select();
+    document.execCommand('copy');
+    document.body.removeChild(el);
+    alert("Copied to Clipboard: " + url);
   }
 
 
