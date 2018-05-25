@@ -3,83 +3,57 @@ import { Link } from 'react-router';
 import ResultsComponent from './ResultsComponent.jsx';
 
 class PreviewComponent extends React.Component {
+  
+
 
   constructor(props) {
     super(props);
-    this.handleClickPlay = this.handleClickPlay.bind(this);
-    this.handleClipDone = this.handleClipDone.bind(this);
     
-    var currentMs = props.preview.currentTime * 1000;
     var breakpoints = props.session.breakpoints;
-    var breakpointsLength = breakpoints.length;
-    
-    var nextBreakpoint = breakpoints[0];
-    var totalWeight = 0;
-    
-    for (var i = 0; i < breakpointsLength; i++) {
-      var breakpoint = breakpoints[i];
-      var questions = breakpoint.questions;
-      
-      if (questions == null) { continue; }
-      
-      if ((breakpoint.milliseconds > currentMs) && (breakpoint.milliseconds <= nextBreakpoint.milliseconds)) {
-       nextBreakpoint = breakpoints[i]; 
-      }
-      if ((nextBreakpoint.milliseconds <= currentMs) && (breakpoint.milliseconds > nextBreakpoint.milliseconds)) {
-       nextBreakpoint = breakpoints[i]; 
-      }
+    var nextPause = breakpoints[0].milliseconds;
 
-      
-
-      var questionsLength = questions.length;
-      for (var j = 0; j < questionsLength; j++) {
-        totalWeight = totalWeight + questions[j].weight;
-      }        
-
-
-    }
-    
-
-    
-    if ((currentMs == nextBreakpoint.milliseconds) || (nextBreakpoint.questions == null)) {
-      // the last breakpoint is complete, go to the dragonefly complete page
-      this.props.history.push('dragonflycomplete');
-    }
-
-      
-    var startPos = Math.round(currentMs / 1000);
-    var endPos = Math.round(nextBreakpoint.milliseconds / 1000);
-    var urlTime = "#t=" + startPos + "," + endPos;
-    
-    
-    
     this.state = {
-          urlTime : urlTime,
-          breakpoint: nextBreakpoint,
-          totalWeight: totalWeight,
-          path: 'not found'
+          breakpointNumber: 0,
+          questionNumber: 0,
+          currentTime: 0,
+          nextPause: nextPause,
+          results: [],
+          earned: 0
     };
     
+    this.handleClickPlay = this.handleClickPlay.bind(this);
+    this.handleInterval = this.handleInterval.bind(this);
+    this.advanceBreakpoint = this.advanceBreakpoint.bind(this);
+    this.advanceQuestion = this.advanceQuestion.bind(this);
+    this.showQuestion = this.showQuestion.bind(this);
+    
 
   }
-
-
+  
   componentDidMount() {
-    if (typeof window !== 'undefined') {
-      var path = window.location.protocol + '//' + window.location.host; 
-      this.setState({path : path});
-    } else {
-      // work out what you want to do server-side...
-    }
+    var myThis = this;
+    
+    var video = document.getElementById("my-player");
+    video.play();
+
+    video.onplay = function() {
+        setInterval(function(){
+            myThis.handleInterval(video);
+        }.bind(this), 250);
+    };
+
+    
   }
+
+
 
   render() {
-    var results = this.props.preview.results;
-    var earned = this.props.preview.earned;
+    var results = this.state.results;
+    var earned = this.state.earned;
     var resultsComponent = function() {return <ResultsComponent results={results} earned={earned} /> }();
     
     var videoId = this.props.session.video.videoId;
-    var videoUrl = "https://s3-us-west-2.amazonaws.com/dragonfly-videos-transcoded/" + videoId + "/mp4-" + videoId + ".mp4" + this.state.urlTime;
+    var videoUrl = "https://s3-us-west-2.amazonaws.com/dragonfly-videos-transcoded/" + videoId + "/mp4-" + videoId + ".mp4";
 
     var thumbnailUrl = "./images/play.png";
     return (
@@ -95,7 +69,7 @@ class PreviewComponent extends React.Component {
               
               <div className="jumbotron dragon-enlarge">
 
-                          <video
+                          <video autoplay
                               id="my-player"
                               class="video-js"
                               preload="auto"
@@ -117,6 +91,8 @@ class PreviewComponent extends React.Component {
               <a href={this.state.path} target="_blank">
               <div className="dragon-powered-by pull-right"><div>powered by</div> <img src="./images/dragonfly-logo.png" /></div>
               </a>
+
+              
               
         </div>
         <div className="col-sm-2">
@@ -129,32 +105,94 @@ class PreviewComponent extends React.Component {
   
   
   handleClickPlay(e) {
-    var myThis = this;
     var video = e.target;
-    e.target.play();
-    e.target.onpause = function() {
-      myThis.handleClipDone(video);
-    };
+    alert('play has been clicked');
+    video.play();
+  }
+  
+  handleInterval(video) {
+    
+    var nextPause = this.state.nextPause;
+    var currentTime = video.currentTime * 1000;
+    if (currentTime < nextPause) { return; }
+    
+    video.pause();
+    this.showQuestion();
+
+  }
+  
+ 
+  showQuestion() {
+    var myThis = this;
+    var breakpoints = this.props.session.breakpoints;
+    var breakpointNumber = this.state.breakpointNumber;
+    var questionNumber = this.state.questionNumber;
+    
+    var breakpoint = breakpoints[breakpointNumber];
+    var question = breakpoint.questions[questionNumber];
+    
+    alert(JSON.stringify(question));
+
+    myThis.advanceQuestion();
+  }
+  
+  
+  
+  
+  advanceQuestion() {
+    var myThis = this;
+    var breakpoints = this.props.session.breakpoints;
+    var breakpointNumber = this.state.breakpointNumber;
+    var questionNumber = this.state.questionNumber;
+    
+    var breakpoint = breakpoints[breakpointNumber];
+    
+    questionNumber = questionNumber + 1;
+    
+    if (questionNumber >= breakpoint.questions.length) {
+      myThis.advanceBreakpoint();
+      return;
+    }
+    
+    this.setState({questionNumber : questionNumber});
+    myThis.showQuestion();
     
   }
   
-  handleClipDone(video) {
-    video.style.display = "none";
+  
+  
+  
+  advanceBreakpoint() {
+    var myThis = this;
+    var breakpoints = this.props.session.breakpoints;
+    var breakpointNumber = this.state.breakpointNumber;
+    var video = document.getElementById("my-player");
     
-    var breakpoint = this.state.breakpoint;
-    var totalWeight = this.state.totalWeight;
-    var preview = this.props.preview;
-    var currentTime = Math.round(breakpoint.milliseconds / 1000);
-    preview.currentTime = currentTime;
-    preview.breakpoint = breakpoint;
-    preview.totalWeight = totalWeight;
-    this.props.handleLoadPreview(preview);
-    this.props.history.push('previewquestion');
+    breakpointNumber = breakpointNumber + 1;
+    
+    if (breakpointNumber >= breakpoints.length) {
+      this.setState({nextPause : 100000000});
+      video.play();
+      video.onended = function() {
+        alert("video ended - save results and go to completion page");
+      };
+      return;
+    }
+    
+    var nextPause = breakpoints[breakpointNumber].milliseconds;
+    
+    this.setState({breakpointNumber : breakpointNumber, 
+                    questionNumber : 0,
+                    nextPause : nextPause
+    });
+    
+    video.play();
+    
   }
 
 
-}
 
+}
 
 
 export default PreviewComponent;

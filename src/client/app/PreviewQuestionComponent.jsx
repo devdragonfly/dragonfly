@@ -8,9 +8,10 @@ class PreviewQuestionComponent extends React.Component {
   constructor(props) {
     super(props);
 
+    var breakpoint = props.breakpoint;
+    var currentTime = props.currentTime;
+
     
-    var preview = props.preview;
-    var breakpoint = preview.breakpoint;
     var questions = breakpoint.questions;
     
     var question = {title:"No questions added to this breakpoint.", answers:[]};
@@ -53,12 +54,10 @@ class PreviewQuestionComponent extends React.Component {
   
 
   render() {
-    var results = this.props.preview.results;
-    var earned = this.props.preview.earned;
-    var resultsComponent = function() {return <ResultsComponent results={results} earned={earned} /> }();
-    
+
     var question = this.state.question;
     var answers = this.state.answers;
+    var totalWeight = this.props.totalWeight;
     var isDisabled = this.state.isDisabled;
     var handleUpdateAnswer = this.handleUpdateAnswer;
     
@@ -68,19 +67,11 @@ class PreviewQuestionComponent extends React.Component {
         }
     });
     
-    var percentWeighting = question.weight / this.props.preview.totalWeight;
+    var percentWeighting = question.weight / totalWeight;
     percentWeighting = Math.round(percentWeighting * 100, 2);
     
     return (
-      <div className="row">
-        <div className="col-sm-2">
-          
-        </div>
-        <div className="col-sm-8">
-              
-              {resultsComponent}
-              
-              <br/><br/>
+
               
               <div className="jumbotron">
                       
@@ -103,18 +94,6 @@ class PreviewQuestionComponent extends React.Component {
                       </form>  
                       
               </div>
-              <a href={this.state.path} target="_blank">
-              <div className="dragon-powered-by pull-right"><div>powered by</div> <img src="./images/dragonfly-logo.png" /></div>
-              </a>
-              
-        </div>
-        <div className="col-sm-2">
-        </div>
-      </div>
-      
-      
-
-
 
     );
   }
