@@ -30,9 +30,10 @@ class LoadDragonflyComponent extends React.Component {
     this.props.dbQueryUnauth(params, function(result) {
       var dragonfly = result.Items[0];
       var session = dragonfly.session;
-      var validBreakpoints = myThis.getValidBreakpoints(session.breakpoints);
-      var orderedBreakpoints = myThis.getOrderedBreakpoints(validBreakpoints);
+      var sessionValidBreakpoints = myThis.getValidBreakpoints(session.breakpoints);
+      var orderedBreakpoints = myThis.getOrderedBreakpoints(sessionValidBreakpoints.breakpoints);
       session.breakpoints = orderedBreakpoints;
+      session.totalWeight = sessionValidBreakpoints.totalWeight;
       dragonfly.session = session;
       myThis.props.handleLoadDragonfly(dragonfly);
       myThis.props.history.push('play');    
@@ -64,7 +65,7 @@ class LoadDragonflyComponent extends React.Component {
 
   
   getValidBreakpoints(breakpoints) {
-    
+    var sessionValidBreakpoints = {};
     var validBreakpoints = [];
     var validBreakpoint = {};
     var validQuestions = [];
@@ -83,11 +84,17 @@ class LoadDragonflyComponent extends React.Component {
       
       // next, go through the questions and only add in valid questions
       validQuestions = [];
-      totalWeight = 0;
 
       if (questions != null) {
             for (var j = 0; j < questions.length; j++) {
                   var question = questions[j];
+                  
+                  question.answers[0].isSelected = false;
+                  question.answers[1].isSelected = false;
+                  question.answers[2].isSelected = false;
+                  question.answers[3].isSelected = false;
+                  question.answers[4].isSelected = false;
+                  
                   isValidQuestion = this.handleValidateQuestion(question);
                   
                   
@@ -110,7 +117,11 @@ class LoadDragonflyComponent extends React.Component {
 
 
     }
-    return validBreakpoints;
+    
+    sessionValidBreakpoints.breakpoints = validBreakpoints;
+    sessionValidBreakpoints.totalWeight = totalWeight;
+    
+    return sessionValidBreakpoints;
   }
   
   

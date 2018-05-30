@@ -7,17 +7,7 @@ class PreviewQuestionComponent extends React.Component {
 
   constructor(props) {
     super(props);
-
-    var breakpoint = props.breakpoint;
-    var currentTime = props.currentTime;
-
-    
-    var questions = breakpoint.questions;
-    
-    var question = {title:"No questions added to this breakpoint.", answers:[]};
-    if (questions != null) {
-      question = questions[0];
-    } 
+    var question = props.question;
     
     question.answers[0].isSelected = false;
     question.answers[1].isSelected = false;
@@ -26,10 +16,7 @@ class PreviewQuestionComponent extends React.Component {
     question.answers[4].isSelected = false;
 
     this.state = {
-          currentQuestion: 0,
-          breakpoint: breakpoint,
           question: question,
-          answers: question.answers,
           isDisabled: false,
           button1Class: "btn btn-primary btn-lg",
           button2Class: "dragon-hidden",
@@ -42,21 +29,11 @@ class PreviewQuestionComponent extends React.Component {
   
 
 
-  componentDidMount() {
-    if (typeof window !== 'undefined') {
-      var path = window.location.protocol + '//' + window.location.host; 
-      this.setState({path : path});
-    } else {
-      // work out what you want to do server-side...
-    }
-  }
-  
-  
 
   render() {
 
     var question = this.state.question;
-    var answers = this.state.answers;
+    var answers = question.answers;
     var totalWeight = this.props.totalWeight;
     var isDisabled = this.state.isDisabled;
     var handleUpdateAnswer = this.handleUpdateAnswer;
@@ -100,7 +77,8 @@ class PreviewQuestionComponent extends React.Component {
 
 
   handleUpdateAnswer(answer) {
-    var answers = this.state.answers;
+    var question = this.state.question;
+    var answers = question.answers;
 
     for (var i = 0; i < 5; i++) {
         if (answers[i].letter === answer.letter) {
@@ -121,8 +99,8 @@ class PreviewQuestionComponent extends React.Component {
     this.setState({button2Class : "btn btn-primary btn-lg"});
     
     var question = this.state.question;
-    var answers = this.state.answers;
-    var preview = this.props.preview;
+    var answers = question.answers;
+    var totalWeight = this.props.totalWeight;
     
     var correct = true;
     var correctAnswers = "";
@@ -151,7 +129,7 @@ class PreviewQuestionComponent extends React.Component {
     
     this.setState({resultText : resultText});
     
-    var percentWeighting = question.weight / preview.totalWeight;
+    var percentWeighting = question.weight / totalWeight;
     percentWeighting = Math.round(percentWeighting * 100, 2);
     
     var value = percentWeighting;
@@ -159,9 +137,9 @@ class PreviewQuestionComponent extends React.Component {
     if (correct) earned = percentWeighting;
 
     var result = {correct: correct, resultText: resultText, value:value, earned: earned};
-    preview.results.push(result);
-    preview.earned = preview.earned + earned;
-    this.props.handleLoadPreview(preview);
+    //dragonfly.results.push(result);
+    //preview.earned = preview.earned + earned;
+    //this.props.handleLoadPreview(preview);
   }
   
   

@@ -2,6 +2,8 @@ import React from 'react';
 import { Link } from 'react-router';
 import ResultsComponent from './ResultsComponent.jsx';
 
+var firstTime = true;
+
 class PreviewComponent extends React.Component {
   
 
@@ -18,7 +20,13 @@ class PreviewComponent extends React.Component {
           currentTime: 0,
           nextPause: nextPause,
           results: [],
-          earned: 0
+          earned: 0,
+          modalClassName: "dragon-hidden",
+          question: null,
+          resultText: null,
+          submitButtonClassname: "btn btn-primary",
+          showModal : false,
+          modalClassName : 0
     };
     
     this.handleClickPlay = this.handleClickPlay.bind(this);
@@ -26,6 +34,7 @@ class PreviewComponent extends React.Component {
     this.advanceBreakpoint = this.advanceBreakpoint.bind(this);
     this.advanceQuestion = this.advanceQuestion.bind(this);
     this.showQuestion = this.showQuestion.bind(this);
+    this.submitAnswer = this.submitAnswer.bind(this);
     
 
   }
@@ -37,10 +46,14 @@ class PreviewComponent extends React.Component {
     video.play();
 
     video.onplay = function() {
+      if (firstTime) {
         setInterval(function(){
             myThis.handleInterval(video);
-        }.bind(this), 250);
+        }.bind(this), 25);
+      } 
+      firstTime = false;
     };
+
 
     
   }
@@ -50,7 +63,16 @@ class PreviewComponent extends React.Component {
   render() {
     var results = this.state.results;
     var earned = this.state.earned;
+    
     var resultsComponent = function() {return <ResultsComponent results={results} earned={earned} /> }();
+    
+    var question = this.state.question;
+    var handleSubmitAnswer = this.submitAnswer;
+    var isDisabled = this.state.isDisabled;
+    var resultText = this.state.resultText;
+    var submitButtonClassname = this.state.submitButtonClassname;
+    var modalClassName = this.state.modalClassName;
+    var modalComponent = function() {return <ModalComponent question={question} modalClassName={modalClassName} handleSubmitAnswer={handleSubmitAnswer} isDisabled={isDisabled} resultText={resultText} submitButtonClassname={submitButtonClassname} /> }();
     
     var videoId = this.props.session.video.videoId;
     var videoUrl = "https://s3-us-west-2.amazonaws.com/dragonfly-videos-transcoded/" + videoId + "/mp4-" + videoId + ".mp4";
@@ -92,7 +114,7 @@ class PreviewComponent extends React.Component {
               <div className="dragon-powered-by pull-right"><div>powered by</div> <img src="./images/dragonfly-logo.png" /></div>
               </a>
 
-              
+              {modalComponent}
               
         </div>
         <div className="col-sm-2">
@@ -112,6 +134,31 @@ class PreviewComponent extends React.Component {
   
   handleInterval(video) {
     
+    var showModal = this.state.showModal;
+    var modalClassName = this.state.modalClassName;
+    
+    if((showModal) && (modalClassName < 35)) {
+      //alert("adding " + modalClassName);
+      modalClassName = modalClassName + 1;
+      this.setState({modalClassName : modalClassName});
+      return;
+    }
+    
+    if((!showModal) && (modalClassName > 0)) {
+      //alert("removing " + modalClassName);
+      modalClassName = modalClassName - 1;
+      this.setState({modalClassName : modalClassName});
+      
+      if (modalClassName == 0) {
+        this.advanceQuestion();
+      }
+      return;
+      
+    }    
+    
+    
+    
+    
     var nextPause = this.state.nextPause;
     var currentTime = video.currentTime * 1000;
     if (currentTime < nextPause) { return; }
@@ -130,10 +177,79 @@ class PreviewComponent extends React.Component {
     
     var breakpoint = breakpoints[breakpointNumber];
     var question = breakpoint.questions[questionNumber];
+    this.setState({question : question});
     
-    alert(JSON.stringify(question));
+    //this.setState({modalClassName : "dragon-modal"});
+    this.setState({showModal : true});
+    
+  }
+  
+  submitAnswer(selectedAnswers) {
+    var myThis = this;
+    
+    this.setState({isDisabled : "disabled"});
+    
+    var question = this.state.question;
+    var answers = question.answers;
+    
+    var totalWeight = this.props.session.totalWeight;
+    
+    var correct = true;
+    var correctAnswers = "";
+    var isSelected = false;
+    //check if answer is correct
+    for (var i = 0; i < 5; i++) {
+        if (answers[i].isCorrect) {
+          correctAnswers = correctAnswers + answers[i].letter;
+        }
+        
+        isSelected = false;
+        for (var j = 0; j < selectedAnswers.length; j++)
+        {
+          if (selectedAnswers[j] === answers[i].letter) isSelected = true;
+        }
+        
+        if (answers[i].isCorrect && !isSelected) correct = false;
+        if (!answers[i].isCorrect && isSelected) correct = false;
+    }
+    
+    correctAnswers =  correctAnswers.split("").join(" and ");
+    
+    var resultText = correctAnswers + " was correct!";
+    if (correct) {
+      if (correctAnswers.length > 1) { resultText = correctAnswers + " were correct!"; } 
+    } else {
+      resultText = "Sorry, the correct answer was " + correctAnswers + ".";
+      if (correctAnswers.length > 1) { resultText = "Sorry, the correct answers were " + correctAnswers + "."; } 
+    }
 
-    myThis.advanceQuestion();
+    var percentWeighting = question.weight / totalWeight;
+    percentWeighting = Math.round(percentWeighting * 100, 2);
+    
+    var value = percentWeighting;
+    var earned = 0;
+    if (correct) earned = percentWeighting;
+
+    var result = {correct: correct, resultText: resultText, value:value, earned: earned};
+    
+    var totalEarned = this.state.earned + earned;
+    var results = this.state.results;
+    results.push(result);
+    
+    this.setState({ earned : totalEarned, results : results, resultText : resultText, submitButtonClassname : "dragon-hidden" });
+    
+    
+    this.setState({ showModal : false });
+    
+    /*
+    myTimeout = setTimeout(function(){ 
+      myThis.advanceQuestion();
+      
+    }, 5000);
+    */
+    
+    
+   
   }
   
   
@@ -141,6 +257,8 @@ class PreviewComponent extends React.Component {
   
   advanceQuestion() {
     var myThis = this;
+    //clearTimeout(myTimeout);
+    this.setState({resultText: null, submitButtonClassname : "btn btn-primary"});
     var breakpoints = this.props.session.breakpoints;
     var breakpointNumber = this.state.breakpointNumber;
     var questionNumber = this.state.questionNumber;
@@ -195,4 +313,147 @@ class PreviewComponent extends React.Component {
 }
 
 
+
 export default PreviewComponent;
+
+
+
+
+
+
+
+
+
+class ModalComponent extends React.Component {
+
+  constructor(props) {
+    super(props);
+
+    this.state = {
+          selectedAnswers: []
+    };
+    
+    this.submitAnswerClicked = this.submitAnswerClicked.bind(this);
+    this.handleUpdateAnswer = this.handleUpdateAnswer.bind(this);
+  }
+
+  render() {
+    var modalClassName = "dragon-modal opacity" + this.props.modalClassName;
+    var question = this.props.question;
+    var answersJsx = null;
+    var title = null;
+    
+    if (question != null) {
+      title = question.title;
+      var answers = question.answers;
+      var isDisabled = false;
+      var handleUpdateAnswer = this.handleUpdateAnswer;
+      
+      answersJsx = answers.map((answer, i) => {
+      if (answer.isValid) {
+        return <AnswerComponent i={i} handleUpdateAnswer={handleUpdateAnswer} answer={answer} isDisabled={isDisabled} />;
+      }
+      });
+    
+    }
+
+    
+    return (
+            <div id="modal" className={modalClassName}>
+              <form ref='uploadForm' onSubmit={this.submitAnswerClicked}>
+                  <div className="dragon-modal-content">
+                    <h3>{title}</h3>
+                    
+                    {answersJsx}
+                          
+                  </div>
+                  <div className="dragon-modal-actionbox">
+                    <input type="submit" className={this.props.submitButtonClassname} value="Submit Answer"/>
+                    
+                    {this.props.resultText}
+                    
+                  </div>
+              </form>
+            </div>
+    );
+  }
+  
+  handleUpdateAnswer(answer) {
+    var selectedAnswers = this.state.selectedAnswers;
+    
+    if (answer.isSelected) {
+      selectedAnswers.push(answer.letter);
+      this.setState({selectedAnswers : selectedAnswers});
+      return;
+    }
+    
+    
+    var selectedAnswersLength = selectedAnswers.length;
+    var newSelectedAnswers = [];
+    for (var i = 0; i < selectedAnswersLength; i++) {
+        if ((selectedAnswers[i] != answer.letter) && (selectedAnswers[i] != null)){
+          newSelectedAnswers.push(selectedAnswers[i]);
+        }
+    }
+    this.setState({
+      selectedAnswers: newSelectedAnswers
+    }); 
+    
+  }
+  
+  submitAnswerClicked(e) {
+    e.preventDefault();
+    this.setState({ selectedAnswers: [] }); 
+    this.props.handleSubmitAnswer(this.state.selectedAnswers);
+    
+  } 
+  
+}
+
+
+
+
+
+
+
+
+
+class AnswerComponent extends React.Component {
+
+  constructor(props) {
+    super(props);
+    this.updateSelectAnswer = this.updateSelectAnswer.bind(this);
+  }
+
+  render() {
+
+    
+    return (
+        <div className="dragon-select-list-row" onClick={this.updateSelectAnswer}>
+        
+            <div className="dragon-select-list-form-cell-lg">
+              <input type="checkbox" value={this.props.answer.isSelected} checked={this.props.answer.isSelected} disabled={this.props.isDisabled} />
+            </div>
+            <div className="dragon-select-list-form-cell-lg">
+              {this.props.answer.letter}.
+            </div>
+            <div className="dragon-select-list-form-cell-lg">
+              {this.props.answer.text}
+            </div>
+        </div>
+    );
+  }
+
+
+
+  updateSelectAnswer(e) {
+    var answer = this.props.answer;
+    var isSelected = answer.isSelected;
+    answer.isSelected = !isSelected;
+    this.props.handleUpdateAnswer(answer);
+    
+  } 
+
+
+
+}
