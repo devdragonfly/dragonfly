@@ -125,7 +125,6 @@ class Main extends Component {
     } 
     
     handleLoadDragonfly(dragonfly) {
-        dragonfly.earned = 0;
         this.setState({dragonfly : dragonfly});
         this.setState({session : dragonfly.session});
         

@@ -8,26 +8,27 @@ class DragonflyCompleteComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {earned: this.props.preview.earned,
-                  path : "not found"
+    this.state = {path : "not found"
     };
+    
     this.titleCase = this.titleCase.bind(this);
   }
   
   
   componentWillMount() {
     
+    var dragonfly = this.props.dragonfly;
     
-    var organizationId = this.props.dragonfly.organizationId;
-    var campaignId = this.props.dragonfly.campaignId;
-    var dragonflyId = this.props.dragonfly.dragonflyId;
-    var results = this.props.preview.results;
-    var earned = this.props.preview.earned;
+    // if previousCompletion = true, this was an already completed dragonfly where link was re-clicked
+    var previousCompletion = dragonfly.previousCompletion;
+    if (previousCompletion) return;
     
-    if (this.props.dragonfly.results != null) {
-      this.setState({earned : this.props.dragonfly.earned });
-      return;
-    }
+    
+    var organizationId = dragonfly.organizationId;
+    var campaignId = dragonfly.campaignId;
+    var dragonflyId = dragonfly.dragonflyId;
+    var results = dragonfly.results;
+    var earned = dragonfly.earned;
     
     var myThis = this;
     
@@ -72,6 +73,7 @@ class DragonflyCompleteComponent extends React.Component {
 
   }
   
+
   componentDidMount() {
     if (typeof window !== 'undefined') {
       var path = window.location.protocol + '//' + window.location.host; 
@@ -80,15 +82,19 @@ class DragonflyCompleteComponent extends React.Component {
       // work out what you want to do server-side...
     }
   }
+  
+  
+  
 
   render() {
     var dragonfly = this.props.dragonfly;
+    
     var contact = dragonfly.contact;
     var first = this.titleCase(contact.first); 
-    var last = this.titleCase(contact.last); 
+    //var last = this.titleCase(contact.last); 
     var email = contact.email;
-    var reward = Number(dragonfly.reward).toFixed(2);
-    var earned = Number(this.state.earned).toFixed(2);
+    //var reward = Number(dragonfly.reward).toFixed(2);
+    var earned = Number(dragonfly.earned).toFixed(2);
     
     return (
       <div className="row">
@@ -134,12 +140,12 @@ class DragonflyCompleteComponent extends React.Component {
   
   
   titleCase(str) {
-  str = str.toLowerCase().split(' ');
-  for (var i = 0; i < str.length; i++) {
-    str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1); 
+    str = str.toLowerCase().split(' ');
+    for (var i = 0; i < str.length; i++) {
+      str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1); 
+    }
+    return str.join(' ');
   }
-  return str.join(' ');
-}
   
 
 }

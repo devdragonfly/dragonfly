@@ -28,7 +28,19 @@ class LoadDragonflyComponent extends React.Component {
     };
 
     this.props.dbQueryUnauth(params, function(result) {
+      
       var dragonfly = result.Items[0];
+      
+      // if earned is already populated, it's because this dragonfly was already completed
+      // and we need to redirect to completion page
+      if (dragonfly.earned != null) {
+        dragonfly.previousCompletion = true;
+        myThis.props.handleLoadDragonfly(dragonfly);
+        myThis.props.history.push('dragonflycomplete'); 
+        return;
+      }
+      
+      
       var session = dragonfly.session;
       var sessionValidBreakpoints = myThis.getValidBreakpoints(session.breakpoints);
       var orderedBreakpoints = myThis.getOrderedBreakpoints(sessionValidBreakpoints.breakpoints);

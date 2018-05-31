@@ -3,6 +3,7 @@ import { Link } from 'react-router';
 import ResultsComponent from './ResultsComponent.jsx';
 
 var firstTime = true;
+var myInterval = null;
 
 class PreviewComponent extends React.Component {
   
@@ -21,12 +22,13 @@ class PreviewComponent extends React.Component {
           nextPause: nextPause,
           results: [],
           earned: 0,
-          modalClassName: "dragon-hidden",
           question: null,
           resultText: null,
           submitButtonClassname: "btn btn-primary",
           showModal : false,
-          modalClassName : 0
+          modalClassName : 0,
+          videoIsEnded : false,
+          breakpointsAreComplete : false
     };
     
     this.handleClickPlay = this.handleClickPlay.bind(this);
@@ -35,6 +37,8 @@ class PreviewComponent extends React.Component {
     this.advanceQuestion = this.advanceQuestion.bind(this);
     this.showQuestion = this.showQuestion.bind(this);
     this.submitAnswer = this.submitAnswer.bind(this);
+    this.handleDragonflyComplete = this.handleDragonflyComplete.bind(this);
+    
     
 
   }
@@ -47,15 +51,27 @@ class PreviewComponent extends React.Component {
 
     video.onplay = function() {
       if (firstTime) {
-        setInterval(function(){
+        myInterval = setInterval(function(){
             myThis.handleInterval(video);
         }.bind(this), 25);
       } 
       firstTime = false;
     };
 
+    video.onended = function() {
+      myThis.setState({videoIsEnded : true});
+      var breakpointsAreComplete = myThis.state.breakpointsAreComplete;
+      if (!breakpointsAreComplete) {
+        myThis.showQuestion();
+      }
+    };
 
-    
+    if (typeof window !== 'undefined') {
+      var path = window.location.protocol + '//' + window.location.host; 
+      this.setState({path : path});
+    } else {
+      // work out what you want to do server-side...
+    }
   }
 
 
@@ -128,11 +144,16 @@ class PreviewComponent extends React.Component {
   
   handleClickPlay(e) {
     var video = e.target;
-    alert('play has been clicked');
     video.play();
   }
   
   handleInterval(video) {
+    var breakpointsAreComplete = this.state.breakpointsAreComplete;
+    var videoIsEnded = this.state.videoIsEnded;
+    if (breakpointsAreComplete && videoIsEnded) {
+      this.handleDragonflyComplete();
+    }
+    
     
     var showModal = this.state.showModal;
     var modalClassName = this.state.modalClassName;
@@ -174,8 +195,14 @@ class PreviewComponent extends React.Component {
     var breakpoints = this.props.session.breakpoints;
     var breakpointNumber = this.state.breakpointNumber;
     var questionNumber = this.state.questionNumber;
-    
     var breakpoint = breakpoints[breakpointNumber];
+    
+    if (questionNumber >= breakpoint.questions.length) {
+      myThis.advanceBreakpoint();
+      return;
+    }
+    
+    
     var question = breakpoint.questions[questionNumber];
     this.setState({question : question});
     
@@ -230,7 +257,7 @@ class PreviewComponent extends React.Component {
     var earned = 0;
     if (correct) earned = percentWeighting;
 
-    var result = {correct: correct, resultText: resultText, value:value, earned: earned};
+    var result = {correct: correct, resultText: resultText, value:value, earned: earned, selectedAnswers : selectedAnswers};
     
     var totalEarned = this.state.earned + earned;
     var results = this.state.results;
@@ -284,19 +311,18 @@ class PreviewComponent extends React.Component {
     var myThis = this;
     var breakpoints = this.props.session.breakpoints;
     var breakpointNumber = this.state.breakpointNumber;
+    var videoIsEnded = this.state.videoIsEnded;
     var video = document.getElementById("my-player");
     
     breakpointNumber = breakpointNumber + 1;
     
     if (breakpointNumber >= breakpoints.length) {
-      this.setState({nextPause : 100000000});
-      video.play();
-      video.onended = function() {
-        alert("video ended - save results and go to completion page");
-      };
-      return;
+        this.setState({breakpointsAreComplete : true});
+        this.setState({nextPause : 100000000});
+        video.play(); 
+        return;
     }
-    
+
     var nextPause = breakpoints[breakpointNumber].milliseconds;
     
     this.setState({breakpointNumber : breakpointNumber, 
@@ -306,6 +332,20 @@ class PreviewComponent extends React.Component {
     
     video.play();
     
+  }
+  
+  
+  handleDragonflyComplete() {
+    clearInterval(myInterval);
+    var myThis = this;
+    var earned = myThis.state.earned;
+    var results = myThis.state.results;
+    var dragonfly = myThis.props.dragonfly;
+    dragonfly.earned = earned;
+    dragonfly.results = results;
+    myThis.props.handleLoadDragonfly(dragonfly);
+    myThis.props.history.push('dragonflycomplete');    
+    return;
   }
 
 
