@@ -34,8 +34,6 @@ import LoadVideosComponent from './LoadVideosComponent.jsx';
 import VideoComponent from './VideoComponent.jsx';
 import SelectVideoComponent from './SelectVideoComponent.jsx';
 import LoadThumbnailsComponent from './LoadThumbnailsComponent.jsx';
-import PreviewComponent from './PreviewComponent.jsx';
-import PreviewQuestionComponent from './PreviewQuestionComponent.jsx';
 import CreateCampaignComponent from './CreateCampaignComponent.jsx';
 import LoadCampaignsComponent from './LoadCampaignsComponent.jsx';
 import CampaignComponent from './CampaignComponent.jsx';
@@ -47,7 +45,9 @@ import LoadResultsComponent from './LoadResultsComponent.jsx';
 import GenerateDragonfliesComponent from './GenerateDragonfliesComponent.jsx';
 import ViewComponent from './ViewComponent.jsx';
 import LoadDragonflyComponent from './LoadDragonflyComponent.jsx';
-import PlayComponent from './PlayComponent.jsx';
+import DragonflyStartComponent from './DragonflyStartComponent.jsx';
+import DragonflyPlayComponent from './DragonflyPlayComponent.jsx';
+import DragonflyPreferencesComponent from './DragonflyPreferencesComponent.jsx';
 import DragonflyCompleteComponent from './DragonflyCompleteComponent.jsx';
 
 
@@ -89,8 +89,6 @@ render(
             <Route path="loadvideos" component={LoadVideosComponent}/>
             <Route path="selectvideo" component={SelectVideoComponent}/>
             <Route path="loadthumbnails" component={LoadThumbnailsComponent}/>
-            <Route path="preview" component={PreviewComponent}/>
-            <Route path="previewquestion" component={PreviewQuestionComponent}/>
             <Route path="createcampaign" component={CreateCampaignComponent}/>
             <Route path="loadcampaigns" component={LoadCampaignsComponent}/>
             <Route path="campaign" component={CampaignComponent}/>
@@ -102,7 +100,9 @@ render(
             <Route path="generatedragonflies" component={GenerateDragonfliesComponent}/>
             <Route path="view" component={ViewComponent}/>
             <Route path="loaddragonfly" component={LoadDragonflyComponent}/>
-            <Route path="play" component={PlayComponent}/>
+            <Route path="dragonflystart" component={DragonflyStartComponent}/>
+            <Route path="dragonflyplay" component={DragonflyPlayComponent}/>
+            <Route path="dragonflypreferences" component={DragonflyPreferencesComponent}/>
             <Route path="dragonflycomplete" component={DragonflyCompleteComponent}/>
 
 

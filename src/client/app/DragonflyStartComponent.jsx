@@ -4,7 +4,7 @@ import { Link } from 'react-router';
 
 
 
-class PlayComponent extends React.Component {
+class DragonflyStartComponent extends React.Component {
 
   constructor(props) {
     super(props);
@@ -65,13 +65,9 @@ class PlayComponent extends React.Component {
                 
                 You have the opportunity to earn up to ${reward} based on how many questions you get right.
                 
-                <br/><br/>
-                
-                On completion of this tutorial, you will receive an email at <b>{email}</b> with instructions on how to claim your reward.
-                
                 <br/><br/><br/>
               
-                <Link to={`preview`} className="btn btn-primary btn-lg">Start Now <i className='fa fa-chevron-circle-right'></i></Link>
+                <Link to={`dragonflyplay`} className="btn btn-primary btn-lg">Start Now <i className='fa fa-chevron-circle-right'></i></Link>
               
               </div>
               <a href={this.state.path} target="_blank">
@@ -98,4 +94,4 @@ class PlayComponent extends React.Component {
 
 }
 
-export default PlayComponent;
+export default DragonflyStartComponent;

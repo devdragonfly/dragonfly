@@ -5,7 +5,7 @@ import ResultsComponent from './ResultsComponent.jsx';
 var firstTime = true;
 var myInterval = null;
 
-class PreviewComponent extends React.Component {
+class DragonflyPlayComponent extends React.Component {
   
 
 
@@ -344,7 +344,7 @@ class PreviewComponent extends React.Component {
     dragonfly.earned = earned;
     dragonfly.results = results;
     myThis.props.handleLoadDragonfly(dragonfly);
-    myThis.props.history.push('dragonflycomplete');    
+    myThis.props.history.push('dragonflypreferences');    
     return;
   }
 
@@ -354,7 +354,7 @@ class PreviewComponent extends React.Component {
 
 
 
-export default PreviewComponent;
+export default DragonflyPlayComponent;
 
 
 

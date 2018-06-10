@@ -48,7 +48,7 @@ class LoadDragonflyComponent extends React.Component {
       session.totalWeight = sessionValidBreakpoints.totalWeight;
       dragonfly.session = session;
       myThis.props.handleLoadDragonfly(dragonfly);
-      myThis.props.history.push('play');    
+      myThis.props.history.push('dragonflystart');    
       
     });
     

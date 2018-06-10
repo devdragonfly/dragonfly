@@ -107,23 +107,23 @@ class DragonflyCompleteComponent extends React.Component {
               
               <div className="jumbotron dragon-enlarge">
 
-                <h2>Congratulations {first}!</h2>
+                <h2>Thank you {first}!</h2>
                 
                 <br/>
                 
-                Your session is complete.
+                We will text you at [mobile] with your payment of ${earned}.
+                <br/>
+                OR
+                <br/>
+                We will email you at [email] with your payment of ${earned}.
                 
                 <br/><br/>
                 
-                You have earned ${earned}.
+                Typically we complete all payments within 8 business hours.
                 
                 <br/><br/>
                 
-                An email has been sent to <b>{email}</b> with instructions on accessing your reward.
-                
-                <br/><br/>
-                
-                If you do not receive this email in the next 5 minutes, please contact us at <b>support@dragonfly.com</b>.
+                If you do not receive payment within 8 business hours, please contact us at <b>support@dragonfly.com</b>.
                 
               </div>
               <a href={this.state.path} target="_blank">
