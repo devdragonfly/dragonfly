@@ -45,14 +45,14 @@ class SignUpComponent extends React.Component {
       <div className="row">
         <div className="col-sm-6">
             <video
-                id="homeVideo"
+                id="my-player"
                 class="video-js"
                 controls
                 preload="auto"
-                poster="../images/playHomeVideo.png"
+                poster="//vjs.zencdn.net/v/oceans.png"
                 data-setup='{}'
                 onClick={this.handleClickPlay}>
-              <source src="http://s3-us-west-2.amazonaws.com/dragonfly-videos-transcoded/b777a5a6-4f3e-4d00-ae62-fb6ba768d79d/mp4-b777a5a6-4f3e-4d00-ae62-fb6ba768d79d.mp4" type="video/mp4"></source>
+              <source src="https://s3-us-west-2.amazonaws.com/dragonfly-videos-transcoded/b777a5a6-4f3e-4d00-ae62-fb6ba768d79d/mp4-b777a5a6-4f3e-4d00-ae62-fb6ba768d79d.mp4" type="video/mp4"></source>
               <p class="vjs-no-js">
                 To view this video please enable JavaScript, and consider upgrading to a
                 web browser that
