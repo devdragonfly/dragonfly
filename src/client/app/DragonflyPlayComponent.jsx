@@ -109,13 +109,13 @@ class DragonflyPlayComponent extends React.Component {
 
                           <video autoplay
                               id="my-player"
-                              class="video-js"
+                              className="video-js"
                               preload="auto"
                               poster={thumbnailUrl}
                               data-setup='{}'
                               onClick={this.handleClickPlay}>
                             <source src={videoUrl} type="video/mp4"></source>
-                            <p class="vjs-no-js">
+                            <p className="vjs-no-js">
                               To view this video please enable JavaScript, and consider upgrading to a
                               web browser that
                               <a href="http://videojs.com/html5-video-support/" target="_blank">
