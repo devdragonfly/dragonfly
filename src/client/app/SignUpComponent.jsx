@@ -52,7 +52,7 @@ class SignUpComponent extends React.Component {
                 poster="../images/playHomeVideo.png"
                 data-setup='{}'
                 onClick={this.handleClickPlay}>
-              <source src="https://s3-us-west-2.amazonaws.com/dragonfly-videos-transcoded/b777a5a6-4f3e-4d00-ae62-fb6ba768d79d/mp4-b777a5a6-4f3e-4d00-ae62-fb6ba768d79d.mp4" type="video/mp4"></source>
+              <source src="http://s3-us-west-2.amazonaws.com/dragonfly-videos-transcoded/b777a5a6-4f3e-4d00-ae62-fb6ba768d79d/mp4-b777a5a6-4f3e-4d00-ae62-fb6ba768d79d.mp4" type="video/mp4"></source>
               <p class="vjs-no-js">
                 To view this video please enable JavaScript, and consider upgrading to a
                 web browser that
