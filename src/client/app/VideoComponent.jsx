@@ -37,7 +37,8 @@ class VideoComponent extends React.Component {
             <br/>
             <video
                 id="my-player"
-                className="video-js"
+                className="video-js vjs-default-skin vjs-big-play-centered"
+                width="800" height="450"
                 controls
                 preload="auto"
                 poster="//vjs.zencdn.net/v/oceans.png"

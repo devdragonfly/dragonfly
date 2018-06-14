@@ -47,7 +47,8 @@ class SignUpComponent extends React.Component {
         <br/><br/>
             <video autoplay
                 id="my-player"
-                className="video-js"
+                className="video-js vjs-default-skin vjs-big-play-centered"
+                width="573" height="429"
                 controls
                 preload="auto"
                 poster="./images/playHomeVideo.png"
