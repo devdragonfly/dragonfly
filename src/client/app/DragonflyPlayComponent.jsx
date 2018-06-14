@@ -109,11 +109,9 @@ class DragonflyPlayComponent extends React.Component {
 
                           <video autoplay
                               id="my-player"
-                              className="video-js vjs-default-skin vjs-big-play-centered"
-                              width="800" height="450"
                               preload="auto"
                               poster={thumbnailUrl}
-                              data-setup='{"fluid": true}'
+                              data-setup='{}'
                               onClick={this.handleClickPlay}>
                             <source src={videoUrl} type="video/mp4"></source>
                             <p className="vjs-no-js">

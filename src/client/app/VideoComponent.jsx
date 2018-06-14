@@ -20,6 +20,13 @@ class VideoComponent extends React.Component {
     
     this.props.s3ListObjects(params);
   }
+  
+  componentDidMount() {
+    var myThis = this;
+    
+    var video = document.getElementById("my-player");
+    video.play();
+  }
 
   render() {
     var organizationMenu = function() {return <OrganizationMenuComponent current="videos" /> }();
@@ -37,12 +44,9 @@ class VideoComponent extends React.Component {
             <br/>
             <video
                 id="my-player"
-                className="video-js vjs-default-skin vjs-big-play-centered"
-                width="800" height="450"
                 controls
                 preload="auto"
-                poster="//vjs.zencdn.net/v/oceans.png"
-                data-setup='{"fluid": true}'>
+                data-setup='{}'>
               <source src={videoUrl} type="video/mp4"></source>
               <p className="vjs-no-js">
                 To view this video please enable JavaScript, and consider upgrading to a
