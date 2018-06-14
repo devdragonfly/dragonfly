@@ -41,7 +41,7 @@ class VideoComponent extends React.Component {
                 controls
                 preload="auto"
                 poster="//vjs.zencdn.net/v/oceans.png"
-                data-setup='{}'>
+                data-setup='{"fluid": true}'>
               <source src={videoUrl} type="video/mp4"></source>
               <p className="vjs-no-js">
                 To view this video please enable JavaScript, and consider upgrading to a
