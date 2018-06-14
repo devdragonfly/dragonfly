@@ -74,9 +74,9 @@ class DragonflyPreferencesComponent extends React.Component {
                 
                 <br/>
                 
-                Your session is complete and have earned ${earned}.
+                <h3>Your session is complete and you have earned ${earned}.</h3>
                 
-                <br/><br/>
+                <br/>
                 
                 <h3>Please enter your preferred contact information for receiving payment:</h3>
                 <div className="dragon-select-list-row">
@@ -189,13 +189,20 @@ class DragonflyPreferencesComponent extends React.Component {
     this.showClickedButtonState(true);
     var myThis = this;
     
-    var emailOrText = this.state.selectedContactOption;
-    var interested = this.state.selectedInterestedOption;
-    var email = this.state.email;
-    var mobile = this.state.mobile;
     
-    alert("emailOrText = " + emailOrText + " and interested = " + interested + " and email = " + email + " and mobile = " + mobile);
+    var preferences = {};
+    preferences.emailOrText = this.state.selectedContactOption;
+    preferences.interested = this.state.selectedInterestedOption;
+    preferences.email = this.state.email;
+    preferences.mobile = this.state.mobile;
     
+    if ((preferences.email == "") || (preferences.email == null)) preferences.email = "none";
+    if ((preferences.mobile == "") || (preferences.mobile == null)) preferences.mobile = "none";
+    
+    
+    var dragonfly = this.props.dragonfly;
+    dragonfly.preferences = preferences;
+    this.props.handleLoadDragonfly(dragonfly);
 
     
     myThis.showClickedButtonState(false); 

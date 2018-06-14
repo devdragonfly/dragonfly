@@ -37,13 +37,30 @@ class SignUpComponent extends React.Component {
     this.updatePasswordValue = this.updatePasswordValue.bind(this);
     this.showClickedButtonState = this.showClickedButtonState.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleClickPlay = this.handleClickPlay.bind(this);
   }
 
   render() {
     return (
       <div className="row">
         <div className="col-sm-6">
-          <img src="./images/dragonfly-logo.png" className="dragon-logo"/>
+            <video
+                id="homeVideo"
+                class="video-js"
+                controls
+                preload="auto"
+                poster="../images/playHomeVideo.png"
+                data-setup='{}'
+                onClick={this.handleClickPlay}>
+              <source src="https://s3-us-west-2.amazonaws.com/dragonfly-videos-transcoded/b777a5a6-4f3e-4d00-ae62-fb6ba768d79d/mp4-b777a5a6-4f3e-4d00-ae62-fb6ba768d79d.mp4" type="video/mp4"></source>
+              <p class="vjs-no-js">
+                To view this video please enable JavaScript, and consider upgrading to a
+                web browser that
+                <a href="http://videojs.com/html5-video-support/" target="_blank">
+                  supports HTML5 video
+                </a>
+              </p>
+            </video>
           
         </div>
         <div className="col-sm-3">
@@ -64,6 +81,11 @@ class SignUpComponent extends React.Component {
       </div>
       
     );
+  }
+  
+  handleClickPlay(e) {
+    var video = e.target;
+    video.play();
   }
 
   showClickedButtonState(yes) {

@@ -46,11 +46,16 @@ class CampaignComponent extends React.Component {
       }
     }
     
+    var numberOfCompletedDragonflies = data.length;
+    
     var totals = [];
-    if (data.length > 0) {
-      totals = Array.apply(null, Array(data[0].length)).map(Number.prototype.valueOf,0);
-      for (var i = 0; i < data.length; i++) {
-        for (var j = 0; j < data[0].length; j++) {
+    if (numberOfCompletedDragonflies > 0) {
+      var numberOfQuestions = data[0].length;
+      
+      
+      totals = Array.apply(null, Array(numberOfQuestions)).map(Number.prototype.valueOf,0);
+      for (var i = 0; i < numberOfCompletedDragonflies; i++) {
+        for (var j = 0; j < numberOfQuestions; j++) {
           if (data[i][j].correct) totals[j] = totals[j] + 1;
         }        
       }
@@ -58,10 +63,13 @@ class CampaignComponent extends React.Component {
     }
     
     
-    
     var ctx = document.getElementById('questionResultsChart').getContext('2d');
     var myChart = new Chart(ctx, {
       type: 'line',
+      options: {
+        scales: {yAxes: [{display: true, ticks: { beginAtZero: true }}]}
+        
+      },
       data: {
         labels: ['Q1', 'Q2', 'Q3', 'Q4'],
         datasets: [{
@@ -173,7 +181,9 @@ class Dragonfly extends React.Component {
             {this.props.dragonfly.reward}
           </div>
           <div className="dragon-select-list-cell">
+            <span onClick={this.showResults.bind(this, this.props.dragonfly)}>
             {status}
+            </span>
           </div>
         </div>
     );
@@ -188,6 +198,19 @@ class Dragonfly extends React.Component {
     document.execCommand('copy');
     document.body.removeChild(el);
     alert("Copied to Clipboard: " + url);
+  }
+  
+  showResults(dragonfly) {
+    if (dragonfly.preferences == null) return;
+    
+    var preferences = dragonfly.preferences;
+    var emailOrText = preferences.emailOrText;
+    var email = preferences.email;
+    var mobile = preferences.mobile;
+    var interested = preferences.interested;
+    var earned = dragonfly.earned;
+    
+    alert("Contact Method: " + emailOrText + "\nEmail: " + email + "\nMobile: " + mobile + "\nInterested: " + interested + "\nAmount Earned: " + earned);
   }
 
 

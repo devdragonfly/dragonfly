@@ -29,6 +29,7 @@ class DragonflyCompleteComponent extends React.Component {
     var dragonflyId = dragonfly.dragonflyId;
     var results = dragonfly.results;
     var earned = dragonfly.earned;
+    var preferences = dragonfly.preferences;
     
     var myThis = this;
     
@@ -38,16 +39,16 @@ class DragonflyCompleteComponent extends React.Component {
                 campaignId  : campaignId,
                 dragonflyId : dragonflyId
             },
-            UpdateExpression: "set results = :results, earned = :earned",
+            UpdateExpression: "set results = :results, earned = :earned, preferences = :preferences",
             ExpressionAttributeValues:{
-                ":results":results, ":earned":earned
+                ":results":results, ":earned":earned, ":preferences":preferences
             },
             ReturnValues:"UPDATED_NEW"
         };
 
 
     this.props.dbUpdateUnauth(params, function(result) {
-      // results successfully saved
+      // results successfully saved // test
     });
     
     
@@ -59,9 +60,9 @@ class DragonflyCompleteComponent extends React.Component {
                 organizationId  : organizationId,
                 dragonflyId : dragonflyId
             },
-            UpdateExpression: "set results = :results, earned = :earned",
+            UpdateExpression: "set results = :results, earned = :earned, preferences = :preferences",
             ExpressionAttributeValues:{
-                ":results":results, ":earned":earned
+                ":results":results, ":earned":earned, ":preferences":preferences
             },
             ReturnValues:"UPDATED_NEW"
         };
@@ -92,9 +93,19 @@ class DragonflyCompleteComponent extends React.Component {
     var contact = dragonfly.contact;
     var first = this.titleCase(contact.first); 
     //var last = this.titleCase(contact.last); 
-    var email = contact.email;
+    
     //var reward = Number(dragonfly.reward).toFixed(2);
     var earned = Number(dragonfly.earned).toFixed(2);
+    
+    var preferences = dragonfly.preferences;
+    var email = preferences.email;
+    var mobile = preferences.mobile;
+    
+    var paymentText = "We will email you at " + email + " with your payment of $" + earned + ".";
+    if (preferences.emailOrText == "text") {
+      paymentText = "We will text you at " + mobile + " with your payment of $" + earned + ".";
+    }
+    
     
     return (
       <div className="row">
@@ -111,11 +122,7 @@ class DragonflyCompleteComponent extends React.Component {
                 
                 <br/>
                 
-                We will text you at [mobile] with your payment of ${earned}.
-                <br/>
-                OR
-                <br/>
-                We will email you at [email] with your payment of ${earned}.
+                {paymentText}
                 
                 <br/><br/>
                 
