@@ -56,7 +56,6 @@ class DragonflyPreferencesComponent extends React.Component {
     var first = this.titleCase(contact.first); 
     //var last = this.titleCase(contact.last); 
     var email = contact.email;
-    //var reward = Number(dragonfly.reward).toFixed(2);
     var earned = Number(dragonfly.earned).toFixed(2);
     
     return (

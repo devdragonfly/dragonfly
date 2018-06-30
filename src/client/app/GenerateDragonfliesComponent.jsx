@@ -8,13 +8,14 @@ class GenerateDragonfliesComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {rewardValue : '',
+    this.state = {incentiveValue : '',
                   buttonRestClassName : buttonClassName,
                   buttonClickedClassName : "dragon-hidden"
     };
-    this.updateRewardValue = this.updateRewardValue.bind(this);
+    this.updateIncentiveValue = this.updateIncentiveValue.bind(this);
     this.showClickedButtonState = this.showClickedButtonState.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.validateIncentive = this.validateIncentive.bind(this);
   }
   
 
@@ -57,8 +58,8 @@ class GenerateDragonfliesComponent extends React.Component {
                  &nbsp;{contactListName}
               </div>
               <div className="col-xs-4">
-                <label for="ex3"><i className='fa fa-credit-card fa-fw fa-lg'></i> Reward per Dragonfly</label><br/>
-                <input value={this.state.rewardValue} id="ex3" onChange={this.updateRewardValue} className="form-control" placeholder="dollar amount"/>
+                <label for="ex3"><i className='fa fa-credit-card fa-fw fa-lg'></i> Incentive per Dragonfly</label><br/>
+                <input value={this.state.incentiveValue} id="ex3" onChange={this.updateIncentiveValue} className="form-control" placeholder="dollar amount"/>
               </div>
             </div>
 
@@ -89,18 +90,45 @@ class GenerateDragonfliesComponent extends React.Component {
     }
   }
   
-  updateRewardValue(e) {
+  updateIncentiveValue(e) {
     this.setState({
-      rewardValue: e.target.value
+      incentiveValue: e.target.value
     });
+  }
+  
+  validateIncentive(incentive) {
+    var isNumeric = !isNaN(parseFloat(incentive)) && isFinite(incentive);
+    if (!isNumeric) return false;
+    if (incentive > 200) return false;
+    return true;
   }
 
   handleSubmit(e) {
     e.preventDefault();
     this.showClickedButtonState(true);
     var myThis = this;
-    const reward = this.state.rewardValue.trim();
     const campaign = this.props.campaign;
+    const incentive = this.state.incentiveValue.trim();
+    
+    if (campaign.session == null) {
+      myThis.showClickedButtonState(false);
+      return;
+    }
+    
+    if (campaign.contactList == null) {
+      myThis.showClickedButtonState(false);
+      return;
+    }
+    
+    
+    var incentiveIsValid = this.validateIncentive(incentive);
+    if (!incentiveIsValid) {
+      myThis.showClickedButtonState(false);
+      return;
+    }
+    
+    
+
     const organizationId = this.props.organizationId;
     const campaignId = campaign.campaignId;
     
@@ -114,7 +142,7 @@ class GenerateDragonfliesComponent extends React.Component {
             var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
             return v.toString(16);
         });
-        var dragonfly = { dragonflyId: dragonflyId, organizationId: organizationId, campaignId: campaignId, contact: contacts[i], session: campaign.session, reward: reward };
+        var dragonfly = { dragonflyId: dragonflyId, organizationId: organizationId, campaignId: campaignId, contact: contacts[i], session: campaign.session, incentive: incentive };
         putRequests.push({ PutRequest: { Item: dragonfly } })
         dragonflies.push(dragonfly);
         

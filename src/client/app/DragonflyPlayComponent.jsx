@@ -213,6 +213,8 @@ class DragonflyPlayComponent extends React.Component {
   submitAnswer(selectedAnswers) {
     var myThis = this;
     
+    var incentive = this.props.dragonfly.incentive;
+    
     this.setState({isDisabled : "disabled"});
     
     var question = this.state.question;
@@ -250,11 +252,10 @@ class DragonflyPlayComponent extends React.Component {
     }
 
     var percentWeighting = question.weight / totalWeight;
-    percentWeighting = Math.round(percentWeighting * 100, 2);
     
     var value = percentWeighting;
     var earned = 0;
-    if (correct) earned = percentWeighting;
+    if (correct) earned = Math.round(percentWeighting * incentive, 2);
 
     var result = {correct: correct, resultText: resultText, value:value, earned: earned, selectedAnswers : selectedAnswers};
     

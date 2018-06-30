@@ -38,7 +38,7 @@ class DragonflyStartComponent extends React.Component {
     var first = this.titleCase(contact.first); 
     var last = this.titleCase(contact.last); 
     var email = contact.email;
-    var reward = Number(dragonfly.reward).toFixed(2);
+    var incentive = Number(dragonfly.incentive).toFixed(2);
     
     return (
       <div className="row">
@@ -59,11 +59,11 @@ class DragonflyStartComponent extends React.Component {
                 
                 <br/><br/>
                 
-                The video you are about to watch is XX minutes long and you will be presented 5 questions at various points throughout it.
+                The video you are about to watch is 15 minutes long and you will be presented 5 questions at various points throughout it.
                 
                 <br/><br/>
                 
-                You have the opportunity to earn up to ${reward} based on how many questions you get right.
+                You have the opportunity to earn up to ${incentive} based on how many questions you get right.
                 
                 <br/><br/><br/>
               

@@ -15,9 +15,11 @@ AWS_unauth.config.region = 'us-west-2';
 AWS_unauth.config.credentials = new AWS_unauth.CognitoIdentityCredentials({
     AccountId: '698305963744',
     RoleArn: 'arn:aws:iam::698305963744:role/Cognito_dragonflyUnauth_Role', 
-    IdentityPoolId : 'us-west-2:b6311e4b-9082-4058-883c-19d23e34802b'
+    IdentityPoolId : 'us-west-2:b6311e4b-9082-4058-883c-19d23e34802b',
 });
 dragonfly_unauth.docClient = new AWS_unauth.DynamoDB.DocumentClient();
+
+
 
 
 var AWS = require("aws-sdk");
@@ -238,6 +240,7 @@ class Main extends Component {
                   }
               }
           });
+          
         
     }
     
@@ -386,7 +389,6 @@ class Main extends Component {
             callback(err,data);
         });
     }
-    
     
     handleSignOut() {
         this.setState({email : ''});
