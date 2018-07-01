@@ -28,7 +28,8 @@ class DragonflyPlayComponent extends React.Component {
           showModal : false,
           modalClassName : 0,
           videoIsEnded : false,
-          breakpointsAreComplete : false
+          breakpointsAreComplete : false,
+          videoClassname: "dragon-video-show"
     };
     
     this.handleClickPlay = this.handleClickPlay.bind(this);
@@ -108,6 +109,7 @@ class DragonflyPlayComponent extends React.Component {
               <div className="jumbotron dragon-enlarge">
 
                           <video autoplay
+                              className={this.state.videoClassname}
                               id="my-player"
                               preload="auto"
                               poster={thumbnailUrl}
@@ -126,7 +128,7 @@ class DragonflyPlayComponent extends React.Component {
               </div>
               
               <a href={this.state.path} target="_blank">
-              <div className="dragon-powered-by pull-right"><div>powered by</div> <img src="./images/dragonfly-logo.png" /></div>
+              <div className="dragon-powered-by pull-right"><img src="./images/dragonfly-logo.png" /></div>
               </a>
 
               {modalComponent}
@@ -191,6 +193,7 @@ class DragonflyPlayComponent extends React.Component {
  
   showQuestion() {
     var myThis = this;
+    
     var breakpoints = this.props.session.breakpoints;
     var breakpointNumber = this.state.breakpointNumber;
     var questionNumber = this.state.questionNumber;
@@ -206,7 +209,7 @@ class DragonflyPlayComponent extends React.Component {
     this.setState({question : question});
     
     //this.setState({modalClassName : "dragon-modal"});
-    this.setState({showModal : true});
+    this.setState({showModal : true, videoClassname : "dragon-video-hide"});
     
   }
   
@@ -266,7 +269,7 @@ class DragonflyPlayComponent extends React.Component {
     this.setState({ earned : totalEarned, results : results, resultText : resultText, submitButtonClassname : "dragon-hidden" });
     
     
-    this.setState({ showModal : false });
+    this.setState({ showModal : false, videoClassname : "dragon-video-show" });
     
     /*
     myTimeout = setTimeout(function(){ 

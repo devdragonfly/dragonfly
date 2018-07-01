@@ -134,7 +134,7 @@ class DragonflyCompleteComponent extends React.Component {
                 
               </div>
               <a href={this.state.path} target="_blank">
-              <div className="dragon-powered-by pull-right"><div>powered by</div> <img src="./images/dragonfly-logo.png" /></div>
+              <div className="dragon-powered-by pull-right"><img src="./images/dragonfly-logo.png" /></div>
               </a>
               
         </div>
