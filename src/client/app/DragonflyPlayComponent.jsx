@@ -39,7 +39,7 @@ class DragonflyPlayComponent extends React.Component {
     this.showQuestion = this.showQuestion.bind(this);
     this.submitAnswer = this.submitAnswer.bind(this);
     this.handleDragonflyComplete = this.handleDragonflyComplete.bind(this);
-    
+    this.closeFullscreen = this.closeFullscreen.bind(this);
     
 
   }
@@ -209,7 +209,9 @@ class DragonflyPlayComponent extends React.Component {
     this.setState({question : question});
     
     //this.setState({modalClassName : "dragon-modal"});
+    this.closeFullscreen();
     this.setState({showModal : true, videoClassname : "dragon-video-hide"});
+    
     
   }
   
@@ -350,7 +352,20 @@ class DragonflyPlayComponent extends React.Component {
     myThis.props.history.push('dragonflypreferences');    
     return;
   }
-
+  
+  
+  closeFullscreen() {
+    var video = document.getElementById("my-player");
+    if (video.exitFullscreen) {
+      video.exitFullscreen();
+    } else if (video.mozCancelFullScreen) { /* Firefox */
+      video.mozCancelFullScreen();
+    } else if (video.webkitExitFullscreen) { /* Chrome, Safari and Opera */
+      video.webkitExitFullscreen();
+    } else if (video.msExitFullscreen) { /* IE/Edge */
+      video.msExitFullscreen();
+    }
+  }
 
 
 }
