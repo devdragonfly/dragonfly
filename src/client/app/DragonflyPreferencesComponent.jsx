@@ -19,7 +19,8 @@ class DragonflyPreferencesComponent extends React.Component {
                   email : email,
                   mobile : "",
                   selectedContactOption : "email",
-                  selectedInterestedOption : "yes",
+                  selectedNPS : "5",
+                  openTextValue : "",
                   buttonRestClassName : buttonClassName,
                   buttonClickedClassName : "dragon-hidden"
     };
@@ -29,7 +30,8 @@ class DragonflyPreferencesComponent extends React.Component {
     this.updateMobileValue = this.updateMobileValue.bind(this);
     this.showClickedButtonState = this.showClickedButtonState.bind(this);
     this.handleContactOptionChange = this.handleContactOptionChange.bind(this);
-    this.handleInterestedOptionChange = this.handleInterestedOptionChange.bind(this);
+    this.handleNPSOptionChange = this.handleNPSOptionChange.bind(this);
+    this.handleOpenTextChange = this.handleOpenTextChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     
   }
@@ -73,11 +75,11 @@ class DragonflyPreferencesComponent extends React.Component {
                 
                 <br/>
                 
-                <h3>Your session is complete and you have earned ${earned}.</h3>
+                <h4>Your session is complete and you have earned ${earned}.</h4>
                 
                 <br/>
                 
-                <h3>Please enter your preferred contact information for receiving payment:</h3>
+                <h4>Please enter your preferred contact information for receiving payment:</h4>
                 <div className="dragon-select-list-row">
                     <div className="dragon-select-list-form-cell">
                             <div className="radio">
@@ -112,21 +114,31 @@ class DragonflyPreferencesComponent extends React.Component {
                 
                 <br/>
                 
-                <h3>Would you like to learn more about Dragonfly Incentivized Information?</h3>
-                  <div className="radio">
-                    <label>
-                      <input className="form-check-input" type="radio" value="yes" checked={this.state.selectedInterestedOption === 'yes'} onChange={this.handleInterestedOptionChange} name="group2"/>
-                      Yes, I am interested in receiving additional information
-                    </label>
-                  </div>
-                  <div className="radio">
-                    <label>
-                      <input className="form-check-input" type="radio" value="no" checked={this.state.selectedInterestedOption === 'no'} onChange={this.handleInterestedOptionChange} name="group2"/>
-                      No, I am not interested
-                    </label>
-                  </div>
+                <h4>How likely are you to recommend Dragonfly to a friend or colleague?</h4>
+                <table>
+                <tr>
+                  <td className="dragon-nps-col"><input className="form-check-input" type="radio" value="0" checked={this.state.selectedNPS === '0'} onChange={this.handleNPSOptionChange} name="group2"/><br/>0</td>
+                  <td className="dragon-nps-col"><input className="form-check-input" type="radio" value="1" checked={this.state.selectedNPS === '1'} onChange={this.handleNPSOptionChange} name="group2"/><br/>1</td>
+                  <td className="dragon-nps-col"><input className="form-check-input" type="radio" value="2" checked={this.state.selectedNPS === '2'} onChange={this.handleNPSOptionChange} name="group2"/><br/>2</td>
+                  <td className="dragon-nps-col"><input className="form-check-input" type="radio" value="3" checked={this.state.selectedNPS === '3'} onChange={this.handleNPSOptionChange} name="group2"/><br/>3</td>
+                  <td className="dragon-nps-col"><input className="form-check-input" type="radio" value="4" checked={this.state.selectedNPS === '4'} onChange={this.handleNPSOptionChange} name="group2"/><br/>4</td>
+                  <td className="dragon-nps-col"><input className="form-check-input" type="radio" value="5" checked={this.state.selectedNPS === '5'} onChange={this.handleNPSOptionChange} name="group2"/><br/>5</td>
+                  <td className="dragon-nps-col"><input className="form-check-input" type="radio" value="6" checked={this.state.selectedNPS === '6'} onChange={this.handleNPSOptionChange} name="group2"/><br/>6</td>
+                  <td className="dragon-nps-col"><input className="form-check-input" type="radio" value="7" checked={this.state.selectedNPS === '7'} onChange={this.handleNPSOptionChange} name="group2"/><br/>7</td>
+                  <td className="dragon-nps-col"><input className="form-check-input" type="radio" value="8" checked={this.state.selectedNPS === '8'} onChange={this.handleNPSOptionChange} name="group2"/><br/>8</td>
+                  <td className="dragon-nps-col"><input className="form-check-input" type="radio" value="9" checked={this.state.selectedNPS === '9'} onChange={this.handleNPSOptionChange} name="group2"/><br/>9</td>
+                  <td className="dragon-nps-col"><input className="form-check-input" type="radio" value="10" checked={this.state.selectedNPS === '10'} onChange={this.handleNPSOptionChange} name="group2"/><br/>10</td>
+                </tr>
+                </table>
+                
                 
                   <br/>
+                  
+                <h4>Is there any reason you think Dragonfly will not work with your customers?</h4>
+                <textarea rows="4" cols="50" value={this.state.openTextValue} onChange={this.handleOpenTextChange}></textarea>
+                
+                <br/>
+                <br/>
                 
                 <input type="submit" className={this.state.buttonRestClassName} value="Save" />
                 <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Saving</div>
@@ -164,9 +176,16 @@ class DragonflyPreferencesComponent extends React.Component {
   }
   
   
-  handleInterestedOptionChange(e) {
+  handleNPSOptionChange(e) {
     this.setState({
-      selectedInterestedOption: e.target.value
+      selectedNPS: e.target.value
+    });
+  }  
+  
+  
+  handleOpenTextChange(e) {
+    this.setState({
+      openTextValue: e.target.value
     });
   }  
   
@@ -191,9 +210,10 @@ class DragonflyPreferencesComponent extends React.Component {
     
     var preferences = {};
     preferences.emailOrText = this.state.selectedContactOption;
-    preferences.interested = this.state.selectedInterestedOption;
+    preferences.nps = this.state.selectedNPS;
     preferences.email = this.state.email;
     preferences.mobile = this.state.mobile;
+    preferences.text = this.state.openTextValue;
     
     if ((preferences.email == "") || (preferences.email == null)) preferences.email = "none";
     if ((preferences.mobile == "") || (preferences.mobile == null)) preferences.mobile = "none";

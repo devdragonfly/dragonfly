@@ -258,9 +258,9 @@ class DragonflyPlayComponent extends React.Component {
 
     var percentWeighting = question.weight / totalWeight;
     
-    var value = percentWeighting;
+    var value = percentWeighting * incentive;
     var earned = 0;
-    if (correct) earned = Math.round(percentWeighting * incentive, 2);
+    if (correct) earned = value;
 
     var result = {correct: correct, resultText: resultText, value:value, earned: earned, selectedAnswers : selectedAnswers};
     

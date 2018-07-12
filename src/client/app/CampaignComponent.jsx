@@ -207,10 +207,11 @@ class Dragonfly extends React.Component {
     var emailOrText = preferences.emailOrText;
     var email = preferences.email;
     var mobile = preferences.mobile;
-    var interested = preferences.interested;
+    var nps = preferences.nps;
+    var text = preferences.text;
     var earned = dragonfly.earned;
     
-    alert("Contact Method: " + emailOrText + "\nEmail: " + email + "\nMobile: " + mobile + "\nInterested: " + interested + "\nAmount Earned: " + earned);
+    alert("Contact Method: " + emailOrText + "\nEmail: " + email + "\nMobile: " + mobile + "\nNPS: " + nps + "\ntext: " + text + "\nAmount Earned: " + earned);
   }
 
 

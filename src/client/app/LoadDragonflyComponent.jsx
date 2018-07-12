@@ -46,6 +46,7 @@ class LoadDragonflyComponent extends React.Component {
       var orderedBreakpoints = myThis.getOrderedBreakpoints(sessionValidBreakpoints.breakpoints);
       session.breakpoints = orderedBreakpoints;
       session.totalWeight = sessionValidBreakpoints.totalWeight;
+      session.totalQuestionCount = sessionValidBreakpoints.totalQuestionCount;
       dragonfly.session = session;
       myThis.props.handleLoadDragonfly(dragonfly);
       myThis.props.history.push('dragonflystart');    
@@ -83,6 +84,7 @@ class LoadDragonflyComponent extends React.Component {
     var validQuestions = [];
     var isValidQuestion = false;
     var totalWeight = 0;
+    var totalQuestionCount = 0;
     
     for (var i = 0; i < breakpoints.length; i++) {
       var breakpoint = breakpoints[i];
@@ -113,6 +115,7 @@ class LoadDragonflyComponent extends React.Component {
                   if (isValidQuestion) {
                     validQuestions.push(question);
                     totalWeight = totalWeight + questions[j].weight;
+                    totalQuestionCount = totalQuestionCount + 1;
                   }
             }
       }
@@ -132,6 +135,7 @@ class LoadDragonflyComponent extends React.Component {
     
     sessionValidBreakpoints.breakpoints = validBreakpoints;
     sessionValidBreakpoints.totalWeight = totalWeight;
+    sessionValidBreakpoints.totalQuestionCount = totalQuestionCount;
     
     return sessionValidBreakpoints;
   }

@@ -34,6 +34,7 @@ class DragonflyStartComponent extends React.Component {
 
   render() {
     var dragonfly = this.props.dragonfly;
+    var totalQuestionCount = dragonfly.session.totalQuestionCount;
     var contact = dragonfly.contact;
     var first = this.titleCase(contact.first); 
     var last = this.titleCase(contact.last); 
@@ -59,7 +60,7 @@ class DragonflyStartComponent extends React.Component {
                 
                 <br/><br/>
                 
-                The video you are about to watch is 15 minutes long and you will be presented 5 questions at various points throughout it.
+                The video you are about to watch is 15 minutes long and you will be presented {totalQuestionCount} questions at various points throughout it.
                 
                 <br/><br/>
                 

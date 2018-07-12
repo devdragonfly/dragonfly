@@ -74,7 +74,7 @@ class ResultComponent extends React.Component {
               &nbsp;&nbsp;
               {this.props.result.resultText}
               &nbsp;&nbsp;
-              Earned: ${this.props.result.earned} out of ${this.props.result.value}
+              Earned: ${Number(this.props.result.earned).toFixed(2)} out of ${Number(this.props.result.value).toFixed(2)}
         </div>
     );
   }
