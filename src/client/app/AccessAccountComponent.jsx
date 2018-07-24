@@ -31,13 +31,17 @@ class AccessAccountComponent extends React.Component {
   render() {
     return (
       
+      
+      <div className="row home-bg-outer"><div className="col-sm-12">
+      <div className="home-bg-inner">
       <div className="row">
-        <div className="col-sm-6">
-
+        <div className="col-sm-1">
         </div>
-        <div className="col-sm-3">
+        <div className="col-sm-4">
+          <br/><br/><br/><br/>
+          <div className="signUpBox">
           <form onSubmit={this.handleSubmit}>
-              <h1>Access Account</h1>
+              <h1 className="dragonfly-blue">Access Account</h1>
               
               Trouble accessing your account?<br/><br/>
               
@@ -48,12 +52,16 @@ class AccessAccountComponent extends React.Component {
             <input type="submit" className={this.state.buttonRestClassName} value="Send" />
             <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Sending</div>
           </form>
-            
+          </div>
+          <br/><br/><br/><br/>
         </div>
-        <div className="col-sm-3">
-
+        <div className="col-sm-7">
         </div>
-      </div>
+        </div></div>
+      </div></div>
+      
+      
+      
       
     );
   }

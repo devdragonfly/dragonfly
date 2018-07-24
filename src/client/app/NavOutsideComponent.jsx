@@ -29,8 +29,10 @@ class NavOutsideComponent extends React.Component {
 
     
     return (
-      <div className="row dragon-navbar">
+      <div className="row dragon-navbar-outside">
         <div className="col-sm-6">
+        <Link to={`signup`}><img className="topNavLogo" src="./images/logo-dragonfly-ii.png" /></Link>
+        
         </div>
         <div className="col-sm-6">
             <div className="dragon-login-box">

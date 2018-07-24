@@ -51,24 +51,17 @@ class DragonflyStartComponent extends React.Component {
               <br/><br/>
               
               <div className="jumbotron dragon-enlarge">
-
-                <h2>Hello {first} {last},</h2>
-                
-                <br/>
-                
-                Thank you for your time.
-                
-                <br/><br/>
-                
-                The video you are about to watch is 15 minutes long and you will be presented {totalQuestionCount} questions at various points throughout it.
-                
-                <br/><br/>
-                
-                You have the opportunity to earn up to ${incentive} based on how many questions you get right.
-                
-                <br/><br/><br/>
+              <h2>Hello {first} {last},</h2>
+              <br/><br/>
+              Welcome to Dragonfly! We are beta testing our new Incentivized Information technology where we pay you to engage with information.
+              <br/><br/>
+              You can earn ${incentive} cash in 8 minutes ($624,000 per year equivalent) if you answer {totalQuestionCount} questions correctly.
+              <br/><br/>
+              At the end we will pay you through the Venmo App and you can designate if you prefer payment by email or phone.
               
-                <Link to={`dragonflyplay`} className="btn btn-primary btn-lg">Start Now <i className='fa fa-chevron-circle-right'></i></Link>
+              <br/><br/><br/>
+            
+              <Link to={`dragonflyplay`} className="btn btn-primary btn-lg">Start Now <i className='fa fa-chevron-circle-right'></i></Link>
               
               </div>
               <a href={this.state.path} target="_blank">

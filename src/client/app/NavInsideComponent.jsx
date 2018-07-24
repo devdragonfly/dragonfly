@@ -43,7 +43,7 @@ class NavInsideComponent extends React.Component {
     }
     
     return (
-      <div className="row dragon-navbar">
+      <div className="row dragon-navbar-inside">
         <div className="col-sm-2">
             <div onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} className="dragon-org-menu">
               <div className="dragon-org-name">{this.props.organizationName} <i className="fa fa-caret-down"></i></div>

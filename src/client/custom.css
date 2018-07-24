@@ -1,12 +1,31 @@
 .dragonfly-red { color:red;}
 .dragonfly-green { color:green;}
+.divCenter { text-align:center;}
+.topNavLogo { padding:4px; }
+.signUpBox { padding: 50px; background-color:white; border-radius: 8px; border:1px solid #00A2E9;}
+.question1and2 { background-color:#215FAA; color:white; font-size:1.2em;}
+.question3and4 { background-color:#00A2E9; color:white; font-size:1.2em;}
+.question5and6 { background-color:#FFFFFF; color:#215FAA; font-size:1.2em;}
+.question7and8 { background-color:#215FAA; color:white; font-size:1.2em;}
+.dragonfly-blue {color: #215FAA;}
 
-.dragon-navbar {
-    background-color: #215FAA;
+
+.home-bg-outer { 
+        background-image: url("./images/dragonfly-bg.JPG"); 
+        background-repeat:no-repeat;
+        background-size:100%;
+}
+.home-bg-inner { 
+    background-color:rgba(255, 255, 255, 0.8); 
+    margin:20px 10px;
+    border-radius: 8px;
 }
 
+.dragon-navbar-outside { background-color: #FFFFFF; border-bottom:1px solid #00A2E9; }
+.dragon-navbar-inside { background-color: #215FAA; }
+
 .dragon-navbar a {
-    color:white;
+    color:#00A2E9;
 }
 
 .dragon-logo{
@@ -17,6 +36,7 @@
 .dragon-login-box {
     margin:14px 0px 0px 0px;
     font-size:12px;
+    float:right;
 }
 
 .dragon-hidden {

@@ -13,18 +13,28 @@ class SuccessPasswordSavedComponent extends React.Component {
 
   render() {
     return (
-      
+ 
+      <div className="row home-bg-outer"><div className="col-sm-12">
+      <div className="home-bg-inner">
       <div className="row">
-        <div className="col-sm-6">
-
+        <div className="col-sm-1">
         </div>
-        <div className="col-sm-6">
-            <h2>Success!</h2>
+        <div className="col-sm-4">
+          <br/><br/><br/><br/>
+          <div className="signUpBox">
+            <h2 className="dragonfly-blue">Success!</h2>
             Your password has been updated.
             <br/><br/>
             Please sign in above with your email and password.
+          </div>
+          <br/><br/><br/><br/>
         </div>
-      </div>
+        <div className="col-sm-7">
+        </div>
+        
+        </div></div>
+      </div></div>
+
       
     );
   }

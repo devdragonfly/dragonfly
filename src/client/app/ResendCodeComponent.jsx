@@ -31,26 +31,34 @@ class ResendCodeComponent extends React.Component {
   render() {
     return (
       
+      <div className="row home-bg-outer"><div className="col-sm-12">
+      <div className="home-bg-inner">
       <div className="row">
-        <div className="col-sm-6">
-
+        <div className="col-sm-1">
         </div>
-        <div className="col-sm-3">
-        <form onSubmit={this.handleSubmit}>
-            <h1>Resend Email</h1>
-            
-            Please enter your email and we will re-send the verification code.<br/><br/>
-            
-            <input value={this.state.emailValue} onChange={this.updateEmailValue} placeholder="email" className="form-control input-lg"/>
-            <br/>
-            <input type="submit" className={this.state.buttonRestClassName} value="Semd" />
-            <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Sending</div>
-        </form>
+        <div className="col-sm-4">
+          <br/><br/><br/><br/>
+          <div className="signUpBox">
+              <form onSubmit={this.handleSubmit}>
+                  <h1 className="dragonfly-blue">Resend Email</h1>
+                  
+                  Please enter your email and we will re-send the verification code.<br/><br/>
+                  
+                  <input value={this.state.emailValue} onChange={this.updateEmailValue} placeholder="email" className="form-control input-lg"/>
+                  <br/>
+                  <input type="submit" className={this.state.buttonRestClassName} value="Semd" />
+                  <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Sending</div>
+              </form>
+          </div>
+          <br/><br/><br/><br/>
         </div>
-        <div className="col-sm-3">
-
+        <div className="col-sm-7">
         </div>
-      </div>
+        </div></div>
+      </div></div>
+      
+      
+      
       
     );
   }

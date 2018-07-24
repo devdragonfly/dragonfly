@@ -72,14 +72,10 @@ class DragonflyPreferencesComponent extends React.Component {
               <div className="jumbotron dragon-enlarge">
               <form onSubmit={this.handleSubmit}>
                 <h2>Congratulations {first}!</h2>
-                
                 <br/>
-                
                 <h4>Your session is complete and you have earned ${earned}.</h4>
-                
                 <br/>
-                
-                <h4>Please enter your preferred contact information for receiving payment:</h4>
+                <h4>We are going to pay you through the Venmo App, please indicate your preferred contact method:</h4>
                 <div className="dragon-select-list-row">
                     <div className="dragon-select-list-form-cell">
                             <div className="radio">
@@ -117,6 +113,11 @@ class DragonflyPreferencesComponent extends React.Component {
                 <h4>How likely are you to recommend Dragonfly to a friend or colleague?</h4>
                 <table>
                 <tr>
+                  <td colspan="4">Not At All Likely</td>
+                  <td colspan="4">Neutral</td>
+                  <td colspan="3">Extremely Likely</td>
+                </tr>
+                <tr>
                   <td className="dragon-nps-col"><input className="form-check-input" type="radio" value="0" checked={this.state.selectedNPS === '0'} onChange={this.handleNPSOptionChange} name="group2"/><br/>0</td>
                   <td className="dragon-nps-col"><input className="form-check-input" type="radio" value="1" checked={this.state.selectedNPS === '1'} onChange={this.handleNPSOptionChange} name="group2"/><br/>1</td>
                   <td className="dragon-nps-col"><input className="form-check-input" type="radio" value="2" checked={this.state.selectedNPS === '2'} onChange={this.handleNPSOptionChange} name="group2"/><br/>2</td>
@@ -134,7 +135,7 @@ class DragonflyPreferencesComponent extends React.Component {
                 
                   <br/>
                   
-                <h4>Is there any reason you think Dragonfly will not work with your customers?</h4>
+                <h4>Do you have any ideas, comments, concerns, or objections that will help us improve our message or product?</h4>
                 <textarea rows="4" cols="50" value={this.state.openTextValue} onChange={this.handleOpenTextChange}></textarea>
                 
                 <br/>

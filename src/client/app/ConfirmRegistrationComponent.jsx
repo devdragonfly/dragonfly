@@ -38,14 +38,16 @@ class ConfirmRegistrationComponent extends React.Component {
 
   render() {
     return (
-      
+      <div className="row home-bg-outer"><div className="col-sm-12">
+      <div className="home-bg-inner">
       <div className="row">
-        <div className="col-sm-6">
-
+        <div className="col-sm-1">
         </div>
-        <div className="col-sm-3">
+        <div className="col-sm-4">
+          <br/><br/><br/><br/>
+          <div className="signUpBox">
           <form onSubmit={this.handleSubmit}>
-              <h1>Confirm Email Address</h1>
+              <h1 className="dragonfly-blue">Confirm Email Address</h1>
               A six-digit verification code was sent to the email address <br/><br/>
               <i>{this.props.email}</i>. <br/><br/> 
               Please enter that code here so we can verify this is your email.
@@ -56,15 +58,17 @@ class ConfirmRegistrationComponent extends React.Component {
             <input type="submit" className={this.state.buttonRestClassName} value="Confirm" />
             <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Confirming</div>
           </form>
-            <br/><br/><br/><br/>
+            <br/><br/>
             
             Can't find email with verification code?<br/>
             <Link to={`resendcode`}>Re-send email.</Link>
+          </div>
+          <br/><br/><br/><br/>
         </div>
-        <div className="col-sm-3">
-
+        <div className="col-sm-7">
         </div>
-      </div>
+        </div></div>
+      </div></div>
       
     );
   }
