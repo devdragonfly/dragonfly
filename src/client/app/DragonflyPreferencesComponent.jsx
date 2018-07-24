@@ -111,12 +111,14 @@ class DragonflyPreferencesComponent extends React.Component {
                 <br/>
                 
                 <h4>How likely are you to recommend Dragonfly to a friend or colleague?</h4>
+                <span className="NPStext">
+                Not At All Likely
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Neutral
+                &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                Extremely Likely
+                </span>
                 <table>
-                <tr>
-                  <td colspan="4">Not At All Likely</td>
-                  <td colspan="4">Neutral</td>
-                  <td colspan="3">Extremely Likely</td>
-                </tr>
                 <tr>
                   <td className="dragon-nps-col"><input className="form-check-input" type="radio" value="0" checked={this.state.selectedNPS === '0'} onChange={this.handleNPSOptionChange} name="group2"/><br/>0</td>
                   <td className="dragon-nps-col"><input className="form-check-input" type="radio" value="1" checked={this.state.selectedNPS === '1'} onChange={this.handleNPSOptionChange} name="group2"/><br/>1</td>
@@ -147,7 +149,7 @@ class DragonflyPreferencesComponent extends React.Component {
               </form>
               </div>
               <a href={this.state.path} target="_blank">
-              <div className="dragon-powered-by pull-right"><img src="./images/dragonfly-logo.png" /></div>
+              <div className="dragon-powered-by pull-right"><img src="./images/logo-dragonfly-ii.png" /></div>
               </a>
               
         </div>
