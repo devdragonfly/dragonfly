@@ -113,7 +113,9 @@ class LoadDragonflyComponent extends React.Component {
                   
                   
                   if (isValidQuestion) {
+                    if (questions[j].weight === undefined) { questions[j].weight = 2.5; }
                     validQuestions.push(question);
+
                     totalWeight = totalWeight + questions[j].weight;
                     totalQuestionCount = totalQuestionCount + 1;
                   }
@@ -161,7 +163,8 @@ class LoadDragonflyComponent extends React.Component {
   
   handleValidateQuestion(question) {
     var isValidQuestion = true;
-    
+  
+
     
     return isValidQuestion;
   }

@@ -130,11 +130,11 @@ class DragonflyCompleteComponent extends React.Component {
                 
                 <br/><br/>
                 
-                If you do not receive payment within 8 business hours, please contact us at <b>support@dragonfly.one</b>.
+                If you do not receive payment within 8 business hours, please contact us at <b>admin@dragonfly.one</b>.
                 
                 <br/><br/>
                 
-                Limited spots are available for the Dragonfly pre-launch in late 2018. Please contact us at <b>launch@dragonfly.one</b> to be included.
+                Limited spots are available for the Dragonfly pre-launch in late 2018. Please contact us at <b>admin@dragonfly.one</b> to be included.
                 
               </div>
               <a href={this.state.path} target="_blank">
