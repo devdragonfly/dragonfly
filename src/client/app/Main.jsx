@@ -5,6 +5,7 @@ import { Router, Route, Link, browserHistory } from 'react-router';
 import NavOutsideComponent from './NavOutsideComponent.jsx';
 import NavInsideComponent from './NavInsideComponent.jsx';
 import appconfig from "./appconfig";
+import ReactGA from 'react-ga';
 //const fs = require('file-system');
 //const zlib = require("zlib");
 
@@ -85,6 +86,12 @@ class Main extends Component {
         this.s3Upload = this.s3Upload.bind(this);
         this.s3ListObjects = this.s3ListObjects.bind(this);
         this.handleLoadNext = this.handleLoadNext.bind(this);
+        
+        
+        ReactGA.initialize('UA-123354073-1');
+        ReactGA.pageview(window.location.pathname);
+        
+        
     }
     
     

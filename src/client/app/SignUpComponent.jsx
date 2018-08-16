@@ -39,6 +39,8 @@ class SignUpComponent extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClickPlay = this.handleClickPlay.bind(this);
   }
+  
+  
 
   render() {
     return (

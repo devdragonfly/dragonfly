@@ -21,6 +21,7 @@
     "file-system": "^2.2.2",
     "react": "^15.6.1",
     "react-dom": "^15.6.1",
+    "react-ga": "^2.5.3",
     "react-router": "^2.0.1",
     "socket.io": "~0.9.14"
   },
