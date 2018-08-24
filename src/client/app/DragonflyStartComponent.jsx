@@ -55,7 +55,7 @@ class DragonflyStartComponent extends React.Component {
               <br/><br/>
               Welcome to Dragonfly! We are beta testing our new Incentivized Information technology where we pay you to engage with information.
               <br/><br/>
-              You can earn ${incentive} cash in 8 minutes ($624,000 per year equivalent) if you answer {totalQuestionCount} questions correctly.
+              You can earn ${incentive} cash in 8 minutes if you answer {totalQuestionCount} questions correctly.
               <br/><br/>
               At the end we will pay you through the Venmo App and you can designate if you prefer payment by email or phone.
               
