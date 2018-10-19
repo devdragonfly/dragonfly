@@ -1,6 +1,9 @@
 .dragonfly-red { color:red;}
 .dragonfly-green { color:green;}
 .divCenter { text-align:center;}
+.divLeft { float:left;}
+.divRight { float:right;}
+
 .topNavLogo { padding:4px; }
 .signUpBox { padding: 50px; background-color:white; border-radius: 8px; border:1px solid #00A2E9;}
 .question1and2 { background-color:#215FAA; color:white; font-size:1.2em;}
@@ -9,6 +12,13 @@
 .question7and8 { background-color:#215FAA; color:white; font-size:1.2em;}
 .dragonfly-blue {color: #215FAA;}
 .NPStext { font-size:0.8em; font-weight:bold;}
+
+.dragonfly-kiss { 
+    position:absolute;
+    left: -165px;
+    top: -95px;
+}
+
 
 .home-bg-outer { 
         background-image: url("./images/dragonfly-bg.JPG"); 
@@ -353,11 +363,16 @@
 .dragon-white { background-color:white; }
 .dragon-home-header { color: #00A2E9; font-size:50px; }
 .dragon-standard-text { color: #215FAA; font-size:30px; }
-.dragon-blue-rounded { border-radius:10px; background-color:#215FAA; color:white; font-size:30px; padding:30px; margin:30px;}
+.dragon-blue-rounded { border-radius:10px; background-color:#215FAA; color:white; font-size:30px; padding:30px; text-align:center; max-width:450px;}
 
 .dragonfly-progress { margin-top:12px;}
+.dragon-gif{
+  width: 200%;
+  height: auto;
+}
 
-
+.lite-blue-bg {background-color:#F0FAFF; }
+.fitToDiv { width:100%; }
 .dragonfly-blue {color: #215FAA;}
 .dragon-12px { font-size:12px;}
 .dragon-13px { font-size:13px;}

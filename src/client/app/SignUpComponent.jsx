@@ -58,24 +58,27 @@ class SignUpComponent extends React.Component {
         </div>
       </div>
       
-      <br/><br/><br/><br/><br/><br/>
+      <br/><br/><br/><br/><br/>
       
       
-      <div className="row">
+      <div className="row lite-blue-bg">
         <div className="col-sm-1">
         </div>
         <div className="col-sm-4 divCenter">
+        <br/><br/><br/>
           <span className="dragon-standard-text">
           Dragonfly allows you to compensate your Customers for Learning about your Company and Products, 
-          providing their Feedback, and Sharing other requested Information. 
+          providing their Feedback, and Sharing other requested Information. <br/><br/>
           The result is an Ongoing, Documentable, Two-Way Information Exchange with your Customers.
           </span>
+        <br/><br/><br/>
         </div>
         <div className="col-sm-2">
         </div>
         <div className="col-sm-4 divCenter">
+        <br/><br/><br/><br/><br/><br/>
                 <div className="dragon-blue-rounded">
-                
+                <img src="./images/dragonfly2.png" className="dragonfly-kiss" />
                     <form onSubmit={this.handleSubmit}>
                                 Create Your Free Account
                                 <br/><br/>
@@ -87,6 +90,7 @@ class SignUpComponent extends React.Component {
                                 <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Creating Account</div> 
                     </form>
                 </div>
+        <br/><br/><br/>
         </div>
         <div className="col-sm-1">
         </div>
@@ -94,72 +98,85 @@ class SignUpComponent extends React.Component {
       
       
       
-      <br/><br/><br/><br/><br/><br/>
+      <br/><br/><br/>
       
       
       
       
     <div className="row">
-            <div className="col-sm-4 divCenter">
-              <div className="dragon-blue-rounded">Dragonfly is built on the belief that customers are so overwhelmed by emails, ads, and sales reps that they aren't getting the message.</div>
+            <div className="col-sm-1"></div>
+            <div className="col-sm-4">
+              <br/><br/><br/>
+              <div className="dragon-blue-rounded divRight">Dragonfly is built on the belief that customers are so overwhelmed by emails, ads, and sales reps that they aren't getting the message.</div>
+              <br/><br/><br/>
             </div>
-            <div className="col-sm-4 divCenter">
+            <div className="col-sm-2 divCenter">
             <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-              <img src="./images/CustomerImageAdsEmailSalesReps.PNG" />
+              <img src="./images/CustomerImageAdsEmailSalesReps.PNG" className="fitToDiv" />
             </div>
-            <div className="col-sm-4 divCenter">
-            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
-              <div className="dragon-blue-rounded">Dragonfly incentivizes information engagement and allows you to measure company and product knowledge for each of your customers.</div>
+            <div className="col-sm-4">
+            <br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/><br/>
+              <div className="dragon-blue-rounded divLeft">Dragonfly incentivizes information engagement and allows you to measure company and product knowledge for each of your customers.</div>
+              <br/><br/><br/>
             </div>
+            <div className="col-sm-1"></div>
     </div>
     
     
     
-    <br/><br/><br/><br/><br/><br/>
+    <br/><br/><br/>
     
     
       
-    <div className="row">
+    <div className="row lite-blue-bg">
             <div className="col-sm-4 divCenter">
+              <br/><br/><br/>
               <span className="dragon-standard-text">Connect with your Customers</span>
               <br/><br/><br/>
               <img src="./images/Company_dragonfly_customer.png" />
               <br/><br/><br/>
               <span className="dragon-standard-text">Incentivizing information encourages customer engagement</span>
+              <br/><br/><br/>
             </div>
             <div className="col-sm-4 divCenter">
+              <br/><br/><br/>
               <span className="dragon-standard-text">Pre and Post Sale</span>
               <br/><br/><br/>
               <img src="./images/Pre_Post_Sale.png" />
               <br/><br/><br/>
               <span className="dragon-standard-text">Dragonfly handles information sharing for sales and customer success teams</span>
+              <br/><br/><br/>
             </div>
             <div className="col-sm-4 divCenter">
+              <br/><br/><br/>
               <span className="dragon-standard-text">Document Engagement</span>
               <br/><br/><br/>
               <img src="./images/Dragonfly_Graph.png" />
               <br/><br/><br/>
               <span className="dragon-standard-text">Measuring what your customers know allows for strategic and progressive messaging</span>
+              <br/><br/><br/>
             </div>
     </div>
     
     
     
-    <br/><br/><br/><br/><br/><br/>
+    <br/><br/><br/><br/>
       
       
 
       <div className="row">
         <div className="col-sm-1">
         </div>
-        <div className="col-sm-7 divCenter">
-            <img src="./images/Slide1.PNG" />
+        <div className="col-sm-5 divCenter">
+            <img src="./images/DragonflyGif222.gif" className="fitToDiv"/>
         </div>
-        <div className="col-sm-4 divCenter">
+        <div className="col-sm-5 divCenter">
           <div className="dragon-blue-rounded">
             Would you like to receive a paid dragonfly?
             <br/><br/>
             We are currently targeting B2B Sales Management and Marketing roles - Director level and up.
+            <br/><br/>
+            admin@dragonfly.one
           </div>
         </div>
         <div className="col-sm-1">
@@ -176,7 +193,8 @@ class SignUpComponent extends React.Component {
             <span className="dragon-home-header">How Companies Use Dragonfly</span>
             <br/><br/>
             <img src="./images/HowCompaniesUseDragonfly.PNG" />
-            
+            <br/><br/><br/>
+            <img src="./images/dragonfly-section.png" />
         </div>
         <div className="col-sm-1">
         </div>
