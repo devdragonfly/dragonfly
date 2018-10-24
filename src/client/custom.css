@@ -19,6 +19,7 @@
     top: -95px;
 }
 
+.dragonfly-contact { font-weight:bold; color:#00A2E9; font-size:14px;}
 
 .home-bg-outer { 
         background-image: url("./images/dragonfly-bg.JPG"); 
@@ -31,6 +32,10 @@
     border-radius: 8px;
 }
 
+.footer { background-color:#215FAA; color:white;  }
+.footer-left { text-align:left; font-size:1.4em;}
+.footer-left a { color:white; text-decoration:underline;}
+.footer-right { text-align:right;}
 .dragon-navbar-outside { background-color: #FFFFFF; border-bottom:1px solid #00A2E9; }
 .dragon-navbar-inside { background-color: #215FAA; }
 
@@ -364,6 +369,9 @@
 .dragon-home-header { color: #00A2E9; font-size:50px; }
 .dragon-standard-text { color: #215FAA; font-size:30px; }
 .dragon-blue-rounded { border-radius:10px; background-color:#215FAA; color:white; font-size:30px; padding:30px; text-align:center; max-width:450px;}
+.dragon-blue-rounded-left { border-radius:10px; background-color:#00A2E9; color:white; font-size:20px; padding:30px; text-align:left; max-width:450px;}
+.underline { text-decoration:underline; }
+.fine-print { font-size:10px;}
 
 .dragonfly-progress { margin-top:12px;}
 .dragon-gif{

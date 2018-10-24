@@ -56,6 +56,11 @@ class NavOutsideComponent extends React.Component {
                 </div>
                   
               </form>
+              <br/>
+              
+              <span className="dragonfly-contact">Contact us:&nbsp;&nbsp;
+                <a href="mailto:admin@dragonfly.one" className="dragonfly-contact">admin@dragonfly.one</a>
+              </span>
             </div>
         </div>
       </div>

@@ -199,6 +199,107 @@ class SignUpComponent extends React.Component {
         <div className="col-sm-1">
         </div>
       </div>
+      
+      
+      <br/><br/><br/><br/><br/><br/><br/>
+      
+      
+      
+      <div className="row lite-blue-bg">
+        <div className="col-sm-1">
+        </div>
+        <div className="col-sm-4 divCenter">
+        <br/><br/><br/>
+          <div className="dragon-blue-rounded-left">
+          
+          <span className="underline">Free</span>
+          
+          <br/><br/>
+          <ul>
+            <li>Create Account</li>
+            <li>Send Unlimited Dragonfly Sessions</li>
+          </ul>
+          <br/><br/>
+          
+          <span className="underline">Risk Free</span>
+          
+          <br/><br/>
+          <ul>
+            <li>Only Pay for Successful Dragonfly Sessions</li>
+          </ul>
+          <br/><br/>
+          
+          <span className="underline">Fees</span>
+          
+          <br/><br/>
+          <ul>
+            <li>Customer Incentive</li>
+            <li>+ Dragonfly Success Fee</li>
+          </ul>
+          <br/>
+          
+          <span className="fine-print">
+          Customer Incentive = Amount Paid for Answering Questions<br/>
+          Dragonfly Success Fee = 33% of Customer Incentive<br/>
+          Dragonfly Success Fee Decreases with Volume Commitment
+          </span>
+          
+          
+          
+          </div>
+        <br/><br/><br/>
+        </div>
+        <div className="col-sm-2">
+        </div>
+        <div className="col-sm-4 divCenter">
+        <br/><br/><br/><br/><br/><br/>
+                <div className="dragon-blue-rounded">
+                <img src="./images/dragonfly2.png" className="dragonfly-kiss" />
+                    <form onSubmit={this.handleSubmit}>
+                                Create Your Free Account
+                                <br/><br/>
+                                <input value={this.state.emailValue} onChange={this.updateEmailValue} placeholder="email" className="form-control input-lg"/>
+                                <br/>
+                                <input type="password" value={this.state.passwordValue} onChange={this.updatePasswordValue} placeholder="password" className="form-control input-lg"/>
+                                <br/>
+                                <input type="submit" className={this.state.buttonRestClassName} value="Create Account" />
+                                <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Creating Account</div> 
+                    </form>
+                </div>
+        <br/><br/><br/>
+        </div>
+        <div className="col-sm-1">
+        </div>
+      </div>
+      
+      
+      <div className="row footer">
+        <div className="col-sm-6 footer-left">
+        
+        <br/><br/>
+        
+        Want to learn more?
+        
+        <br/><br/>
+        
+        Contact us:&nbsp;&nbsp;
+        <a href="mailto:admin@dragonfly.one" className="dragonfly-contact">admin@dragonfly.one</a>
+        
+        <br/><br/>
+        
+        </div>
+        <div className="col-sm-6 footer-right">
+        
+        <br/><br/>
+        
+        <br/><br/>
+        
+        <br/><br/>
+        ©Dragonfly Incentivized Information LLC 2018
+
+        
+        </div>
+      </div>
 
 
       </div></div>

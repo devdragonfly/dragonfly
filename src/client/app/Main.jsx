@@ -511,7 +511,7 @@ class Main extends Component {
                 
                     {childrenWithProps}
                     
-                    <br/><br/><br/><br/><br/>
+                    
             </div>
         );
     }
