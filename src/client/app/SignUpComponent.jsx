@@ -238,6 +238,7 @@ class SignUpComponent extends React.Component {
           </ul>
           <br/>
           
+          
           <span className="fine-print">
           Customer Incentive = Amount Paid for Answering Questions<br/>
           Dragonfly Success Fee = 33% of Customer Incentive<br/>
