@@ -46,7 +46,7 @@ class SignUpComponent extends React.Component {
     return (
       <div className="row"><div className="col-sm-12 dragon-white">
       
-      <br/><br/><br/>
+      <br/><br/>
       
       <div className="row">
         <div className="col-sm-1">
@@ -98,7 +98,7 @@ class SignUpComponent extends React.Component {
       
       
       
-      <br/><br/><br/>
+      <br/><br/>
       
       
       
@@ -124,7 +124,7 @@ class SignUpComponent extends React.Component {
     
     
     
-    <br/><br/><br/>
+    <br/><br/>
     
     
       
@@ -168,6 +168,7 @@ class SignUpComponent extends React.Component {
         <div className="col-sm-1">
         </div>
         <div className="col-sm-5 divCenter">
+            <span className="dragon-home-header">How Dragonfly Works</span><br/>
             <img src="./images/DragonflyGif222.gif" className="fitToDiv"/>
         </div>
         <div className="col-sm-5 divCenter">
@@ -210,6 +211,7 @@ class SignUpComponent extends React.Component {
         </div>
         <div className="col-sm-4 divCenter">
         <br/><br/><br/>
+          <span className="dragon-home-header-pricing">Pricing</span>
           <div className="dragon-blue-rounded-left">
           
           <span className="underline">Free</span>
