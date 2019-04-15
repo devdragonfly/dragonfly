@@ -50,9 +50,6 @@ import DragonflyPlayComponent from './DragonflyPlayComponent.jsx';
 import DragonflyPreferencesComponent from './DragonflyPreferencesComponent.jsx';
 import DragonflyCompleteComponent from './DragonflyCompleteComponent.jsx';
 
-
-
-
 render(
     <Router>
         <Route path="/" component={Main} history={browserHistory}>
@@ -104,7 +101,6 @@ render(
             <Route path="dragonflyplay" component={DragonflyPlayComponent}/>
             <Route path="dragonflypreferences" component={DragonflyPreferencesComponent}/>
             <Route path="dragonflycomplete" component={DragonflyCompleteComponent}/>
-
 
         </Route>
     </Router>,
