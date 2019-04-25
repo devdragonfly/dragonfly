@@ -11,7 +11,6 @@ var socketio = require('socket.io');
 var express = require('express');
 const fileUpload = require('express-fileupload');
 
-
 //
 // ## SimpleServer `SimpleServer(obj)`
 //
@@ -29,8 +28,10 @@ var sockets = [];
 
 router.use(fileUpload());
 
+console.log('messages', messages);
 
 io.on('connection', function (socket) {
+    console.log("User Connected");
     messages.forEach(function (data) {
       socket.emit('message', data);
     });
@@ -38,17 +39,20 @@ io.on('connection', function (socket) {
     sockets.push(socket);
 
     socket.on('disconnect', function () {
+      console.log('user disconnected');
       sockets.splice(sockets.indexOf(socket), 1);
       updateRoster();
+
     });
 
     socket.on('message', function (msg) {
       var text = String(msg || '');
-
+      console.log(text);
       if (!text)
         return;
 
       socket.get('name', function (err, name) {
+        console.log('user name');
         var data = {
           name: name,
           text: text
@@ -60,6 +64,7 @@ io.on('connection', function (socket) {
     });
 
     socket.on('identify', function (name) {
+      console.log('user identify');
       socket.set('name', String(name || 'Anonymous'), function (err) {
         updateRoster();
       });
@@ -71,20 +76,20 @@ io.on('connection', function (socket) {
 
 
 router.post('/upload', function(req, res) {
-  
+
   console.log('video upload called');
-  
+
   if (!req.files)
     return res.status(400).send('No files were uploaded.');
- 
-  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file 
+
+  // The name of the input field (i.e. "sampleFile") is used to retrieve the uploaded file
   var sampleFile = req.files.sampleFile;
- 
-  // Use the mv() method to place the file somewhere on your server 
+
+  // Use the mv() method to place the file somewhere on your server
   //sampleFile.mv('/somewhere/on/your/server/filename.jpg', function(err) {
   //  if (err)
   //    return res.status(500).send(err);
- 
+
   res.send('File uploaded!');
   //});
 });

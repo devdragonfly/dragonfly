@@ -54,7 +54,7 @@ class VideosComponent extends React.Component {
 
             <br/>
 
-            <Link to={`uploadvideo`} className="btn btn-primary"><i className='fa fa-plus'></i> Upload Video 123</Link>
+            <Link to={`uploadvideo`} className="btn btn-primary"><i className='fa fa-plus'></i> Upload Video</Link>
 
           </div>
           <div className="col-sm-4">
