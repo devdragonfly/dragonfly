@@ -62,7 +62,7 @@ class AddContactsComponent extends React.Component {
 
               <br/>
 
-              <input type="submit" className={this.state.buttonRestClassName} value="Add Contacts subm1t" />
+              <input type="submit" className={this.state.buttonRestClassName} value="Add Contacts" />
               <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Adding Contacts</div>
             </form>
 
@@ -101,17 +101,14 @@ class AddContactsComponent extends React.Component {
 
     if (this.props.contactList.contacts != null) {
       validContacts = this.props.contactList.contacts;
-      console.log('validContacts', validContacts);
     }
 
-    console.log('contacts', contacts);
     for (var i = 0; i < contacts.length; i++) {
         if (contacts[i].isValid) {
           console.log('contacts item', contacts[i]);
           validContacts.push({first: contacts[i].first, last: contacts[i].last, email: contacts[i].email});
         }
     }
-    console.log('validContacts', validContacts);
 
     var params = {
             TableName:"ContactLists",

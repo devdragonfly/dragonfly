@@ -41,7 +41,7 @@ class UploadVideoComponent extends React.Component {
           {organizationMenu}
           <div className="col-sm-4">
 
-            <h3><i className='fa fa-file-video-o fa-fw'></i> Upload Video 234</h3>
+            <h3><i className='fa fa-file-video-o fa-fw'></i> Upload Video</h3>
             <form ref='uploadForm' onSubmit={this.handleSubmit}>
 
               <br/>
