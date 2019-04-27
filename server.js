@@ -38,7 +38,6 @@ io.on('connection', function (socket) {
     socket.on('disconnect', function () {
       sockets.splice(sockets.indexOf(socket), 1);
       updateRoster();
-
     });
 
     socket.on('message', function (msg) {
@@ -70,6 +69,8 @@ io.on('connection', function (socket) {
 
 
 router.post('/upload', function(req, res) {
+
+  console.log('video upload called');
 
   if (!req.files)
     return res.status(400).send('No files were uploaded.');
