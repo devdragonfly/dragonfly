@@ -18,7 +18,7 @@ class ContactListComponent extends React.Component {
 
     this.state = {
       show: false,
-      messageText: ''
+      alertMessage: ''
     };
   }
 
@@ -73,7 +73,7 @@ class ContactListComponent extends React.Component {
           </div>
           <div className="col-sm-4">
           </div>
-          <ImportAlertComponent show={this.state.show} onClose={this.showAlert} messageText={this.state.messageText}/>
+          <ImportAlertComponent show={this.state.show} onClose={this.showAlert} alertMessage={this.state.alertMessage}/>
 
         </div>
 
@@ -161,7 +161,7 @@ class ContactListComponent extends React.Component {
   showAlert(message) {
     this.setState({
       show: !this.state.show,
-      messageText: message
+      alertMessage: message
     });
   };
 

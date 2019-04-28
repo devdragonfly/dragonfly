@@ -57,7 +57,7 @@ class ImportAlertComponent extends React.Component {
           <div className="dragon-backdrop" style={backdropStyle}>
             <div className="dragon-alert" style={alertStyle}>
               <p style={messageStyle}>
-                {this.props.messageText}
+                {this.props.alertMessage}
               </p>
               <div style={footerStyle}>
                 <button onClick={(e) => {this.onClose(e)}}>
