@@ -59,7 +59,6 @@ class ContactListComponent extends React.Component {
             <br/>
 
             &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            {/*<Link to={`importcontacts`}><i className='fa fa-file-excel-o'></i> Import Contacts</Link>*/}
 
             <br/>
             <div className="row">
@@ -146,13 +145,11 @@ class ContactListComponent extends React.Component {
                 ReturnValues:"UPDATED_NEW"
             };
 
-            myThis.showAlert("Your file has been successfully imported.");
-
-        // this.props.dbUpdate(params, function(result) {
-        //   myThis.props.handleLoadContacts(result.Attributes.contacts);
-        //   myThis.props.history.push('contactlist');
-        //   myThis.showAlert("Your file has been successfully imported.");
-        // });
+        this.props.dbUpdate(params, function(result) {
+          myThis.props.handleLoadContacts(result.Attributes.contacts);
+          myThis.props.history.push('contactlist');
+          myThis.showAlert("Your file has been successfully imported.");
+        });
       }
 
     });
