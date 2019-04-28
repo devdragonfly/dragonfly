@@ -15,7 +15,7 @@ const userPool_unauth = new CognitoUserPool({ UserPoolId: appconfig.UserPoolId, 
 AWS_unauth.config.region = 'us-west-2';
 AWS_unauth.config.credentials = new AWS_unauth.CognitoIdentityCredentials({
     AccountId: '698305963744',
-    RoleArn: 'arn:aws:iam::698305963744:role/Cognito_dragonflyUnauth_Role', 
+    RoleArn: 'arn:aws:iam::698305963744:role/Cognito_dragonflyUnauth_Role',
     IdentityPoolId : 'us-west-2:b6311e4b-9082-4058-883c-19d23e34802b',
 });
 dragonfly_unauth.docClient = new AWS_unauth.DynamoDB.DocumentClient();
@@ -33,8 +33,8 @@ class Main extends Component {
 
     constructor(props) {
         super(props);
-        this.state = {email : '', 
-                    userId : 'not found', 
+        this.state = {email : '',
+                    userId : 'not found',
                     organizations: 'not found',
                     organizationName: 'not found',
                     organizationId: 'not found',
@@ -86,67 +86,67 @@ class Main extends Component {
         this.s3Upload = this.s3Upload.bind(this);
         this.s3ListObjects = this.s3ListObjects.bind(this);
         this.handleLoadNext = this.handleLoadNext.bind(this);
-        
-        
+
+
         ReactGA.initialize('UA-123354073-1');
         ReactGA.pageview(window.location.pathname);
-        
-        
+
+
     }
-    
-    
-    
+
+
+
     handleLoadEmail(email) {
         this.setState({email : email});
     }
-    
+
     handleLoadOrganizations(result) {
         this.setState({organizations : result.Items});
     }
-    
+
     handleLoadContactLists(result) {
         this.setState({contactLists : result.Items});
     }
-    
+
     handleLoadContactList(contactList) {
         this.setState({contactList : contactList});
-    } 
-    
+    }
+
     handleLoadSessions(result) {
         this.setState({sessions : result.Items});
     }
-    
+
     handleLoadCampaigns(result) {
         this.setState({campaigns : result.Items});
     }
-    
+
     handleLoadCampaign(campaign) {
         this.setState({campaign : campaign});
     }
-    
-    
+
+
     handleLoadResults(results) {
         this.setState({results : results});
-    }    
+    }
 
     handleLoadDragonflyId(dragonflyId) {
         this.setState({dragonflyId : dragonflyId});
-    } 
-    
+    }
+
     handleLoadDragonfly(dragonfly) {
         this.setState({dragonfly : dragonfly});
         this.setState({session : dragonfly.session});
-        
-    } 
-    
+
+    }
+
     handleLoadVideos(result) {
         this.setState({videos : result.Items});
-    }   
-    
+    }
+
     handleLoadPreview(preview) {
         this.setState({preview : preview});
-    }   
-    
+    }
+
     handleLoadSession(session) {
         if ((session.video == null) || (session.video == "not found")) {
             session.video = {name:"No Video Selected", videoId:"not found"};
@@ -159,11 +159,11 @@ class Main extends Component {
         }
         this.setState({session : session});
     }
-    
+
     handleLoadVideo(video) {
         this.setState({video : video});
     }
-    
+
     handleVideoStatusUpdate(videoId, status) {
         var videos = this.state.videos;
         for (var i = 0; i < videos.length; i++) {
@@ -172,29 +172,29 @@ class Main extends Component {
             }
         }
         this.setState({videos : videos});
-        
+
     }
-    
+
     handleLoadBreakpoint(breakpoint) {
         this.setState({breakpoint : breakpoint});
     }
-    
+
     handleLoadQuestion(question) {
         this.setState({question : question});
     }
-    
+
     handleLoadContacts(contacts) {
         var contactList = this.state.contactList;
         contactList.contacts = contacts;
         this.setState({contactList : contactList});
-    } 
-    
-    
+    }
+
+
     handleLoadNext(next) {
         this.setState({next : next});
     }
-    
-    
+
+
     handleLoadOrganization(organizationId, organizationName) {
         this.setState({organizationId : organizationId});
         this.setState({organizationName : organizationName});
@@ -203,42 +203,42 @@ class Main extends Component {
         this.setState({sessions : 'not found'});
         this.setState({videos : 'not found'});
     }
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
+
+
+
     handleAuthenticate(email, password, callback, errorCallback) {
-        
+
         var myThis = this;
         var authenticationData = {Username : email, Password : password};
         var authenticationDetails = new AuthenticationDetails(authenticationData);
         var userData =  {Username : email, Pool : userPool };
         var cognitoUser = new CognitoUser(userData);
 
-        
+
         cognitoUser.authenticateUser(authenticationDetails, {
               onSuccess: function (result) {
-                  
-                  
-                  
+
+
+
                 AWS.config.region = 'us-west-2';
                 AWS.config.credentials = new AWS.CognitoIdentityCredentials({
                         //AccountId: '698305963744',
-                        //RoleArn: 'arn:aws:iam::698305963744:role/Cognito_dragonflyAuth_Role', 
+                        //RoleArn: 'arn:aws:iam::698305963744:role/Cognito_dragonflyAuth_Role',
                         IdentityPoolId : 'us-west-2:b6311e4b-9082-4058-883c-19d23e34802b',
                         Logins : { 'cognito-idp.us-west-2.amazonaws.com/us-west-2_N8urEcZBJ' : result.getIdToken().getJwtToken() }
                 });
-                  
-                
+
+
                 dragonfly.docClient = new AWS.DynamoDB.DocumentClient();
                 dragonfly.cognitoUser = cognitoUser;
                 dragonfly.s3 = new AWS.S3({ apiVersion: '2006-03-01', params: {Bucket: 'dragonfly-videos'},   httpOptions: { timeout: 1000000 } });
                 myThis.handleLoadAttributes(callback);
               },
-       
+
               onFailure: function(err) {
                   if (err.code === "UserNotConfirmedException") {
                     myThis.props.history.push('confirmregistration');
@@ -247,12 +247,12 @@ class Main extends Component {
                   }
               }
           });
-          
-        
+
+
     }
-    
-    
-    
+
+
+
     handleLoadAttributes(callback) {
         var myThis = this;
         dragonfly.cognitoUser.getUserAttributes(function(err, result) {
@@ -265,60 +265,60 @@ class Main extends Component {
                 var userId = result[0].getValue();
                 myThis.setState({ userId : userId });
                 callback();
-                
-              
+
+
             }
         });
-    } 
-    
-    
+    }
+
+
     dbPut(params, callback) {
 
         dragonfly.docClient.put(params, function(err, data) {
-          
+
             if (err) {
                 alert(JSON.stringify(err));
                 callback();
             } else {
                 callback(data);
             }
-        });        
+        });
     }
-    
-    
+
+
      dbBatchWrite(params, callback) {
 
         dragonfly.docClient.batchWrite(params, function(err, data) {
-          
+
             if (err) {
                 alert(JSON.stringify(err));
                 callback();
             } else {
                 callback(data);
             }
-        });        
-    }   
+        });
+    }
 
-    
-    
-    
+
+
+
     dbQuery(params, callback) {
 
         dragonfly.docClient.query(params, function(err, data) {
-          
+
             if (err) {
                 alert(JSON.stringify(err));
                 callback(data);
             } else {
                 callback(data);
             }
-        });        
+        });
     }
-    
+
     dbQueryUnauth(params, callback, doNotRetry) {
         var myThis = this;
         dragonfly_unauth.docClient.query(params, function(err, data) {
-          
+
             if (err) {
                 if (doNotRetry) {
                     alert(JSON.stringify(err));
@@ -326,52 +326,52 @@ class Main extends Component {
                 } else {
                     myThis.dbQueryUnauth(params, callback, true);
                 }
-                
-                
+
+
             } else {
                 callback(data);
             }
-        });        
+        });
     }
-    
+
     dbUpdate(params, callback) {
 
         dragonfly.docClient.update(params, function(err, data) {
-          
+
             if (err) {
                 alert(JSON.stringify(err));
                 callback(data);
             } else {
                 callback(data);
             }
-        });        
+        });
     }
- 
- 
+
+
      dbUpdateUnauth(params, callback) {
 
         dragonfly_unauth.docClient.update(params, function(err, data) {
-          
+
             if (err) {
                 alert(JSON.stringify(err));
                 callback(data);
             } else {
                 callback(data);
             }
-        });        
+        });
     }
- 
-    
-    
+
+
+
     s3Upload(file, key, videoUploadFailedCallback, videoUploadedCallback) {
         var myThis = this;
         var size = file.size;
-        
+
         var params = {Key: key, ContentType: file.type, Body: file};
-        
+
         var request = dragonfly.s3.putObject(params);
         var percent = 0;
-        
+
         request.
           on('httpUploadProgress', function(progress, response) {
             percent = Math.round((progress.loaded / size) * 100, -2);
@@ -387,16 +387,16 @@ class Main extends Component {
             myThis.setState({percent: 'not found'});
           }).
           send();
-          
+
     }
-    
-    
+
+
     s3ListObjects(params, callback) {
         dragonfly.s3.listObjects(params, function (err, data) {
             callback(err,data);
         });
     }
-    
+
     handleSignOut() {
         this.setState({email : ''});
         this.setState({userId : 'not found'});
@@ -409,19 +409,19 @@ class Main extends Component {
         this.setState({videos : 'not found'});
         this.setState({dragonflyId : 'not found'});
     }
-    
-    
-    
 
-    
 
-    
-    
-    
-    
+
+
+
+
+
+
+
+
     render(){
-        
-        
+
+
         const childrenWithProps = React.Children.map(this.props.children,
          (child) => React.cloneElement(child, {
            userId: this.state.userId,
@@ -476,7 +476,7 @@ class Main extends Component {
            s3ListObjects: this.s3ListObjects
          })
         );
-        
+
         var dragonflyId = this.state.dragonflyId;
         var email = this.state.email;
         var userId = this.state.userId;
@@ -488,30 +488,30 @@ class Main extends Component {
         var handleLoadEmail = this.handleLoadEmail;
         var handleLoadOrganization = this.handleLoadOrganization;
         var history = this.props.history;
-        
-        
+
+
         var nav = function() { return '' }();
-        
+
         if (userId === 'not found') {
             nav = function() {return <NavOutsideComponent handleLoadEmail={handleLoadEmail} handleAuthenticate={handleAuthenticate} email={email} history={history} /> }();
         }
-        
+
         if (organizationName !== 'not found') {
             nav = function() {return <NavInsideComponent handleLoadOrganization={handleLoadOrganization} organizationName={organizationName}  organizations={organizations} userId={userId} email={email}   handleSignOut={handleSignOut}  history={history} percent={percent}/> }();
         }
-        
+
         if (dragonflyId !== 'not found') {
             nav = function() { return '' }();
         }
-        
+
         return(
             <div class="container-fluid">
-                
+
                     {nav}
-                
+
                     {childrenWithProps}
-                    
-                    
+
+
             </div>
         );
     }

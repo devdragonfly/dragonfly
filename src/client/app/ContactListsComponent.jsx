@@ -43,7 +43,6 @@ class ContactListsComponent extends React.Component {
 
     var organizationMenu = function() {return <OrganizationMenuComponent current="contactlists" /> }();
 
-
     return (
 
         <div className="row">
@@ -65,7 +64,6 @@ class ContactListsComponent extends React.Component {
           </div>
           <div className="col-sm-4">
           </div>
-
         </div>
 
 

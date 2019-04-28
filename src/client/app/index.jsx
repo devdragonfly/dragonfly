@@ -49,6 +49,7 @@ import DragonflyStartComponent from './DragonflyStartComponent.jsx';
 import DragonflyPlayComponent from './DragonflyPlayComponent.jsx';
 import DragonflyPreferencesComponent from './DragonflyPreferencesComponent.jsx';
 import DragonflyCompleteComponent from './DragonflyCompleteComponent.jsx';
+import ImportAlertComponent from './ImportAlertComponent.jsx';
 
 render(
     <Router>
@@ -101,6 +102,8 @@ render(
             <Route path="dragonflyplay" component={DragonflyPlayComponent}/>
             <Route path="dragonflypreferences" component={DragonflyPreferencesComponent}/>
             <Route path="dragonflycomplete" component={DragonflyCompleteComponent}/>
+            <Route path="importalert" component={ImportAlertComponent}/>
+
 
         </Route>
     </Router>,
