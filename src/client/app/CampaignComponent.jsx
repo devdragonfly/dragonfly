@@ -7,37 +7,35 @@ class CampaignComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    
-    
 
-    
+
     this.state = {path : "not found",
                   totals: []
     };
-    
+
 
 
 
   }
-  
-  
+
+
   componentWillMount() {
     var results = this.props.results;
     if (results.Count == 0) {
       this.props.history.push('generatedragonflies');
     }
-    
-    
+
+
   }
-  
+
   componentDidMount() {
     if (typeof window !== 'undefined') {
-      var path = window.location.protocol + '//' + window.location.host; 
+      var path = window.location.protocol + '//' + window.location.host;
       this.setState({path : path});
     } else {
       // work out what you want to do server-side...
     }
-    
+
     var data = [];
     var dragonflies = this.props.results.Items;
     for (var i = 0; i < dragonflies.length; i++) {
@@ -45,30 +43,30 @@ class CampaignComponent extends React.Component {
         data.push(dragonflies[i].results);
       }
     }
-    
+
     var numberOfCompletedDragonflies = data.length;
-    
+
     var totals = [];
     if (numberOfCompletedDragonflies > 0) {
       var numberOfQuestions = data[0].length;
-      
-      
+
+
       totals = Array.apply(null, Array(numberOfQuestions)).map(Number.prototype.valueOf,0);
       for (var i = 0; i < numberOfCompletedDragonflies; i++) {
         for (var j = 0; j < numberOfQuestions; j++) {
           if (data[i][j].correct) totals[j] = totals[j] + 1;
-        }        
+        }
       }
-      
+
     }
-    
-    
+
+
     var ctx = document.getElementById('questionResultsChart').getContext('2d');
     var myChart = new Chart(ctx, {
       type: 'line',
       options: {
         scales: {yAxes: [{display: true, ticks: { beginAtZero: true }}]}
-        
+
       },
       data: {
         labels: ['Q1', 'Q2', 'Q3', 'Q4'],
@@ -79,33 +77,33 @@ class CampaignComponent extends React.Component {
         }]
       }
     });
-    
-    
+
+
     this.setState({totals : totals});
-    
+
   }
 
   render() {
     var organizationMenu = function() {return <OrganizationMenuComponent current="campaigns" /> }();
     var path = this.state.path;
-    
-    
-    
+
+
+
     var dragonflies = this.props.results;
     var sessionName = "session name";
-    
+
     var dragonfliesJsx = function() {return '' }();
-    
+
     if (dragonflies !== 'not found') {
           dragonflies = dragonflies.Items;
           if (dragonflies.length === 0) {
             dragonfliesJsx = function() {return 'ERROR: No dragonflies created.' }();
-            
+
           } else {
             dragonfliesJsx = dragonflies.map((dragonfly, i) => {
                 sessionName = dragonfly.session.name;
                 return <Dragonfly dragonfly={dragonfly} path={path}/>
-                
+
             });
           }
     }
@@ -117,23 +115,23 @@ class CampaignComponent extends React.Component {
           {organizationMenu}
 
           <div className="col-sm-8">
-          
+
             <h3><i className='fa fa-line-chart fa-fw'></i> {this.props.campaign.name}</h3>
 
             <br/><br/>
             <h4>Session</h4>
-            <i className='fa fa-graduation-cap fa-fw'></i> 
+            <i className='fa fa-graduation-cap fa-fw'></i>
             {sessionName}
-            
+
             <br/><br/>
             <h4>Results</h4>
             <canvas id="questionResultsChart"></canvas>
-            
+
             <br/><br/>
-            <h4>Dragonflies</h4>            
+            <h4>Dragonflies</h4>
             {dragonfliesJsx}
-            
-            
+
+
           </div>
           <div className="col-sm-2">
           </div>
@@ -141,7 +139,7 @@ class CampaignComponent extends React.Component {
 
     );
   }
-  
+
 }
 
 
@@ -161,7 +159,7 @@ class Dragonfly extends React.Component {
     return (
         <div className="dragon-select-list-row dragon-pointer">
           <div className="dragon-select-list-cell">
-            <i className='fa fa-address-book-o fa-fw fa-lg'></i> 
+            <i className='fa fa-address-book-o fa-fw fa-lg'></i>
           </div>
           <div className="dragon-select-list-cell">
             {this.props.dragonfly.contact.first}
@@ -188,8 +186,8 @@ class Dragonfly extends React.Component {
         </div>
     );
   }
-  
-  
+
+
   copyToClipboard(url) {
     const el = document.createElement('textarea');
     el.value = url;
@@ -199,10 +197,10 @@ class Dragonfly extends React.Component {
     document.body.removeChild(el);
     alert("Copied to Clipboard: " + url);
   }
-  
+
   showResults(dragonfly) {
     if (dragonfly.preferences == null) return;
-    
+
     var preferences = dragonfly.preferences;
     var emailOrText = preferences.emailOrText;
     var email = preferences.email;
@@ -210,7 +208,7 @@ class Dragonfly extends React.Component {
     var nps = preferences.nps;
     var text = preferences.text;
     var earned = dragonfly.earned;
-    
+
     alert("Contact Method: " + emailOrText + "\nEmail: " + email + "\nMobile: " + mobile + "\nNPS: " + nps + "\ntext: " + text + "\nAmount Earned: " + earned);
   }
 
