@@ -6,11 +6,11 @@ class CampaignsComponent extends React.Component {
 
   constructor(props) {
     super(props);
+
   }
 
 
   componentWillMount() {
-    console.log('ok');
     this.props.handleLoadResults("not found");
     var campaigns = this.props.campaigns;
     if (campaigns === 'not found') {

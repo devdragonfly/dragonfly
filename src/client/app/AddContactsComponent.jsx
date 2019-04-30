@@ -219,13 +219,9 @@ class NewContact extends React.Component {
       return re.test(email);
   }
 
-
 }
 
-<<<<<<< HEAD
-=======
 
 
 
->>>>>>> master
 export default AddContactsComponent;

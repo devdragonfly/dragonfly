@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
+import ExportCampaignButton from './ExportCampaignButton.jsx';
 import Chart from 'chart.js';
 
 class CampaignComponent extends React.Component {
@@ -20,6 +21,7 @@ class CampaignComponent extends React.Component {
 
 
   componentWillMount() {
+    console.log(this.props);
     var results = this.props.results;
     if (results.Count == 0) {
       this.props.history.push('generatedragonflies');
@@ -108,6 +110,8 @@ class CampaignComponent extends React.Component {
           }
     }
 
+    var exportCsvButton = <ExportCampaignButton test="true" notTest="false"/>;
+
 
     return (
 
@@ -126,6 +130,10 @@ class CampaignComponent extends React.Component {
             <br/><br/>
             <h4>Results</h4>
             <canvas id="questionResultsChart"></canvas>
+
+            <br/><br/>
+            <h4>Export CSV</h4>
+            {exportCsvButton}
 
             <br/><br/>
             <h4>Dragonflies</h4>
