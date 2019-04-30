@@ -103,13 +103,11 @@ class AddContactsComponent extends React.Component {
       validContacts = this.props.contactList.contacts;
     }
 
-
     for (var i = 0; i < contacts.length; i++) {
         if (contacts[i].isValid) {
           validContacts.push({first: contacts[i].first, last: contacts[i].last, email: contacts[i].email});
         }
     }
-
 
     var params = {
             TableName:"ContactLists",
@@ -224,4 +222,10 @@ class NewContact extends React.Component {
 
 }
 
+<<<<<<< HEAD
+=======
+
+
+
+>>>>>>> master
 export default AddContactsComponent;
