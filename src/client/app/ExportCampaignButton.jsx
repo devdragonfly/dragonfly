@@ -6,16 +6,37 @@ class ExportCampaignButton extends React.Component {
 
   constructor(props) {
     super(props);
-    console.log(this.props.test);
-    console.log(this.props.notTest);
+
+    this.state = {
+      csvGenerated: false,
+      dragonfliesData: this.props.dragonfliesData,
+      // check if i need it by updating the componnent and console logging the this.props.dragonfliesData
+      filename: 'dragonflies.csv',
+      data: '#!'
+    };
+
+    console.log(this.props);
+    console.log(this.state);
   }
 
   render() {
     return (
-      <button class={buttonClassName}>
+      <a className={buttonClassName} onClick={this.handleOnClick.bind(this)} href={this.state.data} download={this.state.filename}>
         Click Me To Download
-      </button>
+      </a>
     );
+  }
+
+  handleOnClick() {
+    if (this.state.csvGenerated) {
+      console.log('Trigger click from here');
+    } else {
+      console.log('Generate CSV here');
+      this.setState({
+        csvGenerated: true,
+        data: 'data:text/csv;charset=utf-8,hello,brake,notbreak'
+      });
+    }
   }
 
 }

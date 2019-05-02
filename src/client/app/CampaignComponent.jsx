@@ -21,13 +21,10 @@ class CampaignComponent extends React.Component {
 
 
   componentWillMount() {
-    console.log(this.props);
     var results = this.props.results;
     if (results.Count == 0) {
       this.props.history.push('generatedragonflies');
     }
-
-
   }
 
   componentDidMount() {
@@ -110,7 +107,7 @@ class CampaignComponent extends React.Component {
           }
     }
 
-    var exportCsvButton = <ExportCampaignButton test="true" notTest="false"/>;
+    var exportCsvButton = <ExportCampaignButton dragonfliesData={dragonflies}/>;
 
 
     return (

@@ -11,16 +11,16 @@ class SessionComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    
+
     var thumbnails = [];
     var currentThumbnailUrl = "./images/video-play.jpg";
-    
-    if (props.session.thumbnailState === "loaded") { 
+
+    if (props.session.thumbnailState === "loaded") {
       thumbnails = props.session.thumbnails;
       var key = thumbnails[0].Key;
       currentThumbnailUrl = "https://s3-us-west-2.amazonaws.com/dragonfly-videos-thumbnails/" + key;
     }
-    
+
     this.state = {seconds : 0,
                   currentThumbnailUrl: currentThumbnailUrl,
                   thumbnails: thumbnails,
@@ -31,26 +31,26 @@ class SessionComponent extends React.Component {
     this.updateCurrentThumbnailUrl = this.updateCurrentThumbnailUrl.bind(this);
     this.showClickedButtonState = this.showClickedButtonState.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    
+
     var preview = { currentTime: 0, results: [] };
     props.handleLoadPreview(preview);
   }
-  
-  
+
+
   componentWillMount() {
     var video = this.props.session.video;
     if (video.videoId == "not found") {
       this.props.history.push('selectvideo');
     }
-    
-    
+
+
     var thumbnailState = this.props.session.thumbnailState;
     if (thumbnailState === "unknown") {
       this.props.handleLoadNext('session');
       this.props.history.push('loadthumbnails');
     }
   }
-  
+
 
   render() {
     var myThis = this;
@@ -64,13 +64,13 @@ class SessionComponent extends React.Component {
     var handleLoadBreakpoint = this.props.handleLoadBreakpoint;
     var handleLoadQuestion = this.props.handleLoadQuestion;
     var thumbnails = this.state.thumbnails;
-    
+
     var breakpointsJsx = function() {return '' }();
 
 
     var thumbnailUrl = "./images/video-play.jpg";
     var second = 0;
-    
+
     if (breakpoints == null){
       breakpointsJsx = function() {return 'No breakpoints added to this session yet.' }();
     } else {
@@ -81,15 +81,15 @@ class SessionComponent extends React.Component {
             var key = thumbnails[second].Key;
             thumbnailUrl = "https://s3-us-west-2.amazonaws.com/dragonfly-videos-thumbnails/" + key;
           }
-        
-          return <BreakpointComponent organizationId={organizationId} dbUpdate={dbUpdate} handleLoadSession={handleLoadSession} 
-                                      session={session} breakpoint={breakpoint} thumbnailUrl={thumbnailUrl} 
-                                      handleLoadBreakpoint={handleLoadBreakpoint} 
+
+          return <BreakpointComponent organizationId={organizationId} dbUpdate={dbUpdate} handleLoadSession={handleLoadSession}
+                                      session={session} breakpoint={breakpoint} thumbnailUrl={thumbnailUrl}
+                                      handleLoadBreakpoint={handleLoadBreakpoint}
                                       handleLoadQuestion={handleLoadQuestion} history={history}/>;
       });
-      
+
     }
-    
+
     var organizationMenu = function() {return <OrganizationMenuComponent current="sessions" /> }();
     var millisecondsJsx = function() {return <MillisecondsComponent milliseconds={milliseconds} /> }();
 
@@ -97,20 +97,20 @@ class SessionComponent extends React.Component {
 
         <div className="row">
           {organizationMenu}
-          
-          
-          
+
+
+
           <div className="col-sm-6">
-            
+
                 <h3><i className='fa fa-graduation-cap fa-fw'></i> {this.props.session.name}</h3>
-                
+
                 <div className="dragon-breakpoints">
                   {breakpointsJsx}
                 </div>
-                
+
                 <br/><br/>
-                
-                
+
+
                 <div className="dragon-breakpoint">
                   <div className="dragon-breakpoint-info">
                     <img src={this.state.currentThumbnailUrl}/>
@@ -123,26 +123,26 @@ class SessionComponent extends React.Component {
                       {this.props.session.video.name}
                       &nbsp;
                       <Link to={'selectvideo'}><i className='fa fa-edit fa-fw'></i></Link>
-                      
-                      
+
+
                       <form onSubmit={this.handleSubmit}>
                           <input type="range" min="0" max={thumbnails.length} step="0.5" value={this.state.seconds} onChange={this.updateSeconds}/>
                           <br/>
-                          
+
                         <input type="submit" className={this.state.buttonRestClassName} value="Add Breakpoint" />
                         <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Adding Breakpoint</div>
                       </form>
-                      
-                      
+
+
                     </div>
-                  
+
                   </div>
                 </div>
-                
 
-          </div> 
-          
-          
+
+          </div>
+
+
           <div className="col-sm-4">
           </div>
 
@@ -162,7 +162,7 @@ class SessionComponent extends React.Component {
           this.setState({ buttonClickedClassName: "dragon-hidden" });
     }
   }
-  
+
   updateSeconds(e) {
     this.setState({
       seconds: e.target.value
@@ -175,14 +175,14 @@ class SessionComponent extends React.Component {
       this.updateCurrentThumbnailUrl(thumbnailUrl);
     }
   }
-  
-  
+
+
   updateCurrentThumbnailUrl(currentThumbnailUrl) {
     this.setState({
       currentThumbnailUrl: currentThumbnailUrl
     });
   }
-  
+
   handleSubmit(e) {
     e.preventDefault();
     this.showClickedButtonState(true);
@@ -191,23 +191,23 @@ class SessionComponent extends React.Component {
     const organizationId = this.props.organizationId;
     const sessionId = this.props.session.sessionId;
     var session = this.props.session;
-    
+
     var breakpointId = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
         var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
         return v.toString(16);
     });
-    
 
-    
+
+
     var breakpoint = { breakpointId: breakpointId, milliseconds : milliseconds};
     var breakpoints = [];
-    
+
     if (this.props.session.breakpoints != null) {
       breakpoints = this.props.session.breakpoints;
     }
-    
+
     breakpoints.push(breakpoint);
-   
+
     var params = {
             TableName:"Sessions",
             Key: {
@@ -220,14 +220,14 @@ class SessionComponent extends React.Component {
             },
             ReturnValues:"UPDATED_NEW"
         };
-    
+
 
     this.props.dbUpdate(params, function(result) {
       myThis.showClickedButtonState(false);
       session.breakpoints = breakpoints;
       myThis.props.handleLoadSession(session);
     });
-    
+
   }
 
 
