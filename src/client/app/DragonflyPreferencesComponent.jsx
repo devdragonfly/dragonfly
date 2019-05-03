@@ -22,7 +22,8 @@ class DragonflyPreferencesComponent extends React.Component {
                   selectedNPS : "5",
                   openTextValue : "",
                   buttonRestClassName : buttonClassName,
-                  buttonClickedClassName : "dragon-hidden"
+                  buttonClickedClassName : "dragon-hidden",
+                  postAddressForm: false
     };
     
     this.titleCase = this.titleCase.bind(this);
@@ -33,11 +34,8 @@ class DragonflyPreferencesComponent extends React.Component {
     this.handleNPSOptionChange = this.handleNPSOptionChange.bind(this);
     this.handleOpenTextChange = this.handleOpenTextChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    
+    this.showPostAddressForm = this.showPostAddressForm.bind(this);
   }
-  
-
-  
 
   componentDidMount() {
     if (typeof window !== 'undefined') {
@@ -47,9 +45,6 @@ class DragonflyPreferencesComponent extends React.Component {
       // work out what you want to do server-side...
     }
   }
-  
-  
-  
 
   render() {
     var dragonfly = this.props.dragonfly;
@@ -105,6 +100,33 @@ class DragonflyPreferencesComponent extends React.Component {
                   <input value={this.state.mobile} onChange={this.updateMobileValue} className="form-control" placeholder="mobile number"/>
                 </div>
               </div>
+
+              <div className="checkbox">
+                <label><input type="checkbox" onChange={this.showPostAddressForm}/> Add post address</label>
+              </div>
+              { this.state.postAddressForm && (
+                <div className="form-horizontal">
+                  <div className="form-group">
+                    <label for="address" className="col-sm-2 control-label" style={{ fontWeight: 'normal'}}>Address</label>
+                    <div className="col-sm-6">
+                      <input type="email" className="form-control" id="address" placeholder="Address"/>
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <label for="cityState" className="col-sm-2 control-label" style={{ fontWeight: 'normal'}}>City state</label>
+                    <div className="col-sm-6">
+                      <input type="password" className="form-control" id="cityState" placeholder="Password"/>
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <label for="pobox" className="col-sm-2 control-label" style={{ fontWeight: 'normal'}}>P.O. Box</label>
+                    <div className="col-sm-6">
+                      <input type="password" className="form-control" id="pobox" placeholder="Password"/>
+                    </div>
+                  </div>
+                </div>
+              )}
+
               <br/>
               <h4>How likely are you to recommend Dragonfly to a friend or colleague?</h4>
               <span className="NPStext">
@@ -222,7 +244,12 @@ class DragonflyPreferencesComponent extends React.Component {
     }
     return str.join(' ');
   }
-  
+
+  showPostAddressForm(e) {
+    this.setState({
+      postAddressForm: e.target.checked
+    });
+  }
 
 }
 
