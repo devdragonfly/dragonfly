@@ -97,48 +97,41 @@ class DragonflyPlayComponent extends React.Component {
     var thumbnailUrl = "./images/play.png";
     return (
       <div className="row">
-        <div className="col-sm-2">
-          
-        </div>
+        <div className="col-sm-2"></div>
         <div className="col-sm-8">
-              
-              {resultsComponent}
-              
-              <br/><br/>
-              
-              <div className="jumbotron dragon-enlarge">
-
-                          <video autoplay
-                              className={this.state.videoClassname}
-                              id="my-player"
-                              preload="auto"
-                              poster={thumbnailUrl}
-                              data-setup='{}'
-                              onClick={this.handleClickPlay}>
-                            <source src={videoUrl} type="video/mp4"></source>
-                            <p className="vjs-no-js">
-                              To view this video please enable JavaScript, and consider upgrading to a
-                              web browser that
-                              <a href="http://videojs.com/html5-video-support/" target="_blank">
-                                supports HTML5 video
-                              </a>
-                            </p>
-                          </video>
-
-              </div>
-              
+          {resultsComponent}
+          <br/><br/>
+          <div className="jumbotron dragon-enlarge">
+            <div className="clearfix">
               <a href={this.state.path} target="_blank">
-              <div className="dragon-powered-by pull-right"><img src="./images/logo-dragonfly-ii2.png" /></div>
+                <div className="dragon-powered-by divLeft">
+                  <img src="./images/logo-dragonfly-ii2.png" />
+                </div>
               </a>
-
-              {modalComponent}
-              
+            </div>
+            <div className="padding-18-vertical">
+              <video autoplay
+                  className={this.state.videoClassname}
+                  id="my-player"
+                  preload="auto"
+                  poster={thumbnailUrl}
+                  data-setup='{}'
+                  onClick={this.handleClickPlay}>
+                <source src={videoUrl} type="video/mp4"></source>
+                <p className="vjs-no-js">
+                  To view this video please enable JavaScript, and consider upgrading to a
+                  web browser that
+                  <a href="http://videojs.com/html5-video-support/" target="_blank">
+                    supports HTML5 video
+                  </a>
+                </p>
+              </video>
+            </div>
+           </div>
+            {modalComponent}
         </div>
-        <div className="col-sm-2">
-        </div>
+        <div className="col-sm-2"></div>
       </div>
-      
-
     );
   }
   

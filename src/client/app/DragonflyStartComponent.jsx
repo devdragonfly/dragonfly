@@ -43,36 +43,30 @@ class DragonflyStartComponent extends React.Component {
     
     return (
       <div className="row">
-        <div className="col-sm-2">
-          
-        </div>
+        <div className="col-sm-2"></div>
         <div className="col-sm-8">
-              
-              <br/><br/>
-              
-              <div className="jumbotron dragon-enlarge">
-              <h2>Hello {first} {last},</h2>
-              <br/><br/>
-              Welcome to Dragonfly! We are beta testing our new Incentivized Information technology where we pay you to engage with information.
-              <br/><br/>
-              You can earn ${incentive} cash in 8 minutes if you answer {totalQuestionCount} questions correctly.
-              <br/><br/>
-              At the end we will pay you through the Venmo App and you can designate if you prefer payment by email or phone.
-              
-              <br/><br/><br/>
-            
-              <Link to={`dragonflyplay`} className="btn btn-primary btn-lg">Start Now <i className='fa fa-chevron-circle-right'></i></Link>
-              
-              </div>
+          <br/><br/>
+          <div className="jumbotron dragon-enlarge">
+            <div className="clearfix">
               <a href={this.state.path} target="_blank">
-              <div className="dragon-powered-by pull-right"><img src="./images/logo-dragonfly-ii2.png" /></div>
+                <div className="dragon-powered-by divLeft">
+                  <img src="./images/logo-dragonfly-ii2.png" />
+                </div>
               </a>
-              
+            </div>
+            <h2>Hello {first} {last},</h2>
+            <br/><br/>
+            Welcome to Dragonfly! We are beta testing our new Incentivized Information technology where we pay you to engage with information.
+            <br/><br/>
+            You can earn ${incentive} cash in 8 minutes if you answer {totalQuestionCount} questions correctly.
+            <br/><br/>
+            At the end we will pay you through the Venmo App and you can designate if you prefer payment by email or phone.
+            <br/><br/><br/>
+            <Link to={`dragonflyplay`} className="btn btn-primary btn-lg">Start Now <i className='fa fa-chevron-circle-right'></i></Link>
+          </div>
         </div>
-        <div className="col-sm-2">
-        </div>
+        <div className="col-sm-2"></div>
       </div>
-      
     );
   }
   

@@ -118,6 +118,14 @@ class DragonflyCompleteComponent extends React.Component {
               
               <div className="jumbotron dragon-enlarge">
 
+               <div className="clearfix">
+                  <a href={this.state.path} target="_blank">
+                    <div className="dragon-powered-by divLeft">
+                      <img src="./images/logo-dragonfly-ii2.png" />
+                    </div>
+                  </a>
+                </div>
+
                 <h2>Thank you {first}!</h2>
                 
                 <br/>
@@ -137,9 +145,6 @@ class DragonflyCompleteComponent extends React.Component {
                 Limited spots are available for the Dragonfly pre-launch in late 2018. Please contact us at <b>admin@dragonfly.one</b> to be included.
                 
               </div>
-              <a href={this.state.path} target="_blank">
-              <div className="dragon-powered-by pull-right"><img src="./images/logo-dragonfly-ii.png" /></div>
-              </a>
               
         </div>
         <div className="col-sm-2">

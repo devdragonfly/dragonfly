@@ -62,63 +62,59 @@ class DragonflyPreferencesComponent extends React.Component {
     
     return (
       <div className="row">
-        <div className="col-sm-2">
-          
-        </div>
+        <div className="col-sm-2"></div>
         <div className="col-sm-8">
-              
-              <br/><br/>
-              
-              <div className="jumbotron dragon-enlarge">
-              <form onSubmit={this.handleSubmit}>
-                <h2>Congratulations {first}!</h2>
-                <br/>
-                <h4>Your session is complete and you have earned ${earned}.</h4>
-                <br/>
-                <h4>We are going to pay you through the Venmo App, please indicate your preferred contact method:</h4>
-                <div className="dragon-select-list-row">
-                    <div className="dragon-select-list-form-cell">
-                            <div className="radio">
-                              <label>
-                                <input className="form-check-input" type="radio" value="email" checked={this.state.selectedContactOption === 'email'} onChange={this.handleContactOptionChange} name="group1" id="radio100"/>
-                                Email to 
-                              </label>
-                            </div>
-                    </div>  
-                    <div className="dragon-select-list-form-cell">
-                        <input value={this.state.email} onChange={this.updateEmailValue} className="form-control" placeholder="email address"/>
-                    </div>
+          <br/><br/>
+          <div className="jumbotron dragon-enlarge">
+            <div className="clearfix">
+              <a href={this.state.path} target="_blank">
+                <div className="dragon-powered-by divLeft">
+                  <img src="./images/logo-dragonfly-ii2.png" />
                 </div>
-                
-                
-                
-                <div className="dragon-select-list-row">
-                    <div className="dragon-select-list-form-cell">
-                        <div className="radio">
-                          <label>
-                            <input className="form-check-input" type="radio" value="text" checked={this.state.selectedContactOption === 'text'} onChange={this.handleContactOptionChange} name="group1" id="radio101"/>
-                            Text to 
-                            
-                          </label>
-                        </div>
-                    </div>
-                    <div className="dragon-select-list-form-cell">
-                        <input value={this.state.mobile} onChange={this.updateMobileValue} className="form-control" placeholder="mobile number"/>
-                    </div>
+              </a>
+            </div>
+            <form onSubmit={this.handleSubmit}>
+              <h2>Congratulations {first}!</h2>
+              <br/>
+              <h4>Your session is complete and you have earned ${earned}.</h4>
+              <br/>
+              <h4>We are going to pay you through the Venmo App, please indicate your preferred contact method:</h4>
+              <div className="dragon-select-list-row">
+                <div className="dragon-select-list-form-cell">
+                  <div className="radio">
+                    <label>
+                      <input className="form-check-input" type="radio" value="email" checked={this.state.selectedContactOption === 'email'} onChange={this.handleContactOptionChange} name="group1" id="radio100"/>
+                      Email to 
+                    </label>
+                  </div>
+                </div>  
+                <div className="dragon-select-list-form-cell">
+                  <input value={this.state.email} onChange={this.updateEmailValue} className="form-control" placeholder="email address"/>
                 </div>
-                
-                
-                <br/>
-                
-                <h4>How likely are you to recommend Dragonfly to a friend or colleague?</h4>
-                <span className="NPStext">
+              </div>
+              <div className="dragon-select-list-row">
+                <div className="dragon-select-list-form-cell">
+                  <div className="radio">
+                    <label>
+                      <input className="form-check-input" type="radio" value="text" checked={this.state.selectedContactOption === 'text'} onChange={this.handleContactOptionChange} name="group1" id="radio101"/>
+                      Text to 
+                    </label>
+                  </div>
+                </div>
+                <div className="dragon-select-list-form-cell">
+                  <input value={this.state.mobile} onChange={this.updateMobileValue} className="form-control" placeholder="mobile number"/>
+                </div>
+              </div>
+              <br/>
+              <h4>How likely are you to recommend Dragonfly to a friend or colleague?</h4>
+              <span className="NPStext">
                 Not At All Likely
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 Neutral
                 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                 Extremely Likely
-                </span>
-                <table>
+              </span>
+              <table>
                 <tr>
                   <td className="dragon-nps-col"><input className="form-check-input" type="radio" value="0" checked={this.state.selectedNPS === '0'} onChange={this.handleNPSOptionChange} name="group2"/><br/>0</td>
                   <td className="dragon-nps-col"><input className="form-check-input" type="radio" value="1" checked={this.state.selectedNPS === '1'} onChange={this.handleNPSOptionChange} name="group2"/><br/>1</td>
@@ -132,36 +128,22 @@ class DragonflyPreferencesComponent extends React.Component {
                   <td className="dragon-nps-col"><input className="form-check-input" type="radio" value="9" checked={this.state.selectedNPS === '9'} onChange={this.handleNPSOptionChange} name="group2"/><br/>9</td>
                   <td className="dragon-nps-col"><input className="form-check-input" type="radio" value="10" checked={this.state.selectedNPS === '10'} onChange={this.handleNPSOptionChange} name="group2"/><br/>10</td>
                 </tr>
-                </table>
-                
-                
-                  <br/>
-                  
-                <h4>Do you have any ideas, comments, concerns, or objections that will help us improve our message or product?</h4>
-                <textarea rows="4" cols="50" value={this.state.openTextValue} onChange={this.handleOpenTextChange}></textarea>
-                
-                <br/>
-                <br/>
-                
-                <input type="submit" className={this.state.buttonRestClassName} value="Save" />
-                <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Saving</div>
-                
-              </form>
-              </div>
-              <a href={this.state.path} target="_blank">
-              <div className="dragon-powered-by pull-right"><img src="./images/logo-dragonfly-ii2.png" /></div>
-              </a>
-              
+              </table>
+              <br/>
+              <h4>Do you have any ideas, comments, concerns, or objections that will help us improve our message or product?</h4>
+              <textarea rows="4" cols="50" value={this.state.openTextValue} onChange={this.handleOpenTextChange}></textarea>
+              <br/>
+              <br/>
+              <input type="submit" className={this.state.buttonRestClassName} value="Save" />
+              <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Saving</div>
+            </form>
+          </div>
         </div>
-        <div className="col-sm-2">
-        </div>
+        <div className="col-sm-2"> </div>
       </div>
-      
     );
   }
-  
-  
-  
+
   showClickedButtonState(yes) {
     if (yes) {
           this.setState({ buttonRestClassName: "dragon-hidden" });

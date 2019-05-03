@@ -30,55 +30,100 @@ class GenerateDragonfliesComponent extends React.Component {
 
     var contactListName = '';
     if (contactList == null) 
-      { 
-        contactListName = <Link to={`campaignselectcontactlist`}>Select</Link>; } else { contactListName = contactList.name }
-    
-    
-    
-    
-
-    
+    { 
+      contactListName = <Link to={`campaignselectcontactlist`}>Select</Link>; } else { contactListName = contactList.name
+    }
 
     return (
-
-        <div className="row">
-          {organizationMenu}
-
-          <div className="col-sm-6">
-            <h3><i className='fa fa-line-chart fa-fw'></i> {this.props.campaign.name}</h3>
-            <br/><br/>
-          
-            <div className="form-group row">
-              <div className="col-xs-3">
-                <label for="ex1"><i className='fa fa-graduation-cap fa-fw fa-lg'></i> Session</label><br/>
-                 &nbsp;{sessionName}
+      <div className="row">
+        {organizationMenu}
+        <div className="col-sm-6">
+          <h3><i className='fa fa-line-chart fa-fw'></i> {this.props.campaign.name}</h3>
+          <br/><br/>
+          <div className="form-group row">
+            <div className="col-xs-3">
+              <label for="ex1"><i className='fa fa-graduation-cap fa-fw fa-lg'></i> Session</label><br/>
+                &nbsp;{sessionName}
+            </div>
+            <div className="col-xs-3">
+              <label for="ex2"><i className='fa fa-address-book-o fa-fw fa-lg'></i> Contact List</label><br/>
+                &nbsp;{contactListName}
+            </div>
+            <div className="col-xs-4">
+              <label for="ex3"><i className='fa fa-credit-card fa-fw fa-lg'></i> Incentive per Dragonfly</label><br/>
+              <input value={this.state.incentiveValue} id="ex3" onChange={this.updateIncentiveValue} className="form-control" placeholder="dollar amount"/>
+            </div>
+          </div>
+          <div className="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div className="panel panel-default">
+              <div className="panel-heading" role="tab" id="headingOne">
+                <h4 className="panel-title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordion" href="#logo" aria-expanded="true" aria-controls="collapseOne">
+                    Change Logo for company`s pages
+                  </a>
+                </h4>
               </div>
-              <div className="col-xs-3">
-                <label for="ex2"><i className='fa fa-address-book-o fa-fw fa-lg'></i> Contact List</label><br/>
-                 &nbsp;{contactListName}
-              </div>
-              <div className="col-xs-4">
-                <label for="ex3"><i className='fa fa-credit-card fa-fw fa-lg'></i> Incentive per Dragonfly</label><br/>
-                <input value={this.state.incentiveValue} id="ex3" onChange={this.updateIncentiveValue} className="form-control" placeholder="dollar amount"/>
+              <div id="logo" className="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div className="panel-body">
+                  <div className="input-group">
+                    <label className="input-group-btn">
+                      <span className="btn btn-primary">
+                        Choose File <input type="file" style={{ display: 'none'}}/>
+                      </span>
+                    </label>
+                    <input type="text" className="form-control" placeholder="Select the Logo File" readOnly/>
+                  </div>
+                </div>
               </div>
             </div>
-
-            
-            <br/><br/>
-            <form onSubmit={this.handleSubmit}>
-              <input type="submit" className={this.state.buttonRestClassName} value="Generate Dragonflies" />
-              <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Generating Dragonflies</div>
-            </form>
-            
+            <div className="panel panel-default">
+              <div className="panel-heading" role="tab" id="headingTwo">
+                <h4 className="panel-title">
+                  <a className="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#introPage" aria-expanded="false" aria-controls="collapseTwo">
+                    Introduction page
+                  </a>
+                </h4>
+              </div>
+              <div id="introPage" className="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div className="panel-body">
+                  <div className="col-md-10 form-group">
+                    <label for="intro1">Welcome Line</label><br/>
+                    <textarea id="intro1" className="form-control" rows="3" placeholder="custom text"></textarea>
+                  </div>
+                  <div className="col-md-10" form-group>
+                    <label for="intro2">Payment Info</label><br/>
+                    <textarea id="intro2" className="form-control" rows="3" placeholder="custom text"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="panel panel-default">
+              <div className="panel-heading" role="tab" id="headingThree">
+                <h4 className="panel-title">
+                  <a className="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#confirmPage" aria-expanded="false" aria-controls="collapseThree">
+                    Confirmation page
+                  </a>
+                </h4>
+              </div>
+              <div id="confirmPage" className="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                <div className="panel-body">
+                  <div className="col-md-10 form-group">
+                    <label for="confirm1">Custom Text</label><br/>
+                    <textarea id="confirm1" className="form-control" rows="3" placeholder="Custom text"></textarea>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
-          <div className="col-sm-4">
-          </div>
-          
+          <br/><br/>
+          <form onSubmit={this.handleSubmit}>
+            <input type="submit" className={this.state.buttonRestClassName} value="Generate Dragonflies" />
+            <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Generating Dragonflies</div>
+          </form>
         </div>
-
+      </div>
     );
   }
-  
 
   showClickedButtonState(yes) {
     if (yes) {
