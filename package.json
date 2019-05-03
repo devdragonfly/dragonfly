@@ -24,6 +24,7 @@
     "react-dom": "^15.6.1",
     "react-ga": "^2.5.3",
     "react-router": "^2.0.1",
+    "read-excel-file": "^2.0.10",
     "socket.io": "~0.9.14"
   },
   "scripts": {

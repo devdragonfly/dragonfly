@@ -18,17 +18,17 @@ class AddContactsComponent extends React.Component {
     this.handleLoadContact = this.handleLoadContact.bind(this);
 
   }
-  
+
   handleLoadContact(i, first, last, email, isValid) {
     var contact = { first : first, last : last, email : email, isValid : isValid};
     var contacts = this.state.contacts;
     contacts[i] = contact;
     this.setState({
       contacts: contacts
-    });    
-    
+    });
+
   }
-  
+
   componentWillMount() {
     var contactLists = this.props.contactLists;
     if (contactLists === 'not found') {
@@ -46,26 +46,26 @@ class AddContactsComponent extends React.Component {
 
 
     var organizationMenu = function() {return <OrganizationMenuComponent current="contactlists" /> }();
-    
-    
+
+
     return (
 
         <div className="row">
           {organizationMenu}
           <div className="col-sm-6">
             <h3><i className='fa fa-address-book-o fa-fw'></i> {this.props.contactList.name}</h3>
-            
+
             <form onSubmit={this.handleSubmit}>
               <div className="dragon-select-list">
                 {newContactsJsx}
               </div>
-            
+
               <br/>
-            
+
               <input type="submit" className={this.state.buttonRestClassName} value="Add Contacts" />
               <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Adding Contacts</div>
             </form>
-            
+
           </div>
           <div className="col-sm-4">
           </div>
@@ -89,28 +89,26 @@ class AddContactsComponent extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     this.showClickedButtonState(true);
-    
-    
+
+
     const organizationId = this.props.organizationId;
     const contactListId = this.props.contactList.contactListId;
-    
+
     var contacts = this.state.contacts;
     var myThis = this;
-    
+
     var validContacts = [];
-    
+
     if (this.props.contactList.contacts != null) {
       validContacts = this.props.contactList.contacts;
     }
-    
-    
+
     for (var i = 0; i < contacts.length; i++) {
         if (contacts[i].isValid) {
           validContacts.push({first: contacts[i].first, last: contacts[i].last, email: contacts[i].email});
         }
     }
 
-    
     var params = {
             TableName:"ContactLists",
             Key: {
@@ -123,17 +121,17 @@ class AddContactsComponent extends React.Component {
             },
             ReturnValues:"UPDATED_NEW"
         };
-    
-    
+
+
 
     this.props.dbUpdate(params, function(result) {
       myThis.showClickedButtonState(false);
       myThis.props.handleLoadContacts(result.Attributes.contacts);
-      myThis.props.history.push('contactlist');    
-      
+      myThis.props.history.push('contactlist');
+
     });
-    
-    
+
+
   }
 
 }
@@ -156,13 +154,13 @@ class NewContact extends React.Component {
   render() {
 
     var validityIndicator = 'fa fa-circle fa-fw dragon-gray';
-    
+
     if (this.state.isValid) {
       validityIndicator = 'fa fa-check-circle fa-fw dragon-green';
     }
-    
-    
-    
+
+
+
     return (
         <div className="dragon-select-list-row">
             <div className="dragon-select-list-form-cell">
@@ -180,20 +178,20 @@ class NewContact extends React.Component {
         </div>
     );
   }
-  
+
   updateFirstNameValue(e) {
     this.setState({
       firstName: e.target.value
     });
     this.validate(e.target.value, this.state.lastName, this.state.email);
-  } 
+  }
 
   updateLastNameValue(e) {
     this.setState({
       lastName: e.target.value
     });
     this.validate(this.state.firstName, e.target.value, this.state.email);
-  } 
+  }
 
   updateEmailValue(e) {
     this.setState({
@@ -201,7 +199,7 @@ class NewContact extends React.Component {
     });
     this.validate(this.state.firstName, this.state.lastName, e.target.value);
   }
-  
+
   validate(first, last, email) {
 
     var firstNameIsValid = first.length > 0;
@@ -211,11 +209,11 @@ class NewContact extends React.Component {
     this.setState({
       isValid: isValid
     });
-    
+
     this.props.handleLoadContact(this.props.i, first, last, email, isValid);
   }
-  
-  
+
+
   validateEmail(email) {
       var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
       return re.test(email);
