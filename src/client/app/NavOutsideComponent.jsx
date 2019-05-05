@@ -103,7 +103,6 @@ class NavOutsideComponent extends React.Component {
     const email = this.state.emailValue.trim();
     const password = this.state.passwordValue.trim();
 
-    console.log('NavOutsideComponent');
     this.props.handleLoadEmail(email);
     this.props.handleAuthenticate(email, password, function(){
       myThis.showClickedButtonState(false);
