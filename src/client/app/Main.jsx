@@ -58,10 +58,6 @@ class Main extends Component {
         this.handleAuthenticate = this.handleAuthenticate.bind(this);
         this.handleSignOut = this.handleSignOut.bind(this);
         this.handleLoadAttributes = this.handleLoadAttributes.bind(this);
-
-        this.restoreUserSession = this.restoreUserSession.bind(this);
-        this.setAWSCredential = this.setAWSCredential.bind(this);
-
         this.handleLoadOrganizations = this.handleLoadOrganizations.bind(this);
         this.handleLoadOrganization = this.handleLoadOrganization.bind(this);
         this.handleLoadContactLists = this.handleLoadContactLists.bind(this);
@@ -89,6 +85,8 @@ class Main extends Component {
         this.s3Upload = this.s3Upload.bind(this);
         this.s3ListObjects = this.s3ListObjects.bind(this);
         this.handleLoadNext = this.handleLoadNext.bind(this);
+        this.restoreUserSession = this.restoreUserSession.bind(this);
+        this.setAWSCredential = this.setAWSCredential.bind(this);
 
 
         ReactGA.initialize('UA-123354073-1');

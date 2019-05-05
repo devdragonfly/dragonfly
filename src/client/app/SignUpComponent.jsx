@@ -27,7 +27,6 @@ class SignUpComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    // temporary removed because of twice render
     // this.props.handleSignOut();
     this.state = {emailValue : props.email,
                   passwordValue : '',
