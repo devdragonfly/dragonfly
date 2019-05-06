@@ -23,6 +23,7 @@ var io = socketio.listen(server);
 
 router.use(express.static(path.resolve(__dirname, 'src/client')));
 router.use(express.static(path.resolve(__dirname, 'src/client/public')));
+
 var messages = [];
 var sockets = [];
 

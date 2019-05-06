@@ -12,6 +12,7 @@ import ReactGA from 'react-ga';
 var AWS_unauth = require("aws-sdk");
 var dragonfly_unauth = {};
 const userPool_unauth = new CognitoUserPool({ UserPoolId: appconfig.UserPoolId, ClientId: appconfig.ClientId});
+
 AWS_unauth.config.region = 'us-west-2';
 AWS_unauth.config.credentials = new AWS_unauth.CognitoIdentityCredentials({
     AccountId: '698305963744',
@@ -26,8 +27,6 @@ dragonfly_unauth.docClient = new AWS_unauth.DynamoDB.DocumentClient();
 var AWS = require("aws-sdk");
 var dragonfly = {};
 const userPool = new CognitoUserPool({ UserPoolId: appconfig.UserPoolId, ClientId: appconfig.ClientId});
-
-
 
 class Main extends Component {
 
@@ -86,12 +85,14 @@ class Main extends Component {
         this.s3Upload = this.s3Upload.bind(this);
         this.s3ListObjects = this.s3ListObjects.bind(this);
         this.handleLoadNext = this.handleLoadNext.bind(this);
+        this.restoreUserSession = this.restoreUserSession.bind(this);
+        this.setAWSCredential = this.setAWSCredential.bind(this);
 
 
         ReactGA.initialize('UA-123354073-1');
         ReactGA.pageview(window.location.pathname);
 
-
+        this.restoreUserSession();
     }
 
 
@@ -124,7 +125,6 @@ class Main extends Component {
         this.setState({campaign : campaign});
     }
 
-
     handleLoadResults(results) {
         this.setState({results : results});
     }
@@ -136,7 +136,6 @@ class Main extends Component {
     handleLoadDragonfly(dragonfly) {
         this.setState({dragonfly : dragonfly});
         this.setState({session : dragonfly.session});
-
     }
 
     handleLoadVideos(result) {
@@ -189,11 +188,9 @@ class Main extends Component {
         this.setState({contactList : contactList});
     }
 
-
     handleLoadNext(next) {
         this.setState({next : next});
     }
-
 
     handleLoadOrganization(organizationId, organizationName) {
         this.setState({organizationId : organizationId});
@@ -205,37 +202,16 @@ class Main extends Component {
     }
 
 
-
-
-
-
-
     handleAuthenticate(email, password, callback, errorCallback) {
-
         var myThis = this;
         var authenticationData = {Username : email, Password : password};
         var authenticationDetails = new AuthenticationDetails(authenticationData);
         var userData =  {Username : email, Pool : userPool };
         var cognitoUser = new CognitoUser(userData);
 
-
         cognitoUser.authenticateUser(authenticationDetails, {
               onSuccess: function (result) {
-
-
-
-                AWS.config.region = 'us-west-2';
-                AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-                        //AccountId: '698305963744',
-                        //RoleArn: 'arn:aws:iam::698305963744:role/Cognito_dragonflyAuth_Role',
-                        IdentityPoolId : 'us-west-2:b6311e4b-9082-4058-883c-19d23e34802b',
-                        Logins : { 'cognito-idp.us-west-2.amazonaws.com/us-west-2_N8urEcZBJ' : result.getIdToken().getJwtToken() }
-                });
-
-
-                dragonfly.docClient = new AWS.DynamoDB.DocumentClient();
-                dragonfly.cognitoUser = cognitoUser;
-                dragonfly.s3 = new AWS.S3({ apiVersion: '2006-03-01', params: {Bucket: 'dragonfly-videos'},   httpOptions: { timeout: 1000000 } });
+                myThis.setAWSCredential(cognitoUser, result);
                 myThis.handleLoadAttributes(callback);
               },
 
@@ -248,7 +224,38 @@ class Main extends Component {
               }
           });
 
+    }
 
+    restoreUserSession() {
+      var cognitoUser = userPool.getCurrentUser();
+      var myThis = this;
+      if (cognitoUser != null) {
+          cognitoUser.getSession(function(err, session) {
+            if (err) {
+              alert(err);
+              return;
+            }
+            myThis.setAWSCredential(cognitoUser, session)
+            myThis.handleLoadAttributes(function() {
+              myThis.props.history.push('loadorganizations');
+            });
+        });
+      }
+    }
+
+
+    setAWSCredential(cognitoUser, result) {
+      AWS.config.region = 'us-west-2';
+      AWS.config.credentials = new AWS.CognitoIdentityCredentials({
+              //AccountId: '698305963744',
+              //RoleArn: 'arn:aws:iam::698305963744:role/Cognito_dragonflyAuth_Role',
+              IdentityPoolId : 'us-west-2:b6311e4b-9082-4058-883c-19d23e34802b',
+              Logins : { 'cognito-idp.us-west-2.amazonaws.com/us-west-2_N8urEcZBJ' : result.getIdToken().getJwtToken() }
+      });
+
+      dragonfly.docClient = new AWS.DynamoDB.DocumentClient();
+      dragonfly.cognitoUser = cognitoUser;
+      dragonfly.s3 = new AWS.S3({ apiVersion: '2006-03-01', params: {Bucket: 'dragonfly-videos'},   httpOptions: { timeout: 1000000 } });
     }
 
 
@@ -273,7 +280,6 @@ class Main extends Component {
 
 
     dbPut(params, callback) {
-
         dragonfly.docClient.put(params, function(err, data) {
 
             if (err) {
@@ -287,7 +293,6 @@ class Main extends Component {
 
 
      dbBatchWrite(params, callback) {
-
         dragonfly.docClient.batchWrite(params, function(err, data) {
 
             if (err) {
@@ -303,9 +308,7 @@ class Main extends Component {
 
 
     dbQuery(params, callback) {
-
         dragonfly.docClient.query(params, function(err, data) {
-
             if (err) {
                 alert(JSON.stringify(err));
                 callback(data);
@@ -335,7 +338,6 @@ class Main extends Component {
     }
 
     dbUpdate(params, callback) {
-
         dragonfly.docClient.update(params, function(err, data) {
 
             if (err) {
@@ -349,7 +351,6 @@ class Main extends Component {
 
 
      dbUpdateUnauth(params, callback) {
-
         dragonfly_unauth.docClient.update(params, function(err, data) {
 
             if (err) {
@@ -371,7 +372,6 @@ class Main extends Component {
 
         var request = dragonfly.s3.putObject(params);
         var percent = 0;
-
         request.
           on('httpUploadProgress', function(progress, response) {
             percent = Math.round((progress.loaded / size) * 100, -2);
@@ -411,17 +411,7 @@ class Main extends Component {
     }
 
 
-
-
-
-
-
-
-
-
     render(){
-
-
         const childrenWithProps = React.Children.map(this.props.children,
          (child) => React.cloneElement(child, {
            userId: this.state.userId,

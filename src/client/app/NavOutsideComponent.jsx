@@ -9,7 +9,7 @@ class NavOutsideComponent extends React.Component {
   constructor(props) {
     super(props);
 
-    this.state = {emailValue : props.email, 
+    this.state = {emailValue : props.email,
                   passwordValue : '',
                   buttonRestClassName : buttonClassName,
                   buttonClickedClassName : "dragon-hidden"
