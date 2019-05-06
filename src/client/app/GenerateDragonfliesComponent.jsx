@@ -1,7 +1,8 @@
 import React from 'react';
 import { Link } from 'react-router';
-import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
 
+import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
+import  ImageModalComponent from './components/ImageModalComponent.jsx';
 
 const buttonClassName = "btn btn-primary";
 class GenerateDragonfliesComponent extends React.Component {
@@ -65,13 +66,22 @@ class GenerateDragonfliesComponent extends React.Component {
               </div>
               <div id="logo" className="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                 <div className="panel-body">
-                  <div className="input-group">
-                    <label className="input-group-btn">
-                      <span className="btn btn-primary">
-                        Choose File <input type="file" style={{ display: 'none'}}/>
-                      </span>
-                    </label>
-                    <input type="text" className="form-control" placeholder="Select the Logo File" readOnly/>
+                  <div className="row form-group">
+                    <ImageModalComponent image="./images/logo-dragonfly-ii2.png" columnClass="col-md-4"/>
+                    <ImageModalComponent image="./images/screenshots/whereis_logo.jpg" columnClass="col-md-4"/>
+                    <ImageModalComponent image="./images/screenshots/whereis_logo.jpg" columnClass="col-md-4"/>
+                  </div>
+                  <div className="row form-group">
+                    <div className="col-md-12">
+                      <div className="input-group">
+                        <label className="input-group-btn">
+                          <span className="btn btn-primary">
+                            Choose File <input type="file" style={{ display: 'none'}}/>
+                          </span>
+                        </label>
+                        <input type="text" className="form-control" placeholder="Select the Logo File" readOnly/>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </div>
