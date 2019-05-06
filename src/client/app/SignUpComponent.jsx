@@ -27,8 +27,8 @@ class SignUpComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.props.handleSignOut();
-    this.state = {emailValue : props.email, 
+    // this.props.handleSignOut();
+    this.state = {emailValue : props.email,
                   passwordValue : '',
                   buttonRestClassName : buttonClassName,
                   buttonClickedClassName : "dragon-hidden"
@@ -39,15 +39,15 @@ class SignUpComponent extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClickPlay = this.handleClickPlay.bind(this);
   }
-  
-  
+
+
 
   render() {
     return (
       <div className="row"><div className="col-sm-12 dragon-white">
-      
+
       <br/><br/>
-      
+
       <div className="row">
         <div className="col-sm-1">
         </div>
@@ -57,17 +57,17 @@ class SignUpComponent extends React.Component {
         <div className="col-sm-1">
         </div>
       </div>
-      
+
       <br/><br/><br/><br/><br/>
-      
-      
+
+
       <div className="row lite-blue-bg">
         <div className="col-sm-1">
         </div>
         <div className="col-sm-4 divCenter">
         <br/><br/><br/>
           <span className="dragon-standard-text">
-          Dragonfly allows you to compensate your Customers for Learning about your Company and Products, 
+          Dragonfly allows you to compensate your Customers for Learning about your Company and Products,
           providing their Feedback, and Sharing other requested Information. <br/><br/>
           The result is an Ongoing, Documentable, Two-Way Information Exchange with your Customers.
           </span>
@@ -87,7 +87,7 @@ class SignUpComponent extends React.Component {
                                 <input type="password" value={this.state.passwordValue} onChange={this.updatePasswordValue} placeholder="password" className="form-control input-lg"/>
                                 <br/>
                                 <input type="submit" className={this.state.buttonRestClassName} value="Create Account" />
-                                <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Creating Account</div> 
+                                <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Creating Account</div>
                     </form>
                 </div>
         <br/><br/><br/>
@@ -95,14 +95,14 @@ class SignUpComponent extends React.Component {
         <div className="col-sm-1">
         </div>
       </div>
-      
-      
-      
+
+
+
       <br/><br/>
-      
-      
-      
-      
+
+
+
+
     <div className="row">
             <div className="col-sm-1"></div>
             <div className="col-sm-4">
@@ -121,13 +121,13 @@ class SignUpComponent extends React.Component {
             </div>
             <div className="col-sm-1"></div>
     </div>
-    
-    
-    
+
+
+
     <br/><br/>
-    
-    
-      
+
+
+
     <div className="row lite-blue-bg">
             <div className="col-sm-4 divCenter">
               <br/><br/><br/>
@@ -157,12 +157,12 @@ class SignUpComponent extends React.Component {
               <br/><br/><br/>
             </div>
     </div>
-    
-    
-    
+
+
+
     <br/><br/><br/><br/>
-      
-      
+
+
 
       <div className="row">
         <div className="col-sm-1">
@@ -183,10 +183,10 @@ class SignUpComponent extends React.Component {
         <div className="col-sm-1">
         </div>
       </div>
-      
+
       <br/><br/><br/><br/>
-      
-      
+
+
       <div className="row">
         <div className="col-sm-1">
         </div>
@@ -200,12 +200,12 @@ class SignUpComponent extends React.Component {
         <div className="col-sm-1">
         </div>
       </div>
-      
-      
+
+
       <br/><br/><br/><br/><br/><br/><br/>
-      
-      
-      
+
+
+
       <div className="row lite-blue-bg">
         <div className="col-sm-1">
         </div>
@@ -213,42 +213,42 @@ class SignUpComponent extends React.Component {
         <br/><br/><br/>
           <span className="dragon-home-header-pricing">Pricing</span>
           <div className="dragon-blue-rounded-left">
-          
+
           <span className="underline">Free</span>
-          
+
           <br/><br/>
           <ul>
             <li>Create Account</li>
             <li>Send Unlimited Dragonfly Sessions</li>
           </ul>
           <br/><br/>
-          
+
           <span className="underline">Risk Free</span>
-          
+
           <br/><br/>
           <ul>
             <li>Only Pay for Successful Dragonfly Sessions</li>
           </ul>
           <br/><br/>
-          
+
           <span className="underline">Fees</span>
-          
+
           <br/><br/>
           <ul>
             <li>Customer Incentive</li>
             <li>+ Dragonfly Success Fee</li>
           </ul>
           <br/>
-          
-          
+
+
           <span className="fine-print">
           Customer Incentive = Amount Paid for Answering Questions<br/>
           Dragonfly Success Fee = 33% of Customer Incentive<br/>
           Dragonfly Success Fee Decreases with Volume Commitment
           </span>
-          
-          
-          
+
+
+
           </div>
         <br/><br/><br/>
         </div>
@@ -266,7 +266,7 @@ class SignUpComponent extends React.Component {
                                 <input type="password" value={this.state.passwordValue} onChange={this.updatePasswordValue} placeholder="password" className="form-control input-lg"/>
                                 <br/>
                                 <input type="submit" className={this.state.buttonRestClassName} value="Create Account" />
-                                <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Creating Account</div> 
+                                <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Creating Account</div>
                     </form>
                 </div>
         <br/><br/><br/>
@@ -274,44 +274,44 @@ class SignUpComponent extends React.Component {
         <div className="col-sm-1">
         </div>
       </div>
-      
-      
+
+
       <div className="row footer">
         <div className="col-sm-6 footer-left">
-        
+
         <br/><br/>
-        
+
         Want to learn more?
-        
+
         <br/><br/>
-        
+
         Contact us:&nbsp;&nbsp;
         <a href="mailto:admin@dragonfly.one" className="dragonfly-contact">admin@dragonfly.one</a>
-        
+
         <br/><br/>
-        
+
         </div>
         <div className="col-sm-6 footer-right">
-        
+
         <br/><br/>
-        
+
         <br/><br/>
-        
+
         <br/><br/>
         ©Dragonfly Incentivized Information LLC 2018
 
-        
+
         </div>
       </div>
 
 
       </div></div>
-      
-      
-      
+
+
+
     );
   }
-  
+
   handleClickPlay(e) {
     var video = e.target;
     video.play();
@@ -332,31 +332,31 @@ class SignUpComponent extends React.Component {
       emailValue: e.target.value
     });
   }
-  
+
   updatePasswordValue(e) {
     this.setState({
       passwordValue: e.target.value
     });
   }
-  
+
   handleSubmit(e) {
     e.preventDefault();
     this.showClickedButtonState(true);
-    
+
     const email = this.state.emailValue.trim();
     const password = this.state.passwordValue.trim();
-    
+
     const attributeList = [
       new CognitoUserAttribute({
         Name: 'email',
         Value: email
       })
     ];
-    
-    
+
+
     var cognitoUser;
     var myThis = this;
-    
+
     userPool.signUp(email, password, attributeList, null, (err, result) => {
       myThis.showClickedButtonState(false);
         if (err) {

@@ -7,11 +7,10 @@ class LoadOrganizationsComponent extends React.Component {
   constructor(props) {
     super(props);
   }
-  
+
   componentDidMount() {
     var myThis = this;
     var userId = this.props.userId;
-    
     var params = {
         TableName : "Organizations",
         KeyConditionExpression: "#userId = :userId",
@@ -25,13 +24,13 @@ class LoadOrganizationsComponent extends React.Component {
 
     this.props.dbQuery(params, function(result) {
       myThis.props.handleLoadOrganizations(result);
-      myThis.props.history.push('loadorganization');    
-      
+      myThis.props.history.push('loadorganization');
+
     });
-    
-    
+
+
   }
-  
+
 
   render() {
     return (
@@ -45,10 +44,10 @@ class LoadOrganizationsComponent extends React.Component {
 
         </div>
       </div>
-      
-      
-      
-      
+
+
+
+
     );
   }
 
