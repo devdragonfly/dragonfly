@@ -6,17 +6,13 @@ class ExportCampaignButton extends React.Component {
 
   constructor(props) {
     super(props);
-
     this.state = {
-      csvGenerated: false,
-      dragonfliesData: this.props.dragonfliesData,
-      filename: 'dragonflies.csv',
-      data: '#!'
+                  csvGenerated: false,
+                  filename: 'dragonflies.csv',
+                  data: '#!'
     };
 
     this.handleOnClick = this.handleOnClick.bind(this)
-
-    console.log(this.props);
   }
 
   render() {
@@ -31,34 +27,26 @@ class ExportCampaignButton extends React.Component {
   }
 
   handleOnClick() {
-    if (this.state.csvGenerated) {
-      console.log('if');
-    } else {
-      console.log('else');
-
+    if (!this.state.csvGenerated) {
       this.setState({
         csvGenerated: true,
         data: this.buildCsvData()
       });
-
     }
   }
 
   buildCsvData() {
-    var dragonfliesData = this.state.dragonfliesData;
-    var quot = '\"';
+    var dragonfliesData = this.props.dragonfliesData;
 
-    function preferedContactInfo(preferences) {
-      return preferences.emailOrText == 'email' ? preferences.email : preferences.mobile;
-    }
+    var preferedContactInfo = (preferences) =>  {
+      return preferences.emailOrText == 'email' ? preferences.email : preferences.mobile
+    };
 
-    function formatDate(date) {
-      if (date){
-        return new Date(date);
-      }
-      return '';
-    }
+    var formatDate = (date) => { return date ? new Date(date) : '' };
 
+    var wrapInQuotes = (sentence) => '\"' + sentence + '\"';
+
+    var file_info = 'data:text/csv;charset=utf-8,';
     var headers = [
       'First Name',
       'Last Name',
@@ -69,16 +57,19 @@ class ExportCampaignButton extends React.Component {
       'Earned',
       'NPS',
       'Prefered Contact Method',
-      'Suggestion'
+      'Feedback'
     ];
     var body = '';
 
-    // Gets first Dragonfly and appends Compaign's questions to Headers
+    // Append Headers with Campaign questions
     dragonfliesData[0].session.breakpoints.forEach(function(breakpoint){
-      headers.push(quot + breakpoint.questions[0].title + quot);
+      headers.push(
+        wrapInQuotes(breakpoint.questions[0].title)
+      );
     })
     headers = headers.join() + '\n';
 
+    // Generate CSV records
     dragonfliesData.forEach(function(dragonfly) {
       var row_array = [];
 
@@ -95,19 +86,21 @@ class ExportCampaignButton extends React.Component {
           formatDate(dragonfly.date_completed),
           dragonfly.earned,
           dragonfly.preferences.nps,
-          (quot + preferedContactInfo(dragonfly.preferences) + quot),
-          (quot + dragonfly.preferences.text + quot)
+          wrapInQuotes(preferedContactInfo(dragonfly.preferences)),
+          wrapInQuotes(dragonfly.preferences.text)
         );
 
         dragonfly.results.forEach(function(result){
-          row_array.push( (quot + result.resultText + quot) );
+          row_array.push(
+            wrapInQuotes(result.selectedAnswers[0])
+          );
         });
       }
 
       body += (row_array.join() + '\n');
     });
 
-    return 'data:text/csv;charset=utf-8,' + headers + body;
+    return file_info + headers + body;
   }
 
 }
