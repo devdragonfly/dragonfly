@@ -42,9 +42,7 @@ class LoadDragonflyComponent extends React.Component {
 
       var session = dragonfly.session;
       //
-      console.log(dragonfly);
-      console.log(session);
-      // error here because breackpoint are not defined here(session).breakpoints and later .length called on undefined
+      // #Error here because breackpoint are not defined here(session).breakpoints and later .length called on undefined
       //
       var sessionValidBreakpoints = myThis.getValidBreakpoints(session.breakpoints);
       var orderedBreakpoints = myThis.getOrderedBreakpoints(sessionValidBreakpoints.breakpoints);
