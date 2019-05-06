@@ -10,24 +10,21 @@ class ExportCampaignButton extends React.Component {
     this.state = {
       csvGenerated: false,
       dragonfliesData: this.props.dragonfliesData,
-      // check if i need it by updating the componnent and console logging the this.props.dragonfliesData
       filename: 'dragonflies.csv',
       data: '#!'
     };
 
-    this.buildCsvData.bind(this);
-    this.preferedContactInfo.bind(this);
+    this.handleOnClick = this.handleOnClick.bind(this)
 
     console.log(this.props);
-    console.log(this.state);
   }
 
   render() {
     return (
       <div>
         <h4>Export CSV</h4>
-        <a className={buttonClassName} onClick={this.handleOnClick.bind(this)} href={this.state.data} download={this.state.filename}>
-          Click Me To Download
+        <a className={buttonClassName} onClick={this.handleOnClick} href={this.state.data} download={this.state.filename}>
+          Click to download CSV
         </a>
       </div>
     );
@@ -50,11 +47,25 @@ class ExportCampaignButton extends React.Component {
   buildCsvData() {
     var dragonfliesData = this.state.dragonfliesData;
     var quot = '\"';
+
+    function preferedContactInfo(preferences) {
+      return preferences.emailOrText == 'email' ? preferences.email : preferences.mobile;
+    }
+
+    function formatDate(date) {
+      if (date){
+        return new Data(date);
+      }
+      return '';
+    }
+
     var headers = [
       'First Name',
       'Last Name',
       'Email',
+      'Date Sent',
       'Offered',
+      'Date Completed',
       'Earned',
       'NPS',
       'Prefered Contact Method',
@@ -62,40 +73,41 @@ class ExportCampaignButton extends React.Component {
     ];
     var body = '';
 
-
+    // Gets first Dragonfly and appends Compaign's questions to Headers
     dragonfliesData[0].session.breakpoints.forEach(function(breakpoint){
-      headers.push(qmark + breakpoint.questions[0].title + qmark);
+      headers.push(quot + breakpoint.questions[0].title + quot);
     })
     headers = headers.join() + '\n';
-
 
     dragonfliesData.forEach(function(dragonfly) {
       var row_array = [];
 
-      csv_file.body.push(
+      row_array.push(
         dragonfly.contact.first,
         dragonfly.contact.last,
         dragonfly.contact.email,
+        formatDate(dragonfly.date_sent),
         dragonfly.incentive,
-        dragonfly.earned,
-        dragonfly.preferences.nps,
-        (qmark + this.preferedContactInfo(dragonfly.preferences) + qmark),
-        (qmark + dragonfly.preferences.text + qmark)
       );
 
-      dragonfly.results.forEach(function(result){
-        
-      });
+      if (dragonfly.date_completed) {
+        row_array.push(
+          formatDate(dragonfly.date_completed),
+          dragonfly.earned,
+          dragonfly.preferences.nps,
+          (quot + preferedContactInfo(dragonfly.preferences) + quot),
+          (quot + dragonfly.preferences.text + quot)
+        );
 
-      var row_string = row_array.join();
-      body += (row_string + '\n');
+        dragonfly.results.forEach(function(result){
+          row_array.push( (quot + result.resultText + quot) );
+        });
+      }
+
+      body += (row_array.join() + '\n');
     });
 
-    return 'data:text/csv;charset=utf-8,' + (headers + '\n') + (body);
-  }
-
-  preferedContactInfo(preferences) {
-    return preferences.emailOrText == 'email' ? preferences.email : preferences.mobile;
+    return 'data:text/csv;charset=utf-8,' + headers + body;
   }
 
 }

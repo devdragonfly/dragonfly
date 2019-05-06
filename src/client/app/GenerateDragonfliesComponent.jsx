@@ -17,27 +17,27 @@ class GenerateDragonfliesComponent extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.validateIncentive = this.validateIncentive.bind(this);
   }
-  
+
 
   render() {
     var organizationMenu = function() {return <OrganizationMenuComponent current="campaigns" /> }();
     var campaign = this.props.campaign;
     var session = campaign.session;
     var contactList = campaign.contactList;
-    
+
     var sessionName = '';
     if (session == null) { sessionName = <Link to={`campaignselectsession`}>Select</Link>; } else { sessionName = session.name}
 
     var contactListName = '';
-    if (contactList == null) 
-      { 
+    if (contactList == null)
+      {
         contactListName = <Link to={`campaignselectcontactlist`}>Select</Link>; } else { contactListName = contactList.name }
-    
-    
-    
-    
 
-    
+
+
+
+
+
 
     return (
 
@@ -47,7 +47,7 @@ class GenerateDragonfliesComponent extends React.Component {
           <div className="col-sm-6">
             <h3><i className='fa fa-line-chart fa-fw'></i> {this.props.campaign.name}</h3>
             <br/><br/>
-          
+
             <div className="form-group row">
               <div className="col-xs-3">
                 <label for="ex1"><i className='fa fa-graduation-cap fa-fw fa-lg'></i> Session</label><br/>
@@ -63,22 +63,22 @@ class GenerateDragonfliesComponent extends React.Component {
               </div>
             </div>
 
-            
+
             <br/><br/>
             <form onSubmit={this.handleSubmit}>
               <input type="submit" className={this.state.buttonRestClassName} value="Generate Dragonflies" />
               <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Generating Dragonflies</div>
             </form>
-            
+
           </div>
           <div className="col-sm-4">
           </div>
-          
+
         </div>
 
     );
   }
-  
+
 
   showClickedButtonState(yes) {
     if (yes) {
@@ -89,13 +89,13 @@ class GenerateDragonfliesComponent extends React.Component {
           this.setState({ buttonClickedClassName: "dragon-hidden" });
     }
   }
-  
+
   updateIncentiveValue(e) {
     this.setState({
       incentiveValue: e.target.value
     });
   }
-  
+
   validateIncentive(incentive) {
     var isNumeric = !isNaN(parseFloat(incentive)) && isFinite(incentive);
     if (!isNumeric) return false;
@@ -109,62 +109,77 @@ class GenerateDragonfliesComponent extends React.Component {
     var myThis = this;
     const campaign = this.props.campaign;
     const incentive = this.state.incentiveValue.trim();
-    
+
     if (campaign.session == null) {
       myThis.showClickedButtonState(false);
       return;
     }
-    
+
     if (campaign.contactList == null) {
       myThis.showClickedButtonState(false);
       return;
     }
-    
-    
+
+
     var incentiveIsValid = this.validateIncentive(incentive);
     if (!incentiveIsValid) {
       myThis.showClickedButtonState(false);
       return;
     }
-    
-    
+
+
 
     const organizationId = this.props.organizationId;
     const campaignId = campaign.campaignId;
-    
+
     var contactList = campaign.contactList;
     var contacts = contactList.contacts;
     var putRequests = [];
     var dragonflies = [];
-    
+
     for (var i = 0; i < contacts.length; i++) {
         var dragonflyId = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
             var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
             return v.toString(16);
         });
-        var dragonfly = { dragonflyId: dragonflyId, organizationId: organizationId, campaignId: campaignId, contact: contacts[i], session: campaign.session, incentive: incentive };
-        putRequests.push({ PutRequest: { Item: dragonfly } })
+        var dragonfly = {
+          dragonflyId: dragonflyId,
+          organizationId: organizationId,
+          campaignId: campaignId,
+          contact: contacts[i],
+          session: campaign.session,
+          incentive: incentive,
+          date_sent: new Date().toISOString()
+        };
+        putRequests.push({
+          PutRequest: {
+            Item: dragonfly
+          }
+        })
         dragonflies.push(dragonfly);
-        
+
     }
 
     var params = {
-          RequestItems: {"Dragonflies" : putRequests, "Results" : putRequests },
+          RequestItems: {
+            "Dragonflies" : putRequests,
+            "Results" : putRequests
+          },
           ReturnConsumedCapacity: "NONE",
           ReturnItemCollectionMetrics: "NONE"
       };
-    
-    
+
+
 
     this.props.dbBatchWrite(params, function(result) {
       myThis.showClickedButtonState(false);
       myThis.props.history.push('loadresults');
-      
+
     });
 
   }
-  
-  
+
+
 
 }
 
