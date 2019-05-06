@@ -10,7 +10,7 @@ export default class ImageModalComponent extends React.Component {
     let imageName = this.props.image.split('/').pop().split('.')[0];
     return (
       <div className={ this.props.columnClass }>
-        <img src={ this.props.image } data-toggle="modal" data-target={ '#' + imageName } className="img-thumbnail"/>
+        <img src={ this.props.image } data-toggle="modal" data-target={ '#' + imageName } className="img-thumbnail dragon-in-modal"/>
 
         <div className="modal fade" id={ imageName } tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
           <div className="modal-dialog" role="document">

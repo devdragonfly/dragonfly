@@ -67,9 +67,9 @@ class GenerateDragonfliesComponent extends React.Component {
               <div id="logo" className="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                 <div className="panel-body">
                   <div className="row form-group">
-                    <ImageModalComponent image="./images/logo-dragonfly-ii2.png" columnClass="col-md-4"/>
-                    <ImageModalComponent image="./images/screenshots/whereis_logo.jpg" columnClass="col-md-4"/>
-                    <ImageModalComponent image="./images/screenshots/whereis_logo.jpg" columnClass="col-md-4"/>
+                    <ImageModalComponent image="./images/screenshots/logo-intro-page.jpg" columnClass="col-md-4"/>
+                    <ImageModalComponent image="./images/screenshots/logo-compl-page.jpg" columnClass="col-md-4"/>
+                    <ImageModalComponent image="./images/screenshots/logo-intro-page.jpg" columnClass="col-md-4"/>
                   </div>
                   <div className="row form-group">
                     <div className="col-md-12">
@@ -96,13 +96,20 @@ class GenerateDragonfliesComponent extends React.Component {
               </div>
               <div id="introPage" className="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                 <div className="panel-body">
-                  <div className="col-md-10 form-group">
-                    <label for="intro1">Welcome Line</label><br/>
-                    <textarea id="intro1" className="form-control" rows="3" placeholder="custom text"></textarea>
+                  <div className="row form-group">
+                    <ImageModalComponent image="./images/screenshots/text-intro-page.jpg" columnClass="col-md-4"/>
                   </div>
-                  <div className="col-md-10" form-group>
-                    <label for="intro2">Payment Info</label><br/>
-                    <textarea id="intro2" className="form-control" rows="3" placeholder="custom text"></textarea>
+                  <div className="row">
+                    <div className="col-md-10 form-group">
+                      <label for="intro1">Welcome Line</label><br/>
+                      <textarea id="intro1" className="form-control" rows="3" placeholder="custom text"></textarea>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-10 form-group" >
+                      <label for="intro2">Payment Info</label><br/>
+                      <textarea id="intro2" className="form-control" rows="3" placeholder="custom text"></textarea>
+                    </div>
                   </div>
                 </div>
               </div>
@@ -117,9 +124,14 @@ class GenerateDragonfliesComponent extends React.Component {
               </div>
               <div id="confirmPage" className="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
                 <div className="panel-body">
-                  <div className="col-md-10 form-group">
-                    <label for="confirm1">Custom Text</label><br/>
-                    <textarea id="confirm1" className="form-control" rows="3" placeholder="Custom text"></textarea>
+                  <div className="row form-group">
+                    <ImageModalComponent image="./images/screenshots/text-conf-page.jpg" columnClass="col-md-4"/>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-10 form-group">
+                      <label for="confirm1">Custom Text</label><br/>
+                      <textarea id="confirm1" className="form-control" rows="3" placeholder="Custom text"></textarea>
+                    </div>
                   </div>
                 </div>
               </div>
