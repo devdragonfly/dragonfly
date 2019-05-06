@@ -15,28 +15,87 @@ class ExportCampaignButton extends React.Component {
       data: '#!'
     };
 
+    this.buildCsvData.bind(this);
+    this.preferedContactInfo.bind(this);
+
     console.log(this.props);
     console.log(this.state);
   }
 
   render() {
     return (
-      <a className={buttonClassName} onClick={this.handleOnClick.bind(this)} href={this.state.data} download={this.state.filename}>
-        Click Me To Download
-      </a>
+      <div>
+        <h4>Export CSV</h4>
+        <a className={buttonClassName} onClick={this.handleOnClick.bind(this)} href={this.state.data} download={this.state.filename}>
+          Click Me To Download
+        </a>
+      </div>
     );
   }
 
   handleOnClick() {
     if (this.state.csvGenerated) {
-      console.log('Trigger click from here');
+      console.log('if');
     } else {
-      console.log('Generate CSV here');
+      console.log('else');
+
       this.setState({
         csvGenerated: true,
-        data: 'data:text/csv;charset=utf-8,hello,brake,notbreak'
+        data: this.buildCsvData()
       });
+
     }
+  }
+
+  buildCsvData() {
+    var dragonfliesData = this.state.dragonfliesData;
+    var quot = '\"';
+    var headers = [
+      'First Name',
+      'Last Name',
+      'Email',
+      'Offered',
+      'Earned',
+      'NPS',
+      'Prefered Contact Method',
+      'Suggestion'
+    ];
+    var body = '';
+
+
+    dragonfliesData[0].session.breakpoints.forEach(function(breakpoint){
+      headers.push(qmark + breakpoint.questions[0].title + qmark);
+    })
+    headers = headers.join() + '\n';
+
+
+    dragonfliesData.forEach(function(dragonfly) {
+      var row_array = [];
+
+      csv_file.body.push(
+        dragonfly.contact.first,
+        dragonfly.contact.last,
+        dragonfly.contact.email,
+        dragonfly.incentive,
+        dragonfly.earned,
+        dragonfly.preferences.nps,
+        (qmark + this.preferedContactInfo(dragonfly.preferences) + qmark),
+        (qmark + dragonfly.preferences.text + qmark)
+      );
+
+      dragonfly.results.forEach(function(result){
+        
+      });
+
+      var row_string = row_array.join();
+      body += (row_string + '\n');
+    });
+
+    return 'data:text/csv;charset=utf-8,' + (headers + '\n') + (body);
+  }
+
+  preferedContactInfo(preferences) {
+    return preferences.emailOrText == 'email' ? preferences.email : preferences.mobile;
   }
 
 }

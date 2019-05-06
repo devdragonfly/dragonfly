@@ -83,9 +83,7 @@ class CampaignComponent extends React.Component {
   }
 
   render() {
-    var organizationMenu = function() {return <OrganizationMenuComponent current="campaigns" /> }();
     var path = this.state.path;
-
 
 
     var dragonflies = this.props.results;
@@ -107,8 +105,10 @@ class CampaignComponent extends React.Component {
           }
     }
 
-    var exportCsvButton = <ExportCampaignButton dragonfliesData={dragonflies}/>;
-
+    var organizationMenu = function() {return <OrganizationMenuComponent current="campaigns" />}();
+    if (this.props.results.Count != 0) {
+      var exportCsvButton  = function() {return <ExportCampaignButton dragonfliesData={dragonflies}/>}();
+    }
 
     return (
 
@@ -129,7 +129,6 @@ class CampaignComponent extends React.Component {
             <canvas id="questionResultsChart"></canvas>
 
             <br/><br/>
-            <h4>Export CSV</h4>
             {exportCsvButton}
 
             <br/><br/>
