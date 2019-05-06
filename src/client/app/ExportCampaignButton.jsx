@@ -54,7 +54,7 @@ class ExportCampaignButton extends React.Component {
 
     function formatDate(date) {
       if (date){
-        return new Data(date);
+        return new Date(date);
       }
       return '';
     }
