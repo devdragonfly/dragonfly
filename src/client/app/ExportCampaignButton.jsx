@@ -6,10 +6,12 @@ class ExportCampaignButton extends React.Component {
 
   constructor(props) {
     super(props);
+    this.href_base = 'data:text/csv;charset=utf-8,';
+
     this.state = {
                   csvGenerated: false,
                   filename: 'dragonflies.csv',
-                  data: '#!'
+                  data: this.href_base
     };
 
     this.handleOnClick = this.handleOnClick.bind(this)
@@ -17,12 +19,9 @@ class ExportCampaignButton extends React.Component {
 
   render() {
     return (
-      <div>
-        <h4>Export CSV</h4>
-        <a className={buttonClassName} onClick={this.handleOnClick} href={this.state.data} download={this.state.filename}>
-          Click to download CSV
-        </a>
-      </div>
+      <a className={buttonClassName} onClick={this.handleOnClick} href={this.state.data} download={this.state.filename}>
+        Click to download CSV
+      </a>
     );
   }
 
@@ -46,7 +45,6 @@ class ExportCampaignButton extends React.Component {
 
     var wrapInQuotes = (sentence) => '\"' + sentence + '\"';
 
-    var file_info = 'data:text/csv;charset=utf-8,';
     var headers = [
       'First Name',
       'Last Name',
@@ -100,7 +98,7 @@ class ExportCampaignButton extends React.Component {
       body += (row_array.join() + '\n');
     });
 
-    return file_info + headers + body;
+    return this.href_base + headers + body;
   }
 
 }

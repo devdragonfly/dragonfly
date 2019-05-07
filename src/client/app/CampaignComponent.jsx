@@ -92,23 +92,21 @@ class CampaignComponent extends React.Component {
     var dragonfliesJsx = function() {return '' }();
 
     if (dragonflies !== 'not found') {
-          dragonflies = dragonflies.Items;
-          if (dragonflies.length === 0) {
-            dragonfliesJsx = function() {return 'ERROR: No dragonflies created.' }();
+      dragonflies = dragonflies.Items;
+      if (dragonflies.length === 0) {
+        dragonfliesJsx = function() {return 'ERROR: No dragonflies created.' }();
 
-          } else {
-            dragonfliesJsx = dragonflies.map((dragonfly, i) => {
-                sessionName = dragonfly.session.name;
-                return <Dragonfly dragonfly={dragonfly} path={path}/>
+      } else {
+        dragonfliesJsx = dragonflies.map((dragonfly, i) => {
+            sessionName = dragonfly.session.name;
+            return <Dragonfly dragonfly={dragonfly} path={path}/>
 
-            });
-          }
+        });
+      }
     }
 
     var organizationMenu = function() {return <OrganizationMenuComponent current="campaigns" />}();
-    if (this.props.results.Count != 0) {
-      var exportCsvButton  = function() {return <ExportCampaignButton dragonfliesData={dragonflies}/>}();
-    }
+    var exportCsvButton  = function() {return <ExportCampaignButton dragonfliesData={dragonflies}/>}();
 
     return (
 
@@ -129,6 +127,8 @@ class CampaignComponent extends React.Component {
             <canvas id="questionResultsChart"></canvas>
 
             <br/><br/>
+
+            <h4>Export CSV</h4>
             {exportCsvButton}
 
             <br/><br/>
