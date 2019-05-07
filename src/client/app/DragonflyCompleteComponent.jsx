@@ -18,7 +18,6 @@ class DragonflyCompleteComponent extends React.Component {
   componentWillMount() {
     
     var dragonfly = this.props.dragonfly;
-    
     // if previousCompletion = true, this was an already completed dragonfly where link was re-clicked
     var previousCompletion = dragonfly.previousCompletion;
     if (previousCompletion) return;
@@ -133,9 +132,11 @@ class DragonflyCompleteComponent extends React.Component {
                 {paymentText}
                 
                 <br/><br/>
-                
-                Typically we complete all payments within 8 business hours.
-                
+                {
+                  dragonfly.customTexts && dragonfly.customTexts.complate ?
+                  dragonfly.customTexts.complate :
+                  "Typically we complete all payments within 8 business hours."
+                }
                 <br/><br/>
                 
                 If you do not receive payment within 8 business hours, please contact us at <b>admin@dragonfly.one</b>.

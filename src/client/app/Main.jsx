@@ -87,6 +87,7 @@ class Main extends Component {
         this.handleLoadNext = this.handleLoadNext.bind(this);
         this.restoreUserSession = this.restoreUserSession.bind(this);
         this.setAWSCredential = this.setAWSCredential.bind(this);
+        this.s3UploadLogos = this.s3UploadLogos.bind(this);
 
 
         ReactGA.initialize('UA-123354073-1');
@@ -256,6 +257,7 @@ class Main extends Component {
       dragonfly.docClient = new AWS.DynamoDB.DocumentClient();
       dragonfly.cognitoUser = cognitoUser;
       dragonfly.s3 = new AWS.S3({ apiVersion: '2006-03-01', params: {Bucket: 'dragonfly-videos'},   httpOptions: { timeout: 1000000 } });
+      dragonfly.logos_bucket = new AWS.S3({ apiVersion: '2006-03-01', params: {Bucket: 'dragonfly-ui'},   httpOptions: { timeout: 1000000 } });
     }
 
 
@@ -397,6 +399,13 @@ class Main extends Component {
         });
     }
 
+    s3UploadLogos(params, callback) {
+        console.log("Param param" , params)
+        dragonfly.logos_bucket.putObject(params, function (err, data) {
+            callback(err,data);
+        });
+    }
+
     handleSignOut() {
         this.setState({email : ''});
         this.setState({userId : 'not found'});
@@ -463,10 +472,10 @@ class Main extends Component {
            dbUpdate: this.dbUpdate,
            dbUpdateUnauth: this.dbUpdateUnauth,
            s3Upload: this.s3Upload,
-           s3ListObjects: this.s3ListObjects
+           s3ListObjects: this.s3ListObjects,
+           s3UploadLogos: this.s3UploadLogos
          })
         );
-
         var dragonflyId = this.state.dragonflyId;
         var email = this.state.email;
         var userId = this.state.userId;

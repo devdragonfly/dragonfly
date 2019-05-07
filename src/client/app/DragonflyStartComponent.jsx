@@ -40,7 +40,7 @@ class DragonflyStartComponent extends React.Component {
     var last = this.titleCase(contact.last); 
     var email = contact.email;
     var incentive = Number(dragonfly.incentive).toFixed(2);
-    
+
     return (
       <div className="row">
         <div className="col-sm-2"></div>
@@ -56,11 +56,19 @@ class DragonflyStartComponent extends React.Component {
             </div>
             <h2>Hello {first} {last},</h2>
             <br/><br/>
-            Welcome to Dragonfly! We are beta testing our new Incentivized Information technology where we pay you to engage with information.
+            {
+              dragonfly.customTexts && dragonfly.customTexts.welcome ?
+              dragonfly.customTexts.welcome :
+              "Welcome to Dragonfly! We are beta testing our new Incentivized Information technology where we pay you to engage with information."
+            }
             <br/><br/>
-            You can earn ${incentive} cash in 8 minutes if you answer {totalQuestionCount} questions correctly.
+            You can earn ${incentive} cash if you answer {totalQuestionCount} questions correctly.
             <br/><br/>
-            At the end we will pay you through the Venmo App and you can designate if you prefer payment by email or phone.
+            {
+              dragonfly.customTexts && dragonfly.customTexts.payment ?
+              dragonfly.customTexts.payment :
+              "At the end we will pay you through the Venmo App and you can designate if you prefer payment by email or phone."
+            }
             <br/><br/><br/>
             <Link to={`dragonflyplay`} className="btn btn-primary btn-lg">Start Now <i className='fa fa-chevron-circle-right'></i></Link>
           </div>

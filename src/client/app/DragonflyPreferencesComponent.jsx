@@ -23,7 +23,10 @@ class DragonflyPreferencesComponent extends React.Component {
                   openTextValue : "",
                   buttonRestClassName : buttonClassName,
                   buttonClickedClassName : "dragon-hidden",
-                  postAddressForm: false
+                  postAddressForm: false,
+                  address: "",
+                  cityState: "",
+                  pobox: ""
     };
     
     this.titleCase = this.titleCase.bind(this);
@@ -35,6 +38,9 @@ class DragonflyPreferencesComponent extends React.Component {
     this.handleOpenTextChange = this.handleOpenTextChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.showPostAddressForm = this.showPostAddressForm.bind(this);
+    this.updateAddressValue = this.updateAddressValue.bind(this);
+    this.updateCityStateValue = this.updateCityStateValue.bind(this);
+    this.updatePoboxValue = this.updatePoboxValue.bind(this);
   }
 
   componentDidMount() {
@@ -109,19 +115,19 @@ class DragonflyPreferencesComponent extends React.Component {
                   <div className="form-group">
                     <label for="address" className="col-sm-2 control-label" style={{ fontWeight: 'normal'}}>Address</label>
                     <div className="col-sm-6">
-                      <input type="email" className="form-control" id="address" placeholder="Address"/>
+                      <input type="text" className="form-control" id="address" placeholder="Address" value={this.state.address} onChange={this.updateAddressValue} />
                     </div>
                   </div>
                   <div className="form-group">
                     <label for="cityState" className="col-sm-2 control-label" style={{ fontWeight: 'normal'}}>City state</label>
                     <div className="col-sm-6">
-                      <input type="password" className="form-control" id="cityState" placeholder="Password"/>
+                      <input type="text" className="form-control" id="cityState" placeholder="City state" value={this.state.cityState} onChange={this.updateCityStateValue} />
                     </div>
                   </div>
                   <div className="form-group">
                     <label for="pobox" className="col-sm-2 control-label" style={{ fontWeight: 'normal'}}>P.O. Box</label>
                     <div className="col-sm-6">
-                      <input type="password" className="form-control" id="pobox" placeholder="Password"/>
+                      <input type="text" className="form-control" id="pobox" placeholder="P.O. Box" value={this.state.pobox} onChange={this.updatePoboxValue} />
                     </div>
                   </div>
                 </div>
@@ -206,8 +212,25 @@ class DragonflyPreferencesComponent extends React.Component {
     this.setState({
       mobile: e.target.value, selectedContactOption : "text"
     });
-  } 
-  
+  }
+
+  updateAddressValue(e) {
+    this.setState({
+      address: e.target.value
+    });
+  }
+
+  updateCityStateValue(e) {
+    this.setState({
+      cityState: e.target.value
+    });
+  }
+
+  updatePoboxValue(e) {
+    this.setState({
+      pobox: e.target.value
+    });
+  }
   
   handleSubmit(e) {
     e.preventDefault();
@@ -221,6 +244,9 @@ class DragonflyPreferencesComponent extends React.Component {
     preferences.email = this.state.email;
     preferences.mobile = this.state.mobile;
     preferences.text = this.state.openTextValue;
+    preferences.address = this.state.address;
+    preferences.cityState = this.state.cityState;
+    preferences.pobox = this.state.pobox;
     
     if ((preferences.email == "") || (preferences.email == null)) preferences.email = "none";
     if ((preferences.mobile == "") || (preferences.mobile == null)) preferences.mobile = "none";

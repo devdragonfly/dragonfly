@@ -9,16 +9,24 @@ class GenerateDragonfliesComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {incentiveValue : '',
-                  buttonRestClassName : buttonClassName,
-                  buttonClickedClassName : "dragon-hidden"
+    this.state = {
+      incentiveValue : '',
+      buttonRestClassName : buttonClassName,
+      buttonClickedClassName : "dragon-hidden",
+      logo: null,
+      customTexts: {
+        welcome: "",
+        payment: "",
+        complate: ""
+      }
     };
     this.updateIncentiveValue = this.updateIncentiveValue.bind(this);
     this.showClickedButtonState = this.showClickedButtonState.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.validateIncentive = this.validateIncentive.bind(this);
+    this.handleFile = this.handleFile.bind(this);
+    this.handleTextareChange = this.handleTextareChange.bind(this);
   }
-  
 
   render() {
     var organizationMenu = function() {return <OrganizationMenuComponent current="campaigns" /> }();
@@ -76,10 +84,10 @@ class GenerateDragonfliesComponent extends React.Component {
                       <div className="input-group">
                         <label className="input-group-btn">
                           <span className="btn btn-primary">
-                            Choose File <input type="file" style={{ display: 'none'}}/>
+                            Choose File <input type="file" style={{ display: 'none'}} onChange={ this.handleFile }/>
                           </span>
                         </label>
-                        <input type="text" className="form-control" placeholder="Select the Logo File" readOnly/>
+                        <input type="text" className="form-control" placeholder="Select the Logo File" value={ this.state.logo? this.state.logo.name : '' } readOnly/>
                       </div>
                     </div>
                   </div>
@@ -102,13 +110,13 @@ class GenerateDragonfliesComponent extends React.Component {
                   <div className="row">
                     <div className="col-md-10 form-group">
                       <label for="intro1">Welcome Line</label><br/>
-                      <textarea id="intro1" className="form-control" rows="3" placeholder="custom text"></textarea>
+                      <textarea id="intro1" className="form-control" value={this.state.customTexts.welcome} onChange={ this.handleTextareChange } name="welcome" rows="3" placeholder="custom text"></textarea>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-10 form-group" >
                       <label for="intro2">Payment Info</label><br/>
-                      <textarea id="intro2" className="form-control" rows="3" placeholder="custom text"></textarea>
+                      <textarea id="intro2" className="form-control" value={this.state.customTexts.payment} onChange={ this.handleTextareChange } name="payment" rows="3" placeholder="custom text"></textarea>
                     </div>
                   </div>
                 </div>
@@ -130,7 +138,7 @@ class GenerateDragonfliesComponent extends React.Component {
                   <div className="row">
                     <div className="col-md-10 form-group">
                       <label for="confirm1">Custom Text</label><br/>
-                      <textarea id="confirm1" className="form-control" rows="3" placeholder="Custom text"></textarea>
+                      <textarea id="confirm1" className="form-control" value={this.state.customTexts.complate} onChange={ this.handleTextareChange } name="complate" rows="3" placeholder="Custom text"></textarea>
                     </div>
                   </div>
                 </div>
@@ -145,6 +153,15 @@ class GenerateDragonfliesComponent extends React.Component {
         </div>
       </div>
     );
+  }
+
+  handleTextareChange(e) {
+    var inputName = e.target.name;
+    var inputValue = e.target.value;
+    var statusCopy = Object.assign({}, this.state);
+
+    statusCopy.customTexts[inputName] = inputValue;
+    this.setState(statusCopy);
   }
 
   showClickedButtonState(yes) {
@@ -162,12 +179,48 @@ class GenerateDragonfliesComponent extends React.Component {
       incentiveValue: e.target.value
     });
   }
-  
+
   validateIncentive(incentive) {
     var isNumeric = !isNaN(parseFloat(incentive)) && isFinite(incentive);
     if (!isNumeric) return false;
     if (incentive > 200) return false;
     return true;
+  }
+
+  isFileImage(file) {
+    return file && file['type'].split('/')[0] === 'image';
+  }
+
+  handleFile(e) {
+    if (this.isFileImage(e.target.files[0])) {
+      this.setState({ logo: e.target.files[0] });
+    } else {
+      this.setState({ logo: null });
+    }
+  }
+
+  putLogoupdateCompany() {
+    if (this.state.logo) {
+      let logoId = this.createId();
+      let companyId = this.props.campaign.campaignId;
+
+      var params = {
+        Bucket: 'dragonfly-ui',
+        Key: logoId+"-test",
+        ContentType: this.state.logo.type,
+        Body: this.state.logo
+      };
+      console.log(params);
+      // this.props.s3UploadLogos(params, function(err, data) {
+      //   console.log("Error ", err);
+      //   console.log(" Data ", data);
+      // });
+      this.props.s3Upload(this.state.logo, params.Key, function(err) {
+        console.log("Error", err)
+      }, function(res) {
+        console.log("Success ", res)
+      });
+    }
   }
 
   handleSubmit(e) {
@@ -176,6 +229,7 @@ class GenerateDragonfliesComponent extends React.Component {
     var myThis = this;
     const campaign = this.props.campaign;
     const incentive = this.state.incentiveValue.trim();
+    const customTexts = this.state.customTexts;
     
     if (campaign.session == null) {
       myThis.showClickedButtonState(false);
@@ -186,15 +240,12 @@ class GenerateDragonfliesComponent extends React.Component {
       myThis.showClickedButtonState(false);
       return;
     }
-    
-    
+
     var incentiveIsValid = this.validateIncentive(incentive);
     if (!incentiveIsValid) {
       myThis.showClickedButtonState(false);
       return;
     }
-    
-    
 
     const organizationId = this.props.organizationId;
     const campaignId = campaign.campaignId;
@@ -205,40 +256,34 @@ class GenerateDragonfliesComponent extends React.Component {
     var dragonflies = [];
     
     for (var i = 0; i < contacts.length; i++) {
-        var dragonflyId = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-            var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
-            return v.toString(16);
-        });
-        var dragonfly = { dragonflyId: dragonflyId, organizationId: organizationId, campaignId: campaignId, contact: contacts[i], session: campaign.session, incentive: incentive };
+        var dragonflyId = this.createId();
+        var dragonfly = { dragonflyId: dragonflyId, organizationId: organizationId, campaignId: campaignId, contact: contacts[i], session: campaign.session, incentive: incentive, customTexts: customTexts };
         putRequests.push({ PutRequest: { Item: dragonfly } })
         dragonflies.push(dragonfly);
-        
     }
 
     var params = {
-          RequestItems: {"Dragonflies" : putRequests, "Results" : putRequests },
-          ReturnConsumedCapacity: "NONE",
-          ReturnItemCollectionMetrics: "NONE"
-      };
-    
-    
-
-    this.props.dbBatchWrite(params, function(result) {
-      myThis.showClickedButtonState(false);
-      myThis.props.history.push('loadresults');
-      
-    });
+        RequestItems: {"Dragonflies" : putRequests, "Results" : putRequests },
+        ReturnConsumedCapacity: "NONE",
+        ReturnItemCollectionMetrics: "NONE"
+    };
+    myThis.putLogoupdateCompany();
+    // this.props.dbBatchWrite(params, function(result) {
+    //   console.log("RESULT ", result);
+    //   myThis.putLogoupdateCompany();
+    //   myThis.showClickedButtonState(false);
+    //   myThis.props.history.push('loadresults');
+    // });
 
   }
   
-  
+  createId() {
+    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
+      var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
+      return v.toString(16);
+    });
+  }
 
 }
-
-
-
-
-
-
 
 export default GenerateDragonfliesComponent;
