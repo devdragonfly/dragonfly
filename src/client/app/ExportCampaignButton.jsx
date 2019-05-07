@@ -1,6 +1,7 @@
 import React from 'react';
 
-const buttonClassName = "btn btn-primary";
+const buttonClassName = 'btn btn-primary';
+const errorMessage = 'Sorry! Error occured during CSV file generation'
 
 class ExportCampaignButton extends React.Component {
 
@@ -11,7 +12,7 @@ class ExportCampaignButton extends React.Component {
     this.state = {
                   csvGenerated: false,
                   filename: 'dragonflies.csv',
-                  data: this.href_base
+                  data: this.href_base + errorMessage
     };
 
     this.handleOnClick = this.handleOnClick.bind(this)
@@ -32,6 +33,7 @@ class ExportCampaignButton extends React.Component {
         data: this.buildCsvData()
       });
     }
+
   }
 
   buildCsvData() {
@@ -60,18 +62,21 @@ class ExportCampaignButton extends React.Component {
     var body = '';
 
     // Append Headers with Campaign questions
-    dragonfliesData[0].session.breakpoints.forEach(function(breakpoint){
-      headers.push(
-        wrapInQuotes(breakpoint.questions[0].title)
-      );
-    })
+    if (dragonfliesData[0].session.breakpoints) {
+      dragonfliesData[0].session.breakpoints.forEach(function(breakpoint) {
+        breakpoint.questions.forEach(function(question) {
+          headers.push( wrapInQuotes(question.title) );
+        });
+      });
+    }
+
     headers = headers.join() + '\n';
 
     // Generate CSV records
     dragonfliesData.forEach(function(dragonfly) {
-      var row_array = [];
+      var record_attributes = [];
 
-      row_array.push(
+      record_attributes.push(
         dragonfly.contact.first,
         dragonfly.contact.last,
         dragonfly.contact.email,
@@ -80,7 +85,7 @@ class ExportCampaignButton extends React.Component {
       );
 
       if (dragonfly.date_completed) {
-        row_array.push(
+        record_attributes.push(
           formatDate(dragonfly.date_completed),
           dragonfly.earned,
           dragonfly.preferences.nps,
@@ -88,14 +93,14 @@ class ExportCampaignButton extends React.Component {
           wrapInQuotes(dragonfly.preferences.text)
         );
 
-        dragonfly.results.forEach(function(result){
-          row_array.push(
-            wrapInQuotes(result.selectedAnswers[0])
-          );
+        dragonfly.results.forEach(function(result) {
+          result.selectedAnswers.forEach(function(answer) {
+            record_attributes.push( wrapInQuotes(answer) );
+          });
         });
       }
 
-      body += (row_array.join() + '\n');
+      body += (record_attributes.join() + '\n');
     });
 
     return this.href_base + headers + body;
