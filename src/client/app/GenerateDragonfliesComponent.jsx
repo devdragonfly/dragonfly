@@ -33,7 +33,7 @@ class GenerateDragonfliesComponent extends React.Component {
     var campaign = this.props.campaign;
     var session = campaign.session;
     var contactList = campaign.contactList;
-    
+
     var sessionName = '';
     if (session == null) { sessionName = <Link to={`campaignselectsession`}>Select</Link>; } else { sessionName = session.name}
 
@@ -173,7 +173,7 @@ class GenerateDragonfliesComponent extends React.Component {
           this.setState({ buttonClickedClassName: "dragon-hidden" });
     }
   }
-  
+
   updateIncentiveValue(e) {
     this.setState({
       incentiveValue: e.target.value

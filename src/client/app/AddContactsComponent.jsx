@@ -219,7 +219,6 @@ class NewContact extends React.Component {
       return re.test(email);
   }
 
-
 }
 
 
