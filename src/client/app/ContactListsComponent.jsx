@@ -21,7 +21,7 @@ class ContactListsComponent extends React.Component {
     var contactLists = this.props.contactLists;
     var handleLoadContactList = this.props.handleLoadContactList;
     var history = this.props.history;
-
+    var dbDelete = this.props.dbDelete;
     var contactListsJsx = function() {return '' }();
 
     if (contactLists !== 'not found') {
@@ -35,8 +35,9 @@ class ContactListsComponent extends React.Component {
                 if (contactList.contacts != null) {
                   contactCount = contactList.contacts.length;
                 }
-                return <ContactList contactList={contactList} handleLoadContactList={handleLoadContactList} contactCount={contactCount} history={history}/>
+                return <ContactList contactList={contactList} handleLoadContactList={handleLoadContactList} contactCount={contactCount} history={history} dbDelete={dbDelete} />
             });
+            console.log('contactListsJsx', contactListsJsx);
           }
     }
 
@@ -86,15 +87,17 @@ class ContactList extends React.Component {
 
   render() {
     return (
-        <div onClick={this.handleSelectContactList.bind(this, this.props.contactList)} className="dragon-select-list-row dragon-pointer">
-          <div className="dragon-select-list-cell">
+        <div className="dragon-select-list-row dragon-pointer">
+          <div className="dragon-select-list-cell" onClick={this.handleSelectContactList.bind(this, this.props.contactList)}>
             <i className='fa fa-address-book-o fa-fw fa-lg'></i>
-          </div>
-          <div className="dragon-select-list-cell">
             {this.props.contactList.name}
-          </div>
-          <div className="dragon-select-list-cell">
             Contacts ({this.props.contactCount})
+          </div>
+          <div className="dragon-select-list-cell" onClick={this.handleEditContactList.bind(this)}>
+            <i className="fa fa-pencil-square-o fa-fw fa-lg" aria-hidden="true"></i>
+          </div>
+          <div className="dragon-select-list-cell" onClick={this.handleDeleteContactList.bind(this)}>
+            <i className='fa fa-times fa-fw fa-lg'></i>
           </div>
         </div>
     );
@@ -103,6 +106,33 @@ class ContactList extends React.Component {
   handleSelectContactList(contactList) {
     this.props.handleLoadContactList(contactList);
     this.props.history.push('contactlist');
+  }
+
+  handleEditContactList() {
+    console.log('Edit');
+    console.log('this.props', this.props);
+
+  }
+
+  handleDeleteContactList() {
+    if ( confirm("Are you sure!") ) {
+      var organizationId = this.props.contactList.organizationId;
+      var contactListId = this.props.contactList.contactListId;
+      console.log('organizationId', organizationId, 'contactListId', contactListId);
+      var params = {
+          TableName:"ContactLists",
+          Key:{
+              organizationId : organizationId,
+              contactListId : contactListId
+          }
+        };
+
+      this.props.dbDelete(params, function(result){
+        console.log('delete finished', result);
+      });
+    }
+
+
   }
 
 }

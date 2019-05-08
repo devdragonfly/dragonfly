@@ -81,6 +81,7 @@ class Main extends Component {
         this.dbQuery = this.dbQuery.bind(this);
         this.dbQueryUnauth = this.dbQueryUnauth.bind(this);
         this.dbUpdate = this.dbUpdate.bind(this);
+        this.dbDelete = this.dbDelete.bind(this);
         this.dbUpdateUnauth = this.dbUpdateUnauth.bind(this);
         this.s3Upload = this.s3Upload.bind(this);
         this.s3ListObjects = this.s3ListObjects.bind(this);
@@ -247,7 +248,7 @@ class Main extends Component {
     setAWSCredential(cognitoUser, result) {
       AWS.config.region = 'us-west-2';
       AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-              //AccountId: '698305963744',
+              // AccountId: '698305963744',
               //RoleArn: 'arn:aws:iam::698305963744:role/Cognito_dragonflyAuth_Role',
               IdentityPoolId : 'us-west-2:b6311e4b-9082-4058-883c-19d23e34802b',
               Logins : { 'cognito-idp.us-west-2.amazonaws.com/us-west-2_N8urEcZBJ' : result.getIdToken().getJwtToken() }
@@ -256,6 +257,7 @@ class Main extends Component {
       dragonfly.docClient = new AWS.DynamoDB.DocumentClient();
       dragonfly.cognitoUser = cognitoUser;
       dragonfly.s3 = new AWS.S3({ apiVersion: '2006-03-01', params: {Bucket: 'dragonfly-videos'},   httpOptions: { timeout: 1000000 } });
+      console.log(260);
     }
 
 
@@ -280,6 +282,7 @@ class Main extends Component {
 
 
     dbPut(params, callback) {
+        console.log('dbPut', dragonfly.docClient);
         dragonfly.docClient.put(params, function(err, data) {
 
             if (err) {
@@ -349,6 +352,20 @@ class Main extends Component {
         });
     }
 
+    dbDelete(params, callback) {
+      console.log('dragonfly.docClient', dragonfly.docClient);
+      console.log('params', params);
+      dragonfly.docClient.delete(params, function(err, data) {
+
+        if (err) {
+          alert(JSON.stringify(err));
+          console.log(JSON.stringify(err));
+          callback(data);
+        } else {
+          callback(data);
+        }
+      });
+    }
 
      dbUpdateUnauth(params, callback) {
         dragonfly_unauth.docClient.update(params, function(err, data) {
@@ -461,6 +478,7 @@ class Main extends Component {
            dbQuery: this.dbQuery,
            dbQueryUnauth: this.dbQueryUnauth,
            dbUpdate: this.dbUpdate,
+           dbDelete: this.dbDelete,
            dbUpdateUnauth: this.dbUpdateUnauth,
            s3Upload: this.s3Upload,
            s3ListObjects: this.s3ListObjects
