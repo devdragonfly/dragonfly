@@ -104,8 +104,10 @@ class DragonflyCompleteComponent extends React.Component {
     if (preferences.emailOrText == "text") {
       paymentText = "We will text you at " + mobile + " with your payment of $" + earned + ".";
     }
-    
-    
+    if (dragonfly.logoId) {
+      var logo = "https://s3-us-west-2.amazonaws.com/dragonfly-logos/" + dragonfly.logoId;
+    }
+
     return (
       <div className="row">
         <div className="col-sm-2">
@@ -120,7 +122,10 @@ class DragonflyCompleteComponent extends React.Component {
                <div className="clearfix">
                   <a href={this.state.path} target="_blank">
                     <div className="dragon-powered-by divLeft">
-                      <img src="./images/logo-dragonfly-ii2.png" />
+                    {
+                      logo  ? <img src={logo} />
+                            : <img src="./images/logo-dragonfly-ii2.png" />
+                    }
                     </div>
                   </a>
                 </div>
@@ -133,7 +138,7 @@ class DragonflyCompleteComponent extends React.Component {
                 
                 <br/><br/>
                 {
-                  dragonfly.customTexts && dragonfly.customTexts.complate ?
+                  dragonfly.customTexts && dragonfly.customTexts.complate != "custom text" ?
                   dragonfly.customTexts.complate :
                   "Typically we complete all payments within 8 business hours."
                 }

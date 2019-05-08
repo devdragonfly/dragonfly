@@ -95,6 +95,11 @@ class DragonflyPlayComponent extends React.Component {
     var videoUrl = "https://s3-us-west-2.amazonaws.com/dragonfly-videos-transcoded/" + videoId + "/mp4-" + videoId + ".mp4";
 
     var thumbnailUrl = "./images/play.png";
+    var dragonfly = this.props.dragonfly;
+    if (dragonfly.logoId) {
+      var logo = "https://s3-us-west-2.amazonaws.com/dragonfly-logos/" + dragonfly.logoId;
+    }
+
     return (
       <div className="row">
         <div className="col-sm-2"></div>
@@ -105,7 +110,10 @@ class DragonflyPlayComponent extends React.Component {
             <div className="clearfix">
               <a href={this.state.path} target="_blank">
                 <div className="dragon-powered-by divLeft">
-                  <img src="./images/logo-dragonfly-ii2.png" />
+                {
+                  logo  ? <img src={logo} />
+                        : <img src="./images/logo-dragonfly-ii2.png" />
+                }
                 </div>
               </a>
             </div>

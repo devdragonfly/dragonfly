@@ -57,7 +57,7 @@ class CampaignComponent extends React.Component {
       for (var i = 0; i < numberOfCompletedDragonflies; i++) {
         for (var j = 0; j < numberOfQuestions; j++) {
           if (data[i][j].correct) totals[j] = totals[j] + 1;
-        }        
+        }
       }
       
     }
@@ -88,9 +88,7 @@ class CampaignComponent extends React.Component {
   render() {
     var organizationMenu = function() {return <OrganizationMenuComponent current="campaigns" /> }();
     var path = this.state.path;
-    
-    
-    
+        
     var dragonflies = this.props.results;
     var sessionName = "session name";
     

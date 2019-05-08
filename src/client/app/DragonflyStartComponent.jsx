@@ -40,6 +40,9 @@ class DragonflyStartComponent extends React.Component {
     var last = this.titleCase(contact.last); 
     var email = contact.email;
     var incentive = Number(dragonfly.incentive).toFixed(2);
+    if (dragonfly.logoId) {
+      var logo = "https://s3-us-west-2.amazonaws.com/dragonfly-logos/" + dragonfly.logoId;
+    }
 
     return (
       <div className="row">
@@ -50,14 +53,17 @@ class DragonflyStartComponent extends React.Component {
             <div className="clearfix">
               <a href={this.state.path} target="_blank">
                 <div className="dragon-powered-by divLeft">
-                  <img src="./images/logo-dragonfly-ii2.png" />
+                {
+                  logo  ? <img src={logo} />
+                        : <img src="./images/logo-dragonfly-ii2.png" />
+                }
                 </div>
               </a>
             </div>
             <h2>Hello {first} {last},</h2>
             <br/><br/>
             {
-              dragonfly.customTexts && dragonfly.customTexts.welcome ?
+              dragonfly.customTexts && dragonfly.customTexts.welcome != "custom text" ?
               dragonfly.customTexts.welcome :
               "Welcome to Dragonfly! We are beta testing our new Incentivized Information technology where we pay you to engage with information."
             }
@@ -65,7 +71,7 @@ class DragonflyStartComponent extends React.Component {
             You can earn ${incentive} cash if you answer {totalQuestionCount} questions correctly.
             <br/><br/>
             {
-              dragonfly.customTexts && dragonfly.customTexts.payment ?
+              dragonfly.customTexts && dragonfly.customTexts.payment != "custom text" ?
               dragonfly.customTexts.payment :
               "At the end we will pay you through the Venmo App and you can designate if you prefer payment by email or phone."
             }

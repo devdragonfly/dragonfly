@@ -15,9 +15,9 @@ class GenerateDragonfliesComponent extends React.Component {
       buttonClickedClassName : "dragon-hidden",
       logo: null,
       customTexts: {
-        welcome: "",
-        payment: "",
-        complate: ""
+        welcome: "custom text",
+        payment: "custom text",
+        complate: "custom text"
       }
     };
     this.updateIncentiveValue = this.updateIncentiveValue.bind(this);
@@ -199,43 +199,20 @@ class GenerateDragonfliesComponent extends React.Component {
     }
   }
 
-  putLogoupdateCompany() {
-    if (this.state.logo) {
-      let logoId = this.createId();
-      let companyId = this.props.campaign.campaignId;
-
-      var params = {
-        Bucket: 'dragonfly-ui',
-        Key: logoId+"-test",
-        ContentType: this.state.logo.type,
-        Body: this.state.logo
-      };
-      console.log(params);
-      // this.props.s3UploadLogos(params, function(err, data) {
-      //   console.log("Error ", err);
-      //   console.log(" Data ", data);
-      // });
-      this.props.s3Upload(this.state.logo, params.Key, function(err) {
-        console.log("Error", err)
-      }, function(res) {
-        console.log("Success ", res)
-      });
-    }
-  }
-
   handleSubmit(e) {
+
     e.preventDefault();
     this.showClickedButtonState(true);
     var myThis = this;
     const campaign = this.props.campaign;
     const incentive = this.state.incentiveValue.trim();
     const customTexts = this.state.customTexts;
-    
+
     if (campaign.session == null) {
       myThis.showClickedButtonState(false);
       return;
     }
-    
+
     if (campaign.contactList == null) {
       myThis.showClickedButtonState(false);
       return;
@@ -249,34 +226,77 @@ class GenerateDragonfliesComponent extends React.Component {
 
     const organizationId = this.props.organizationId;
     const campaignId = campaign.campaignId;
-    
+
     var contactList = campaign.contactList;
     var contacts = contactList.contacts;
+
+    if (this.state.logo) {
+      let logoId = this.createId();
+      let params = {
+        Bucket: 'dragonfly-logos',
+        Key: logoId,
+        ContentType: this.state.logo.type,
+        Body: this.state.logo
+      };
+      this.props.s3UploadLogos(params, function(err, data) {
+        if(err) {
+          alert(JSON.stringify(err));
+        } else {
+          let params = {
+            TableName: "Campaigns",
+            Key: {
+                organizationId : organizationId,
+                campaignId : campaignId
+            },
+            UpdateExpression: "set logoId = :logoId",
+            ExpressionAttributeValues: {
+                ":logoId" : logoId
+            },
+            ReturnValues: "UPDATED_NEW"
+          };
+          myThis.props.dbUpdate(params, function(result) {
+            myThis.createDragonfly(organizationId, campaignId, contacts, campaign, incentive, customTexts, logoId);
+          });
+        }
+      })
+    } else {
+      this.createDragonfly(organizationId, campaignId, contacts, campaign, incentive, customTexts);
+    }
+  }
+
+  createDragonfly(organizationId, campaignId, contacts, campaign, incentive, customTexts, logoId) {
+    var myThis = this;
     var putRequests = [];
     var dragonflies = [];
-    
-    for (var i = 0; i < contacts.length; i++) {
-        var dragonflyId = this.createId();
-        var dragonfly = { dragonflyId: dragonflyId, organizationId: organizationId, campaignId: campaignId, contact: contacts[i], session: campaign.session, incentive: incentive, customTexts: customTexts };
-        putRequests.push({ PutRequest: { Item: dragonfly } })
-        dragonflies.push(dragonfly);
-    }
 
+    for (var i = 0; i < contacts.length; i++) {
+      var dragonflyId = myThis.createId();
+      var dragonfly = {
+        dragonflyId: dragonflyId,
+        organizationId: organizationId,
+        campaignId: campaignId,
+        contact: contacts[i],
+        session: campaign.session,
+        incentive: incentive,
+        customTexts: customTexts
+      };
+      if (logoId) {
+        dragonfly.logoId = logoId;
+      }
+      putRequests.push({ PutRequest: { Item: dragonfly } })
+      dragonflies.push(dragonfly);
+    }
     var params = {
         RequestItems: {"Dragonflies" : putRequests, "Results" : putRequests },
         ReturnConsumedCapacity: "NONE",
         ReturnItemCollectionMetrics: "NONE"
     };
-    myThis.putLogoupdateCompany();
-    // this.props.dbBatchWrite(params, function(result) {
-    //   console.log("RESULT ", result);
-    //   myThis.putLogoupdateCompany();
-    //   myThis.showClickedButtonState(false);
-    //   myThis.props.history.push('loadresults');
-    // });
-
+    myThis.props.dbBatchWrite(params, function(result) {
+      myThis.showClickedButtonState(false);
+      myThis.props.history.push('loadresults');
+    });
   }
-  
+
   createId() {
     return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
       var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);

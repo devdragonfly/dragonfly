@@ -257,7 +257,7 @@ class Main extends Component {
       dragonfly.docClient = new AWS.DynamoDB.DocumentClient();
       dragonfly.cognitoUser = cognitoUser;
       dragonfly.s3 = new AWS.S3({ apiVersion: '2006-03-01', params: {Bucket: 'dragonfly-videos'},   httpOptions: { timeout: 1000000 } });
-      dragonfly.logos_bucket = new AWS.S3({ apiVersion: '2006-03-01', params: {Bucket: 'dragonfly-ui'},   httpOptions: { timeout: 1000000 } });
+      dragonfly.logos_bucket = new AWS.S3({ apiVersion: '2006-03-01', params: {Bucket: 'dragonfly-logos'},   httpOptions: { timeout: 1000000 } });
     }
 
 
@@ -341,7 +341,6 @@ class Main extends Component {
 
     dbUpdate(params, callback) {
         dragonfly.docClient.update(params, function(err, data) {
-
             if (err) {
                 alert(JSON.stringify(err));
                 callback(data);
@@ -371,7 +370,6 @@ class Main extends Component {
         var size = file.size;
 
         var params = {Key: key, ContentType: file.type, Body: file};
-
         var request = dragonfly.s3.putObject(params);
         var percent = 0;
         request.
@@ -400,9 +398,8 @@ class Main extends Component {
     }
 
     s3UploadLogos(params, callback) {
-        console.log("Param param" , params)
-        dragonfly.logos_bucket.putObject(params, function (err, data) {
-            callback(err,data);
+        dragonfly.s3.putObject(params, function(err, data) {
+            callback(err, data)
         });
     }
 
@@ -487,7 +484,6 @@ class Main extends Component {
         var handleLoadEmail = this.handleLoadEmail;
         var handleLoadOrganization = this.handleLoadOrganization;
         var history = this.props.history;
-
 
         var nav = function() { return '' }();
 
