@@ -257,7 +257,6 @@ class Main extends Component {
       dragonfly.docClient = new AWS.DynamoDB.DocumentClient();
       dragonfly.cognitoUser = cognitoUser;
       dragonfly.s3 = new AWS.S3({ apiVersion: '2006-03-01', params: {Bucket: 'dragonfly-videos'},   httpOptions: { timeout: 1000000 } });
-      dragonfly.logos_bucket = new AWS.S3({ apiVersion: '2006-03-01', params: {Bucket: 'dragonfly-logos'},   httpOptions: { timeout: 1000000 } });
     }
 
 
@@ -398,9 +397,7 @@ class Main extends Component {
     }
 
     s3UploadLogos(params, callback) {
-        dragonfly.s3.putObject(params, function(err, data) {
-            callback(err, data)
-        });
+        dragonfly.s3.putObject(params, callback);
     }
 
     handleSignOut() {

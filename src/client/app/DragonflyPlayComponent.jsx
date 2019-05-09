@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import ResultsComponent from './ResultsComponent.jsx';
+import LogoComponent from './components/LogoComponent.jsx';
 
 var firstTime = true;
 var myInterval = null;
@@ -96,9 +97,6 @@ class DragonflyPlayComponent extends React.Component {
 
     var thumbnailUrl = "./images/play.png";
     var dragonfly = this.props.dragonfly;
-    if (dragonfly.logoId) {
-      var logo = "https://s3-us-west-2.amazonaws.com/dragonfly-logos/" + dragonfly.logoId;
-    }
 
     return (
       <div className="row">
@@ -110,10 +108,7 @@ class DragonflyPlayComponent extends React.Component {
             <div className="clearfix">
               <a href={this.state.path} target="_blank">
                 <div className="dragon-powered-by divLeft">
-                {
-                  logo  ? <img src={logo} />
-                        : <img src="./images/logo-dragonfly-ii2.png" />
-                }
+                  <LogoComponent dragonfly={dragonfly} />
                 </div>
               </a>
             </div>

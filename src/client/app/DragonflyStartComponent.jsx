@@ -1,6 +1,7 @@
 //import { Config, CognitoIdentityCredentials } from "aws-sdk";
 import React from 'react';
 import { Link } from 'react-router';
+import LogoComponent from './components/LogoComponent.jsx';
 
 
 
@@ -11,6 +12,7 @@ class DragonflyStartComponent extends React.Component {
     this.state = {path : "not found"
     };
     this.titleCase = this.titleCase.bind(this);
+    this.showCustomText = this.showCustomText.bind(this);
   }
   
   
@@ -40,9 +42,6 @@ class DragonflyStartComponent extends React.Component {
     var last = this.titleCase(contact.last); 
     var email = contact.email;
     var incentive = Number(dragonfly.incentive).toFixed(2);
-    if (dragonfly.logoId) {
-      var logo = "https://s3-us-west-2.amazonaws.com/dragonfly-logos/" + dragonfly.logoId;
-    }
 
     return (
       <div className="row">
@@ -53,28 +52,17 @@ class DragonflyStartComponent extends React.Component {
             <div className="clearfix">
               <a href={this.state.path} target="_blank">
                 <div className="dragon-powered-by divLeft">
-                {
-                  logo  ? <img src={logo} />
-                        : <img src="./images/logo-dragonfly-ii2.png" />
-                }
+                  <LogoComponent dragonfly={dragonfly} />
                 </div>
               </a>
             </div>
             <h2>Hello {first} {last},</h2>
             <br/><br/>
-            {
-              dragonfly.customTexts && dragonfly.customTexts.welcome != "custom text" ?
-              dragonfly.customTexts.welcome :
-              "Welcome to Dragonfly! We are beta testing our new Incentivized Information technology where we pay you to engage with information."
-            }
+            { this.showCustomText(dragonfly.customTexts, "welcome") }
             <br/><br/>
             You can earn ${incentive} cash if you answer {totalQuestionCount} questions correctly.
             <br/><br/>
-            {
-              dragonfly.customTexts && dragonfly.customTexts.payment != "custom text" ?
-              dragonfly.customTexts.payment :
-              "At the end we will pay you through the Venmo App and you can designate if you prefer payment by email or phone."
-            }
+            { this.showCustomText(dragonfly.customTexts, "payment") }
             <br/><br/><br/>
             <Link to={`dragonflyplay`} className="btn btn-primary btn-lg">Start Now <i className='fa fa-chevron-circle-right'></i></Link>
           </div>
@@ -83,15 +71,27 @@ class DragonflyStartComponent extends React.Component {
       </div>
     );
   }
-  
-  
-  titleCase(str) {
-  str = str.toLowerCase().split(' ');
-  for (var i = 0; i < str.length; i++) {
-    str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1); 
+
+  showCustomText(txtObj, prop) {
+    if (txtObj && txtObj[prop] != "custom text") {
+      return txtObj[prop];
+    } else {
+      if (prop == 'welcome') {
+        return "Welcome to Dragonfly! We are beta testing our new Incentivized Information technology where we pay you to engage with information.";
+      }
+      if (prop == "payment") {
+        return "At the end we will pay you through the Venmo App and you can designate if you prefer payment by email or phone.";
+      }
+    }
   }
-  return str.join(' ');
-}
+
+  titleCase(str) {
+    str = str.toLowerCase().split(' ');
+    for (var i = 0; i < str.length; i++) {
+      str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1); 
+    }
+    return str.join(' ');
+  }
   
 
 }

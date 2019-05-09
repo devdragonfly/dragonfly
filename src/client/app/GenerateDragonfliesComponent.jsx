@@ -17,7 +17,7 @@ class GenerateDragonfliesComponent extends React.Component {
       customTexts: {
         welcome: "custom text",
         payment: "custom text",
-        complate: "custom text"
+        complete: "custom text"
       }
     };
     this.updateIncentiveValue = this.updateIncentiveValue.bind(this);
@@ -25,7 +25,7 @@ class GenerateDragonfliesComponent extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.validateIncentive = this.validateIncentive.bind(this);
     this.handleFile = this.handleFile.bind(this);
-    this.handleTextareChange = this.handleTextareChange.bind(this);
+    this.handleTextareaChange = this.handleTextareaChange.bind(this);
   }
 
   render() {
@@ -110,13 +110,13 @@ class GenerateDragonfliesComponent extends React.Component {
                   <div className="row">
                     <div className="col-md-10 form-group">
                       <label for="intro1">Welcome Line</label><br/>
-                      <textarea id="intro1" className="form-control" value={this.state.customTexts.welcome} onChange={ this.handleTextareChange } name="welcome" rows="3" placeholder="custom text"></textarea>
+                      <textarea id="intro1" className="form-control" value={this.state.customTexts.welcome} onChange={ this.handleTextareaChange } name="welcome" rows="3" placeholder="custom text"></textarea>
                     </div>
                   </div>
                   <div className="row">
                     <div className="col-md-10 form-group" >
                       <label for="intro2">Payment Info</label><br/>
-                      <textarea id="intro2" className="form-control" value={this.state.customTexts.payment} onChange={ this.handleTextareChange } name="payment" rows="3" placeholder="custom text"></textarea>
+                      <textarea id="intro2" className="form-control" value={this.state.customTexts.payment} onChange={ this.handleTextareaChange } name="payment" rows="3" placeholder="custom text"></textarea>
                     </div>
                   </div>
                 </div>
@@ -138,7 +138,7 @@ class GenerateDragonfliesComponent extends React.Component {
                   <div className="row">
                     <div className="col-md-10 form-group">
                       <label for="confirm1">Custom Text</label><br/>
-                      <textarea id="confirm1" className="form-control" value={this.state.customTexts.complate} onChange={ this.handleTextareChange } name="complate" rows="3" placeholder="Custom text"></textarea>
+                      <textarea id="confirm1" className="form-control" value={this.state.customTexts.complete} onChange={ this.handleTextareaChange } name="complete" rows="3" placeholder="Custom text"></textarea>
                     </div>
                   </div>
                 </div>
@@ -155,7 +155,7 @@ class GenerateDragonfliesComponent extends React.Component {
     );
   }
 
-  handleTextareChange(e) {
+  handleTextareaChange(e) {
     var inputName = e.target.name;
     var inputValue = e.target.value;
     var statusCopy = Object.assign({}, this.state);
@@ -278,12 +278,17 @@ class GenerateDragonfliesComponent extends React.Component {
         contact: contacts[i],
         session: campaign.session,
         incentive: incentive,
-        customTexts: customTexts
+        customTexts: customTexts,
+        date_sent: new Date().toISOString()
       };
       if (logoId) {
         dragonfly.logoId = logoId;
       }
-      putRequests.push({ PutRequest: { Item: dragonfly } })
+      putRequests.push({
+        PutRequest: {
+          Item: dragonfly
+        }
+      })
       dragonflies.push(dragonfly);
     }
     var params = {

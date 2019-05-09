@@ -1,7 +1,7 @@
 //import { Config, CognitoIdentityCredentials } from "aws-sdk";
 import React from 'react';
 import { Link } from 'react-router';
-
+import LogoComponent from './components/LogoComponent.jsx';
 
 
 class DragonflyCompleteComponent extends React.Component {
@@ -111,9 +111,6 @@ class DragonflyCompleteComponent extends React.Component {
     if (preferences.emailOrText == "text") {
       paymentText = "We will text you at " + mobile + " with your payment of $" + earned + ".";
     }
-    if (dragonfly.logoId) {
-      var logo = "https://s3-us-west-2.amazonaws.com/dragonfly-logos/" + dragonfly.logoId;
-    }
 
     return (
       <div className="row">
@@ -129,10 +126,7 @@ class DragonflyCompleteComponent extends React.Component {
                <div className="clearfix">
                   <a href={this.state.path} target="_blank">
                     <div className="dragon-powered-by divLeft">
-                    {
-                      logo  ? <img src={logo} />
-                            : <img src="./images/logo-dragonfly-ii2.png" />
-                    }
+                      <LogoComponent dragonfly={dragonfly} />
                     </div>
                   </a>
                 </div>
@@ -145,8 +139,8 @@ class DragonflyCompleteComponent extends React.Component {
 
                 <br/><br/>
                 {
-                  dragonfly.customTexts && dragonfly.customTexts.complate != "custom text" ?
-                  dragonfly.customTexts.complate :
+                  dragonfly.customTexts && dragonfly.customTexts.complete != "custom text" ?
+                  dragonfly.customTexts.complete :
                   "Typically we complete all payments within 8 business hours."
                 }
                 <br/><br/>

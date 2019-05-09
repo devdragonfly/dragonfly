@@ -1,6 +1,8 @@
 //import { Config, CognitoIdentityCredentials } from "aws-sdk";
 import React from 'react';
 import { Link } from 'react-router';
+import LogoComponent from './components/LogoComponent.jsx';
+import PostFormComponent from './components/PostFormComponent.jsx';
 
 
 const buttonClassName = "btn btn-primary";
@@ -26,7 +28,7 @@ class DragonflyPreferencesComponent extends React.Component {
                   postAddressForm: false,
                   address: "",
                   cityState: "",
-                  pobox: ""
+                  poBox: ""
     };
     
     this.titleCase = this.titleCase.bind(this);
@@ -40,7 +42,7 @@ class DragonflyPreferencesComponent extends React.Component {
     this.showPostAddressForm = this.showPostAddressForm.bind(this);
     this.updateAddressValue = this.updateAddressValue.bind(this);
     this.updateCityStateValue = this.updateCityStateValue.bind(this);
-    this.updatePoboxValue = this.updatePoboxValue.bind(this);
+    this.updatePoBoxValue = this.updatePoBoxValue.bind(this);
   }
 
   componentDidMount() {
@@ -60,9 +62,6 @@ class DragonflyPreferencesComponent extends React.Component {
     //var last = this.titleCase(contact.last); 
     var email = contact.email;
     var earned = Number(dragonfly.earned).toFixed(2);
-    if (dragonfly.logoId) {
-      var logo = "https://s3-us-west-2.amazonaws.com/dragonfly-logos/" + dragonfly.logoId;
-    }
 
     return (
       <div className="row">
@@ -73,10 +72,7 @@ class DragonflyPreferencesComponent extends React.Component {
             <div className="clearfix">
               <a href={this.state.path} target="_blank">
                 <div className="dragon-powered-by divLeft">
-                {
-                  logo  ? <img src={logo} />
-                        : <img src="./images/logo-dragonfly-ii2.png" />
-                }
+                  <LogoComponent dragonfly={dragonfly} />
                 </div>
               </a>
             </div>
@@ -116,29 +112,15 @@ class DragonflyPreferencesComponent extends React.Component {
               <div className="checkbox">
                 <label><input type="checkbox" onChange={this.showPostAddressForm}/> Add post address</label>
               </div>
-              { this.state.postAddressForm && (
-                <div className="form-horizontal">
-                  <div className="form-group">
-                    <label for="address" className="col-sm-2 control-label" style={{ fontWeight: 'normal'}}>Address</label>
-                    <div className="col-sm-6">
-                      <input type="text" className="form-control" id="address" placeholder="Address" value={this.state.address} onChange={this.updateAddressValue} />
-                    </div>
-                  </div>
-                  <div className="form-group">
-                    <label for="cityState" className="col-sm-2 control-label" style={{ fontWeight: 'normal'}}>City state</label>
-                    <div className="col-sm-6">
-                      <input type="text" className="form-control" id="cityState" placeholder="City state" value={this.state.cityState} onChange={this.updateCityStateValue} />
-                    </div>
-                  </div>
-                  <div className="form-group">
-                    <label for="pobox" className="col-sm-2 control-label" style={{ fontWeight: 'normal'}}>P.O. Box</label>
-                    <div className="col-sm-6">
-                      <input type="text" className="form-control" id="pobox" placeholder="P.O. Box" value={this.state.pobox} onChange={this.updatePoboxValue} />
-                    </div>
-                  </div>
-                </div>
-              )}
-
+              <PostFormComponent
+                address={this.state.address}
+                cityState={this.state.cityState}
+                poBox={this.state.poBox}
+                showForm={this.state.postAddressForm}
+                updateAddressValue={this.updateAddressValue}
+                updateCityStateValue={this.updateCityStateValue}
+                updatePoBoxValue={this.updatePoBoxValue}
+              />
               <br/>
               <h4>How likely are you to recommend Dragonfly to a friend or colleague?</h4>
               <span className="NPStext">
@@ -232,9 +214,9 @@ class DragonflyPreferencesComponent extends React.Component {
     });
   }
 
-  updatePoboxValue(e) {
+  updatePoBoxValue(e) {
     this.setState({
-      pobox: e.target.value
+      poBox: e.target.value
     });
   }
   
@@ -242,7 +224,6 @@ class DragonflyPreferencesComponent extends React.Component {
     e.preventDefault();
     this.showClickedButtonState(true);
     var myThis = this;
-    
     
     var preferences = {};
     preferences.emailOrText = this.state.selectedContactOption;
@@ -252,7 +233,7 @@ class DragonflyPreferencesComponent extends React.Component {
     preferences.text = this.state.openTextValue;
     preferences.address = this.state.address;
     preferences.cityState = this.state.cityState;
-    preferences.pobox = this.state.pobox;
+    preferences.poBox = this.state.poBox;
     
     if ((preferences.email == "") || (preferences.email == null)) preferences.email = "none";
     if ((preferences.mobile == "") || (preferences.mobile == null)) preferences.mobile = "none";
@@ -284,5 +265,6 @@ class DragonflyPreferencesComponent extends React.Component {
   }
 
 }
+
 
 export default DragonflyPreferencesComponent;
