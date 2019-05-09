@@ -410,4 +410,16 @@
 
 .dragon-in-modal {
     cursor: zoom-in;
+    min-height: 100px;
+}
+
+.modal .modal-dialog.modal-dragon-centered {
+    display: flex;
+    align-items: center;
+    min-height: calc(100% - (.5rem * 2));
+    width: 80%;
+}
+
+.dragon-thumbnail {
+    margin: 0 5px;
 }

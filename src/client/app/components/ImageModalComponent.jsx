@@ -13,7 +13,7 @@ export default class ImageModalComponent extends React.Component {
         <img src={ this.props.image } data-toggle="modal" data-target={ '#' + imageName } className="img-thumbnail dragon-in-modal"/>
 
         <div className="modal fade" id={ imageName } tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-          <div className="modal-dialog" role="document">
+          <div className="modal-dialog modal-dragon-centered" role="document">
             <div className="modal-content">
               <div className="modal-body">
                 <img src={ this.props.image } data-toggle="modal" data-target="#myModal" style={{width: '100%'}} />

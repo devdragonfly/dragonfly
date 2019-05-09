@@ -84,7 +84,7 @@ class GenerateDragonfliesComponent extends React.Component {
                       <div className="input-group">
                         <label className="input-group-btn">
                           <span className="btn btn-primary">
-                            Choose File <input type="file" style={{ display: 'none'}} onChange={ this.handleFile }/>
+                            Choose File <input type="file" accept="image/*" style={{ display: 'none'}} onChange={ this.handleFile }/>
                           </span>
                         </label>
                         <input type="text" className="form-control" placeholder="Select the Logo File" value={ this.state.logo? this.state.logo.name : '' } readOnly/>
