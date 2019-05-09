@@ -77,7 +77,7 @@ class GenerateDragonfliesComponent extends React.Component {
                   <div className="row form-group">
                     <ImageModalComponent image="./images/screenshots/logo-intro-page.jpg" columnClass="col-md-4"/>
                     <ImageModalComponent image="./images/screenshots/logo-compl-page.jpg" columnClass="col-md-4"/>
-                    <ImageModalComponent image="./images/screenshots/logo-intro-page.jpg" columnClass="col-md-4"/>
+                    <ImageModalComponent image="./images/screenshots/logo-confirm-page.jpg" columnClass="col-md-4"/>
                   </div>
                   <div className="row form-group">
                     <div className="col-md-12">
