@@ -25,6 +25,7 @@ class ContactListComponent extends React.Component {
   render() {
 
     var contacts = this.props.contactList.contacts;
+    console.log('contacts', contacts);
 
     var contactsJsx = function() {return '' }();
 
@@ -195,6 +196,37 @@ class Contact extends React.Component {
     super(props);
   }
 
+  handleEditContact() {
+    console.log(199);
+  }
+
+  handleDeleteContact() {
+    console.log(203);
+    console.log('this.props', this.props);
+    // validContacts = this.props.contactList.contacts;
+
+    // var params = {
+    //         TableName:"ContactLists",
+    //         Key: {
+    //             organizationId : organizationId,
+    //             contactListId : contactListId
+    //         },
+    //         UpdateExpression: "set contacts = :contacts",
+    //         ExpressionAttributeValues:{
+    //             ":contacts":validContacts
+    //         },
+    //         ReturnValues:"UPDATED_NEW"
+    //     };
+    //
+    //
+    //
+    // this.props.dbUpdate(params, function(result) {
+    //   myThis.props.handleLoadContacts(result.Attributes.contacts);
+    //   myThis.props.history.push('contactlist');
+    //
+    // });
+  }
+
   render() {
     return (
         <div className="dragon-select-list-row">
@@ -209,6 +241,12 @@ class Contact extends React.Component {
           </div>
           <div className="dragon-select-list-cell">
             {this.props.contact.email}
+          </div>
+          <div className="dragon-select-list-cell" onClick={this.handleEditContact.bind(this)}>
+            <i className="fa fa-pencil-square-o fa-fw fa-lg" aria-hidden="true"></i>
+          </div>
+          <div className="dragon-select-list-cell" onClick={this.handleDeleteContact.bind(this)}>
+            <i className='fa fa-times fa-fw fa-lg'></i>
           </div>
         </div>
     );

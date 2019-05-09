@@ -22,6 +22,7 @@ class ContactListsComponent extends React.Component {
     var handleLoadContactList = this.props.handleLoadContactList;
     var history = this.props.history;
     var dbDelete = this.props.dbDelete;
+    var dbUpdate = this.props.dbUpdate;
     var contactListsJsx = function() {return '' }();
 
     if (contactLists !== 'not found') {
@@ -35,9 +36,8 @@ class ContactListsComponent extends React.Component {
                 if (contactList.contacts != null) {
                   contactCount = contactList.contacts.length;
                 }
-                return <ContactList contactList={contactList} handleLoadContactList={handleLoadContactList} contactCount={contactCount} history={history} dbDelete={dbDelete} />
+                return <ContactList contactList={contactList} handleLoadContactList={handleLoadContactList} contactCount={contactCount} history={history} dbDelete={dbDelete} dbUpdate={dbUpdate}/>
             });
-            console.log('contactListsJsx', contactListsJsx);
           }
     }
 
@@ -83,16 +83,44 @@ class ContactList extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      edit: false
+    }
   }
 
   render() {
+    const edit = this.state.edit;
+    const adressBookIcon = (
+      <div className="dragon-list-cell">
+        <i className='fa fa-address-book-o fa-fw fa-lg'></i>
+      </div>
+    );
+    let contactName;
+
+
+    if (edit) {
+      contactName = (
+        <div className="dragon-select-list-cell">
+          {adressBookIcon}
+          <div className="dragon-list-cell">
+            <input autoFocus defaultValue={this.props.contactList.name} onKeyPress={this.handleKeyDown.bind(this)}/>
+          </div>
+        </div>
+      );
+    } else {
+      contactName = (
+        <div className="dragon-select-list-cell" onClick={this.handleSelectContactList.bind(this, this.props.contactList)}>
+          {adressBookIcon}
+          <div className="dragon-list-cell">
+            {this.props.contactList.name}
+          </div>
+        </div>
+      );
+    }
+
     return (
         <div className="dragon-select-list-row dragon-pointer">
-          <div className="dragon-select-list-cell" onClick={this.handleSelectContactList.bind(this, this.props.contactList)}>
-            <i className='fa fa-address-book-o fa-fw fa-lg'></i>
-            {this.props.contactList.name}
-            Contacts ({this.props.contactCount})
-          </div>
+          {contactName}
           <div className="dragon-select-list-cell" onClick={this.handleEditContactList.bind(this)}>
             <i className="fa fa-pencil-square-o fa-fw fa-lg" aria-hidden="true"></i>
           </div>
@@ -101,6 +129,42 @@ class ContactList extends React.Component {
           </div>
         </div>
     );
+
+  }
+
+  handleKeyDown(e) {
+    if (e.key === 'Enter') {
+      var newContactListName = e.target.value;
+      if ( newContactListName.length > 0 && newContactListName !== e.target.defaultValue) {
+        var myThis = this;
+        const organizationId = this.props.contactList.organizationId;
+        const contactListId = this.props.contactList.contactListId;
+        var params = {
+                TableName:"ContactLists",
+                Key: {
+                    organizationId : organizationId,
+                    contactListId : contactListId
+                },
+                UpdateExpression: "set #name = :name",
+                ExpressionAttributeValues:{
+                    ":name": newContactListName
+                },
+                ExpressionAttributeNames: {
+                    "#name": "name"
+                },
+                ReturnValues:"UPDATED_NEW"
+            };
+
+        this.props.dbUpdate(params, function(result) {
+          myThis.props.history.push('loadcontactlists');
+        });
+      } else if (newContactListName === e.target.defaultValue){
+        this.setState({edit: false});
+      } else {
+        alert('Please enter a name for your Contact List.')
+      }
+
+    }
   }
 
   handleSelectContactList(contactList) {
@@ -109,16 +173,14 @@ class ContactList extends React.Component {
   }
 
   handleEditContactList() {
-    console.log('Edit');
-    console.log('this.props', this.props);
-
+    this.setState({edit: true});
   }
 
   handleDeleteContactList() {
     if ( confirm("Are you sure!") ) {
-      var organizationId = this.props.contactList.organizationId;
-      var contactListId = this.props.contactList.contactListId;
-      console.log('organizationId', organizationId, 'contactListId', contactListId);
+      var myThis = this;
+      const organizationId = this.props.contactList.organizationId;
+      const contactListId = this.props.contactList.contactListId;
       var params = {
           TableName:"ContactLists",
           Key:{
@@ -128,10 +190,9 @@ class ContactList extends React.Component {
         };
 
       this.props.dbDelete(params, function(result){
-        console.log('delete finished', result);
+        myThis.props.history.push('loadcontactlists');
       });
     }
-
 
   }
 

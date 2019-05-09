@@ -257,7 +257,6 @@ class Main extends Component {
       dragonfly.docClient = new AWS.DynamoDB.DocumentClient();
       dragonfly.cognitoUser = cognitoUser;
       dragonfly.s3 = new AWS.S3({ apiVersion: '2006-03-01', params: {Bucket: 'dragonfly-videos'},   httpOptions: { timeout: 1000000 } });
-      console.log(260);
     }
 
 
@@ -282,7 +281,6 @@ class Main extends Component {
 
 
     dbPut(params, callback) {
-        console.log('dbPut', dragonfly.docClient);
         dragonfly.docClient.put(params, function(err, data) {
 
             if (err) {
@@ -353,13 +351,10 @@ class Main extends Component {
     }
 
     dbDelete(params, callback) {
-      console.log('dragonfly.docClient', dragonfly.docClient);
-      console.log('params', params);
       dragonfly.docClient.delete(params, function(err, data) {
 
         if (err) {
           alert(JSON.stringify(err));
-          console.log(JSON.stringify(err));
           callback(data);
         } else {
           callback(data);

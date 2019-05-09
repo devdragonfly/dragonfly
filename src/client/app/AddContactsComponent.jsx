@@ -53,7 +53,7 @@ class AddContactsComponent extends React.Component {
         <div className="row">
           {organizationMenu}
           <div className="col-sm-6">
-            <h3><i className='fa fa-address-book-o fa-fw'></i> {this.props.contactList.name}</h3>
+            <h3><i className='fa fa-address-book-o fa-fw'></i> {this.props.contactList.name} </h3>
 
             <form onSubmit={this.handleSubmit}>
               <div className="dragon-select-list">
