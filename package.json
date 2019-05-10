@@ -29,6 +29,7 @@
   },
   "scripts": {
     "build": "webpack -p",
+    "watch": "webpack --watch",
     "start": "webpack -p && node server.js"
   },
   "devDependencies": {
