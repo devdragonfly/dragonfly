@@ -171,6 +171,10 @@
     padding:10px 0px;
 }
 
+.dragon-message {
+  width:100%;
+  color:red;
+}
 
 .dragon-enlarge { font-size:125%; }
 .dragon-enlarge-xx { font-size:200%; }

@@ -104,7 +104,7 @@ class ContactList extends React.Component {
           {adressBookIcon}
           <div className="dragon-list-cell">
             <input className="form-control" autoFocus defaultValue={this.props.contactList.name} onKeyDown={this.handleKeyDown.bind(this)}/>
-            <div className="dragon-validation-message">
+            <div className="dragon-message">
               Press Enter to save, ESC to exit
             </div>
           </div>
