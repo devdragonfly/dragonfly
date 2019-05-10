@@ -212,6 +212,7 @@ class DragonflyPreferencesComponent extends React.Component {
     
     if ((preferences.email == "") || (preferences.email == null)) preferences.email = "none";
     if ((preferences.mobile == "") || (preferences.mobile == null)) preferences.mobile = "none";
+    if ((preferences.text == "") || (preferences.text == null)) preferences.text = "none";
     
     
     var dragonfly = this.props.dragonfly;

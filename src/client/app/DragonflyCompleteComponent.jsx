@@ -109,7 +109,7 @@ class DragonflyCompleteComponent extends React.Component {
 
     var paymentText = "We will email you at " + email + " with your payment of $" + earned + ".";
     if (preferences.emailOrText == "text") {
-      paymentText = "We will text you at " + mobile + " with your payment of $" + earned + ".";
+      paymentText = "We will send your payment of $" + earned + " using Venmo to " + mobile + ".";
     }
 
     return (
