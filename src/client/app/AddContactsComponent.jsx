@@ -223,5 +223,4 @@ class NewContact extends React.Component {
 
 
 
-
 export default AddContactsComponent;

@@ -25,7 +25,6 @@ class LoadContactListsComponent extends React.Component {
 
     this.props.dbQuery(params, function(result) {
       var next = myThis.props.next;
-      console.log('next', next);
       myThis.props.handleLoadContactLists(result);
       myThis.props.history.push(next);
 

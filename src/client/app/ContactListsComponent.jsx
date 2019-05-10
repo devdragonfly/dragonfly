@@ -103,7 +103,10 @@ class ContactList extends React.Component {
         <div className="dragon-select-list-cell">
           {adressBookIcon}
           <div className="dragon-list-cell">
-            <input autoFocus defaultValue={this.props.contactList.name} onKeyPress={this.handleKeyDown.bind(this)}/>
+            <input className="form-control" autoFocus defaultValue={this.props.contactList.name} onKeyDown={this.handleKeyDown.bind(this)}/>
+            <div className="dragon-validation-message">
+              Press Enter to save, ESC to exit
+            </div>
           </div>
         </div>
       );
@@ -125,7 +128,7 @@ class ContactList extends React.Component {
             <i className="fa fa-pencil-square-o fa-fw fa-lg" aria-hidden="true"></i>
           </div>
           <div className="dragon-select-list-cell" onClick={this.handleDeleteContactList.bind(this)}>
-            <i className='fa fa-times fa-fw fa-lg'></i>
+            <i className='fa fa-trash fa-fw fa-lg'></i>
           </div>
         </div>
     );
@@ -164,6 +167,8 @@ class ContactList extends React.Component {
         alert('Please enter a name for your Contact List.')
       }
 
+    } else if (e.key === "Escape") {
+      this.setState({edit: false});
     }
   }
 
@@ -177,7 +182,7 @@ class ContactList extends React.Component {
   }
 
   handleDeleteContactList() {
-    if ( confirm("Are you sure!") ) {
+    if ( confirm("Are you sure?") ) {
       var myThis = this;
       const organizationId = this.props.contactList.organizationId;
       const contactListId = this.props.contactList.contactListId;
