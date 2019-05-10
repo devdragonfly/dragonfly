@@ -53,7 +53,7 @@ class DragonflyPreferencesComponent extends React.Component {
 
   routerWillLeave(nextLocation) {
     if (nextLocation.pathname != "dragonflycomplete") {
-      return 'Your work is not saved! Are you sure you want to leave?'
+      return 'You have not saved your changes. Are you sure you want to leave the page?'
     }
   }
 
