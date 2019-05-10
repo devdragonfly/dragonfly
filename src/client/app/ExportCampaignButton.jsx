@@ -47,6 +47,14 @@ class ExportCampaignButton extends React.Component {
 
     var wrapInQuotes = (sentence) => '\"' + sentence + '\"';
 
+    var fillEmptyFields = (fieldsCount) => {
+      var result = '';
+      for (var i = 0; i < emptyFieldsLength; i++) {
+        result += '-,'
+      }
+      return result;
+    }
+
     var headers = [
       'First Name',
       'Last Name',
@@ -69,6 +77,10 @@ class ExportCampaignButton extends React.Component {
         });
       });
     }
+
+    // Data for filling empty boxes
+    var filledByDefault = 6;
+    var emptyFieldsLength = headers.length - filledByDefault;
 
     headers = headers.join() + '\n';
 
@@ -94,12 +106,14 @@ class ExportCampaignButton extends React.Component {
         );
 
         dragonfly.results.forEach(function(result) {
-          var selectedAnswers = [];
-          result.selectedAnswers.forEach(function(answer) {
-            selectedAnswers.push(answer);
-          });
-          record_attributes.push( wrapInQuotes(selectedAnswers.join()) );
+          if (result.correct) {
+            record_attributes.push('Correct');
+            return;
+          }
+          record_attributes.push('Incorrect');
         });
+      } else {
+        record_attributes.push(wrapInQuotes('Not Completed'), fillEmptyFields(emptyFieldsLength));
       }
 
       body += (record_attributes.join() + '\n');
