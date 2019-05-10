@@ -118,7 +118,7 @@ class ContactListComponent extends React.Component {
             <div className="row">
               <div className="col-sm-6">
                 {/*onClick={this.showAlert} */}
-                <label for="input">Import your contact list in xlsx format</label>
+                <label for="input">Import your contact list in .xlsx format</label>
                 <input type="file" accept=".xlsx" onChange={this.handleFile} className="form-control" id="input" placeholder="exel file"/>
               </div>
             </div>
