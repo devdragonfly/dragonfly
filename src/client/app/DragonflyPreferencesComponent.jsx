@@ -2,7 +2,6 @@
 import React from 'react';
 import { Link } from 'react-router';
 import LogoComponent from './components/LogoComponent.jsx';
-import PostFormComponent from './components/PostFormComponent.jsx';
 
 
 const buttonClassName = "btn btn-primary";
@@ -24,11 +23,7 @@ class DragonflyPreferencesComponent extends React.Component {
                   selectedNPS : "5",
                   openTextValue : "",
                   buttonRestClassName : buttonClassName,
-                  buttonClickedClassName : "dragon-hidden",
-                  postAddressForm: false,
-                  address: "",
-                  cityState: "",
-                  poBox: ""
+                  buttonClickedClassName : "dragon-hidden"
     };
     
     this.titleCase = this.titleCase.bind(this);
@@ -39,10 +34,6 @@ class DragonflyPreferencesComponent extends React.Component {
     this.handleNPSOptionChange = this.handleNPSOptionChange.bind(this);
     this.handleOpenTextChange = this.handleOpenTextChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.showPostAddressForm = this.showPostAddressForm.bind(this);
-    this.updateAddressValue = this.updateAddressValue.bind(this);
-    this.updateCityStateValue = this.updateCityStateValue.bind(this);
-    this.updatePoBoxValue = this.updatePoBoxValue.bind(this);
   }
 
   componentDidMount() {
@@ -109,18 +100,6 @@ class DragonflyPreferencesComponent extends React.Component {
                 </div>
               </div>
 
-              <div className="checkbox">
-                <label><input type="checkbox" onChange={this.showPostAddressForm}/> Add post address</label>
-              </div>
-              <PostFormComponent
-                address={this.state.address}
-                cityState={this.state.cityState}
-                poBox={this.state.poBox}
-                showForm={this.state.postAddressForm}
-                updateAddressValue={this.updateAddressValue}
-                updateCityStateValue={this.updateCityStateValue}
-                updatePoBoxValue={this.updatePoBoxValue}
-              />
               <br/>
               <h4>How likely are you to recommend Dragonfly to a friend or colleague?</h4>
               <span className="NPStext">
@@ -202,24 +181,6 @@ class DragonflyPreferencesComponent extends React.Component {
     });
   }
 
-  updateAddressValue(e) {
-    this.setState({
-      address: e.target.value
-    });
-  }
-
-  updateCityStateValue(e) {
-    this.setState({
-      cityState: e.target.value
-    });
-  }
-
-  updatePoBoxValue(e) {
-    this.setState({
-      poBox: e.target.value
-    });
-  }
-  
   handleSubmit(e) {
     e.preventDefault();
     this.showClickedButtonState(true);
@@ -231,9 +192,6 @@ class DragonflyPreferencesComponent extends React.Component {
     preferences.email = this.state.email;
     preferences.mobile = this.state.mobile;
     preferences.text = this.state.openTextValue;
-    preferences.address = this.state.address;
-    preferences.cityState = this.state.cityState;
-    preferences.poBox = this.state.poBox;
     
     if ((preferences.email == "") || (preferences.email == null)) preferences.email = "none";
     if ((preferences.mobile == "") || (preferences.mobile == null)) preferences.mobile = "none";
@@ -256,12 +214,6 @@ class DragonflyPreferencesComponent extends React.Component {
       str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1); 
     }
     return str.join(' ');
-  }
-
-  showPostAddressForm(e) {
-    this.setState({
-      postAddressForm: e.target.checked
-    });
   }
 
 }
