@@ -1,8 +1,7 @@
 //import { Config, CognitoIdentityCredentials } from "aws-sdk";
 import React from 'react';
-import { Link } from 'react-router';
+import { withRouter } from 'react-router';
 import LogoComponent from './components/LogoComponent.jsx';
-
 
 const buttonClassName = "btn btn-primary";
 
@@ -10,7 +9,6 @@ class DragonflyPreferencesComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    
     var dragonfly = props.dragonfly;
     
     var contact = dragonfly.contact;
@@ -34,15 +32,34 @@ class DragonflyPreferencesComponent extends React.Component {
     this.handleNPSOptionChange = this.handleNPSOptionChange.bind(this);
     this.handleOpenTextChange = this.handleOpenTextChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.onUnload = this.onUnload.bind(this);
+    this.routerWillLeave = this.routerWillLeave.bind(this);
   }
 
   componentDidMount() {
+    window.addEventListener("beforeunload", this.onUnload);
+    this.props.router.setRouteLeaveHook(this.props.route, this.routerWillLeave)
     if (typeof window !== 'undefined') {
       var path = window.location.protocol + '//' + window.location.host; 
       this.setState({path : path});
     } else {
       // work out what you want to do server-side...
     }
+  }
+
+  componentWillUnmount() {
+    window.removeEventListener("onbeforeunload", this.onUnload)
+  }
+
+  routerWillLeave(nextLocation) {
+    if (nextLocation.pathname != "dragonflycomplete") {
+      return 'Your work is not saved! Are you sure you want to leave?'
+    }
+  }
+
+  onUnload(event) {
+    event.preventDefault();
+    return event.returnValue = 'Are you sure you want to close?';
   }
 
   render() {
@@ -219,4 +236,4 @@ class DragonflyPreferencesComponent extends React.Component {
 }
 
 
-export default DragonflyPreferencesComponent;
+export default withRouter(DragonflyPreferencesComponent);

@@ -1,8 +1,8 @@
 .dragonfly-red { color:red;}
 .dragonfly-green { color:green;}
 .divCenter { text-align:center;}
-.divLeft { float:left;}
-.divRight { float:right;}
+.divLeft { float: left !important; }
+.divRight { float: right; }
 
 .topNavLogo { padding:4px; max-width:330px;}
 .signUpBox { padding: 50px; background-color:white; border-radius: 8px; border:1px solid #00A2E9;}
@@ -188,10 +188,6 @@
 .dragon-powered-by img {
     width:150px;
     float:right;
-}
-
-.dragon-powered-by.divLeft img {
-    float: left;
 }
 
 .dragon-menu-visible {
@@ -413,10 +409,14 @@
     min-height: 100px;
 }
 
+.modal {
+    --modal-min-height: calc(100% - (.5rem * 2));
+}
+
 .modal .modal-dialog.modal-dragon-centered {
     display: flex;
     align-items: center;
-    min-height: calc(100% - (.5rem * 2));
+    min-height: var(--modal-min-height);
     width: 80%;
 }
 

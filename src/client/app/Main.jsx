@@ -96,8 +96,6 @@ class Main extends Component {
         this.restoreUserSession();
     }
 
-
-
     handleLoadEmail(email) {
         this.setState({email : email});
     }

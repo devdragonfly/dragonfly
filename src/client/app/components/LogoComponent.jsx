@@ -16,7 +16,7 @@ export default class LogoComponent extends React.Component {
 
   render() {
     return (
-      <img src={this.getLogoImg()} />
+      <img src={this.getLogoImg()} className="divLeft" />
     );
   };
 
