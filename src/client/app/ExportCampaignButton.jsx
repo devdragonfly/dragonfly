@@ -119,7 +119,7 @@ class ExportCampaignButton extends React.Component {
       body += (record_attributes.join() + '\n');
     });
 
-    return this.href_base + headers + body;
+    return encodeURI(this.href_base + headers + body);
   }
 
 }
