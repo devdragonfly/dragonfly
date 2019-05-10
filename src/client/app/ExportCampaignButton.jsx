@@ -94,9 +94,11 @@ class ExportCampaignButton extends React.Component {
         );
 
         dragonfly.results.forEach(function(result) {
+          var selectedAnswers = [];
           result.selectedAnswers.forEach(function(answer) {
-            record_attributes.push( wrapInQuotes(answer) );
+            selectedAnswers.push(answer);
           });
+          record_attributes.push( wrapInQuotes(selectedAnswers.join()) );
         });
       }
 
