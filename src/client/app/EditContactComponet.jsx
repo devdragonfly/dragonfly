@@ -29,7 +29,7 @@ class EditContact extends React.Component {
 
 
     return (
-        <div className="dragon-select-list-row">
+        <div className="dragon-select-list-cell">
             <div className="dragon-select-list-form-cell">
               <i className={validityIndicator}></i>
             </div>
@@ -42,10 +42,10 @@ class EditContact extends React.Component {
             <div className="dragon-select-list-form-cell">
               <input defaultValue={this.props.contact.email} onChange={this.updateEmailValue} className="form-control" placeholder="email"/>
             </div>
-            <div className="dragon-select-list-cell" onClick={this.handleSaveContact.bind(this)}>
+            <div className="dragon-select-list-form-cell" onClick={this.handleSaveContact.bind(this)}>
               <i className="fa fa-floppy-o fa-fw fa-lg"></i>
             </div>
-            <div className="dragon-select-list-cell" onClick={this.handleCancelContact.bind(this)}>
+            <div className="dragon-select-list-form-cell" onClick={this.handleCancelContact.bind(this)}>
               <i className='fa fa-times fa-fw fa-lg'></i>
             </div>
         </div>
