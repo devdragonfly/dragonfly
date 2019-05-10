@@ -21,7 +21,8 @@ class ContactListsComponent extends React.Component {
     var contactLists = this.props.contactLists;
     var handleLoadContactList = this.props.handleLoadContactList;
     var history = this.props.history;
-
+    var dbDelete = this.props.dbDelete;
+    var dbUpdate = this.props.dbUpdate;
     var contactListsJsx = function() {return '' }();
 
     if (contactLists !== 'not found') {
@@ -35,7 +36,7 @@ class ContactListsComponent extends React.Component {
                 if (contactList.contacts != null) {
                   contactCount = contactList.contacts.length;
                 }
-                return <ContactList contactList={contactList} handleLoadContactList={handleLoadContactList} contactCount={contactCount} history={history}/>
+                return <ContactList contactList={contactList} handleLoadContactList={handleLoadContactList} contactCount={contactCount} history={history} dbDelete={dbDelete} dbUpdate={dbUpdate}/>
             });
           }
     }
@@ -82,27 +83,122 @@ class ContactList extends React.Component {
 
   constructor(props) {
     super(props);
+    this.state = {
+      edit: false
+    }
   }
 
   render() {
-    return (
-        <div onClick={this.handleSelectContactList.bind(this, this.props.contactList)} className="dragon-select-list-row dragon-pointer">
-          <div className="dragon-select-list-cell">
-            <i className='fa fa-address-book-o fa-fw fa-lg'></i>
+    const edit = this.state.edit;
+    const adressBookIcon = (
+      <div className="dragon-list-cell">
+        <i className='fa fa-address-book-o fa-fw fa-lg'></i>
+      </div>
+    );
+    let contactName;
+
+
+    if (edit) {
+      contactName = (
+        <div className="dragon-select-list-cell">
+          {adressBookIcon}
+          <div className="dragon-list-cell">
+            <input className="form-control" autoFocus defaultValue={this.props.contactList.name} onKeyDown={this.handleKeyDown.bind(this)}/>
+            <div className="dragon-message">
+              Press Enter to save, ESC to exit
+            </div>
           </div>
-          <div className="dragon-select-list-cell">
+        </div>
+      );
+    } else {
+      contactName = (
+        <div className="dragon-select-list-cell" onClick={this.handleSelectContactList.bind(this, this.props.contactList)}>
+          {adressBookIcon}
+          <div className="dragon-list-cell">
             {this.props.contactList.name}
           </div>
-          <div className="dragon-select-list-cell">
-            Contacts ({this.props.contactCount})
+        </div>
+      );
+    }
+
+    return (
+        <div className="dragon-select-list-row dragon-pointer">
+          {contactName}
+          <div className="dragon-select-list-cell" onClick={this.handleEditContactList.bind(this)}>
+            <i className="fa fa-pencil-square-o fa-fw fa-lg" aria-hidden="true"></i>
+          </div>
+          <div className="dragon-select-list-cell" onClick={this.handleDeleteContactList.bind(this)}>
+            <i className='fa fa-trash fa-fw fa-lg'></i>
           </div>
         </div>
     );
+
+  }
+
+  handleKeyDown(e) {
+    if (e.key === 'Enter') {
+      var newContactListName = e.target.value;
+      if ( newContactListName.length > 0 && newContactListName !== e.target.defaultValue) {
+        var myThis = this;
+        const organizationId = this.props.contactList.organizationId;
+        const contactListId = this.props.contactList.contactListId;
+        var params = {
+                TableName:"ContactLists",
+                Key: {
+                    organizationId : organizationId,
+                    contactListId : contactListId
+                },
+                UpdateExpression: "set #name = :name",
+                ExpressionAttributeValues:{
+                    ":name": newContactListName
+                },
+                ExpressionAttributeNames: {
+                    "#name": "name"
+                },
+                ReturnValues:"UPDATED_NEW"
+            };
+
+        this.props.dbUpdate(params, function(result) {
+          myThis.props.history.push('loadcontactlists');
+        });
+      } else if (newContactListName === e.target.defaultValue){
+        this.setState({edit: false});
+      } else {
+        alert('Please enter a name for your Contact List.')
+      }
+
+    } else if (e.key === "Escape") {
+      this.setState({edit: false});
+    }
   }
 
   handleSelectContactList(contactList) {
     this.props.handleLoadContactList(contactList);
     this.props.history.push('contactlist');
+  }
+
+  handleEditContactList() {
+    this.setState({edit: true});
+  }
+
+  handleDeleteContactList() {
+    if ( confirm("Are you sure?") ) {
+      var myThis = this;
+      const organizationId = this.props.contactList.organizationId;
+      const contactListId = this.props.contactList.contactListId;
+      var params = {
+          TableName:"ContactLists",
+          Key:{
+              organizationId : organizationId,
+              contactListId : contactListId
+          }
+        };
+
+      this.props.dbDelete(params, function(result){
+        myThis.props.history.push('loadcontactlists');
+      });
+    }
+
   }
 
 }
