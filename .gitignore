@@ -6,3 +6,5 @@
 src/client/app/appconfig.js
 node_modules/
 package-lock.json
+src/client/public/bundle.js.map
+src/client/public/bundle.js

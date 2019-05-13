@@ -29,15 +29,19 @@
   },
   "scripts": {
     "build": "webpack -p",
-    "start": "webpack -p && node server.js"
+    "start": "webpack -p && node server.js",
+    "client": "webpack-dev-server -p --content-base src/client",
+    "serve": "concurrently \"npm run client\" \"npm run start\" "
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-react": "^6.24.1",
+    "concurrently": "^4.1.0",
     "json-loader": "^0.5.4",
     "video.js": "^6.2.0",
-    "webpack": "^2.4.1"
+    "webpack": "^2.4.1",
+    "webpack-dev-server": "^2.11.5"
   },
   "keywords": [
     "tbd"

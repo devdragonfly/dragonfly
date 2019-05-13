@@ -10,6 +10,11 @@ var config = {
     path: BUILD_DIR,
     filename: 'bundle.js'
   },
+  devtool: 'source-map',
+  devServer: {
+    port: 3000,
+    open: true,
+  },
   module : {
     loaders : [
       {
