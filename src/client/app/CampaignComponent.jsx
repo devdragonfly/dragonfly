@@ -84,8 +84,7 @@ class CampaignComponent extends React.Component {
 
   render() {
     var path = this.state.path;
-
-
+        
     var dragonflies = this.props.results;
     var sessionName = "session name";
 

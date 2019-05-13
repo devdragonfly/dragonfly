@@ -4,7 +4,6 @@
 !.elasticbeanstalk/*.cfg.yml
 !.elasticbeanstalk/*.global.yml
 src/client/app/appconfig.js
-
 node_modules/
 package-lock.json
 src/client/public/bundle.js.map

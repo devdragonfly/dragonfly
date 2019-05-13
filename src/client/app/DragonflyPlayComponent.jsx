@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
 import ResultsComponent from './ResultsComponent.jsx';
+import LogoComponent from './components/LogoComponent.jsx';
 
 var firstTime = true;
 var myInterval = null;
@@ -95,50 +96,45 @@ class DragonflyPlayComponent extends React.Component {
     var videoUrl = "https://s3-us-west-2.amazonaws.com/dragonfly-videos-transcoded/" + videoId + "/mp4-" + videoId + ".mp4";
 
     var thumbnailUrl = "./images/play.png";
+    var dragonfly = this.props.dragonfly;
+
     return (
       <div className="row">
-        <div className="col-sm-2">
-          
-        </div>
+        <div className="col-sm-2"></div>
         <div className="col-sm-8">
-              
-              {resultsComponent}
-              
-              <br/><br/>
-              
-              <div className="jumbotron dragon-enlarge">
-
-                          <video autoplay
-                              className={this.state.videoClassname}
-                              id="my-player"
-                              preload="auto"
-                              poster={thumbnailUrl}
-                              data-setup='{}'
-                              onClick={this.handleClickPlay}>
-                            <source src={videoUrl} type="video/mp4"></source>
-                            <p className="vjs-no-js">
-                              To view this video please enable JavaScript, and consider upgrading to a
-                              web browser that
-                              <a href="http://videojs.com/html5-video-support/" target="_blank">
-                                supports HTML5 video
-                              </a>
-                            </p>
-                          </video>
-
-              </div>
-              
+          {resultsComponent}
+          <br/><br/>
+          <div className="jumbotron dragon-enlarge">
+            <div className="clearfix">
               <a href={this.state.path} target="_blank">
-              <div className="dragon-powered-by pull-right"><img src="./images/logo-dragonfly-ii.png" /></div>
+                <div className="dragon-powered-by divLeft">
+                  <LogoComponent dragonfly={dragonfly} />
+                </div>
               </a>
-
-              {modalComponent}
-              
+            </div>
+            <div className="padding-18-vertical">
+              <video autoplay
+                  className={this.state.videoClassname}
+                  id="my-player"
+                  preload="auto"
+                  poster={thumbnailUrl}
+                  data-setup='{}'
+                  onClick={this.handleClickPlay}>
+                <source src={videoUrl} type="video/mp4"></source>
+                <p className="vjs-no-js">
+                  To view this video please enable JavaScript, and consider upgrading to a
+                  web browser that
+                  <a href="http://videojs.com/html5-video-support/" target="_blank">
+                    supports HTML5 video
+                  </a>
+                </p>
+              </video>
+            </div>
+           </div>
+            {modalComponent}
         </div>
-        <div className="col-sm-2">
-        </div>
+        <div className="col-sm-2"></div>
       </div>
-      
-
     );
   }
   

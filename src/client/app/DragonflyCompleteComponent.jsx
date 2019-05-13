@@ -1,7 +1,7 @@
 //import { Config, CognitoIdentityCredentials } from "aws-sdk";
 import React from 'react';
 import { Link } from 'react-router';
-
+import LogoComponent from './components/LogoComponent.jsx';
 
 
 class DragonflyCompleteComponent extends React.Component {
@@ -18,7 +18,6 @@ class DragonflyCompleteComponent extends React.Component {
   componentWillMount() {
 
     var dragonfly = this.props.dragonfly;
-
     // if previousCompletion = true, this was an already completed dragonfly where link was re-clicked
     var previousCompletion = dragonfly.previousCompletion;
     if (previousCompletion) return;
@@ -110,9 +109,8 @@ class DragonflyCompleteComponent extends React.Component {
 
     var paymentText = "We will email you at " + email + " with your payment of $" + earned + ".";
     if (preferences.emailOrText == "text") {
-      paymentText = "We will text you at " + mobile + " with your payment of $" + earned + ".";
+      paymentText = "We will send your payment of $" + earned + " using Venmo to " + mobile + ".";
     }
-
 
     return (
       <div className="row">
@@ -125,6 +123,14 @@ class DragonflyCompleteComponent extends React.Component {
 
               <div className="jumbotron dragon-enlarge">
 
+               <div className="clearfix">
+                  <a href={this.state.path} target="_blank">
+                    <div className="dragon-powered-by divLeft">
+                      <LogoComponent dragonfly={dragonfly} />
+                    </div>
+                  </a>
+                </div>
+
                 <h2>Thank you {first}!</h2>
 
                 <br/>
@@ -132,9 +138,11 @@ class DragonflyCompleteComponent extends React.Component {
                 {paymentText}
 
                 <br/><br/>
-
-                Typically we complete all payments within 8 business hours.
-
+                {
+                  dragonfly.customTexts && dragonfly.customTexts.complete != "custom text" ?
+                  dragonfly.customTexts.complete :
+                  "Typically we complete all payments within 8 business hours."
+                }
                 <br/><br/>
 
                 If you do not receive payment within 8 business hours, please contact us at <b>admin@dragonfly.one</b>.
@@ -144,10 +152,6 @@ class DragonflyCompleteComponent extends React.Component {
                 Limited spots are available for the Dragonfly pre-launch in late 2018. Please contact us at <b>admin@dragonfly.one</b> to be included.
 
               </div>
-              <a href={this.state.path} target="_blank">
-              <div className="dragon-powered-by pull-right"><img src="./images/logo-dragonfly-ii.png" /></div>
-              </a>
-
         </div>
         <div className="col-sm-2">
         </div>

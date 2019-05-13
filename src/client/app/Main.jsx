@@ -81,12 +81,14 @@ class Main extends Component {
         this.dbQuery = this.dbQuery.bind(this);
         this.dbQueryUnauth = this.dbQueryUnauth.bind(this);
         this.dbUpdate = this.dbUpdate.bind(this);
+        this.dbDelete = this.dbDelete.bind(this);
         this.dbUpdateUnauth = this.dbUpdateUnauth.bind(this);
         this.s3Upload = this.s3Upload.bind(this);
         this.s3ListObjects = this.s3ListObjects.bind(this);
         this.handleLoadNext = this.handleLoadNext.bind(this);
         this.restoreUserSession = this.restoreUserSession.bind(this);
         this.setAWSCredential = this.setAWSCredential.bind(this);
+        this.s3UploadLogos = this.s3UploadLogos.bind(this);
 
 
         ReactGA.initialize('UA-123354073-1');
@@ -94,8 +96,6 @@ class Main extends Component {
 
         this.restoreUserSession();
     }
-
-
 
     handleLoadEmail(email) {
         this.setState({email : email});
@@ -247,7 +247,7 @@ class Main extends Component {
     setAWSCredential(cognitoUser, result) {
       AWS.config.region = 'us-west-2';
       AWS.config.credentials = new AWS.CognitoIdentityCredentials({
-              //AccountId: '698305963744',
+              // AccountId: '698305963744',
               //RoleArn: 'arn:aws:iam::698305963744:role/Cognito_dragonflyAuth_Role',
               IdentityPoolId : 'us-west-2:b6311e4b-9082-4058-883c-19d23e34802b',
               Logins : { 'cognito-idp.us-west-2.amazonaws.com/us-west-2_N8urEcZBJ' : result.getIdToken().getJwtToken() }
@@ -339,7 +339,6 @@ class Main extends Component {
 
     dbUpdate(params, callback) {
         dragonfly.docClient.update(params, function(err, data) {
-
             if (err) {
                 alert(JSON.stringify(err));
                 callback(data);
@@ -349,6 +348,17 @@ class Main extends Component {
         });
     }
 
+    dbDelete(params, callback) {
+      dragonfly.docClient.delete(params, function(err, data) {
+
+        if (err) {
+          alert(JSON.stringify(err));
+          callback(data);
+        } else {
+          callback(data);
+        }
+      });
+    }
 
      dbUpdateUnauth(params, callback) {
         dragonfly_unauth.docClient.update(params, function(err, data) {
@@ -369,7 +379,6 @@ class Main extends Component {
         var size = file.size;
 
         var params = {Key: key, ContentType: file.type, Body: file};
-
         var request = dragonfly.s3.putObject(params);
         var percent = 0;
         request.
@@ -395,6 +404,10 @@ class Main extends Component {
         dragonfly.s3.listObjects(params, function (err, data) {
             callback(err,data);
         });
+    }
+
+    s3UploadLogos(params, callback) {
+        dragonfly.s3.putObject(params, callback);
     }
 
     handleSignOut() {
@@ -461,12 +474,13 @@ class Main extends Component {
            dbQuery: this.dbQuery,
            dbQueryUnauth: this.dbQueryUnauth,
            dbUpdate: this.dbUpdate,
+           dbDelete: this.dbDelete,
            dbUpdateUnauth: this.dbUpdateUnauth,
            s3Upload: this.s3Upload,
-           s3ListObjects: this.s3ListObjects
+           s3ListObjects: this.s3ListObjects,
+           s3UploadLogos: this.s3UploadLogos
          })
         );
-
         var dragonflyId = this.state.dragonflyId;
         var email = this.state.email;
         var userId = this.state.userId;
@@ -478,7 +492,6 @@ class Main extends Component {
         var handleLoadEmail = this.handleLoadEmail;
         var handleLoadOrganization = this.handleLoadOrganization;
         var history = this.props.history;
-
 
         var nav = function() { return '' }();
 

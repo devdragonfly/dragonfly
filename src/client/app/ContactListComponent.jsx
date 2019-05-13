@@ -4,6 +4,7 @@ import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
 import ImportAlertComponent from './ImportAlertComponent.jsx';
 import ReactDOM from 'react-dom';
 import readXlsxFile from 'read-excel-file'
+import EditContact from './EditContactComponet.jsx'
 
 
 
@@ -15,6 +16,8 @@ class ContactListComponent extends React.Component {
 
     this.handleFile = this.handleFile.bind(this);
     this.showAlert = this.showAlert.bind(this);
+    this.deleteContact = this.deleteContact.bind(this);
+    this.editContact = this.editContact.bind(this);
 
     this.state = {
       show: false,
@@ -22,18 +25,69 @@ class ContactListComponent extends React.Component {
     };
   }
 
+  deleteContact(id) {
+    var myThis = this;
+    const organizationId = this.props.organizationId;
+    const contactListId = this.props.contactList.contactListId;
+    if ( confirm("Are you sure?") ) {
+      this.props.contactList.contacts.splice(id, 1);
+      var contacts = this.props.contactList.contacts;
+      var params = {
+              TableName:"ContactLists",
+              Key: {
+                  organizationId : organizationId,
+                  contactListId : contactListId
+              },
+              UpdateExpression: "set contacts = :contacts",
+              ExpressionAttributeValues:{
+                  ":contacts":contacts
+              },
+              ReturnValues:"UPDATED_NEW"
+          };
+
+      this.props.dbUpdate(params, function(result) {
+        myThis.props.handleLoadContacts(result.Attributes.contacts);
+        myThis.props.history.push('contactlist');
+      });
+    }
+
+  }
+
+  editContact(id, contact, callback) {
+    var myThis = this;
+    const organizationId = this.props.organizationId;
+    const contactListId = this.props.contactList.contactListId;
+    this.props.contactList.contacts[id] = contact;
+    var contacts = this.props.contactList.contacts;
+    var params = {
+            TableName:"ContactLists",
+            Key: {
+                organizationId : organizationId,
+                contactListId : contactListId
+            },
+            UpdateExpression: "set contacts = :contacts",
+            ExpressionAttributeValues:{
+                ":contacts":contacts
+            },
+            ReturnValues:"UPDATED_NEW"
+        };
+
+    this.props.dbUpdate(params, function(result) {
+      myThis.props.handleLoadContacts(result.Attributes.contacts);
+      callback();
+    });
+  }
+
   render() {
 
     var contacts = this.props.contactList.contacts;
-
     var contactsJsx = function() {return '' }();
-
 
     if (contacts == null){
       contactsJsx = function() {return 'No contacts added to this list yet.' }();
     } else {
       contactsJsx = contacts.map((contact, i) => {
-          return <Contact contact={contact} />
+          return <Contact contact={contact} contactIndex={i} deleteContact={this.deleteContact} editContact={this.editContact} />
       });
 
     }
@@ -64,7 +118,7 @@ class ContactListComponent extends React.Component {
             <div className="row">
               <div className="col-sm-6">
                 {/*onClick={this.showAlert} */}
-                <label for="input">Import your contact list</label>
+                <label for="input">Import your contact list in .xlsx format</label>
                 <input type="file" accept=".xlsx" onChange={this.handleFile} className="form-control" id="input" placeholder="exel file"/>
               </div>
             </div>
@@ -193,23 +247,76 @@ class Contact extends React.Component {
 
   constructor(props) {
     super(props);
+    this.handleLoadContact = this.handleLoadContact.bind(this);
+    this.handleCloseContactEdit = this.handleCloseContactEdit.bind(this);
+    this.state = {
+      edit: false,
+      contact: this.props.contact
+    }
+  }
+
+  handleEditContact() {
+    this.setState({edit: true});
+  }
+
+  handleCloseContactEdit() {
+    this.setState({edit: false});
+  }
+
+  handleDeleteContact() {
+    this.props.deleteContact(this.props.contactIndex);
+  }
+
+  handleLoadContact(first, last, email, isValid) {
+    var myThis = this;
+    if (isValid) {
+      var contact = { first : first, last : last, email : email};
+      this.props.editContact(this.props.contactIndex, contact, function(){
+        myThis.setState({edit: false});
+      });
+    } else {
+      alert('Your contact is not valid!');
+    }
+
   }
 
   render() {
+    const edit = this.state.edit;
+    const index = this.props.contactIndex;
+    var contactForm;
+
+    if (edit) {
+      contactForm = (
+        <EditContact i={index} contact={this.props.contact} handleCloseContactEdit={this.handleCloseContactEdit} handleLoadContact={this.handleLoadContact}/>
+      );
+    } else {
+      contactForm = (<div className="dragon-select-list">
+                <div className="dragon-select-list-cell">
+                  {this.props.contact.first}
+                </div>
+                <div className="dragon-select-list-cell">
+                  {this.props.contact.last}
+                </div>
+                <div className="dragon-select-list-cell">
+                  {this.props.contact.email}
+                </div>
+                <div className="dragon-select-list-cell" onClick={this.handleEditContact.bind(this)}>
+                  <i className="fa fa-pencil-square-o fa-fw fa-lg" aria-hidden="true"></i>
+                </div>
+                <div className="dragon-select-list-cell" onClick={this.handleDeleteContact.bind(this)}>
+                  <i className='fa fa-trash fa-fw fa-lg'></i>
+                </div>
+              </div>
+            );
+    }
+
+
     return (
         <div className="dragon-select-list-row">
           <div className="dragon-select-list-cell">
             <i className='fa fa-address-card fa-fw fa-lg'></i>
           </div>
-          <div className="dragon-select-list-cell">
-            {this.props.contact.first}
-          </div>
-          <div className="dragon-select-list-cell">
-            {this.props.contact.last}
-          </div>
-          <div className="dragon-select-list-cell">
-            {this.props.contact.email}
-          </div>
+          {contactForm}
         </div>
     );
   }
