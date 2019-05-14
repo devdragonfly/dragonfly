@@ -18,8 +18,30 @@ class DragonflyStartComponent extends React.Component {
 
   componentWillMount() {
     var results = this.props.dragonfly.results;
+
     if (results != null) {
       this.props.history.push('dragonflycomplete');
+    }
+
+    var campaignId = this.props.dragonfly.campaignId;
+    var campaigns = this.props.campaigns;
+    var campaign;
+
+    // Find needed Campaign
+    for (let i = 0; i < campaigns.length; i++) {
+      if (campaigns[i].campaignId == campaignId) {
+        this.currentCampaign = campaigns[i];
+        break;
+      }
+    }
+
+    // Determine if Campaign Date is Expired
+    var endDate = this.currentCampaign.expirationDate;
+    if (endDate) {
+      var today = new Date().getTime();
+      if (today >= Date.parse(endDate)) {
+        this.campaignIsExpired = true;
+      }
     }
 
   }
@@ -34,6 +56,9 @@ class DragonflyStartComponent extends React.Component {
   }
 
   render() {
+    if (this.campaignIsExpired) {
+      return this.expiredNotice();
+    }
     var dragonfly = this.props.dragonfly;
     var totalQuestionCount = dragonfly.session.totalQuestionCount;
     var contact = dragonfly.contact;
@@ -41,6 +66,7 @@ class DragonflyStartComponent extends React.Component {
     var last = this.titleCase(contact.last);
     var email = contact.email;
     var incentive = Number(dragonfly.incentive).toFixed(2);
+
 
     return (
       <div className="row">
@@ -90,6 +116,27 @@ class DragonflyStartComponent extends React.Component {
       str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
     }
     return str.join(' ');
+  }
+
+  expiredNotice() {
+    return (
+      <div className="row">
+        <div className="col-sm-2"></div>
+        <div className="col-sm-8">
+          <div className="jumbotron dragon-enlarge bg-white">
+            <div className="clearfix">
+              <a href={this.state.path} target="_self">
+                <div className="dragon-powered-by divLeft">
+                  <LogoComponent dragonfly={{dragonfly: {}}} />
+                </div>
+              </a>
+            </div>
+            <br/>
+            <h3>This Dragonfly link has expired</h3>
+          </div>
+        </div>
+      </div>
+    );
   }
 
 

@@ -239,7 +239,7 @@ class GenerateDragonfliesComponent extends React.Component {
 
     var contactList = campaign.contactList;
     var contacts = contactList.contacts;
-    var logoId;
+    var logoId = null;
 
     if (this.state.logo) {
       logoId = this.createId();
@@ -252,8 +252,8 @@ class GenerateDragonfliesComponent extends React.Component {
       this.props.s3UploadLogos(params, function(err, data) {
         if(err) {
           alert(JSON.stringify(err));
-        } else {
-          logoId = '';
+        } {
+          logoId = null
         }
       });
     }
@@ -270,7 +270,7 @@ class GenerateDragonfliesComponent extends React.Component {
       },
       ReturnValues: "UPDATED_NEW"
     };
-    myThis.props.dbUpdate(params, function(result) {
+    myThis.props.dbUpdate(campaignParams, function(result) {
       myThis.createDragonfly(organizationId, campaignId, contacts, campaign, incentive, customTexts, logoId);
     });
   }
@@ -285,6 +285,8 @@ class GenerateDragonfliesComponent extends React.Component {
     var myThis = this;
     var putRequests = [];
     var dragonflies = [];
+    var campaign = myThis.props.campaign;
+
 
     for (var i = 0; i < contacts.length; i++) {
       var dragonflyId = myThis.createId();
@@ -315,6 +317,10 @@ class GenerateDragonfliesComponent extends React.Component {
     };
     myThis.props.dbBatchWrite(params, function(result) {
       myThis.showClickedButtonState(false);
+
+      campaign.expirationDate = myThis.state.expirationDate;
+      myThis.props.handleLoadCampaign(campaign);
+
       myThis.props.history.push('loadresults');
     });
   }
