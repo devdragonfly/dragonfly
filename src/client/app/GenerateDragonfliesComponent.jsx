@@ -77,9 +77,9 @@ class GenerateDragonfliesComponent extends React.Component {
               <div id="logo" className="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                 <div className="panel-body">
                   <div className="row form-group">
-                    <ImageModalComponent image="./images/screenshots/logo-intro-page.jpg" columnClass="col-md-4"/>
-                    <ImageModalComponent image="./images/screenshots/logo-compl-page.jpg" columnClass="col-md-4"/>
-                    <ImageModalComponent image="./images/screenshots/logo-confirm-page.jpg" columnClass="col-md-4"/>
+                    <ImageModalComponent image="./images/screenshots/screenshot_1.png" columnClass="col-md-4"/>
+                    <ImageModalComponent image="./images/screenshots/screenshot_2.png" columnClass="col-md-4"/>
+                    <ImageModalComponent image="./images/screenshots/screenshot_3.png" columnClass="col-md-4"/>
                   </div>
                   <div className="row form-group">
                     <div className="col-md-12">
@@ -89,7 +89,7 @@ class GenerateDragonfliesComponent extends React.Component {
                             Choose File <input type="file" accept="image/*" style={{ display: 'none'}} onChange={ this.handleFile }/>
                           </span>
                         </label>
-                        <input type="text" className="form-control" placeholder="Select the Logo File" value={ this.state.logo? this.state.logo.name : '' } readOnly/>
+                        <input type="text" className="form-control bg-white" placeholder="Select the Logo File" value={ this.state.logo? this.state.logo.name : '' } readOnly/>
                       </div>
                     </div>
                   </div>
@@ -107,7 +107,7 @@ class GenerateDragonfliesComponent extends React.Component {
               <div id="introPage" className="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                 <div className="panel-body">
                   <div className="row form-group">
-                    <ImageModalComponent image="./images/screenshots/text-intro-page.jpg" columnClass="col-md-4"/>
+                    <ImageModalComponent image="./images/screenshots/screenshot_4.png" columnClass="col-md-4"/>
                   </div>
                   <div className="row">
                     <div className="col-md-10 form-group">
@@ -135,7 +135,7 @@ class GenerateDragonfliesComponent extends React.Component {
               <div id="confirmPage" className="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
                 <div className="panel-body">
                   <div className="row form-group">
-                    <ImageModalComponent image="./images/screenshots/text-conf-page.jpg" columnClass="col-md-4"/>
+                    <ImageModalComponent image="./images/screenshots/screenshot_5.png" columnClass="col-md-4"/>
                   </div>
                   <div className="row">
                     <div className="col-md-10 form-group">
