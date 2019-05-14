@@ -39,11 +39,9 @@ class DragonflyStartComponent extends React.Component {
     var endDate = this.currentCampaign.expirationDate;
     if (endDate) {
       var today = new Date().getTime();
-      this.campaignIsExpired = true;
-      // 
-      // if (today >= Date.parse(endDate)) {
-      //   this.campaignIsExpired = true;
-      // }
+      if (today >= Date.parse(endDate)) {
+        this.campaignIsExpired = true;
+      }
     }
 
   }
