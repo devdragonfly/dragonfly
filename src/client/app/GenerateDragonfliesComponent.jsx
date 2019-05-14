@@ -77,9 +77,9 @@ class GenerateDragonfliesComponent extends React.Component {
               <div id="logo" className="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
                 <div className="panel-body">
                   <div className="row form-group">
-                    <ImageModalComponent image="./images/screenshots/screenshot_1.png" columnClass="col-md-4"/>
-                    <ImageModalComponent image="./images/screenshots/screenshot_2.png" columnClass="col-md-4"/>
-                    <ImageModalComponent image="./images/screenshots/screenshot_3.png" columnClass="col-md-4"/>
+                    <ImageModalComponent image="./images/screenshots/logo-intro-page.jpg" columnClass="col-md-4"/>
+                    <ImageModalComponent image="./images/screenshots/logo-compl-page.jpg" columnClass="col-md-4"/>
+                    <ImageModalComponent image="./images/screenshots/logo-confirm-page.jpg" columnClass="col-md-4"/>
                   </div>
                   <div className="row form-group">
                     <div className="col-md-12">
@@ -107,7 +107,7 @@ class GenerateDragonfliesComponent extends React.Component {
               <div id="introPage" className="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
                 <div className="panel-body">
                   <div className="row form-group">
-                    <ImageModalComponent image="./images/screenshots/screenshot_4.png" columnClass="col-md-4"/>
+                    <ImageModalComponent image="./images/screenshots/text-intro-page.jpg" columnClass="col-md-4"/>
                   </div>
                   <div className="row">
                     <div className="col-md-10 form-group">
@@ -135,7 +135,7 @@ class GenerateDragonfliesComponent extends React.Component {
               <div id="confirmPage" className="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
                 <div className="panel-body">
                   <div className="row form-group">
-                    <ImageModalComponent image="./images/screenshots/screenshot_5.png" columnClass="col-md-4"/>
+                    <ImageModalComponent image="./images/screenshots/text-conf-page.jpg" columnClass="col-md-4"/>
                   </div>
                   <div className="row">
                     <div className="col-md-10 form-group">
@@ -149,8 +149,12 @@ class GenerateDragonfliesComponent extends React.Component {
             <br/><br/>
             <div className="form-group row">
               <div className="col-xs-4">
-                <label for="exp_date"><i className='fa fa-calendar-times-o fa-fw fa-lg'></i>Campaign Expiration Date</label><br/>
-                <input value={this.state.expirationDate} id="exp_date" onChange={this.updateExpirationDate} className="form-control" min={this.dateTomorrow} type="date"/>
+                <label for="exp_date">
+                  <i className='fa fa-calendar-times-o fa-fw fa-lg'></i>
+                  Campaign Expiration Date
+                </label>
+                <br/>
+                <input id="exp_date" onChange={this.updateExpirationDate} className="form-control" min={this.dateTomorrow} type="date"/>
               </div>
             </div>
           </div>
@@ -257,7 +261,7 @@ class GenerateDragonfliesComponent extends React.Component {
         }
       });
     }
-    var campaignParams = {
+    var params = {
       TableName: "Campaigns",
       Key: {
           organizationId : organizationId,
@@ -270,7 +274,7 @@ class GenerateDragonfliesComponent extends React.Component {
       },
       ReturnValues: "UPDATED_NEW"
     };
-    myThis.props.dbUpdate(campaignParams, function(result) {
+    myThis.props.dbUpdate(params, function(result) {
       myThis.createDragonfly(organizationId, campaignId, contacts, campaign, incentive, customTexts, logoId);
     });
   }
