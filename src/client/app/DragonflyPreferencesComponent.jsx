@@ -10,10 +10,10 @@ class DragonflyPreferencesComponent extends React.Component {
   constructor(props) {
     super(props);
     var dragonfly = props.dragonfly;
-    
+
     var contact = dragonfly.contact;
     var email = contact.email;
-    
+
     this.state = {path : "not found",
                   email : email,
                   mobile : "",
@@ -23,7 +23,7 @@ class DragonflyPreferencesComponent extends React.Component {
                   buttonRestClassName : buttonClassName,
                   buttonClickedClassName : "dragon-hidden"
     };
-    
+
     this.titleCase = this.titleCase.bind(this);
     this.updateEmailValue = this.updateEmailValue.bind(this);
     this.updateMobileValue = this.updateMobileValue.bind(this);
@@ -40,7 +40,7 @@ class DragonflyPreferencesComponent extends React.Component {
     window.addEventListener("beforeunload", this.onUnload);
     this.props.router.setRouteLeaveHook(this.props.route, this.routerWillLeave)
     if (typeof window !== 'undefined') {
-      var path = window.location.protocol + '//' + window.location.host; 
+      var path = window.location.protocol + '//' + window.location.host;
       this.setState({path : path});
     } else {
       // work out what you want to do server-side...
@@ -64,10 +64,10 @@ class DragonflyPreferencesComponent extends React.Component {
 
   render() {
     var dragonfly = this.props.dragonfly;
-    
+
     var contact = dragonfly.contact;
-    var first = this.titleCase(contact.first); 
-    //var last = this.titleCase(contact.last); 
+    var first = this.titleCase(contact.first);
+    //var last = this.titleCase(contact.last);
     var email = contact.email;
     var earned = Number(dragonfly.earned).toFixed(2);
 
@@ -76,7 +76,7 @@ class DragonflyPreferencesComponent extends React.Component {
         <div className="col-sm-2"></div>
         <div className="col-sm-8">
           <br/><br/>
-          <div className="jumbotron dragon-enlarge">
+          <div className="jumbotron dragon-enlarge bg-white">
             <div className="clearfix">
               <a href={this.state.path} target="_blank">
                 <div className="dragon-powered-by divLeft">
@@ -95,10 +95,10 @@ class DragonflyPreferencesComponent extends React.Component {
                   <div className="radio">
                     <label>
                       <input className="form-check-input" type="radio" value="email" checked={this.state.selectedContactOption === 'email'} onChange={this.handleContactOptionChange} name="group1" id="radio100"/>
-                      Email to 
+                      Email to
                     </label>
                   </div>
-                </div>  
+                </div>
                 <div className="dragon-select-list-form-cell">
                   <input value={this.state.email} onChange={this.updateEmailValue} className="form-control" placeholder="email address"/>
                 </div>
@@ -108,7 +108,7 @@ class DragonflyPreferencesComponent extends React.Component {
                   <div className="radio">
                     <label>
                       <input className="form-check-input" type="radio" value="text" checked={this.state.selectedContactOption === 'text'} onChange={this.handleContactOptionChange} name="group1" id="radio101"/>
-                      Text to 
+                      Text to
                     </label>
                   </div>
                 </div>
@@ -165,33 +165,33 @@ class DragonflyPreferencesComponent extends React.Component {
           this.setState({ buttonClickedClassName: "dragon-hidden" });
     }
   }
-  
+
   handleContactOptionChange(e) {
     this.setState({
       selectedContactOption: e.target.value
     });
   }
-  
-  
+
+
   handleNPSOptionChange(e) {
     this.setState({
       selectedNPS: e.target.value
     });
-  }  
-  
-  
+  }
+
+
   handleOpenTextChange(e) {
     this.setState({
       openTextValue: e.target.value
     });
-  }  
-  
+  }
+
   updateEmailValue(e) {
     this.setState({
       email: e.target.value, selectedContactOption : "email"
     });
-  } 
-  
+  }
+
   updateMobileValue(e) {
     this.setState({
       mobile: e.target.value, selectedContactOption : "text"
@@ -202,34 +202,34 @@ class DragonflyPreferencesComponent extends React.Component {
     e.preventDefault();
     this.showClickedButtonState(true);
     var myThis = this;
-    
+
     var preferences = {};
     preferences.emailOrText = this.state.selectedContactOption;
     preferences.nps = this.state.selectedNPS;
     preferences.email = this.state.email;
     preferences.mobile = this.state.mobile;
     preferences.text = this.state.openTextValue;
-    
+
     if ((preferences.email == "") || (preferences.email == null)) preferences.email = "none";
     if ((preferences.mobile == "") || (preferences.mobile == null)) preferences.mobile = "none";
     if ((preferences.text == "") || (preferences.text == null)) preferences.text = "none";
-    
-    
+
+
     var dragonfly = this.props.dragonfly;
     dragonfly.preferences = preferences;
     this.props.handleLoadDragonfly(dragonfly);
 
-    
-    myThis.showClickedButtonState(false); 
+
+    myThis.showClickedButtonState(false);
     myThis.props.history.push('dragonflycomplete');
-    
+
   }
-  
-  
+
+
   titleCase(str) {
     str = str.toLowerCase().split(' ');
     for (var i = 0; i < str.length; i++) {
-      str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1); 
+      str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
     }
     return str.join(' ');
   }

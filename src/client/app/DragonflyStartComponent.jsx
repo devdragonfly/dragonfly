@@ -14,20 +14,20 @@ class DragonflyStartComponent extends React.Component {
     this.titleCase = this.titleCase.bind(this);
     this.showCustomText = this.showCustomText.bind(this);
   }
-  
-  
+
+
   componentWillMount() {
     var results = this.props.dragonfly.results;
     if (results != null) {
       this.props.history.push('dragonflycomplete');
-      
+
     }
-    
+
   }
-  
+
   componentDidMount() {
     if (typeof window !== 'undefined') {
-      var path = window.location.protocol + '//' + window.location.host; 
+      var path = window.location.protocol + '//' + window.location.host;
       this.setState({path : path});
     } else {
       // work out what you want to do server-side...
@@ -38,8 +38,8 @@ class DragonflyStartComponent extends React.Component {
     var dragonfly = this.props.dragonfly;
     var totalQuestionCount = dragonfly.session.totalQuestionCount;
     var contact = dragonfly.contact;
-    var first = this.titleCase(contact.first); 
-    var last = this.titleCase(contact.last); 
+    var first = this.titleCase(contact.first);
+    var last = this.titleCase(contact.last);
     var email = contact.email;
     var incentive = Number(dragonfly.incentive).toFixed(2);
 
@@ -48,7 +48,7 @@ class DragonflyStartComponent extends React.Component {
         <div className="col-sm-2"></div>
         <div className="col-sm-8">
           <br/><br/>
-          <div className="jumbotron dragon-enlarge">
+          <div className="jumbotron dragon-enlarge bg-white">
             <div className="clearfix">
               <a href={this.state.path} target="_blank">
                 <div className="dragon-powered-by divLeft">
@@ -88,11 +88,11 @@ class DragonflyStartComponent extends React.Component {
   titleCase(str) {
     str = str.toLowerCase().split(' ');
     for (var i = 0; i < str.length; i++) {
-      str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1); 
+      str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
     }
     return str.join(' ');
   }
-  
+
 
 }
 

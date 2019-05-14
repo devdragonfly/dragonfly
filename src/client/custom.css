@@ -47,6 +47,9 @@
     margin:30px;
 }
 
+.bg-white {
+  background-color: #fff !important;
+}
 
 .dragon-login-box {
     margin:14px 0px 0px 0px;

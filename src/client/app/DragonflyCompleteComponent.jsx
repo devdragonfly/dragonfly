@@ -121,7 +121,7 @@ class DragonflyCompleteComponent extends React.Component {
 
               <br/><br/>
 
-              <div className="jumbotron dragon-enlarge">
+              <div className="jumbotron dragon-enlarge bg-white">
 
                <div className="clearfix">
                   <a href={this.state.path} target="_blank">
