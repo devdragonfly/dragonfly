@@ -84,7 +84,9 @@ class CampaignComponent extends React.Component {
 
   render() {
     var path = this.state.path;
-        
+
+    console.log(this.props.campaign);
+
     var dragonflies = this.props.results;
     var sessionName = "session name";
 
@@ -117,9 +119,19 @@ class CampaignComponent extends React.Component {
             <h3><i className='fa fa-line-chart fa-fw'></i> {this.props.campaign.name}</h3>
 
             <br/><br/>
-            <h4>Session</h4>
-            <i className='fa fa-graduation-cap fa-fw'></i>
-            {sessionName}
+
+            <div className="row">
+              <div className="col-sm-4">
+                <h4>Session</h4>
+                <i className='fa fa-graduation-cap fa-fw'></i>
+                {sessionName}
+              </div>
+              <div className="col-sm-4">
+                <h4>Expiration Date</h4>
+                <i className='fa fa-calendar-times-o fa-fw'></i>
+                {this.props.campaign.expirationDate || 'Not set'}
+              </div>
+            </div>
 
             <br/><br/>
             <h4>Results</h4>

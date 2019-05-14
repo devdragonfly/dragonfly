@@ -26,6 +26,8 @@ class GenerateDragonfliesComponent extends React.Component {
     this.validateIncentive = this.validateIncentive.bind(this);
     this.handleFile = this.handleFile.bind(this);
     this.handleTextareaChange = this.handleTextareaChange.bind(this);
+    this.updateExpirationDate = this.updateExpirationDate.bind(this);
+    this.dateTomorrow = this.dateTomorrow();
   }
 
   render() {
@@ -38,8 +40,8 @@ class GenerateDragonfliesComponent extends React.Component {
     if (session == null) { sessionName = <Link to={`campaignselectsession`}>Select</Link>; } else { sessionName = session.name}
 
     var contactListName = '';
-    if (contactList == null) 
-    { 
+    if (contactList == null)
+    {
       contactListName = <Link to={`campaignselectcontactlist`}>Select</Link>; } else { contactListName = contactList.name
     }
 
@@ -144,6 +146,13 @@ class GenerateDragonfliesComponent extends React.Component {
                 </div>
               </div>
             </div>
+            <br/><br/>
+            <div className="form-group row">
+              <div className="col-xs-4">
+                <label for="exp_date"><i className='fa fa-calendar-times-o fa-fw fa-lg'></i>Campaign Expiration Date</label><br/>
+                <input value={this.state.expirationDate} id="exp_date" onChange={this.updateExpirationDate} className="form-control" min={this.dateTomorrow} type="date"/>
+              </div>
+            </div>
           </div>
           <br/><br/>
           <form onSubmit={this.handleSubmit}>
@@ -180,6 +189,12 @@ class GenerateDragonfliesComponent extends React.Component {
     });
   }
 
+  updateExpirationDate(e) {
+    this.setState({
+      expirationDate: e.target.value
+    });
+  }
+
   validateIncentive(incentive) {
     var isNumeric = !isNaN(parseFloat(incentive)) && isFinite(incentive);
     if (!isNumeric) return false;
@@ -200,20 +215,15 @@ class GenerateDragonfliesComponent extends React.Component {
   }
 
   handleSubmit(e) {
-
     e.preventDefault();
     this.showClickedButtonState(true);
     var myThis = this;
     const campaign = this.props.campaign;
     const incentive = this.state.incentiveValue.trim();
     const customTexts = this.state.customTexts;
+    const expirationDate = this.state.expirationDate;
 
-    if (campaign.session == null) {
-      myThis.showClickedButtonState(false);
-      return;
-    }
-
-    if (campaign.contactList == null) {
+    if (campaign.session == null || campaign.contactList == null || expirationDate == null) {
       myThis.showClickedButtonState(false);
       return;
     }
@@ -229,9 +239,10 @@ class GenerateDragonfliesComponent extends React.Component {
 
     var contactList = campaign.contactList;
     var contacts = contactList.contacts;
+    var logoId;
 
     if (this.state.logo) {
-      let logoId = this.createId();
+      logoId = this.createId();
       let params = {
         Bucket: 'dragonfly-logos',
         Key: logoId,
@@ -242,26 +253,32 @@ class GenerateDragonfliesComponent extends React.Component {
         if(err) {
           alert(JSON.stringify(err));
         } else {
-          let params = {
-            TableName: "Campaigns",
-            Key: {
-                organizationId : organizationId,
-                campaignId : campaignId
-            },
-            UpdateExpression: "set logoId = :logoId",
-            ExpressionAttributeValues: {
-                ":logoId" : logoId
-            },
-            ReturnValues: "UPDATED_NEW"
-          };
-          myThis.props.dbUpdate(params, function(result) {
-            myThis.createDragonfly(organizationId, campaignId, contacts, campaign, incentive, customTexts, logoId);
-          });
+          logoId = '';
         }
-      })
-    } else {
-      this.createDragonfly(organizationId, campaignId, contacts, campaign, incentive, customTexts);
+      });
     }
+    var campaignParams = {
+      TableName: "Campaigns",
+      Key: {
+          organizationId : organizationId,
+          campaignId : campaignId
+      },
+      UpdateExpression: "set logoId = :logoId, expirationDate = :expirationDate",
+      ExpressionAttributeValues: {
+          ":logoId" : logoId,
+          ":expirationDate": expirationDate
+      },
+      ReturnValues: "UPDATED_NEW"
+    };
+    myThis.props.dbUpdate(params, function(result) {
+      myThis.createDragonfly(organizationId, campaignId, contacts, campaign, incentive, customTexts, logoId);
+    });
+  }
+
+  dateTomorrow(hey, nope) {
+    var date = new Date;
+    date.setDate(date.getDate() + 1);
+    return date.toISOString().split('T')[0];
   }
 
   createDragonfly(organizationId, campaignId, contacts, campaign, incentive, customTexts, logoId) {

@@ -20,7 +20,6 @@ class DragonflyStartComponent extends React.Component {
     var results = this.props.dragonfly.results;
     if (results != null) {
       this.props.history.push('dragonflycomplete');
-
     }
 
   }
