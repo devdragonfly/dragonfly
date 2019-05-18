@@ -12,18 +12,19 @@ class ViewComponent extends React.Component {
     super(props);
     this.getParameterByName = this.getParameterByName.bind(this);
   }
-  
+
   componentWillMount() {
     var dragonflyId = this.getParameterByName("id");
+    localStorage.setItem('dragonflyId', dragonflyId);
     this.props.handleLoadDragonflyId(dragonflyId);
-    this.props.history.push('loaddragonfly'); 
+    this.props.history.push('loaddragonfly');
   }
 
   render() {
     return (
       <div className="row">
         <div className="col-sm-3">
-          
+
         </div>
         <div className="col-sm-6">
               <i className='fa fa-circle-o-notch fa-spin'></i> Loading Dragonfly
@@ -31,11 +32,11 @@ class ViewComponent extends React.Component {
         <div className="col-sm-3">
         </div>
       </div>
-      
+
     );
   }
-  
-  
+
+
   getParameterByName(name) {
     var url = window.location.href;
     name = name.replace(/[\[\]]/g, "\\$&");

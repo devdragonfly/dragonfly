@@ -31,10 +31,10 @@ class UserDropdownComponent extends React.Component {
     this.handleSignOut = this.handleSignOut.bind(this);
 
   }
-  
+
     mouseOver() {
         this.setState({menuClass: "dragon-menu-visible dragon-menu-right"});
-        
+
     }
 
     mouseOut() {
@@ -58,27 +58,26 @@ class UserDropdownComponent extends React.Component {
     this.props.history.push('profile');
   }
 
-  
+
   handleSignOut(e) {
-    
+
     const email = this.props.email;
-    
+
     var userData = {
         Username : email,
         Pool : userPool
     };
-    
+
     var cognitoUser = new CognitoUser(userData);
 
-    
     if (cognitoUser != null) {
           cognitoUser.signOut();
         }
-        
+
     this.props.handleSignOut();
-    
+
     this.props.history.push('signup');
-    
+
   }
 
 }

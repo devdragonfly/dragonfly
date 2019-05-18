@@ -4,7 +4,6 @@ class LoadDragonflyComponent extends React.Component {
 
   constructor(props) {
     super(props);
-
     this.getValidBreakpoints = this.getValidBreakpoints.bind(this);
     this.getOrderedBreakpoints = this.getOrderedBreakpoints.bind(this);
     this.handleValidateQuestion = this.handleValidateQuestion.bind(this);
@@ -15,7 +14,6 @@ class LoadDragonflyComponent extends React.Component {
   componentDidMount() {
     var myThis = this;
     var dragonflyId = this.props.dragonflyId;
-
     var params = {
         TableName : "Dragonflies",
         KeyConditionExpression: "#dragonflyId = :dragonflyId",
@@ -23,7 +21,7 @@ class LoadDragonflyComponent extends React.Component {
             "#dragonflyId": "dragonflyId"
         },
         ExpressionAttributeValues: {
-            ":dragonflyId":dragonflyId
+            ":dragonflyId": dragonflyId
         }
     };
 

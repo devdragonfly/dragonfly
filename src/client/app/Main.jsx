@@ -227,8 +227,8 @@ class Main extends Component {
     }
 
     restoreUserSession() {
-      var cognitoUser = userPool.getCurrentUser();
       var myThis = this;
+      var cognitoUser = userPool.getCurrentUser();
       if (cognitoUser != null) {
           cognitoUser.getSession(function(err, session) {
             if (err) {
@@ -421,6 +421,7 @@ class Main extends Component {
         this.setState({sessions : 'not found'});
         this.setState({videos : 'not found'});
         this.setState({dragonflyId : 'not found'});
+        AWS.config.credentials.clearCachedId();
     }
 
 
@@ -502,7 +503,6 @@ class Main extends Component {
         if (organizationName !== 'not found') {
             nav = function() {return <NavInsideComponent handleLoadOrganization={handleLoadOrganization} organizationName={organizationName}  organizations={organizations} userId={userId} email={email}   handleSignOut={handleSignOut}  history={history} percent={percent}/> }();
         }
-
         if (dragonflyId !== 'not found') {
             nav = function() { return '' }();
         }

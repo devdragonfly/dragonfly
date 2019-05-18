@@ -8,77 +8,103 @@ class DragonflyCompleteComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {path : "not found"
+    this.state = {
+      path: "not found",
+      dragonflyExist: true
     };
 
     this.titleCase = this.titleCase.bind(this);
   }
 
-
   componentWillMount() {
-
-    var dragonfly = this.props.dragonfly;
-    // if previousCompletion = true, this was an already completed dragonfly where link was re-clicked
-    var previousCompletion = dragonfly.previousCompletion;
-    if (previousCompletion) return;
-
-
-    var organizationId = dragonfly.organizationId;
-    var campaignId = dragonfly.campaignId;
-    var dragonflyId = dragonfly.dragonflyId;
-    var results = dragonfly.results;
-    var earned = dragonfly.earned;
-    var preferences = dragonfly.preferences;
-    var date_completed = new Date().toISOString();
-
     var myThis = this;
+    var dragonfly;
 
-    var params = {
-            TableName:"Results",
-            Key: {
-                campaignId  : campaignId,
-                dragonflyId : dragonflyId
-            },
-            UpdateExpression: "set results = :results, earned = :earned, preferences = :preferences, date_completed = :date_completed",
-            ExpressionAttributeValues:{
-                ":results": results,
-                ":earned": earned,
-                ":preferences": preferences,
-                ":date_completed": date_completed
-            },
-            ReturnValues:"UPDATED_NEW"
-        };
+    if (this.props.dragonfly === 'not found') {
+      this.setState({dragonflyExist: false});
+      const dragonflyId = localStorage.getItem('dragonflyId');
+      this.props.handleLoadDragonflyId(dragonflyId);
+
+      var params = {
+          TableName : "Dragonflies",
+          KeyConditionExpression: "#dragonflyId = :dragonflyId",
+          ExpressionAttributeNames:{
+              "#dragonflyId": "dragonflyId"
+          },
+          ExpressionAttributeValues: {
+              ":dragonflyId":dragonflyId
+          }
+      };
+
+      this.props.dbQueryUnauth(params, function(result) {
+        dragonfly = result.Items[0];
+        dragonfly.previousCompletion = true;
+        myThis.props.handleLoadDragonfly(dragonfly);
+        myThis.setState({dragonflyExist: true})
+      });
+
+    } else {
+      dragonfly = this.props.dragonfly;
+      // if previousCompletion = true, this was an already completed dragonfly where link was re-clicked
+      var previousCompletion = dragonfly.previousCompletion;
+      if (previousCompletion) return;
+
+      var organizationId = dragonfly.organizationId;
+      var campaignId = dragonfly.campaignId;
+      var dragonflyId = dragonfly.dragonflyId;
+      var results = dragonfly.results;
+      var earned = dragonfly.earned;
+      var preferences = dragonfly.preferences;
+      var date_completed = new Date().toISOString();
+
+      var myThis = this;
+
+      var params = {
+              TableName:"Results",
+              Key: {
+                  campaignId  : campaignId,
+                  dragonflyId : dragonflyId
+              },
+              UpdateExpression: "set results = :results, earned = :earned, preferences = :preferences, date_completed = :date_completed",
+              ExpressionAttributeValues:{
+                  ":results": results,
+                  ":earned": earned,
+                  ":preferences": preferences,
+                  ":date_completed": date_completed
+              },
+              ReturnValues:"UPDATED_NEW"
+          };
 
 
-    this.props.dbUpdateUnauth(params, function(result) {
-      // results successfully saved // test
-    });
+      this.props.dbUpdateUnauth(params, function(result) {
+        // results successfully saved // test
+      });
 
+      var params2 = {
+              TableName:"Dragonflies",
+              Key: {
+                  organizationId  : organizationId,
+                  dragonflyId : dragonflyId
+              },
+              UpdateExpression: "set results = :results, earned = :earned, preferences = :preferences, date_completed = :date_completed",
+              ExpressionAttributeValues:{
+                  ":results":results,
+                  ":earned":earned,
+                  ":preferences":preferences,
+                  ":date_completed": date_completed
+              },
+              ReturnValues:"UPDATED_NEW"
+          };
 
-
-
-    var params2 = {
-            TableName:"Dragonflies",
-            Key: {
-                organizationId  : organizationId,
-                dragonflyId : dragonflyId
-            },
-            UpdateExpression: "set results = :results, earned = :earned, preferences = :preferences, date_completed = :date_completed",
-            ExpressionAttributeValues:{
-                ":results":results,
-                ":earned":earned,
-                ":preferences":preferences,
-                ":date_completed": date_completed
-            },
-            ReturnValues:"UPDATED_NEW"
-        };
-
-    this.props.dbUpdateUnauth(params2, function(result) {
-      // results successfully saved
-    });
-
+      this.props.dbUpdateUnauth(params2, function(result) {
+        // results successfully saved
+      });
+    }
 
   }
+
+
+
 
 
   componentDidMount() {
@@ -94,6 +120,9 @@ class DragonflyCompleteComponent extends React.Component {
 
 
   render() {
+
+    if (!this.state.dragonflyExist) return null;
+
     var dragonfly = this.props.dragonfly;
 
     var contact = dragonfly.contact;
