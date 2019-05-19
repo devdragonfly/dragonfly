@@ -262,7 +262,7 @@ class GenerateDragonfliesComponent extends React.Component {
       });
     }
     var params = {
-      TableName: "Campaigns",
+      TableName:"Campaigns",
       Key: {
           organizationId : organizationId,
           campaignId : campaignId
