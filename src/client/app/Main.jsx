@@ -90,11 +90,12 @@ class Main extends Component {
         this.setAWSCredential = this.setAWSCredential.bind(this);
         this.s3UploadLogos = this.s3UploadLogos.bind(this);
 
-
         ReactGA.initialize('UA-123354073-1');
         ReactGA.pageview(window.location.pathname);
 
-        this.restoreUserSession();
+        if (this.props.location.pathname !== '/view') {
+          this.restoreUserSession();
+        }
     }
 
     handleLoadEmail(email) {
