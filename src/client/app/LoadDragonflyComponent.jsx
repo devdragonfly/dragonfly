@@ -52,7 +52,7 @@ class LoadDragonflyComponent extends React.Component {
       // myThis.props.history.push('dragonflystart');
 
       if (myThis.props.campaigns === 'not found') {
-        var organizationId = myThis.props.dragonfly.organizationId;
+        var organizationId = dragonfly.organizationId;
         var params = {
             TableName : "Campaigns",
             KeyConditionExpression: "#organizationId = :organizationId",
