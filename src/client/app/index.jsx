@@ -103,8 +103,6 @@ render(
             <Route path="dragonflypreferences" component={DragonflyPreferencesComponent}/>
             <Route path="dragonflycomplete" component={DragonflyCompleteComponent}/>
             <Route path="importalert" component={ImportAlertComponent}/>
-
-
         </Route>
     </Router>,
     document.getElementById('container')

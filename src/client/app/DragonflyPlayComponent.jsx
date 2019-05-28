@@ -505,7 +505,6 @@ class AnswerComponent extends React.Component {
     var isSelected = answer.isSelected;
     answer.isSelected = !isSelected;
     this.props.handleUpdateAnswer(answer);
-
   }
 
 
