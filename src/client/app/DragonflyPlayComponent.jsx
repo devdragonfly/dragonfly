@@ -13,6 +13,8 @@ class DragonflyPlayComponent extends React.Component {
   constructor(props) {
     super(props);
 
+    console.log(props.session);
+
     var breakpoints = props.session.breakpoints;
     var nextPause = breakpoints[0].milliseconds;
 
@@ -220,6 +222,7 @@ class DragonflyPlayComponent extends React.Component {
 
     var question = this.state.question;
     var answers = question.answers;
+    var type = question = question.type;
 
     var totalWeight = this.props.session.totalWeight;
 
@@ -228,12 +231,14 @@ class DragonflyPlayComponent extends React.Component {
     var isSelected = false;
     //check if answer is correct
 
-    if (question.isSurvey) {
+    if (type.survey) {
+      console.log('Survey');
       var resultText = 'Thank you for your answer';
-    } else if (question.isOpenEnded) {
+    } else if (type.openEnded) {
+      console.log('Open-Ended');
       // Do something here with open ended answer
-    }
-     else {
+    } else {
+      console.log('Multiple Choice');
       for (var i = 0; i < 5; i++) {
           if (answers[i].isCorrect) {
             correctAnswers = correctAnswers + answers[i].letter;
@@ -416,12 +421,11 @@ class ModalComponent extends React.Component {
 
       answersJsx = answers.map((answer, i) => {
       if (answer.isValid) {
-        return <AnswerComponent i={i} handleUpdateAnswer={handleUpdateAnswer} answer={answer} isDisabled={isDisabled} />;
+        return <MultipleAnswerComponent i={i} handleUpdateAnswer={handleUpdateAnswer} answer={answer} isDisabled={isDisabled} />;
       }
       });
 
     }
-
 
     return (
             <div id="modal" className={modalClassName}>
@@ -442,6 +446,9 @@ class ModalComponent extends React.Component {
             </div>
     );
   }
+
+  // TODO Here on change we would track input field and update state of modal component
+  // this way we can later submitt it
 
   handleUpdateAnswer(answer) {
     var selectedAnswers = this.state.selectedAnswers;
@@ -479,20 +486,13 @@ class ModalComponent extends React.Component {
 
 
 
-
-
-
-
-class AnswerComponent extends React.Component {
-
+class MultipleAnswerComponent extends React.Component {
   constructor(props) {
     super(props);
     this.updateSelectAnswer = this.updateSelectAnswer.bind(this);
   }
 
   render() {
-
-    console.log(this.props);
 
     return (
         <div className="dragon-select-list-row" onClick={this.updateSelectAnswer}>
@@ -510,15 +510,37 @@ class AnswerComponent extends React.Component {
     );
   }
 
-
-
   updateSelectAnswer(e) {
     var answer = this.props.answer;
     var isSelected = answer.isSelected;
     answer.isSelected = !isSelected;
     this.props.handleUpdateAnswer(answer);
   }
+}
 
 
 
+
+
+
+class OpenEndedAnswerComponent extends React.Component {
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    return (
+        <div className="dragon-select-list-row" >
+          <div className="">
+            <input type="text" />
+          </div>
+        </div>
+    );
+  }
+
+  updateSelectAnswer(e) {
+    // if
+    // answer.isSelected = !isSelected;
+    // this.props.handleUpdateAnswer(answer);
+  }
 }
