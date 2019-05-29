@@ -2,27 +2,33 @@ import React from 'react';
 import {Link} from 'react-router';
 import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
 import AnswerComponent from './AnswerComponent.jsx';
+import SelectTypeComponent from './components/session/SelectTypeComponent.jsx';
 
 const buttonClassName = "btn btn-primary";
 
 class EditQuestionComponent extends React.Component {
 
+
+
   constructor(props) {
     super(props);
+    this.setQuestionType = this.setQuestionType.bind(this);
 
     this.state = {titleValue : props.question.title,
                   answers : props.question.answers,
                   buttonRestClassName : buttonClassName,
                   buttonClickedClassName : "dragon-hidden",
-                  errorMessage : ''
+                  errorMessage : '',
+                  questionType: this.setQuestionType(props.questionType)
     };
+
+    this.handleTypeSelect = this.handleTypeSelect.bind(this);
     this.showClickedButtonState = this.showClickedButtonState.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.updateTitleValue = this.updateTitleValue.bind(this);
     this.handleUpdateAnswer = this.handleUpdateAnswer.bind(this);
-
   }
-  
+
   handleUpdateAnswer(answer) {
     var answers = this.state.answers;
     var isValid = false;
@@ -37,10 +43,10 @@ class EditQuestionComponent extends React.Component {
     }
     this.setState({
       answers: answers
-    });    
-    
+    });
+
   }
-  
+
   componentWillMount() {
     var sessions = this.props.sessions;
     if (sessions === 'not found') {
@@ -49,47 +55,53 @@ class EditQuestionComponent extends React.Component {
   }
 
   render() {
-    
+
     var answers = this.state.answers;
     var handleUpdateAnswer = this.handleUpdateAnswer;
+    var type = this.state.questionType;
+    var handleTypeSelect = this.handleTypeSelect;
     var answersJsx = answers.map((answer, i) => {
-        return <AnswerComponent i={i} handleUpdateAnswer={handleUpdateAnswer} answer={answer} />
+        return <AnswerComponent i={i} handleUpdateAnswer={handleUpdateAnswer} answer={answer} needSelectCorrect={type.multipleChoice} disableAll={type.openEnded}/>
     });
 
-
+    var selectTypeComponent = function() {return <SelectTypeComponent selectHandler={handleTypeSelect} questionType={type}/> }();
     var organizationMenu = function() {return <OrganizationMenuComponent current="sessions" /> }();
-    
-    
+
+
     return (
 
         <div className="row">
           {organizationMenu}
           <div className="col-sm-6">
             <h3><i className='fa fa-file-video-o fa-fw'></i> {this.props.session.name}</h3>
-            
+
             <br/><br/>
-            
+
             <form onSubmit={this.handleSubmit}>
-              
+
               <input value={this.state.titleValue} onChange={this.updateTitleValue} className="form-control" placeholder="question title"/>
-            
-              <br/><br/>
-            
+
+              <br/>
+
+              {selectTypeComponent}
+
+              <br/>
+
               <div className="dragon-select-list">
                 {answersJsx}
               </div>
-              
+
               <br/><br/>
-            
+
               <input type="submit" className={this.state.buttonRestClassName} value="Save" />
               <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Saving</div>
-              
+
               &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
               <Link to={`session`}>Cancel</Link>
-              
+
             </form>
             <span className="dragon-error">{this.state.errorMessage}</span>
-            
+
           </div>
           <div className="col-sm-4">
           </div>
@@ -97,6 +109,37 @@ class EditQuestionComponent extends React.Component {
     );
   }
 
+  setQuestionType(typeObject) {
+    if (typeObject !== undefined) {
+      return typeObject
+    }
+    return {
+      multipleChoice: true,
+      openEnded: false,
+      survey: false
+    }
+  }
+
+
+  handleTypeSelect(e) {
+    var newType = {
+      questionType: {
+        multipleChoice: false,
+        openEnded: false,
+        survey: false
+      }
+    }
+
+    if (e.target.name == 'survey') {
+      newType.questionType.survey = true;
+    } else if (e.target.name == 'openEnded') {
+      newType.questionType.openEnded = true;
+    } else {
+      newType.questionType.multipleChoice = true;
+    }
+
+    this.setState(newType);
+  }
 
 
   showClickedButtonState(yes) {
@@ -120,65 +163,69 @@ class EditQuestionComponent extends React.Component {
   handleSubmit(e) {
     e.preventDefault();
     this.showClickedButtonState(true);
-    
+
     const title = this.state.titleValue;
     const organizationId = this.props.organizationId;
     const sessionId = this.props.session.sessionId;
     const questionId = this.props.question.questionId;
-    
+
+    const questionType = this.state.questionType;
+
     var answers = this.state.answers;
     var myThis = this;
-    
+
     var validAnswersCount = 0;
     var correctAnswerCount = 0;
-    
+
     for (var i = 0; i < answers.length; i++) {
-        if (answers[i].isValid) { 
+        if (answers[i].isValid) {
           validAnswersCount = validAnswersCount + 1;
           if(answers[i].isCorrect) { correctAnswerCount = correctAnswerCount + 1; }
         } else {
           delete answers[i].text;
         }
     }
-    
 
-    
     this.setState({errorMessage: ''});
-    
-    
+
+
     if (title === '') {
       this.setState({errorMessage: "Please enter a title for your question."});
       myThis.showClickedButtonState(false);
       return;
     }
-    
-    if (validAnswersCount < 2) {
-      this.setState({errorMessage: "Please enter at least 2 valid answers."});
-      myThis.showClickedButtonState(false);
-      return;
+
+    if (!questionType.openEnded) {
+      if (validAnswersCount < 2) {
+        this.setState({errorMessage: "Please enter at least 2 valid answers."});
+        myThis.showClickedButtonState(false);
+        return;
+      }
     }
-    
-    if (correctAnswerCount === 0) {
-      this.setState({errorMessage: "Please select at least 1 correct answer."});
-      myThis.showClickedButtonState(false);
-      return;
+
+    if (!questionType.survey) {
+      if (correctAnswerCount === 0) {
+        this.setState({errorMessage: "Please select at least 1 correct answer."});
+        myThis.showClickedButtonState(false);
+        return;
+      }
     }
 
 
-    var question = { questionId:questionId, title : title, answers : answers };
+    var question = { questionId:questionId, title : title, answers : answers, type: questionType };
 
     var session = this.props.session;
     var breakpoints = this.props.session.breakpoints;
-    
+
     for (var i = 0; i < breakpoints.length; i++) {
-        if (breakpoints[i].questions != null) { 
+        if (breakpoints[i].questions != null) {
                   for (var j = 0; j < breakpoints[i].questions.length; j++) {
                       if (breakpoints[i].questions[j].questionId === questionId) breakpoints[i].questions[j] = question;
                   }
         }
     }
-    
-   
+
+
     var params = {
             TableName:"Sessions",
             Key: {
@@ -197,11 +244,11 @@ class EditQuestionComponent extends React.Component {
       myThis.showClickedButtonState(false);
       session.breakpoints = breakpoints;
       myThis.props.handleLoadSession(session);
-      myThis.props.history.push('session'); 
+      myThis.props.history.push('session');
     });
-    
-    
-    
+
+
+
   }
 
 }

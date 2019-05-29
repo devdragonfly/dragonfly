@@ -13,16 +13,18 @@ class AnswerComponent extends React.Component {
   }
 
   render() {
+    var disableAll = this.props.disableAll;
+    var checkmarkDisabled = !this.props.needSelectCorrect;
     return (
         <div className="dragon-select-list-row">
             <div className="dragon-select-list-form-cell">
               {this.props.answer.letter}.
             </div>
             <div className="dragon-select-list-form-cell">
-              <input value={this.state.answer.text} onChange={this.updateTextValue} className="form-control" placeholder="answer"/>
+              <input value={this.state.answer.text} onChange={this.updateTextValue} disabled={disableAll} className="form-control" placeholder="answer"/>
             </div>
             <div className="dragon-select-list-form-cell">
-              <input type="checkbox" onChange={this.updateIsCorrectValue} value={this.state.answer.isCorrect} disabled={this.props.isSurvey} checked={this.state.answer.isCorrect} /> Correct
+              <input type="checkbox" onChange={this.updateIsCorrectValue} value={this.state.answer.isCorrect} disabled={(checkmarkDisabled || disableAll)} checked={this.state.answer.isCorrect} /> Correct
             </div>
         </div>
     );
