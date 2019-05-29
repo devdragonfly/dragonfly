@@ -492,6 +492,7 @@ class AnswerComponent extends React.Component {
 
   render() {
 
+    console.log(this.props);
 
     return (
         <div className="dragon-select-list-row" onClick={this.updateSelectAnswer}>

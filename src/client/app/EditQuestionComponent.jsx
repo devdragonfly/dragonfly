@@ -13,13 +13,13 @@ class EditQuestionComponent extends React.Component {
   constructor(props) {
     super(props);
     this.setQuestionType = this.setQuestionType.bind(this);
-
+    
     this.state = {titleValue : props.question.title,
                   answers : props.question.answers,
                   buttonRestClassName : buttonClassName,
                   buttonClickedClassName : "dragon-hidden",
                   errorMessage : '',
-                  questionType: this.setQuestionType(props.questionType)
+                  type: this.setQuestionType(props.question.type)
     };
 
     this.handleTypeSelect = this.handleTypeSelect.bind(this);
@@ -58,13 +58,13 @@ class EditQuestionComponent extends React.Component {
 
     var answers = this.state.answers;
     var handleUpdateAnswer = this.handleUpdateAnswer;
-    var type = this.state.questionType;
+    var type = this.state.type;
     var handleTypeSelect = this.handleTypeSelect;
     var answersJsx = answers.map((answer, i) => {
         return <AnswerComponent i={i} handleUpdateAnswer={handleUpdateAnswer} answer={answer} needSelectCorrect={type.multipleChoice} disableAll={type.openEnded}/>
     });
 
-    var selectTypeComponent = function() {return <SelectTypeComponent selectHandler={handleTypeSelect} questionType={type}/> }();
+    var selectTypeComponent = function() {return <SelectTypeComponent selectHandler={handleTypeSelect} type={type}/> }();
     var organizationMenu = function() {return <OrganizationMenuComponent current="sessions" /> }();
 
 
@@ -123,7 +123,7 @@ class EditQuestionComponent extends React.Component {
 
   handleTypeSelect(e) {
     var newType = {
-      questionType: {
+      type: {
         multipleChoice: false,
         openEnded: false,
         survey: false
@@ -131,11 +131,11 @@ class EditQuestionComponent extends React.Component {
     }
 
     if (e.target.name == 'survey') {
-      newType.questionType.survey = true;
+      newType.type.survey = true;
     } else if (e.target.name == 'openEnded') {
-      newType.questionType.openEnded = true;
+      newType.type.openEnded = true;
     } else {
-      newType.questionType.multipleChoice = true;
+      newType.type.multipleChoice = true;
     }
 
     this.setState(newType);
@@ -168,7 +168,7 @@ class EditQuestionComponent extends React.Component {
     const organizationId = this.props.organizationId;
     const sessionId = this.props.session.sessionId;
     const questionId = this.props.question.questionId;
-    const questionType = this.state.questionType;
+    const questionType = this.state.type;
 
     var answers = this.state.answers;
     var myThis = this;

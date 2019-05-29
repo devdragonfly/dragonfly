@@ -7,7 +7,7 @@ export default class SelectTypeComponent extends React.Component {
   }
 
   render() {
-    var type = this.props.questionType;
+    var type = this.props.type;
     var handleSelect = this.props.selectHandler;
     return (
       <div className='select-question-type__container'>

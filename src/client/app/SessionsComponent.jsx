@@ -24,7 +24,6 @@ class SessionsComponent extends React.Component {
 
     var sessionsJsx = function() {return '' }();
 
-    console.log(sessions);
     if (sessions !== 'not found') {
           if (sessions.length === 0) {
             sessionsJsx = function() {return 'No sessions created yet.' }();
