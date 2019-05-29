@@ -8,7 +8,7 @@ class SessionsComponent extends React.Component {
     super(props);
 
   }
-  
+
   componentWillMount() {
     var sessions = this.props.sessions;
     if (sessions === 'not found') {
@@ -21,13 +21,14 @@ class SessionsComponent extends React.Component {
     var sessions = this.props.sessions;
     var handleLoadSession = this.props.handleLoadSession;
     var history = this.props.history;
-    
+
     var sessionsJsx = function() {return '' }();
-    
+
+    console.log(sessions);
     if (sessions !== 'not found') {
           if (sessions.length === 0) {
             sessionsJsx = function() {return 'No sessions created yet.' }();
-            
+
           } else {
             var breakpointCount = 0;
             sessionsJsx = this.props.sessions.map((session, i) => {
@@ -41,8 +42,8 @@ class SessionsComponent extends React.Component {
     }
 
     var organizationMenu = function() {return <OrganizationMenuComponent current="sessions" /> }();
-    
-    
+
+
     return (
 
         <div className="row">
@@ -51,16 +52,16 @@ class SessionsComponent extends React.Component {
             <h3>
               Sessions
             </h3>
-            
-            
+
+
             <div className="dragon-select-list">
               {sessionsJsx}
             </div>
-            
+
             <br/>
-            
+
             <Link to={`createsession`} className="btn btn-primary"><i className='fa fa-plus'></i> Create Session</Link>
-            
+
           </div>
           <div className="col-sm-4">
           </div>
@@ -88,7 +89,7 @@ class Session extends React.Component {
     return (
         <div onClick={this.handleSelectSession.bind(this, this.props.session)} className="dragon-select-list-row dragon-pointer">
           <div className="dragon-select-list-cell">
-            <i className='fa fa-graduation-cap fa-fw fa-lg'></i> 
+            <i className='fa fa-graduation-cap fa-fw fa-lg'></i>
           </div>
           <div className="dragon-select-list-cell">
             {this.props.session.name}
@@ -99,7 +100,7 @@ class Session extends React.Component {
         </div>
     );
   }
-  
+
   handleSelectSession(session) {
     this.props.handleLoadSession(session);
     this.props.history.push('session');

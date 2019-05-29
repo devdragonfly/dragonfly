@@ -192,19 +192,19 @@ class AddQuestionComponent extends React.Component {
     }
 
     if (!questionType.openEnded) {
+
       if (validAnswersCount < 2) {
         this.setState({errorMessage: "Please enter at least 2 valid answers."});
         myThis.showClickedButtonState(false);
         return;
       }
-    }
 
-    if (!questionType.survey) {
-      if (correctAnswerCount === 0) {
+      if (questionType.multipleChoice && correctAnswerCount === 0) {
         this.setState({errorMessage: "Please select at least 1 correct answer."});
         myThis.showClickedButtonState(false);
         return;
       }
+
     }
 
     var questionId = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
@@ -230,6 +230,8 @@ class AddQuestionComponent extends React.Component {
       breakpoints[breakpointPosition].questions.push(question);
     }
 
+    console.log(session);
+
     var params = {
             TableName:"Sessions",
             Key: {
@@ -247,11 +249,10 @@ class AddQuestionComponent extends React.Component {
       myThis.showClickedButtonState(false);
       session.breakpoints = breakpoints;
       myThis.props.handleLoadSession(session);
+      console.log('2', session);
       myThis.props.history.push('session');
 
     });
-
-
 
   }
 

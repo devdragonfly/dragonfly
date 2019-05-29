@@ -168,7 +168,6 @@ class EditQuestionComponent extends React.Component {
     const organizationId = this.props.organizationId;
     const sessionId = this.props.session.sessionId;
     const questionId = this.props.question.questionId;
-
     const questionType = this.state.questionType;
 
     var answers = this.state.answers;
@@ -178,12 +177,12 @@ class EditQuestionComponent extends React.Component {
     var correctAnswerCount = 0;
 
     for (var i = 0; i < answers.length; i++) {
-        if (answers[i].isValid) {
-          validAnswersCount = validAnswersCount + 1;
-          if(answers[i].isCorrect) { correctAnswerCount = correctAnswerCount + 1; }
-        } else {
-          delete answers[i].text;
-        }
+      if (answers[i].isValid) {
+        validAnswersCount = validAnswersCount + 1;
+        if(answers[i].isCorrect) { correctAnswerCount = correctAnswerCount + 1; }
+      } else {
+        delete answers[i].text;
+      }
     }
 
     this.setState({errorMessage: ''});
@@ -196,21 +195,20 @@ class EditQuestionComponent extends React.Component {
     }
 
     if (!questionType.openEnded) {
+
       if (validAnswersCount < 2) {
         this.setState({errorMessage: "Please enter at least 2 valid answers."});
         myThis.showClickedButtonState(false);
         return;
       }
-    }
 
-    if (!questionType.survey) {
-      if (correctAnswerCount === 0) {
+      if (questionType.multipleChoice && correctAnswerCount === 0) {
         this.setState({errorMessage: "Please select at least 1 correct answer."});
         myThis.showClickedButtonState(false);
         return;
       }
-    }
 
+    }
 
     var question = { questionId:questionId, title : title, answers : answers, type: questionType };
 
