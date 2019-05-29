@@ -439,3 +439,7 @@
 .dragon-thumbnail {
     margin: 0 5px;
 }
+
+.select-question-type__container label {
+  margin: 0 15px 0 5px;
+}

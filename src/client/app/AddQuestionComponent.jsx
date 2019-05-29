@@ -21,7 +21,12 @@ class AddQuestionComponent extends React.Component {
                   answers : answers,
                   buttonRestClassName : buttonClassName,
                   buttonClickedClassName : "dragon-hidden",
-                  errorMessage : ''
+                  errorMessage : '',
+                  questionType: {
+                    multipleChoice: true,
+                    openEnded: false,
+                    survey: false
+                  }
     };
     this.showClickedButtonState = this.showClickedButtonState.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -68,7 +73,6 @@ class AddQuestionComponent extends React.Component {
 
     var organizationMenu = function() {return <OrganizationMenuComponent current="sessions" /> }();
 
-
     return (
 
         <div className="row">
@@ -84,10 +88,13 @@ class AddQuestionComponent extends React.Component {
 
               <br/>
 
-              <div>
-                <input value='survey' name='questionType' type='radio'> Survey </input>
-                <input value='multiple-choice' name='questionType' type='radio'> Multiple Choice </input>
-                <input value='open-ended' name='questionType' type='radio'> Open-Ended </input>
+              <div className='select-question-type__container'>
+                <input value='multiple-choice' id='1' name='multipleChoice' type='radio' checked={this.state.questionType.multipleChoice} onChange={this.handleTypeSelect}/>
+                <label for='1'>Multiple Choice</label>
+                <input value='open-ended' id='2' name='openEnded' type='radio' checked={this.state.questionType.openEnded} onChange={this.handleTypeSelect}/>
+                <label for='2'>Open-Ended</label>
+                <input value='survey' id='3' name='survey' type='radio' checked={this.state.questionType.survey} onChange={this.handleTypeSelect}/>
+                <label for='3'>Survey</label>
               </div>
 
               <div className="dragon-select-list-form-cell">
@@ -142,6 +149,26 @@ class AddQuestionComponent extends React.Component {
     this.setState({
       isSurvey: e.target.checked
     });
+  }
+
+  handleTypeSelect(e) {
+    var newType = {
+      questionType: {
+        multipleChoice: false,
+        openEnded: false,
+        survey: false
+      }
+    }
+
+    if (e.target.name == 'survey') {
+      newType.questionType.survey = true;
+    } else if (e.target.name == 'openEnded') {
+      newType.questionType.openEnded = true;
+    } else {
+      newType.questionType.multipleChoice = true;
+    }
+
+    setState(newType);
   }
 
 
