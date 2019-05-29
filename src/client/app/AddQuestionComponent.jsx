@@ -236,7 +236,7 @@ class AddQuestionComponent extends React.Component {
             TableName:"Sessions",
             Key: {
                 organizationId : organizationId,
-                sessionId : organizationId
+                sessionId : sessionId
             },
             UpdateExpression: "set breakpoints = :breakpoints",
             ExpressionAttributeValues:{
