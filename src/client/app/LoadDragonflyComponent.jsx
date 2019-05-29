@@ -49,10 +49,9 @@ class LoadDragonflyComponent extends React.Component {
       session.totalQuestionCount = sessionValidBreakpoints.totalQuestionCount;
       dragonfly.session = session;
       myThis.props.handleLoadDragonfly(dragonfly);
-      // myThis.props.history.push('dragonflystart');
 
       if (myThis.props.campaigns === 'not found') {
-        var organizationId = myThis.props.dragonfly.organizationId;
+        var organizationId = dragonfly.organizationId;
         var params = {
             TableName : "Campaigns",
             KeyConditionExpression: "#organizationId = :organizationId",
