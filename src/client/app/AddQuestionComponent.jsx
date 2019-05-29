@@ -84,6 +84,12 @@ class AddQuestionComponent extends React.Component {
 
               <br/>
 
+              <div>
+                <input value='survey' name='questionType' type='radio'> Survey </input>
+                <input value='multiple-choice' name='questionType' type='radio'> Multiple Choice </input>
+                <input value='open-ended' name='questionType' type='radio'> Open-Ended </input>
+              </div>
+
               <div className="dragon-select-list-form-cell">
                 <input type="checkbox" onChange={this.handleSurveyOption} value={this.state.isSurveyQuestion} checked={this.state.isSurveyQuestion} /> Any answer is correct
               </div>
@@ -146,7 +152,9 @@ class AddQuestionComponent extends React.Component {
     const title = this.state.titleValue;
     const organizationId = this.props.organizationId;
     const sessionId = this.props.session.sessionId;
+
     const isSurveyQuestion = this.state.isSurvey;
+    // const questionType = this.state.questionType;
 
     var answers = this.state.answers;
 

@@ -227,29 +227,39 @@ class DragonflyPlayComponent extends React.Component {
     var correctAnswers = "";
     var isSelected = false;
     //check if answer is correct
-    for (var i = 0; i < 5; i++) {
-        if (answers[i].isCorrect) {
-          correctAnswers = correctAnswers + answers[i].letter;
-        }
 
-        isSelected = false;
-        for (var j = 0; j < selectedAnswers.length; j++)
-        {
-          if (selectedAnswers[j] === answers[i].letter) isSelected = true;
-        }
-
-        if (answers[i].isCorrect && !isSelected) correct = false;
-        if (!answers[i].isCorrect && isSelected) correct = false;
+    if (question.isSurvey) {
+      var resultText = 'Thank you for your answer';
+    } else if (question.isOpenEnded) {
+      // Do something here with open ended answer
     }
+     else {
+      for (var i = 0; i < 5; i++) {
+          if (answers[i].isCorrect) {
+            correctAnswers = correctAnswers + answers[i].letter;
+          }
 
-    correctAnswers =  correctAnswers.split("").join(" and ");
+          isSelected = false;
+          for (var j = 0; j < selectedAnswers.length; j++)
+          {
+            if (selectedAnswers[j] === answers[i].letter) isSelected = true;
+          }
 
-    var resultText = correctAnswers + " was correct!";
-    if (correct) {
-      if (correctAnswers.length > 1) { resultText = correctAnswers + " were correct!"; }
-    } else {
-      resultText = "Sorry, the correct answer was " + correctAnswers + ".";
-      if (correctAnswers.length > 1) { resultText = "Sorry, the correct answers were " + correctAnswers + "."; }
+          if (answers[i].isCorrect && !isSelected) correct = false;
+          if (!answers[i].isCorrect && isSelected) correct = false;
+      }
+
+      correctAnswers =  correctAnswers.split("").join(" and ");
+
+      var resultText = correctAnswers + " was correct!";
+
+      if (correct) {
+        if (correctAnswers.length > 1) { resultText = correctAnswers + " were correct!"; }
+      } else {
+        resultText = "Sorry, the correct answer was " + correctAnswers + ".";
+        if (correctAnswers.length > 1) { resultText = "Sorry, the correct answers were " + correctAnswers + "."; }
+      }
+
     }
 
     var percentWeighting = question.weight / totalWeight;
@@ -258,7 +268,8 @@ class DragonflyPlayComponent extends React.Component {
     var earned = 0;
     if (correct) earned = value;
 
-    var result = {correct: correct, resultText: resultText, value:value, earned: earned, selectedAnswers : selectedAnswers};
+    // I dont know if we need it here Leave it here for now
+    var result = {correct: correct, isSurvey: question.isSurvey, resultText: resultText, value:value, earned: earned, selectedAnswers : selectedAnswers};
 
     var totalEarned = this.state.earned + earned;
     var results = this.state.results;
