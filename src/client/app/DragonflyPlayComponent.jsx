@@ -13,8 +13,6 @@ class DragonflyPlayComponent extends React.Component {
   constructor(props) {
     super(props);
 
-    console.log(props.session);
-
     var breakpoints = props.session.breakpoints;
     var nextPause = breakpoints[0].milliseconds;
 
@@ -214,6 +212,12 @@ class DragonflyPlayComponent extends React.Component {
   }
 
   submitAnswer(userAnswers, answerValues=[]) {
+
+    if (!userAnswers.length) {
+      this.setState({resultText: 'Please enter the answer'});
+      return;
+    }
+
     var myThis = this;
 
     var incentive = this.props.dragonfly.incentive;
@@ -234,24 +238,13 @@ class DragonflyPlayComponent extends React.Component {
 
     //check if answer is correct
     if (type.survey) {
+      correct = true;
       var typeName = 'survey';
-      if (userAnswers.length) {
-        correct = true;
-        var resultText = 'Any answer was correct.';
-      } else {
-        correct = false;
-        var resultText = 'You skipped the question.';
-      }
+      var resultText = 'Any answer was correct.';
     } else if (type.openEnded) {
+      correct = true;
       var typeName = 'openEnded';
-      if (userAnswers.length) {
-        correct = true;
-        var resultText = 'Thank you for your answer';
-      } else {
-        correct = false;
-        var resultText = 'You did not anwer the question.';
-      }
-
+      var resultText = 'Thank you for your answer';
     } else {
       var typeName = 'multipleChoice';
       for (var i = 0; i < 5; i++) {
@@ -292,9 +285,9 @@ class DragonflyPlayComponent extends React.Component {
     var result = {correct: correct, type: typeName, resultText: resultText, value: value, earned: earned};
 
     if (type.openEnded) {
-      result = Object.assign(result, {openEndedAnswer: (userAnswers || []) });
+      result = Object.assign(result, {openEndedAnswer: userAnswers});
     } else {
-      result = Object.assign(result, {selectedAnswers: (userAnswers || []), answerValues: answerValues});
+      result = Object.assign(result, {selectedAnswers: userAnswers, answerValues: answerValues});
     }
 
     var totalEarned = this.state.earned + earned;
@@ -461,7 +454,9 @@ class ModalComponent extends React.Component {
                   <div className="dragon-modal-actionbox">
                     <input type="submit" className={this.props.submitButtonClassname} value="Submit Answer"/>
 
-                    {this.props.resultText}
+                    <span className="dragon-modal-result_text">
+                      {this.props.resultText}
+                    </span>
 
                   </div>
               </form>

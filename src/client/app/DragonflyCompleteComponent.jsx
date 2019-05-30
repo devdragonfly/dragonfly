@@ -59,9 +59,6 @@ class DragonflyCompleteComponent extends React.Component {
 
       var myThis = this;
 
-      console.log('results', results);
-      console.log('dragonfly', dragonfly);
-
       var params = {
               TableName:"Results",
               Key: {

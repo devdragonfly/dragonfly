@@ -107,14 +107,11 @@ class ExportCampaignButton extends React.Component {
 
 
         dragonfly.results.forEach(function(result) {
-          if (result.type == 'openEnded' && result.openEndedAnswer.length) {
+          if (result.type == 'openEnded') {
             record_attributes.push(wrapInQuotes(result.openEndedAnswer));
             return;
-          } else if (result.type != 'openEnded' && result.answerValues.length){
-            record_attributes.push(wrapInQuotes(result.answerValues.join()));
-            return;
           }
-          record_attributes.push('Not Answered');
+          record_attributes.push(wrapInQuotes(result.answerValues.join()));
         });
       } else {
         record_attributes.push(wrapInQuotes('Not Completed'), fillEmptyFields(emptyFieldsLength));
