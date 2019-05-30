@@ -235,10 +235,10 @@ class DragonflyPlayComponent extends React.Component {
     var type = question.type;
 
     //check if answer is correct
-    if (type.survey) {
+    if (type && type.survey) {
       var typeName = 'survey';
       var resultText = 'Any answer was correct.';
-    } else if (type.openEnded) {
+    } else if (type && type.openEnded) {
       var typeName = 'openEnded';
       var resultText = 'Thank you for your answer';
     } else {
@@ -279,7 +279,7 @@ class DragonflyPlayComponent extends React.Component {
 
     var result = {correct: correct, type: typeName, resultText: resultText, value: value, earned: earned};
 
-    if (type.openEnded) {
+    if (type && type.openEnded) {
       result = Object.assign(result, {openEndedAnswer: userAnswers});
     } else {
       result = Object.assign(result, {selectedAnswers: userAnswers, answerValues: answerValues});
@@ -423,7 +423,7 @@ class ModalComponent extends React.Component {
       var answers = question.answers;
       var isDisabled = false;
 
-      if (question.type.openEnded) {
+      if (question.type && question.type.openEnded) {
         var inputValue = this.state.openEndedAnswer;
         var handleOpenEndedAnswer = this.handleOpenEndedAnswer;
         answersJsx = function() { return <OpenEndedAnswerComponent input={inputValue} handleUpdateAnswer={handleOpenEndedAnswer}/> }();
