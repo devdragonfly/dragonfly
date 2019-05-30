@@ -213,7 +213,7 @@ class DragonflyPlayComponent extends React.Component {
 
   }
 
-  submitAnswer(userAnswers) {
+  submitAnswer(userAnswers, answerValues=[]) {
     var myThis = this;
 
     var incentive = this.props.dragonfly.incentive;
@@ -234,16 +234,16 @@ class DragonflyPlayComponent extends React.Component {
 
     //check if answer is correct
     if (type.survey) {
-      type = 'survey';
+      var typeName = 'survey';
       if (userAnswers.length) {
         correct = true;
         var resultText = 'Any answer was correct.';
       } else {
         correct = false;
-        var resultText = 'You skipped this question.';
+        var resultText = 'You skipped the question.';
       }
     } else if (type.openEnded) {
-      type = 'openEnded';
+      var typeName = 'openEnded';
       if (userAnswers.length) {
         correct = true;
         var resultText = 'Thank you for your answer';
@@ -253,7 +253,7 @@ class DragonflyPlayComponent extends React.Component {
       }
 
     } else {
-      type = 'multipleChoice';
+      var typeName = 'multipleChoice';
       for (var i = 0; i < 5; i++) {
           if (answers[i].isCorrect) {
             correctAnswers = correctAnswers + answers[i].letter;
@@ -289,12 +289,12 @@ class DragonflyPlayComponent extends React.Component {
     if (correct) earned = value;
 
     // I dont know if we need it here Leave it here for now
-    var result = {correct: correct, type: type, resultText: resultText, value: value, earned: earned};
+    var result = {correct: correct, type: typeName, resultText: resultText, value: value, earned: earned};
 
-    if (openEndedAnswer) {
-      result = Object.assign(result, {openEndedAnswer: userAnswers});
+    if (type.openEnded) {
+      result = Object.assign(result, {openEndedAnswer: (userAnswers || []) });
     } else {
-      result = Object.assign(result, {selectedAnswers: userAnswers});
+      result = Object.assign(result, {selectedAnswers: (userAnswers || []), answerValues: answerValues});
     }
 
     var totalEarned = this.state.earned + earned;
@@ -415,6 +415,7 @@ class ModalComponent extends React.Component {
 
     this.state = {
           selectedAnswers: [],
+          answerValues: [],
           openEndedAnswer: ""
     };
 
@@ -476,23 +477,32 @@ class ModalComponent extends React.Component {
 
   handleUpdateAnswer(answer) {
     var selectedAnswers = this.state.selectedAnswers;
+    var answerValues = this.state.answerValues;
 
     if (answer.isSelected) {
+      answerValues.push(answer.text);
       selectedAnswers.push(answer.letter);
-      this.setState({selectedAnswers : selectedAnswers});
+
+      this.setState({
+        selectedAnswers: selectedAnswers,
+        answerValues: answerValues
+      });
       return;
     }
 
 
     var selectedAnswersLength = selectedAnswers.length;
     var newSelectedAnswers = [];
+    var newAnswerValues = []
     for (var i = 0; i < selectedAnswersLength; i++) {
         if ((selectedAnswers[i] != answer.letter) && (selectedAnswers[i] != null)){
           newSelectedAnswers.push(selectedAnswers[i]);
+          newAnswerValues.push(answerValues[i]);
         }
     }
     this.setState({
-      selectedAnswers: newSelectedAnswers
+      selectedAnswers: newSelectedAnswers,
+      answerValues: newAnswerValues
     });
 
   }
@@ -501,10 +511,11 @@ class ModalComponent extends React.Component {
     e.preventDefault();
     this.setState({
       selectedAnswers: [],
+      answerValues: [],
       openEndedAnswer: ""
      });
     if (this.state.selectedAnswers.length) {
-      this.props.handleSubmitAnswer(this.state.selectedAnswers);
+      this.props.handleSubmitAnswer(this.state.selectedAnswers, this.state.answerValues);
     } else {
       this.props.handleSubmitAnswer(this.state.openEndedAnswer);
     }
@@ -562,7 +573,7 @@ class OpenEndedAnswerComponent extends React.Component {
     return (
         <div className="dragon-select-list-row">
           <div className="">
-            <input type="text" value={this.props.input} onChange={this.props.handleUpdateAnswer}/>
+            <textarea rows="5" cols="50" value={this.props.input} onChange={this.props.handleUpdateAnswer}/>
           </div>
         </div>
     );
