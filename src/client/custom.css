@@ -98,6 +98,11 @@
   margin: 0 10px;
 }
 
+.dragon-select-textarea {
+  max-width: 500px;
+  max-height: 200px;
+}
+
 .opacity0 { display:none; }
 .opacity1 { opacity: 0.05; top:-100px;}
 .opacity2 { opacity: 0.10; top:-90px;}

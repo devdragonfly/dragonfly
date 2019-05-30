@@ -12,14 +12,13 @@ class EditQuestionComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.setQuestionType = this.setQuestionType.bind(this);
-    
+
     this.state = {titleValue : props.question.title,
                   answers : props.question.answers,
                   buttonRestClassName : buttonClassName,
                   buttonClickedClassName : "dragon-hidden",
-                  errorMessage : '',
-                  type: this.setQuestionType(props.question.type)
+                  type: this.setQuestionType(props.question.type),
+                  errorMessage : ''
     };
 
     this.handleTypeSelect = this.handleTypeSelect.bind(this);

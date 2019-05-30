@@ -232,24 +232,20 @@ class DragonflyPlayComponent extends React.Component {
     var correct = true;
     var correctAnswers = "";
     var isSelected = false;
-    var openEndedAnswer = "";
-
     var type = question.type;
 
     //check if answer is correct
     if (type.survey) {
-      correct = true;
       var typeName = 'survey';
       var resultText = 'Any answer was correct.';
     } else if (type.openEnded) {
-      correct = true;
       var typeName = 'openEnded';
       var resultText = 'Thank you for your answer';
     } else {
       var typeName = 'multipleChoice';
       for (var i = 0; i < 5; i++) {
           if (answers[i].isCorrect) {
-            correctAnswers = correctAnswers + answers[i].letter;
+            correctAnswers += answers[i].letter;
           }
 
           isSelected = false;
@@ -281,7 +277,6 @@ class DragonflyPlayComponent extends React.Component {
     var earned = 0;
     if (correct) earned = value;
 
-    // I dont know if we need it here Leave it here for now
     var result = {correct: correct, type: typeName, resultText: resultText, value: value, earned: earned};
 
     if (type.openEnded) {
@@ -567,9 +562,7 @@ class OpenEndedAnswerComponent extends React.Component {
   render() {
     return (
         <div className="dragon-select-list-row">
-          <div className="">
-            <textarea rows="5" cols="50" value={this.props.input} onChange={this.props.handleUpdateAnswer}/>
-          </div>
+          <textarea rows="5" cols="50" className="dragon-select-textarea" value={this.props.input} onChange={this.props.handleUpdateAnswer}/>
         </div>
     );
   }
