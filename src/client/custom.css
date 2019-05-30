@@ -99,6 +99,7 @@
 }
 
 .dragon-select-textarea {
+  border: 1px solid #000;
   max-width: 500px;
   max-height: 200px;
 }
