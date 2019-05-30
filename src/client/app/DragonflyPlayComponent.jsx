@@ -213,7 +213,7 @@ class DragonflyPlayComponent extends React.Component {
 
   }
 
-  submitAnswer(selectedAnswers) {
+  submitAnswer(userAnswers) {
     var myThis = this;
 
     var incentive = this.props.dragonfly.incentive;
@@ -222,32 +222,47 @@ class DragonflyPlayComponent extends React.Component {
 
     var question = this.state.question;
     var answers = question.answers;
-    var type = question = question.type;
 
     var totalWeight = this.props.session.totalWeight;
 
     var correct = true;
     var correctAnswers = "";
     var isSelected = false;
-    //check if answer is correct
+    var openEndedAnswer = "";
 
+    var type = question.type;
+
+    //check if answer is correct
     if (type.survey) {
-      console.log('Survey');
-      var resultText = 'Thank you for your answer';
+      type = 'survey';
+      if (userAnswers.length) {
+        correct = true;
+        var resultText = 'Any answer was correct.';
+      } else {
+        correct = false;
+        var resultText = 'You skipped this question.';
+      }
     } else if (type.openEnded) {
-      console.log('Open-Ended');
-      // Do something here with open ended answer
+      type = 'openEnded';
+      if (userAnswers.length) {
+        correct = true;
+        var resultText = 'Thank you for your answer';
+      } else {
+        correct = false;
+        var resultText = 'You did not anwer the question.';
+      }
+
     } else {
-      console.log('Multiple Choice');
+      type = 'multipleChoice';
       for (var i = 0; i < 5; i++) {
           if (answers[i].isCorrect) {
             correctAnswers = correctAnswers + answers[i].letter;
           }
 
           isSelected = false;
-          for (var j = 0; j < selectedAnswers.length; j++)
+          for (var j = 0; j < userAnswers.length; j++)
           {
-            if (selectedAnswers[j] === answers[i].letter) isSelected = true;
+            if (userAnswers[j] === answers[i].letter) isSelected = true;
           }
 
           if (answers[i].isCorrect && !isSelected) correct = false;
@@ -274,7 +289,13 @@ class DragonflyPlayComponent extends React.Component {
     if (correct) earned = value;
 
     // I dont know if we need it here Leave it here for now
-    var result = {correct: correct, isSurvey: question.isSurvey, resultText: resultText, value:value, earned: earned, selectedAnswers : selectedAnswers};
+    var result = {correct: correct, type: type, resultText: resultText, value: value, earned: earned};
+
+    if (openEndedAnswer) {
+      result = Object.assign(result, {openEndedAnswer: userAnswers});
+    } else {
+      result = Object.assign(result, {selectedAnswers: userAnswers});
+    }
 
     var totalEarned = this.state.earned + earned;
     var results = this.state.results;
@@ -292,12 +313,7 @@ class DragonflyPlayComponent extends React.Component {
     }, 5000);
     */
 
-
-
   }
-
-
-
 
   advanceQuestion() {
     var myThis = this;
@@ -382,8 +398,6 @@ class DragonflyPlayComponent extends React.Component {
 
 }
 
-
-
 export default DragonflyPlayComponent;
 
 
@@ -400,9 +414,11 @@ class ModalComponent extends React.Component {
     super(props);
 
     this.state = {
-          selectedAnswers: []
+          selectedAnswers: [],
+          openEndedAnswer: ""
     };
 
+    this.handleOpenEndedAnswer = this.handleOpenEndedAnswer.bind(this);
     this.submitAnswerClicked = this.submitAnswerClicked.bind(this);
     this.handleUpdateAnswer = this.handleUpdateAnswer.bind(this);
   }
@@ -417,14 +433,19 @@ class ModalComponent extends React.Component {
       title = question.title;
       var answers = question.answers;
       var isDisabled = false;
-      var handleUpdateAnswer = this.handleUpdateAnswer;
 
-      answersJsx = answers.map((answer, i) => {
-      if (answer.isValid) {
-        return <MultipleAnswerComponent i={i} handleUpdateAnswer={handleUpdateAnswer} answer={answer} isDisabled={isDisabled} />;
+      if (question.type.openEnded) {
+        var inputValue = this.state.openEndedAnswer;
+        var handleOpenEndedAnswer = this.handleOpenEndedAnswer;
+        answersJsx = function() { return <OpenEndedAnswerComponent input={inputValue} handleUpdateAnswer={handleOpenEndedAnswer}/> }();
+      } else {
+        var handleUpdateAnswer = this.handleUpdateAnswer;
+        answersJsx = answers.map((answer, i) => {
+        if (answer.isValid) {
+          return <MultipleAnswerComponent i={i} handleUpdateAnswer={handleUpdateAnswer} answer={answer} isDisabled={isDisabled} />;
+        }
+        });
       }
-      });
-
     }
 
     return (
@@ -447,8 +468,11 @@ class ModalComponent extends React.Component {
     );
   }
 
-  // TODO Here on change we would track input field and update state of modal component
-  // this way we can later submitt it
+  handleOpenEndedAnswer(e) {
+    this.setState({
+      openEndedAnswer: e.target.value
+    });
+  }
 
   handleUpdateAnswer(answer) {
     var selectedAnswers = this.state.selectedAnswers;
@@ -475,9 +499,15 @@ class ModalComponent extends React.Component {
 
   submitAnswerClicked(e) {
     e.preventDefault();
-    this.setState({ selectedAnswers: [] });
-    this.props.handleSubmitAnswer(this.state.selectedAnswers);
-
+    this.setState({
+      selectedAnswers: [],
+      openEndedAnswer: ""
+     });
+    if (this.state.selectedAnswers.length) {
+      this.props.handleSubmitAnswer(this.state.selectedAnswers);
+    } else {
+      this.props.handleSubmitAnswer(this.state.openEndedAnswer);
+    }
   }
 
 }
@@ -530,17 +560,11 @@ class OpenEndedAnswerComponent extends React.Component {
 
   render() {
     return (
-        <div className="dragon-select-list-row" >
+        <div className="dragon-select-list-row">
           <div className="">
-            <input type="text" />
+            <input type="text" value={this.props.input} onChange={this.props.handleUpdateAnswer}/>
           </div>
         </div>
     );
-  }
-
-  updateSelectAnswer(e) {
-    // if
-    // answer.isSelected = !isSelected;
-    // this.props.handleUpdateAnswer(answer);
   }
 }
