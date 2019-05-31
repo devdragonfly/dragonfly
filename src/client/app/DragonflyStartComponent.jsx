@@ -66,7 +66,38 @@ class DragonflyStartComponent extends React.Component {
     var last = this.titleCase(contact.last);
     var email = contact.email;
     var incentive = Number(dragonfly.incentive).toFixed(2);
+    var checkbox = dragonfly.checkbox;
 
+    // checkbox manual demo
+    if (checkbox) {
+      return (
+      <div className="row">
+        <div className="col-sm-2"></div>
+        <div className="col-sm-8">
+          <br/><br/>
+          <div className="jumbotron dragon-enlarge bg-white">
+            <div className="clearfix">
+              <a href={this.state.path} target="_blank">
+                <div className="dragon-powered-by divLeft">
+                  <LogoComponent dragonfly={dragonfly} />
+                </div>
+              </a>
+            </div>
+            <h2>Hello {first} {last},</h2>
+            <br/><br/>
+            { this.showCustomText(dragonfly.customTexts, "welcome") }
+            <br/><br/>
+            You can earn ${incentive} cash if you answer {totalQuestionCount} questions correctly.
+            <br/><br/>
+            { this.showCustomText(dragonfly.customTexts, "payment") }
+            <br/><br/><br/>
+            <Link to={`dragonflyplay`} className="btn btn-primary btn-lg">Start Now <i className='fa fa-chevron-circle-right'></i></Link>
+          </div>
+        </div>
+        <div className="col-sm-2"></div>
+      </div>
+    );
+    }
 
     return (
       <div className="row">
