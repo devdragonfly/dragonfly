@@ -70,6 +70,53 @@ class DragonflyPreferencesComponent extends React.Component {
     //var last = this.titleCase(contact.last);
     var email = contact.email;
     var earned = Number(dragonfly.earned).toFixed(2);
+    var checkbox = dragonfly.checkbox;
+
+    // checkbox trigger manual demo
+    if (checkbox) {
+      return (
+        <div className="row">
+          <div className="col-sm-2"></div>
+          <div className="col-sm-8">
+            <br/><br/>
+            <div className="jumbotron dragon-enlarge bg-white">
+              <div className="clearfix">
+                <a href={this.state.path} target="_blank">
+                  <div className="dragon-powered-by divLeft">
+                    <LogoComponent dragonfly={dragonfly} />
+                  </div>
+                </a>
+              </div>
+
+              <h2>Thank you {first} you earned ${earned}!</h2>
+
+              <br/>
+              <br/><br/>
+                {
+                  dragonfly.customTexts && dragonfly.customTexts.complete != "custom text" ?
+                  dragonfly.customTexts.complete :
+                  " "
+                }
+                <br/><br/>
+
+              <br/><br/>
+              <form onSubmit={this.handleSubmit}>
+
+                <br/>
+                <br/>
+                <h4>Do you have any ideas, comments, concerns, or objections that will help us improve our message or product?</h4>
+                <textarea rows="4" cols="50" value={this.state.openTextValue} onChange={this.handleOpenTextChange}></textarea>
+                <br/>
+                <br/>
+                <input type="submit" className={this.state.buttonRestClassName} value="Save" />
+                <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Saving</div>
+              </form>
+            </div>
+          </div>
+          <div className="col-sm-2"> </div>
+        </div>
+      );
+    }
 
     return (
       <div className="row">

@@ -3,6 +3,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import LogoComponent from './components/LogoComponent.jsx';
 
+const buttonClassName = "btn btn-primary";
 
 class DragonflyCompleteComponent extends React.Component {
 
@@ -10,10 +11,15 @@ class DragonflyCompleteComponent extends React.Component {
     super(props);
     this.state = {
       path: "not found",
-      dragonflyExist: true
+      dragonflyExist: true,
+      openTextValue : "",
+      buttonRestClassName : buttonClassName,
+      buttonClickedClassName : "dragon-hidden"
     };
 
     this.titleCase = this.titleCase.bind(this);
+    this.handleOpenTextChange = this.handleOpenTextChange.bind(this);
+    this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   componentWillMount() {
@@ -135,10 +141,48 @@ class DragonflyCompleteComponent extends React.Component {
     var preferences = dragonfly.preferences;
     var email = preferences.email;
     var mobile = preferences.mobile;
+    var checkbox = dragonfly.checkbox;
 
     var paymentText = "We will email you at " + email + " with your payment of $" + earned + ".";
     if (preferences.emailOrText == "text") {
       paymentText = "We will send your payment of $" + earned + " using Venmo to " + mobile + ".";
+    }
+
+    // checkbox trigger manual deliver
+    if (checkbox) {
+      paymentText = "Thank you " + first + " you earned $" + earned + ".";
+
+      return (
+        <div className="row">
+          <div className="col-sm-2">
+          </div>
+          <div className="col-sm-8">
+                <br/><br/>
+
+                <div className="jumbotron dragon-enlarge bg-white">
+
+                 <div className="clearfix">
+                    <a href={this.state.path} target="_blank">
+                      <div className="dragon-powered-by divLeft">
+                        <LogoComponent dragonfly={dragonfly} />
+                      </div>
+                    </a>
+                  </div>
+
+                  <h2>Thank you {first} you earned ${earned}!</h2>
+
+                  <br/>
+
+                  <br/><br/>
+                  <br/><br/>
+
+                </div>
+          </div>
+          <div className="col-sm-2">
+          </div>
+        </div>
+
+      );
     }
 
     return (
@@ -174,11 +218,7 @@ class DragonflyCompleteComponent extends React.Component {
                 }
                 <br/><br/>
 
-                If you do not receive payment within 8 business hours, please contact us at <b>admin@dragonfly.one</b>.
-
-                <br/><br/>
-
-                Limited spots are available for the Dragonfly pre-launch in late 2018. Please contact us at <b>admin@dragonfly.one</b> to be included.
+                
 
               </div>
         </div>
@@ -198,6 +238,44 @@ class DragonflyCompleteComponent extends React.Component {
     return str.join(' ');
   }
 
+  handleOpenTextChange(e) {
+    this.setState({
+      openTextValue: e.target.value
+    });
+  }
+
+  showClickedButtonState(yes) {
+    if (yes) {
+          this.setState({ buttonRestClassName: "dragon-hidden" });
+          this.setState({ buttonClickedClassName: buttonClassName });
+    } else {
+          this.setState({ buttonRestClassName: buttonClassName });
+          this.setState({ buttonClickedClassName: "dragon-hidden" });
+    }
+  }
+
+  handleSubmit(e) {
+    e.preventDefault();
+    this.showClickedButtonState(true);
+    var myThis = this;
+
+    var preferences = {};
+    preferences.emailOrText = this.state.selectedContactOption;
+    preferences.nps = this.state.selectedNPS;
+    preferences.email = this.state.email;
+    preferences.mobile = this.state.mobile;
+    preferences.text = this.state.openTextValue; 
+
+    if ((preferences.email == "") || (preferences.email == null)) preferences.email = "none";
+    if ((preferences.mobile == "") || (preferences.mobile == null)) preferences.mobile = "none";
+    if ((preferences.text == "") || (preferences.text == null)) preferences.text = "none";
+
+    var dragonfly = this.props.dragonfly;
+    dragonfly.preferences = preferences;
+    this.props.handleLoadDragonfly(dragonfly);
+    myThis.showClickedButtonState(false);
+    myThis.props.history.push('dragonflycomplete');
+  }
 
 }
 

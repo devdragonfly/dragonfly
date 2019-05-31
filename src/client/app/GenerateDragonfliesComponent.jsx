@@ -156,6 +156,9 @@ class GenerateDragonfliesComponent extends React.Component {
                 <br/>
                 <input id="exp_date" onChange={this.updateExpirationDate} className="form-control" min={this.dateTomorrow} type="date"/>
               </div>
+              <div>
+                <input type="checkbox" id="myCheck"></input>: Manual Delivery
+              </div>
             </div>
           </div>
           <br/><br/>
@@ -185,6 +188,12 @@ class GenerateDragonfliesComponent extends React.Component {
           this.setState({ buttonRestClassName: buttonClassName });
           this.setState({ buttonClickedClassName: "dragon-hidden" });
     }
+  }
+
+  checkBoxState() {
+    var x = document.getElementById("myCheck").checked;
+    if (x == true) return true;
+    else return false; // return x;
   }
 
   updateIncentiveValue(e) {
@@ -302,6 +311,7 @@ class GenerateDragonfliesComponent extends React.Component {
         session: campaign.session,
         incentive: incentive,
         customTexts: customTexts,
+        checkbox: this.checkBoxState(),
         date_sent: new Date().toISOString()
       };
       if (logoId) {
