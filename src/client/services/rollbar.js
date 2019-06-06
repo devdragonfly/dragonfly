@@ -3,7 +3,7 @@ var _rollbarConfig = {
     captureUncaught: true,
     captureUnhandledRejections: true,
     payload: {
-        environment: "production"
+        environment: "development"
     }
 };
 
