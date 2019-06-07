@@ -171,11 +171,11 @@ class DragonflyStartComponent extends React.Component {
     return false;
   }
 
-  getDateObject(stringDate, separatorChar, timeType) {
-    var date = stringDate.split(separatorChar);
-    if (timeType == 'mm/dd/yy'){
+  getDateObject(stringDate, separator, format) {
+    var date = stringDate.split(separator);
+    if (format == 'mm/dd/yy'){
       return {month: parseInt(date[0]), day: parseInt(date[1]), year: parseInt(date[2])};
-    } else if (timeType == 'yy/mm/dd'){
+    } else if (format == 'yy/mm/dd'){
       return {year: parseInt(date[0]), month: parseInt(date[1]), day: parseInt(date[2])};
     }
   }
