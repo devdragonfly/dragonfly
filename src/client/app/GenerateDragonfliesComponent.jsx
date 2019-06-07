@@ -204,7 +204,6 @@ class GenerateDragonfliesComponent extends React.Component {
   }
 
   updateExpirationDate(e) {
-    console.log(e.target.value);
     this.setState({
       expirationDate: e.target.value
     });

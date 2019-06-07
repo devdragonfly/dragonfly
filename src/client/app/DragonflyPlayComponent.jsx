@@ -335,6 +335,8 @@ class DragonflyPlayComponent extends React.Component {
     var videoIsEnded = this.state.videoIsEnded;
     var video = document.getElementById("my-player");
 
+    console.log(breakpoints);
+
     breakpointNumber = breakpointNumber + 1;
 
     if (breakpointNumber >= breakpoints.length) {

@@ -13,6 +13,8 @@ class DragonflyStartComponent extends React.Component {
     };
     this.titleCase = this.titleCase.bind(this);
     this.showCustomText = this.showCustomText.bind(this);
+    this.checkIfTimestampExpired = this.checkIfTimestampExpired.bind(this);
+    this.getDateObject = this.getDateObject.bind(this);
   }
 
 
@@ -28,6 +30,7 @@ class DragonflyStartComponent extends React.Component {
     var campaign;
 
     // Find needed Campaign
+    console.log('campaigns', campaigns);
     for (let i = 0; i < campaigns.length; i++) {
       if (campaigns[i].campaignId == campaignId) {
         this.currentCampaign = campaigns[i];
@@ -38,7 +41,8 @@ class DragonflyStartComponent extends React.Component {
     // Determine if Campaign Date is Expired
     var endDate = this.currentCampaign.expirationDate;
     if (endDate) {
-      this.campaignIsExpired = campaignTimestampValidity(endDate);
+      console.log('Expired Link? ', this.checkIfTimestampExpired(endDate));
+      this.campaignIsExpired = this.checkIfTimestampExpired(endDate);
     }
   }
 
@@ -145,26 +149,26 @@ class DragonflyStartComponent extends React.Component {
     return str.join(' ');
   }
 
-  campaignTimestampValidity(expDate){
+  checkIfTimestampExpired(expDate){
     var today = new Date().toLocaleString("en-US", {timeZone: "America/New_York"}).split(',')[0];
-    today = getDateObject(today, '/', 'mm/dd/yy');
-    var end = getDateObject(expDate, '-', 'yy/mm/dd');
+    today = this.getDateObject(today, '/', 'mm/dd/yy');
+    var end = this.getDateObject(expDate, '-', 'yy/mm/dd');
 
     if (today.year > end.year) {
-      return false;
+      return true;
     }
 
     if (today.year === end.year) {
       if (today.month > end.month) {
-        return false;
+        return true;
       }
 
       if (today.month === end.month && today.day >= end.day) {
-        return false;
+        return true;
       }
     }
 
-    return true;
+    return false;
   }
 
   getDateObject(stringDate, separatorChar, timeType) {
