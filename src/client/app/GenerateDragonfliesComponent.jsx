@@ -148,15 +148,16 @@ class GenerateDragonfliesComponent extends React.Component {
             </div>
             <br/><br/>
             <div className="form-group row">
-              <div className="col-xs-4">
+              <div className="col-xs-6">
                 <label for="exp_date">
                   <i className='fa fa-calendar-times-o fa-fw fa-lg'></i>
                   Campaign Expiration Date
                 </label>
                 <br/>
                 <input id="exp_date" onChange={this.updateExpirationDate} className="form-control" min={this.dateTomorrow} type="date"/>
+                <span className="generate-dragonfly__hind-text">Campaign becomes unaccessible on a selected date at 00:00:00 GTM-4</span>
               </div>
-              <div>
+              <div className="col-xs-6">
                 <input type="checkbox" id="myCheck"></input>: Manual Delivery
               </div>
             </div>
@@ -203,6 +204,7 @@ class GenerateDragonfliesComponent extends React.Component {
   }
 
   updateExpirationDate(e) {
+    console.log(e.target.value);
     this.setState({
       expirationDate: e.target.value
     });

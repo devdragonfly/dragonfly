@@ -19,6 +19,13 @@
     top: -95px;
 }
 
+.generate-dragonfly__hind-text {
+  display: block;
+  font-size: 11px;
+  color: #6f6f6f;
+  margin: 10px 3px;
+}
+
 .dragonfly-contact { font-weight:bold; color:#00A2E9; font-size:24px;}
 
 .home-bg-outer {

@@ -38,12 +38,8 @@ class DragonflyStartComponent extends React.Component {
     // Determine if Campaign Date is Expired
     var endDate = this.currentCampaign.expirationDate;
     if (endDate) {
-      var today = new Date().getTime();
-      if (today >= Date.parse(endDate)) {
-        this.campaignIsExpired = true;
-      }
+      this.campaignIsExpired = campaignTimestampValidity(endDate);
     }
-
   }
 
   componentDidMount() {
@@ -147,6 +143,37 @@ class DragonflyStartComponent extends React.Component {
       str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
     }
     return str.join(' ');
+  }
+
+  campaignTimestampValidity(expDate){
+    var today = new Date().toLocaleString("en-US", {timeZone: "America/New_York"}).split(',')[0];
+    today = getDateObject(today, '/', 'mm/dd/yy');
+    var end = getDateObject(expDate, '-', 'yy/mm/dd');
+
+    if (today.year > end.year) {
+      return false;
+    }
+
+    if (today.year === end.year) {
+      if (today.month > end.month) {
+        return false;
+      }
+
+      if (today.month === end.month && today.day >= end.day) {
+        return false;
+      }
+    }
+
+    return true;
+  }
+
+  getDateObject(stringDate, separatorChar, timeType) {
+    var date = stringDate.split(separatorChar);
+    if (timeType == 'mm/dd/yy'){
+      return {month: parseInt(date[0]), day: parseInt(date[1]), year: parseInt(date[2])};
+    } else if (timeType == 'yy/mm/dd'){
+      return {year: parseInt(date[0]), month: parseInt(date[1]), day: parseInt(date[2])};
+    }
   }
 
   expiredNotice() {
