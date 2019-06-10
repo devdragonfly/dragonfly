@@ -150,20 +150,20 @@ class DragonflyStartComponent extends React.Component {
       return false;
     }
 
-    var today = new Date().toLocaleString("en-US", {timeZone: "America/New_York"}).split(',')[0];
-    today = this.getDateObject(today, '/', 'mm/dd/yy');
-    var end = this.getDateObject(expDate, '-', 'yy/mm/dd');
+    var currentDate = new Date().toLocaleString("en-US", {timeZone: "America/New_York"}).split(',')[0];
+    currentDate = this.getDateObject(currentDate, '/', 'mm/dd/yy');
+    var expirationDate = this.getDateObject(expDate, '-', 'yy/mm/dd');
 
-    if (today.year > end.year) {
+    if (currentDate.year > expirationDate.year) {
       return true;
     }
 
-    if (today.year === end.year) {
-      if (today.month > end.month) {
+    if (currentDate.year === expirationDate.year) {
+      if (currentDate.month > expirationDate.month) {
         return true;
       }
 
-      if (today.month === end.month && today.day >= end.day) {
+      if (currentDate.month === expirationDate.month && currentDate.day >= expirationDate.day) {
         return true;
       }
     }
