@@ -277,12 +277,10 @@ class DragonflyPlayComponent extends React.Component {
     var earned = 0;
     if (correct) earned = value;
 
-    var result = {correct: correct, type: typeName, resultText: resultText, value: value, earned: earned};
-
     if (type && type.openEnded) {
-      result = Object.assign(result, {openEndedAnswer: userAnswers});
+      var result = {correct: correct, type: typeName, resultText: resultText, value: value, earned: earned, openEndedAnswer: userAnswers};
     } else {
-      result = Object.assign(result, {selectedAnswers: userAnswers, answerValues: answerValues});
+      var result = {correct: correct, type: typeName, resultText: resultText, value: value, earned: earned, selectedAnswers: userAnswers, answerValues: answerValues};
     }
 
     var totalEarned = this.state.earned + earned;
