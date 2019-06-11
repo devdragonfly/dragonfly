@@ -13,6 +13,8 @@ class DragonflyStartComponent extends React.Component {
     };
     this.titleCase = this.titleCase.bind(this);
     this.showCustomText = this.showCustomText.bind(this);
+    this.checkIfTimestampExpired = this.checkIfTimestampExpired.bind(this);
+    this.getDateObject = this.getDateObject.bind(this);
   }
 
 
@@ -37,13 +39,7 @@ class DragonflyStartComponent extends React.Component {
 
     // Determine if Campaign Date is Expired
     var endDate = this.currentCampaign.expirationDate;
-    if (endDate) {
-      var today = new Date().getTime();
-      if (today >= Date.parse(endDate)) {
-        this.campaignIsExpired = true;
-      }
-    }
-
+    this.campaignIsExpired = this.checkIfTimestampExpired(endDate);
   }
 
   componentDidMount() {
@@ -99,7 +95,6 @@ class DragonflyStartComponent extends React.Component {
     );
     }
 
-
     return (
       <div className="row">
         <div className="col-sm-2"></div>
@@ -148,6 +143,41 @@ class DragonflyStartComponent extends React.Component {
       str[i] = str[i].charAt(0).toUpperCase() + str[i].slice(1);
     }
     return str.join(' ');
+  }
+
+  checkIfTimestampExpired(expDate){
+    if (expDate === undefined) {
+      return false;
+    }
+
+    var currentDate = new Date().toLocaleString("en-US", {timeZone: "America/New_York"}).split(',')[0];
+    currentDate = this.getDateObject(currentDate, '/', 'mm/dd/yy');
+    var expirationDate = this.getDateObject(expDate, '-', 'yy/mm/dd');
+
+    if (currentDate.year > expirationDate.year) {
+      return true;
+    }
+
+    if (currentDate.year === expirationDate.year) {
+      if (currentDate.month > expirationDate.month) {
+        return true;
+      }
+
+      if (currentDate.month === expirationDate.month && currentDate.day >= expirationDate.day) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  getDateObject(stringDate, separator, format) {
+    var date = stringDate.split(separator);
+    if (format == 'mm/dd/yy'){
+      return {month: parseInt(date[0]), day: parseInt(date[1]), year: parseInt(date[2])};
+    } else if (format == 'yy/mm/dd'){
+      return {year: parseInt(date[0]), month: parseInt(date[1]), day: parseInt(date[2])};
+    }
   }
 
   expiredNotice() {
