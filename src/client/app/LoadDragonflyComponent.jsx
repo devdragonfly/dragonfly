@@ -19,69 +19,68 @@ class LoadDragonflyComponent extends React.Component {
     var myThis = this;
     var dragonflyId = this.props.dragonflyId;
 
-    if ( this.supportedBrowsers() ) {
-
-      var params = {
-          TableName : "Dragonflies",
-          KeyConditionExpression: "#dragonflyId = :dragonflyId",
-          ExpressionAttributeNames:{
-              "#dragonflyId": "dragonflyId"
-          },
-          ExpressionAttributeValues: {
-              ":dragonflyId": dragonflyId
-          }
-      };
-
-      this.props.dbQueryUnauth(params, function(result) {
-
-        var dragonfly = result.Items[0];
-
-        // if earned is already populated, it's because this dragonfly was already completed
-        // and we need to redirect to completion page
-        if (dragonfly.earned != null) {
-          dragonfly.previousCompletion = true;
-          myThis.props.handleLoadDragonfly(dragonfly);
-          myThis.props.history.push('dragonflycomplete');
-          return;
-        }
-
-        var session = dragonfly.session;
-        //
-        // #Error here because breackpoint are not defined here(session).breakpoints and later .length called on undefined
-        //
-        var sessionValidBreakpoints = myThis.getValidBreakpoints(session.breakpoints);
-        var orderedBreakpoints = myThis.getOrderedBreakpoints(sessionValidBreakpoints.breakpoints);
-        session.breakpoints = orderedBreakpoints;
-        session.totalWeight = sessionValidBreakpoints.totalWeight;
-        session.totalQuestionCount = sessionValidBreakpoints.totalQuestionCount;
-        dragonfly.session = session;
-        myThis.props.handleLoadDragonfly(dragonfly);
-
-        if (myThis.props.campaigns === 'not found') {
-          var organizationId = dragonfly.organizationId;
-          var params = {
-              TableName : "Campaigns",
-              KeyConditionExpression: "#organizationId = :organizationId",
-              ExpressionAttributeNames:{
-                  "#organizationId": "organizationId"
-              },
-              ExpressionAttributeValues: {
-                  ":organizationId":organizationId
-              }
-          };
-
-          myThis.props.dbQueryUnauth(params, function(result) {
-            myThis.props.handleLoadCampaigns(result);
-            myThis.props.history.push('dragonflystart');
-          });
-        } else {
-          myThis.props.history.push('dragonflystart');
-        }
-      });
-
-    } else {
+    if ( !this.supportedBrowsers() ) {
       this.setState({supportedBrowsers: false})
+      return;
     }
+
+    var params = {
+        TableName : "Dragonflies",
+        KeyConditionExpression: "#dragonflyId = :dragonflyId",
+        ExpressionAttributeNames:{
+            "#dragonflyId": "dragonflyId"
+        },
+        ExpressionAttributeValues: {
+            ":dragonflyId": dragonflyId
+        }
+    };
+
+    this.props.dbQueryUnauth(params, function(result) {
+
+      var dragonfly = result.Items[0];
+
+      // if earned is already populated, it's because this dragonfly was already completed
+      // and we need to redirect to completion page
+      if (dragonfly.earned != null) {
+        dragonfly.previousCompletion = true;
+        myThis.props.handleLoadDragonfly(dragonfly);
+        myThis.props.history.push('dragonflycomplete');
+        return;
+      }
+
+      var session = dragonfly.session;
+      //
+      // #Error here because breackpoint are not defined here(session).breakpoints and later .length called on undefined
+      //
+      var sessionValidBreakpoints = myThis.getValidBreakpoints(session.breakpoints);
+      var orderedBreakpoints = myThis.getOrderedBreakpoints(sessionValidBreakpoints.breakpoints);
+      session.breakpoints = orderedBreakpoints;
+      session.totalWeight = sessionValidBreakpoints.totalWeight;
+      session.totalQuestionCount = sessionValidBreakpoints.totalQuestionCount;
+      dragonfly.session = session;
+      myThis.props.handleLoadDragonfly(dragonfly);
+
+      if (myThis.props.campaigns === 'not found') {
+        var organizationId = dragonfly.organizationId;
+        var params = {
+            TableName : "Campaigns",
+            KeyConditionExpression: "#organizationId = :organizationId",
+            ExpressionAttributeNames:{
+                "#organizationId": "organizationId"
+            },
+            ExpressionAttributeValues: {
+                ":organizationId":organizationId
+            }
+        };
+
+        myThis.props.dbQueryUnauth(params, function(result) {
+          myThis.props.handleLoadCampaigns(result);
+          myThis.props.history.push('dragonflystart');
+        });
+      } else {
+        myThis.props.history.push('dragonflystart');
+      }
+    });
 
   }
 
