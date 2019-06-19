@@ -28,6 +28,36 @@
 
 .dragonfly-contact { font-weight:bold; color:#00A2E9; font-size:24px;}
 
+.dragonfly-unsupported {
+  text-align: center;
+  margin-top: 10%;
+}
+.dragonfly-unsupported .title {
+  color: #575757
+}
+.dragonfly-unsupported .text {
+  font-size: 20px;
+  color: #575757;
+  font-weight: 300;
+}
+.supported-browsers-list {
+  -ms-align-items: center;
+  align-items: center;
+}
+.supported-browsers-item {
+  display: inline-block;
+  margin: 20px;
+}
+.supported-browser-information {
+  font-size: 16px;
+  color: #515151;
+  font-weight: bold;
+}
+.browser-icon {
+  width: 100px;
+  height: 100px;
+}
+
 .home-bg-outer {
         background-image: url("./images/dragonfly-bg.JPG");
         background-repeat:no-repeat;

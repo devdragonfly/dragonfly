@@ -425,7 +425,6 @@ class Main extends Component {
         AWS.config.credentials.clearCachedId();
     }
 
-
     render(){
         const childrenWithProps = React.Children.map(this.props.children,
          (child) => React.cloneElement(child, {
