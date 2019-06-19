@@ -133,12 +133,16 @@ class LoadDragonflyComponent extends React.Component {
               <p className="supported-browser-information">Apple Safari</p>
             </div>
             <div className="supported-browsers-item browser-firefox">
-              <img src="./images/firefox.png" className="browser-icon" />
-              <p className="supported-browser-information">Mozilla Firefox</p>
+              <a href="https://www.mozilla.org/en-US/firefox/all/">
+                <img src="./images/firefox.png" className="browser-icon" />
+                <p className="supported-browser-information">Mozilla Firefox</p>
+              </a>
             </div>
             <div className="supported-browsers-item browser-chrome">
-              <img src="./images/chrome.png" className="browser-icon" />
-              <p className="supported-browser-information">Google Chrome</p>
+              <a href="https://www.google.com/intl/en/chrome/">
+                <img src="./images/chrome.png" className="browser-icon" />
+                <p className="supported-browser-information">Google Chrome</p>
+              </a>
             </div>
           </div>
 
