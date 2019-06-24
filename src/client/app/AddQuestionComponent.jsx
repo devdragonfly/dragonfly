@@ -247,6 +247,17 @@ class AddQuestionComponent extends React.Component {
       myThis.showClickedButtonState(false);
       session.breakpoints = breakpoints;
       myThis.props.handleLoadSession(session);
+      console.log(250);
+      console.log(session);
+      console.log(session.name);
+      mixpanel.track("AddQuestion", {
+        'Title': title,
+        'SessionId': sessionId,
+        'SessionName': session.name,
+        'OrganizationId': organizationId,
+        'QuestionType': questionType,
+        'Answers': answers
+      });
       myThis.props.history.push('session');
 
     });

@@ -75,9 +75,11 @@ class LoadDragonflyComponent extends React.Component {
 
         myThis.props.dbQueryUnauth(params, function(result) {
           myThis.props.handleLoadCampaigns(result);
+          mixpanel.track('Session Opened');
           myThis.props.history.push('dragonflystart');
         });
       } else {
+        mixpanel.track('Session Opened');
         myThis.props.history.push('dragonflystart');
       }
     });

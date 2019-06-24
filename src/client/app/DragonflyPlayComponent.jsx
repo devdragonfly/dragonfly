@@ -47,7 +47,7 @@ class DragonflyPlayComponent extends React.Component {
 
   componentDidMount() {
     var myThis = this;
-
+    mixpanel.track('Session Started');
     var video = document.getElementById("my-player");
     video.play();
 
@@ -271,6 +271,8 @@ class DragonflyPlayComponent extends React.Component {
 
     }
 
+    mixpanel.track('Answered question(s)');
+
     var percentWeighting = question.weight / totalWeight;
 
     var value = percentWeighting * incentive;
@@ -363,6 +365,7 @@ class DragonflyPlayComponent extends React.Component {
     dragonfly.earned = earned;
     dragonfly.results = results;
     myThis.props.handleLoadDragonfly(dragonfly);
+    mixpanel.track('Dragonfly ended');
     myThis.props.history.push('dragonflypreferences');
     return;
   }

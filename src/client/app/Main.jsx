@@ -375,22 +375,35 @@ class Main extends Component {
 
 
 
-    s3Upload(file, key, videoUploadFailedCallback, videoUploadedCallback) {
+    s3Upload(file, key, videoUploadFailedCallback, videoUploadedCallback, title) {
         var myThis = this;
         var size = file.size;
 
         var params = {Key: key, ContentType: file.type, Body: file};
         var request = dragonfly.s3.putObject(params);
         var percent = 0;
+
         request.
           on('httpUploadProgress', function(progress, response) {
             percent = Math.round((progress.loaded / size) * 100, -2);
             myThis.setState({percent: percent});
           }).
           on('success', function(response) {
+            console.log('success', response);
+            mixpanel.track("Upload Video", {
+              'Upload': 'Success',
+              'Title': title,
+              'VideoId': key
+            });
             videoUploadedCallback();
           }).
           on('error', function(response) {
+            console.log('error', response);
+            mixpanel.track("Upload Video", {
+              'Upload': 'Error',
+              'Title': title,
+              'VideoId': key
+            });
             videoUploadFailedCallback();
           }).
           on('complete', function(response) {

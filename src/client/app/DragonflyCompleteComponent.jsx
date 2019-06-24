@@ -25,7 +25,7 @@ class DragonflyCompleteComponent extends React.Component {
   componentWillMount() {
     var myThis = this;
     var dragonfly;
-
+    mixpanel.track('Received Confirmation Page');
     if (this.props.dragonfly === 'not found') {
       this.setState({dragonflyExist: false});
       const dragonflyId = localStorage.getItem('dragonflyId');
@@ -218,7 +218,7 @@ class DragonflyCompleteComponent extends React.Component {
                 }
                 <br/><br/>
 
-                
+
 
               </div>
         </div>
@@ -264,7 +264,7 @@ class DragonflyCompleteComponent extends React.Component {
     preferences.nps = this.state.selectedNPS;
     preferences.email = this.state.email;
     preferences.mobile = this.state.mobile;
-    preferences.text = this.state.openTextValue; 
+    preferences.text = this.state.openTextValue;
 
     if ((preferences.email == "") || (preferences.email == null)) preferences.email = "none";
     if ((preferences.mobile == "") || (preferences.mobile == null)) preferences.mobile = "none";

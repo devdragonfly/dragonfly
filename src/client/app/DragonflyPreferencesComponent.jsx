@@ -268,6 +268,7 @@ class DragonflyPreferencesComponent extends React.Component {
 
 
     myThis.showClickedButtonState(false);
+    mixpanel.track('Finished Completion page');
     myThis.props.history.push('dragonflycomplete');
 
   }

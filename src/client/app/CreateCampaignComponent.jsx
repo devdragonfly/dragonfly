@@ -19,14 +19,14 @@ class CreateCampaignComponent extends React.Component {
     this.showClickedButtonState = this.showClickedButtonState.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
     this.validate = this.validate.bind(this);
-    
+
   }
 
   render() {
-    
+
     var organizationMenu = function() {return <OrganizationMenuComponent current="campaigns" /> }();
-    
-    
+
+
     return (
 
         <div className="row">
@@ -35,21 +35,21 @@ class CreateCampaignComponent extends React.Component {
           <div className="col-sm-4">
             <form onSubmit={this.handleSubmit}>
                 <h3>Create Campaign</h3>
-                
+
                 <br/><br/>
-                
+
                 <input value={this.state.nameValue} onChange={this.updateNameValue} className="form-control input-lg" placeholder="name of campaign"/>
                 <div className="dragon-validation-message">{this.state.validationMessage}</div>
               <input type="submit" className={this.state.buttonRestClassName} value="Save" />
               <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Saving</div>
             </form>
-          </div> 
-          
-          
-          
+          </div>
+
+
+
           <div className="col-sm-6">
           </div>
-          
+
         </div>
 
 
@@ -70,41 +70,41 @@ class CreateCampaignComponent extends React.Component {
           this.setState({ buttonClickedClassName: "dragon-hidden" });
     }
   }
-  
+
   updateNameValue(e) {
     this.setState({ nameValue: e.target.value });
     this.setState({ validationMessage: "" });
   }
-  
+
   validate(name) {
     name = name.trim();
     if (name.length === 0) {
       this.setState({ validationMessage: "Please enter a name for your Campaign." });
       return false;
     }
-    
+
     return true;
   }
-  
+
   handleSubmit(e) {
     e.preventDefault();
     const nameValue = this.state.nameValue.trim();
-    
+
     var isValid = this.validate(nameValue);
     if (!isValid) return;
-    
+
     this.showClickedButtonState(true);
     var myThis = this;
-    
+
     const organizationIdValue = this.props.organizationId;
-    
+
     var campaignIdValue = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
         var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
         return v.toString(16);
     });
-    
 
-    
+
+
     var params = {
         TableName:"Campaigns",
         Item:{
@@ -113,12 +113,17 @@ class CreateCampaignComponent extends React.Component {
             name : nameValue
         }
     };
-    
-    this.props.dbPut(params, function(result){ 
-      myThis.showClickedButtonState(false); 
+
+    this.props.dbPut(params, function(result){
+      myThis.showClickedButtonState(false);
+      console.log(119);
+      console.log(params);
+      console.log(result);
+      console.log(organizationIdValue, campaignIdValue, nameValue);
+      mixpanel.track('Create Campaign');
       myThis.props.history.push('loadcampaigns');
     });
-    
+
   }
 
 
