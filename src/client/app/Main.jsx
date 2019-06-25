@@ -246,6 +246,8 @@ class Main extends Component {
 
 
     setAWSCredential(cognitoUser, result) {
+      mixpanel.identify(cognitoUser.username);
+
       AWS.config.region = 'us-west-2';
       AWS.config.credentials = new AWS.CognitoIdentityCredentials({
               // AccountId: '698305963744',
@@ -389,7 +391,6 @@ class Main extends Component {
             myThis.setState({percent: percent});
           }).
           on('success', function(response) {
-            console.log('success', response);
             mixpanel.track("Upload Video", {
               'Upload': 'Success',
               'Title': title,
@@ -398,7 +399,6 @@ class Main extends Component {
             videoUploadedCallback();
           }).
           on('error', function(response) {
-            console.log('error', response);
             mixpanel.track("Upload Video", {
               'Upload': 'Error',
               'Title': title,

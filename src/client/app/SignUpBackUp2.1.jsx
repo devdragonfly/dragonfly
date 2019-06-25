@@ -227,7 +227,8 @@ class SignUpComponent extends React.Component {
           alert(err);
           return;
         }
-      mixpanel.track("Signup");
+      mixpanel.identify(email);
+      mixpanel.track("Creates Account");
       cognitoUser = result.user;
       myThis.props.handleLoadEmail(email);
       myThis.props.history.push('confirmregistration');

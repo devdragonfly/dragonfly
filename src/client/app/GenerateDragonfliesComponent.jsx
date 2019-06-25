@@ -330,6 +330,12 @@ class GenerateDragonfliesComponent extends React.Component {
         ReturnConsumedCapacity: "NONE",
         ReturnItemCollectionMetrics: "NONE"
     };
+    mixpanel.track('Generating Dragonfly Links', {
+      'OrganizationId': organizationId,
+      'CampaignId': campaignId,
+      'CampaignName': campaign.name,
+      'CustomTexts': customTexts
+    });
     myThis.props.dbBatchWrite(params, function(result) {
       myThis.showClickedButtonState(false);
 

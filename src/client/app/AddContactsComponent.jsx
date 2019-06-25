@@ -127,7 +127,11 @@ class AddContactsComponent extends React.Component {
     this.props.dbUpdate(params, function(result) {
       myThis.showClickedButtonState(false);
       myThis.props.handleLoadContacts(result.Attributes.contacts);
-      mixpanel.track("Upload Contacts");
+      mixpanel.track("Upload Contacts", {
+        'AddedManually': true,
+        'OrganizationId': organizationId,
+        'ContactListId': contactListId
+      });
       myThis.props.history.push('contactlist');
 
     });

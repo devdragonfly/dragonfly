@@ -25,7 +25,7 @@ class DragonflyCompleteComponent extends React.Component {
   componentWillMount() {
     var myThis = this;
     var dragonfly;
-    mixpanel.track('Received Confirmation Page');
+
     if (this.props.dragonfly === 'not found') {
       this.setState({dragonflyExist: false});
       const dragonflyId = localStorage.getItem('dragonflyId');
@@ -106,6 +106,16 @@ class DragonflyCompleteComponent extends React.Component {
         // results successfully saved
       });
     }
+
+    mixpanel.track('Received Confirmation Page', {
+      'DragonflyId': dragonfly.dragonflyId,
+      'CampaignId': dragonfly.campaignId,
+      'FirstName': dragonfly.contact.first,
+      'LastName': dragonfly.contact.last,
+      'Email': dragonfly.contact.email,
+      'Incentive': dragonfly.incentive,
+      'CheckboxManualDemo': dragonfly.checkbox
+    });
 
   }
 

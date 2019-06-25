@@ -268,7 +268,18 @@ class DragonflyPreferencesComponent extends React.Component {
 
 
     myThis.showClickedButtonState(false);
-    mixpanel.track('Finished Completion page');
+
+    mixpanel.track('Finished Completion page', {
+      'DragonflyId': dragonfly.dragonflyId,
+      'CampaignId': dragonfly.campaignId,
+      'FirstName': dragonfly.contact.first,
+      'LastName': dragonfly.contact.last,
+      'Email': dragonfly.contact.email,
+      'Incentive': dragonfly.incentive,
+      'CheckboxManualDemo': dragonfly.checkbox,
+      'Preferences': preferences
+    });
+
     myThis.props.history.push('dragonflycomplete');
 
   }

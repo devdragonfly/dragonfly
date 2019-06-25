@@ -116,11 +116,11 @@ class CreateCampaignComponent extends React.Component {
 
     this.props.dbPut(params, function(result){
       myThis.showClickedButtonState(false);
-      console.log(119);
-      console.log(params);
-      console.log(result);
-      console.log(organizationIdValue, campaignIdValue, nameValue);
-      mixpanel.track('Create Campaign');
+      mixpanel.track('Create Campaign', {
+        'CampaignName': nameValue,
+        'OrganizationId': organizationIdValue,
+        'CampaignId': campaignIdValue
+      });
       myThis.props.history.push('loadcampaigns');
     });
 
