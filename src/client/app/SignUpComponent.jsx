@@ -364,6 +364,10 @@ class SignUpComponent extends React.Component {
           return;
         }
       mixpanel.identify(email);
+      mixpanel.people.set({
+        "$email": email,
+        "$created": new Date()
+      });
       mixpanel.track("Creates Account", {
         'Email': email
       });

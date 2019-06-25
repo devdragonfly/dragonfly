@@ -247,6 +247,10 @@ class Main extends Component {
 
     setAWSCredential(cognitoUser, result) {
       mixpanel.identify(cognitoUser.username);
+      mixpanel.people.set({
+        "$email": cognitoUser.username,
+        "$last_login": new Date()
+      });
 
       AWS.config.region = 'us-west-2';
       AWS.config.credentials = new AWS.CognitoIdentityCredentials({
