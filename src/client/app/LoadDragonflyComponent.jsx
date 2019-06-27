@@ -120,13 +120,12 @@ class LoadDragonflyComponent extends React.Component {
     } else {
       return (
         <div className="dragonfly-unsupported">
-          {/*<img src="./images/dragonfly2.png" />*/}
           <h1 className="title">
             OOPS!
             <br/>
             YOUR BROWSER IS NOT SUPPORTED.
           </h1>
-          <p className="text">To view this expirience, please upgrade to the latest one of these browser</p>
+          <p className="text">To view this experience, please upgrade to the latest one of these browsers</p>
           <div className="supported-browsers-list">
             <div className="supported-browsers-item browser-safari">
               <img src="./images/safari.png" className="browser-icon" />

@@ -206,7 +206,7 @@ class DragonflyStartComponent extends React.Component {
               </a>
             </div>
             <br/>
-            <h3>This Dragonfly link has expired</h3>
+            <h3>This Dragonfly link has expired. Please contact the sender if you have any questions.</h3>
           </div>
         </div>
       </div>
