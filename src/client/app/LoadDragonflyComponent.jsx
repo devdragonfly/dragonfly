@@ -87,7 +87,6 @@ class LoadDragonflyComponent extends React.Component {
 
   supportedBrowsers() {
     const browser = detect();
-
     switch (browser && browser.name) {
       case 'chrome':
       case 'firefox':
