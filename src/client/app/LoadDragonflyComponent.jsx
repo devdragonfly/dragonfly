@@ -92,6 +92,8 @@ class LoadDragonflyComponent extends React.Component {
       case 'firefox':
       case 'safari':
       case 'ios':
+      case 'crios':
+      case 'fxios':
         return true;
         break;
       default:
