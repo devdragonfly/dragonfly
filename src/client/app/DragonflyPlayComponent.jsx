@@ -47,6 +47,17 @@ class DragonflyPlayComponent extends React.Component {
 
   componentDidMount() {
     var myThis = this;
+    var dragonfly = this.props.dragonfly;
+
+    mixpanel.track('Session Started', {
+      'DragonflyId': dragonfly.dragonflyId,
+      'CampaignId': dragonfly.campaignId,
+      'FirstName': dragonfly.contact.first,
+      'LastName': dragonfly.contact.last,
+      'Email': dragonfly.contact.email,
+      'Incentive': dragonfly.incentive,
+      'CheckboxManualDemo': dragonfly.checkbox
+    });
 
     var video = document.getElementById("my-player");
     video.play();
@@ -287,6 +298,16 @@ class DragonflyPlayComponent extends React.Component {
     var results = this.state.results;
     results.push(result);
 
+    mixpanel.track('Answered Question(s)', {
+      'DragonflyId': myThis.props.dragonfly.dragonflyId,
+      'CampaignId': myThis.props.dragonfly.campaignId,
+      'OrganizationId': myThis.props.dragonfly.organizationId,
+      'Answers': userAnswers,
+      'Question': question.title,
+      'QuestionType': question.type,
+      'ResultText': resultText
+    });
+
     this.setState({ earned : totalEarned, results : results, resultText : resultText, submitButtonClassname : "dragon-hidden" });
 
 
@@ -363,6 +384,18 @@ class DragonflyPlayComponent extends React.Component {
     dragonfly.earned = earned;
     dragonfly.results = results;
     myThis.props.handleLoadDragonfly(dragonfly);
+
+    mixpanel.track('Dragonfly Ended', {
+      'DragonflyId': dragonfly.dragonflyId,
+      'CampaignId': dragonfly.campaignId,
+      'FirstName': dragonfly.contact.first,
+      'LastName': dragonfly.contact.last,
+      'Email': dragonfly.contact.email,
+      'Incentive': dragonfly.incentive,
+      'CheckboxManualDemo': dragonfly.checkbox,
+      'Earned': Number(earned).toFixed(2)
+    });
+
     myThis.props.history.push('dragonflypreferences');
     return;
   }

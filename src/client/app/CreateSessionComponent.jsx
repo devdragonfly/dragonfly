@@ -22,10 +22,10 @@ class CreateSessionComponent extends React.Component {
   }
 
   render() {
-    
+
     var organizationMenu = function() {return <OrganizationMenuComponent current="sessions" /> }();
-    
-    
+
+
     return (
 
         <div className="row">
@@ -34,21 +34,21 @@ class CreateSessionComponent extends React.Component {
           <div className="col-sm-4">
             <form onSubmit={this.handleSubmit}>
                 <h3>Create Session</h3>
-                
+
                 <br/><br/>
-                
+
                 <input value={this.state.nameValue} onChange={this.updateNameValue} className="form-control input-lg" placeholder="name of session"/>
                 <div className="dragon-validation-message">{this.state.validationMessage}</div>
               <input type="submit" className={this.state.buttonRestClassName} value="Save" />
               <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Saving</div>
             </form>
-          </div> 
-          
-          
-          
+          </div>
+
+
+
           <div className="col-sm-6">
           </div>
-          
+
         </div>
 
 
@@ -69,48 +69,48 @@ class CreateSessionComponent extends React.Component {
           this.setState({ buttonClickedClassName: "dragon-hidden" });
     }
   }
-  
+
   updateNameValue(e) {
     this.setState({
       nameValue: e.target.value
     });
   }
-  
-  
-  
-  
+
+
+
+
   validate(name) {
     name = name.trim();
     if (name.length === 0) {
       this.setState({ validationMessage: "Please enter a name for your Session." });
       return false;
     }
-    
+
     return true;
   }
-  
-  
-  
+
+
+
   handleSubmit(e) {
     e.preventDefault();
     const nameValue = this.state.nameValue.trim();
-    
+
     var isValid = this.validate(nameValue);
     if (!isValid) return;
-    
-    
+
+
     this.showClickedButtonState(true);
     var myThis = this;
-    
+
     const organizationIdValue = this.props.organizationId;
-    
+
     var sessionIdValue = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
         var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
         return v.toString(16);
     });
-    
 
-    
+
+
     var params = {
         TableName:"Sessions",
         Item:{
@@ -119,13 +119,18 @@ class CreateSessionComponent extends React.Component {
             name : nameValue
         }
     };
-    
-    this.props.dbPut(params, function(result){ 
+
+    this.props.dbPut(params, function(result){
       myThis.props.handleLoadNext('sessions');
-      myThis.showClickedButtonState(false); 
+      myThis.showClickedButtonState(false);
+      mixpanel.track("Generate Dragonfly Sessions", {
+        'Name': nameValue,
+        'SessionId': sessionIdValue,
+        'OrganizationId': organizationIdValue
+      });
       myThis.props.history.push('loadsessions');
     });
-    
+
   }
 
 

@@ -43,6 +43,18 @@ class DragonflyStartComponent extends React.Component {
   }
 
   componentDidMount() {
+    var dragonfly = this.props.dragonfly;
+
+    mixpanel.track('Session Opened', {
+      'DragonflyId': dragonfly.dragonflyId,
+      'CampaignId': dragonfly.campaignId,
+      'FirstName': dragonfly.contact.first,
+      'LastName': dragonfly.contact.last,
+      'Email': dragonfly.contact.email,
+      'Incentive': dragonfly.incentive,
+      'CheckboxManualDemo': dragonfly.checkbox
+    });
+
     if (typeof window !== 'undefined') {
       var path = window.location.protocol + '//' + window.location.host;
       this.setState({path : path});
@@ -194,7 +206,7 @@ class DragonflyStartComponent extends React.Component {
               </a>
             </div>
             <br/>
-            <h3>This Dragonfly link has expired</h3>
+            <h3>This Dragonfly link has expired. Please contact the sender if you have any questions.</h3>
           </div>
         </div>
       </div>

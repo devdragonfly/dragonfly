@@ -107,6 +107,16 @@ class DragonflyCompleteComponent extends React.Component {
       });
     }
 
+    mixpanel.track('Received Confirmation Page', {
+      'DragonflyId': dragonfly.dragonflyId,
+      'CampaignId': dragonfly.campaignId,
+      'FirstName': dragonfly.contact.first,
+      'LastName': dragonfly.contact.last,
+      'Email': dragonfly.contact.email,
+      'Incentive': dragonfly.incentive,
+      'CheckboxManualDemo': dragonfly.checkbox
+    });
+
   }
 
 
@@ -218,7 +228,7 @@ class DragonflyCompleteComponent extends React.Component {
                 }
                 <br/><br/>
 
-                
+
 
               </div>
         </div>
@@ -264,7 +274,7 @@ class DragonflyCompleteComponent extends React.Component {
     preferences.nps = this.state.selectedNPS;
     preferences.email = this.state.email;
     preferences.mobile = this.state.mobile;
-    preferences.text = this.state.openTextValue; 
+    preferences.text = this.state.openTextValue;
 
     if ((preferences.email == "") || (preferences.email == null)) preferences.email = "none";
     if ((preferences.mobile == "") || (preferences.mobile == null)) preferences.mobile = "none";

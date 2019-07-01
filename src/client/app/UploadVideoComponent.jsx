@@ -122,7 +122,7 @@ class UploadVideoComponent extends React.Component {
         }
     };
 
-    this.props.s3Upload(file, videoId, myThis.videoUploadFailedCallback, myThis.videoUploadedCallback);
+    this.props.s3Upload(file, videoId, myThis.videoUploadFailedCallback, myThis.videoUploadedCallback, nameValue);
 
     this.props.dbPut(params, function(result){
       myThis.showClickedButtonState(false);

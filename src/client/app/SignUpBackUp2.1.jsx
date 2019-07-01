@@ -28,7 +28,7 @@ class SignUpComponent extends React.Component {
   constructor(props) {
     super(props);
     this.props.handleSignOut();
-    this.state = {emailValue : props.email, 
+    this.state = {emailValue : props.email,
                   passwordValue : '',
                   buttonRestClassName : buttonClassName,
                   buttonClickedClassName : "dragon-hidden"
@@ -39,8 +39,8 @@ class SignUpComponent extends React.Component {
     this.handleSubmit = this.handleSubmit.bind(this);
     this.handleClickPlay = this.handleClickPlay.bind(this);
   }
-  
-  
+
+
 
   render() {
     return (
@@ -52,7 +52,7 @@ class SignUpComponent extends React.Component {
         <div className="col-sm-4">
           <br/><br/><br/><br/>
           <div className="signUpBox">
-          
+
               <form onSubmit={this.handleSubmit}>
                           <h1 className="dragonfly-blue">Sign Up for Pre-Launch</h1>
                           <input value={this.state.emailValue} onChange={this.updateEmailValue} placeholder="email" className="form-control input-lg"/>
@@ -60,7 +60,7 @@ class SignUpComponent extends React.Component {
                           <input type="password" value={this.state.passwordValue} onChange={this.updatePasswordValue} placeholder="password" className="form-control input-lg"/>
                           <br/>
                           <input type="submit" className={this.state.buttonRestClassName} value="Create Account" />
-                          <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Creating Account</div> 
+                          <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Creating Account</div>
               </form>
           </div>
           <br/><br/><br/><br/>
@@ -92,9 +92,9 @@ class SignUpComponent extends React.Component {
 
         <div className="col-sm-1">
         </div>
-      
+
       </div>
-      
+
       <div className="row question1and2">
             <div className="col-sm-1"></div>
             <div className="col-sm-10">
@@ -108,7 +108,7 @@ class SignUpComponent extends React.Component {
                   <br/><br/>
                   Dragonfly was built on the belief that customers are so overwhelmed with emails, ads, and sales reps, and that they aren’t getting companies’ messages. In addition, companies don’t have an effective communication channel with their customers and have no way to document which customer knows what. Further, we believe the current b2b marketing method is backwards because money is allocated to bombarding customers with email, ads, and sales reps but none of that takes into account the value of the customer’s limited time. These are costly issues for companies.
                   <br/><br/>
-                  At Dragonfly we believe paying customers for the time it takes to engage with information is the key to attracting their attention. We can then measure what information the customer learns and collect their feedback. We find this is a more effective form of communication and creates a better experience for both companies and customers. 
+                  At Dragonfly we believe paying customers for the time it takes to engage with information is the key to attracting their attention. We can then measure what information the customer learns and collect their feedback. We find this is a more effective form of communication and creates a better experience for both companies and customers.
                   <br/><br/><br/>
                   </div>
             </div>
@@ -146,7 +146,7 @@ class SignUpComponent extends React.Component {
                 <br/>
                 <div className="divCenter"><h3>What’s the catch?</h3></div>
                 <br/><br/>
-                There is no catch. We believe incentivized information is a more effective solution for companies to communicate with their customers. Besides asking customers for the best email or phone number to pay their incentives, we do not collect any information on individual companies or customers and we do not share or sell any information to third parties.     
+                There is no catch. We believe incentivized information is a more effective solution for companies to communicate with their customers. Besides asking customers for the best email or phone number to pay their incentives, we do not collect any information on individual companies or customers and we do not share or sell any information to third parties.
                 <br/><br/><br/>
                 </div>
             </div>
@@ -170,12 +170,12 @@ class SignUpComponent extends React.Component {
             <div className="col-sm-1"></div>
       </div>
       </div></div>
-      
-      
-      
+
+
+
     );
   }
-  
+
   handleClickPlay(e) {
     var video = e.target;
     video.play();
@@ -196,37 +196,43 @@ class SignUpComponent extends React.Component {
       emailValue: e.target.value
     });
   }
-  
+
   updatePasswordValue(e) {
     this.setState({
       passwordValue: e.target.value
     });
   }
-  
+
   handleSubmit(e) {
     e.preventDefault();
     this.showClickedButtonState(true);
-    
+
     const email = this.state.emailValue.trim();
     const password = this.state.passwordValue.trim();
-    
+
     const attributeList = [
       new CognitoUserAttribute({
         Name: 'email',
         Value: email
       })
     ];
-    
-    
+
+
     var cognitoUser;
     var myThis = this;
-    
+
     userPool.signUp(email, password, attributeList, null, (err, result) => {
       myThis.showClickedButtonState(false);
         if (err) {
           alert(err);
           return;
         }
+      mixpanel.identify(email);
+      mixpanel.people.set({
+        "$email": email,
+        "$created": new Date()
+      });
+      mixpanel.track("Creates Account");
       cognitoUser = result.user;
       myThis.props.handleLoadEmail(email);
       myThis.props.history.push('confirmregistration');
