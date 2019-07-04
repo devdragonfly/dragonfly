@@ -21,18 +21,6 @@ class CampaignSelectContactListComponent extends React.Component {
       this.props.history.push('campaignnocontactlists');
     }
 
-    // var atLeastOneHasContacts = false;
-    // for (var i = 0; i < contactLists.length; i++) {
-    //     if (contactLists[i].contacts != null) {
-    //       atLeastOneHasContacts = true;
-    //     }
-    // }
-    //
-    // if (!atLeastOneHasContacts) {
-    //   this.props.history.push('campaignnocontactlists');
-    // }
-
-
   }
 
   render() {
