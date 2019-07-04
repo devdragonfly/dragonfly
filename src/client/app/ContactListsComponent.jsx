@@ -11,6 +11,7 @@ class ContactListsComponent extends React.Component {
 
   componentWillMount() {
     var contactLists = this.props.contactLists;
+    console.log('ContactListsComponent contactLists', contactLists);
     if (contactLists === 'not found') {
       this.props.handleLoadNext('contactlists');
       this.props.history.push('loadcontactlists');
