@@ -246,6 +246,12 @@ class Main extends Component {
 
 
     setAWSCredential(cognitoUser, result) {
+      mixpanel.identify(cognitoUser.username);
+      mixpanel.people.set({
+        "$email": cognitoUser.username,
+        "$last_login": new Date()
+      });
+
       AWS.config.region = 'us-west-2';
       AWS.config.credentials = new AWS.CognitoIdentityCredentials({
               // AccountId: '698305963744',
@@ -375,22 +381,33 @@ class Main extends Component {
 
 
 
-    s3Upload(file, key, videoUploadFailedCallback, videoUploadedCallback) {
+    s3Upload(file, key, videoUploadFailedCallback, videoUploadedCallback, title) {
         var myThis = this;
         var size = file.size;
 
         var params = {Key: key, ContentType: file.type, Body: file};
         var request = dragonfly.s3.putObject(params);
         var percent = 0;
+
         request.
           on('httpUploadProgress', function(progress, response) {
             percent = Math.round((progress.loaded / size) * 100, -2);
             myThis.setState({percent: percent});
           }).
           on('success', function(response) {
+            mixpanel.track("Upload Video", {
+              'Upload': 'Success',
+              'Title': title,
+              'VideoId': key
+            });
             videoUploadedCallback();
           }).
           on('error', function(response) {
+            mixpanel.track("Upload Video", {
+              'Upload': 'Error',
+              'Title': title,
+              'VideoId': key
+            });
             videoUploadFailedCallback();
           }).
           on('complete', function(response) {
@@ -424,7 +441,6 @@ class Main extends Component {
         this.setState({dragonflyId : 'not found'});
         AWS.config.credentials.clearCachedId();
     }
-
 
     render(){
         const childrenWithProps = React.Children.map(this.props.children,

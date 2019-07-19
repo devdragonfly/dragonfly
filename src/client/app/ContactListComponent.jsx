@@ -202,6 +202,10 @@ class ContactListComponent extends React.Component {
         this.props.dbUpdate(params, function(result) {
           myThis.props.handleLoadContacts(result.Attributes.contacts);
           myThis.props.history.push('contactlist');
+          mixpanel.track('Upload Contacts', {
+            'OrganizationId': organizationId,
+            'ContactListId': contactListId
+          });
           myThis.showAlert("Your file has been successfully imported.");
         });
       }

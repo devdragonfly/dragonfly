@@ -28,6 +28,20 @@ class LoadContactListsComponent extends React.Component {
       myThis.props.handleLoadContactLists(result);
       myThis.props.history.push(next);
 
+      if ( next === 'campaignselectcontactlist') {
+        var atLeastOneHasContacts = false;
+        var contactLists = myThis.props.contactLists;
+
+        for (var i = 0; i < contactLists.length; i++) {
+            if (contactLists[i].contacts != null) {
+              atLeastOneHasContacts = true;
+            }
+        }
+        if (!atLeastOneHasContacts) {
+          myThis.props.history.push('campaignnocontactlists');
+        }
+      }
+
     });
 
 

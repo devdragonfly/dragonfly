@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link } from 'react-router';
+import {Link} from 'react-router';
 import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
 
 
@@ -10,7 +10,7 @@ class CampaignSelectContactListComponent extends React.Component {
     super(props);
     this.handleSelectContactList = this.handleSelectContactList.bind(this);
   }
-  
+
   componentWillMount() {
     var contactLists = this.props.contactLists;
     if (contactLists == 'not found') {
@@ -20,19 +20,7 @@ class CampaignSelectContactListComponent extends React.Component {
     if (contactLists.length === 0) {
       this.props.history.push('campaignnocontactlists');
     }
-    
-    var atLeastOneHasContacts = false;
-    for (var i = 0; i < contactLists.length; i++) {
-        if (contactLists[i].contacts != null) { 
-          atLeastOneHasContacts = true;
-        }
-    }
-    
-    if (!atLeastOneHasContacts) {
-      this.props.history.push('campaignnocontactlists');
-    }
-    
-    
+
   }
 
   render() {
@@ -40,29 +28,29 @@ class CampaignSelectContactListComponent extends React.Component {
     var contactLists = this.props.contactLists;
     var handleSelectContactList = this.handleSelectContactList;
     var history = this.props.history;
-    
 
-    
-    
+
+
+
     var contactListsJsx = function() {return '' }();
-    
+
     if (contactLists !== 'not found') {
           if (contactLists.length === 0) {
             contactListsJsx = function() {return 'No contact lists created yet.' }();
-            
+
           } else {
             var contactCount = 0;
             contactListsJsx = this.props.contactLists.map((contactList, i) => {
                 contactCount = 0;
                 if (contactList.contacts != null) {
                   contactCount = contactList.contacts.length;
-                } else 
+                } else
                 { return null;}
                 return <ContactList contactList={contactList} handleSelectContactList={handleSelectContactList} contactCount={contactCount} />
             });
           }
     }
-    
+
     return (
 
         <div className="row">
@@ -73,17 +61,17 @@ class CampaignSelectContactListComponent extends React.Component {
             <br/><br/>
             Select a Contact List for this Campaign:
             <br/><br/>
-            
+
             <div className="dragon-select-list">
               {contactListsJsx}
             </div>
-          
+
           <br/><br/>
             If you have not created the Contact List for this Campaign yet, &nbsp;
             <Link to={`createcontactlist`}>click here</Link>
             &nbsp; to create it now.
           <br/><br/>
-            
+
           </div>
           <div className="col-sm-4">
           </div>
@@ -91,7 +79,7 @@ class CampaignSelectContactListComponent extends React.Component {
 
     );
   }
-  
+
 
 
 
@@ -119,7 +107,7 @@ class ContactList extends React.Component {
     return (
         <div onClick={this.selectContactList.bind(this, this.props.contactList)} className="dragon-select-list-row dragon-pointer">
           <div className="dragon-select-list-cell">
-            <i className='fa fa-address-book-o fa-fw fa-lg'></i> 
+            <i className='fa fa-address-book-o fa-fw fa-lg'></i>
           </div>
           <div className="dragon-select-list-cell">
             {this.props.contactList.name}
@@ -130,7 +118,7 @@ class ContactList extends React.Component {
         </div>
     );
   }
-  
+
   selectContactList(contactList) {
     this.props.handleSelectContactList(contactList);
   }

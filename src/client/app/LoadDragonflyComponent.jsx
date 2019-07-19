@@ -1,4 +1,5 @@
 import React from 'react';
+import { detect } from 'detect-browser'
 
 class LoadDragonflyComponent extends React.Component {
 
@@ -8,12 +9,21 @@ class LoadDragonflyComponent extends React.Component {
     this.getOrderedBreakpoints = this.getOrderedBreakpoints.bind(this);
     this.handleValidateQuestion = this.handleValidateQuestion.bind(this);
     this.compareMilliseconds = this.compareMilliseconds.bind(this);
-
+    this.supportedBrowsers = this.supportedBrowsers.bind(this);
+    this.state = {
+      supportedBrowsers: true
+    }
   }
 
   componentDidMount() {
     var myThis = this;
     var dragonflyId = this.props.dragonflyId;
+
+    if ( !this.supportedBrowsers() ) {
+      this.setState({supportedBrowsers: false})
+      return;
+    }
+
     var params = {
         TableName : "Dragonflies",
         KeyConditionExpression: "#dragonflyId = :dragonflyId",
@@ -72,26 +82,75 @@ class LoadDragonflyComponent extends React.Component {
       }
     });
 
+  }
 
+
+  supportedBrowsers() {
+    const browser = detect();
+    switch (browser && browser.name) {
+      case 'chrome':
+      case 'firefox':
+      case 'safari':
+      case 'ios':
+      case 'crios':
+      case 'fxios':
+        return true;
+        break;
+      default:
+        return false;
+    }
   }
 
 
   render() {
 
-    return (
+    var isSupportedBrowsers = this.state.supportedBrowsers;
 
-      <div className="row">
-        <div className="col-sm-3">
+    if ( isSupportedBrowsers ) {
+      return (
+        <div className="row">
+          <div className="col-sm-3">
+
+          </div>
+          <div className="col-sm-6">
+                <i className='fa fa-circle-o-notch fa-spin'></i> Loading Dragonfly
+          </div>
+          <div className="col-sm-3">
+          </div>
+        </div>
+      );
+    } else {
+      return (
+        <div className="dragonfly-unsupported">
+          <h1 className="title">
+            OOPS!
+            <br/>
+            YOUR BROWSER IS NOT SUPPORTED.
+          </h1>
+          <p className="text">To view this experience, please upgrade to the latest one of these browsers</p>
+          <div className="supported-browsers-list">
+            <div className="supported-browsers-item browser-safari">
+              <img src="./images/safari.png" className="browser-icon" />
+              <p className="supported-browser-information">Apple Safari</p>
+            </div>
+            <div className="supported-browsers-item browser-firefox">
+              <a href="https://www.mozilla.org/en-US/firefox/all/">
+                <img src="./images/firefox.png" className="browser-icon" />
+                <p className="supported-browser-information">Mozilla Firefox</p>
+              </a>
+            </div>
+            <div className="supported-browsers-item browser-chrome">
+              <a href="https://www.google.com/intl/en/chrome/">
+                <img src="./images/chrome.png" className="browser-icon" />
+                <p className="supported-browser-information">Google Chrome</p>
+              </a>
+            </div>
+          </div>
 
         </div>
-        <div className="col-sm-6">
-              <i className='fa fa-circle-o-notch fa-spin'></i> Loading Dragonfly
-        </div>
-        <div className="col-sm-3">
-        </div>
-      </div>
+      )
+    }
 
-    );
   }
 
 
@@ -104,59 +163,58 @@ class LoadDragonflyComponent extends React.Component {
     var isValidQuestion = false;
     var totalWeight = 0;
     var totalQuestionCount = 0;
-
-    for (var i = 0; i < breakpoints.length; i++) {
-      var breakpoint = breakpoints[i];
-      var questions = breakpoint.questions;
-
-
-      // first, create a brand new breakpoint that just has the milliseconds property
-      validBreakpoint = {};
-      validBreakpoint.milliseconds = breakpoint.milliseconds;
+    if ( breakpoints !== undefined ) {
+      for (var i = 0; i < breakpoints.length; i++) {
+        var breakpoint = breakpoints[i];
+        var questions = breakpoint.questions;
 
 
-      // next, go through the questions and only add in valid questions
-      validQuestions = [];
-
-      if (questions != null) {
-            for (var j = 0; j < questions.length; j++) {
-                  var question = questions[j];
-
-                  question.answers[0].isSelected = false;
-                  question.answers[1].isSelected = false;
-                  question.answers[2].isSelected = false;
-                  question.answers[3].isSelected = false;
-                  question.answers[4].isSelected = false;
-
-                  isValidQuestion = this.handleValidateQuestion(question);
+        // first, create a brand new breakpoint that just has the milliseconds property
+        validBreakpoint = {};
+        validBreakpoint.milliseconds = breakpoint.milliseconds;
 
 
-                  if (isValidQuestion) {
-                    if (questions[j].weight === undefined) { questions[j].weight = 2.5; }
-                    validQuestions.push(question);
+        // next, go through the questions and only add in valid questions
+        validQuestions = [];
 
-                    totalWeight = totalWeight + questions[j].weight;
-                    totalQuestionCount = totalQuestionCount + 1;
-                  }
-            }
+        if (questions != null) {
+              for (var j = 0; j < questions.length; j++) {
+                    var question = questions[j];
+
+                    question.answers[0].isSelected = false;
+                    question.answers[1].isSelected = false;
+                    question.answers[2].isSelected = false;
+                    question.answers[3].isSelected = false;
+                    question.answers[4].isSelected = false;
+
+                    isValidQuestion = this.handleValidateQuestion(question);
+
+
+                    if (isValidQuestion) {
+                      if (questions[j].weight === undefined) { questions[j].weight = 2.5; }
+                      validQuestions.push(question);
+
+                      totalWeight = totalWeight + questions[j].weight;
+                      totalQuestionCount = totalQuestionCount + 1;
+                    }
+              }
+        }
+
+
+        // third, for breakpoints with valid questions, add those breakpoints in
+        if (validQuestions.length != 0) {
+              validBreakpoint.questions = validQuestions;
+              validBreakpoint.totalWeight = totalWeight;
+              validBreakpoints.push(validBreakpoint);
+        }
+
       }
 
-
-      // third, for breakpoints with valid questions, add those breakpoints in
-      if (validQuestions.length != 0) {
-            validBreakpoint.questions = validQuestions;
-            validBreakpoint.totalWeight = totalWeight;
-            validBreakpoints.push(validBreakpoint);
-      }
-
-
-
-
+      sessionValidBreakpoints.breakpoints = validBreakpoints;
+      sessionValidBreakpoints.totalWeight = totalWeight;
+      sessionValidBreakpoints.totalQuestionCount = totalQuestionCount;
     }
 
-    sessionValidBreakpoints.breakpoints = validBreakpoints;
-    sessionValidBreakpoints.totalWeight = totalWeight;
-    sessionValidBreakpoints.totalQuestionCount = totalQuestionCount;
 
     return sessionValidBreakpoints;
   }

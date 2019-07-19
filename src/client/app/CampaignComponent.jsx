@@ -127,7 +127,11 @@ class CampaignComponent extends React.Component {
               <div className="col-sm-4">
                 <h4>Expiration Date</h4>
                 <i className='fa fa-calendar-times-o fa-fw'></i>
-                {this.props.campaign.expirationDate || 'Not set'}
+                {this.props.campaign.expirationDate ?
+                    (this.props.campaign.expirationDate + ' at 00:00:00 GMT-4')
+                    :
+                    'Not set'
+                }
               </div>
             </div>
 

@@ -13,6 +13,8 @@ class DragonflyStartComponent extends React.Component {
     };
     this.titleCase = this.titleCase.bind(this);
     this.showCustomText = this.showCustomText.bind(this);
+    this.checkIfTimestampExpired = this.checkIfTimestampExpired.bind(this);
+    this.getDateObject = this.getDateObject.bind(this);
   }
 
 
@@ -37,16 +39,22 @@ class DragonflyStartComponent extends React.Component {
 
     // Determine if Campaign Date is Expired
     var endDate = this.currentCampaign.expirationDate;
-    if (endDate) {
-      var today = new Date().getTime();
-      if (today >= Date.parse(endDate)) {
-        this.campaignIsExpired = true;
-      }
-    }
-
+    this.campaignIsExpired = this.checkIfTimestampExpired(endDate);
   }
 
   componentDidMount() {
+    var dragonfly = this.props.dragonfly;
+
+    mixpanel.track('Session Opened', {
+      'DragonflyId': dragonfly.dragonflyId,
+      'CampaignId': dragonfly.campaignId,
+      'FirstName': dragonfly.contact.first,
+      'LastName': dragonfly.contact.last,
+      'Email': dragonfly.contact.email,
+      'Incentive': dragonfly.incentive,
+      'CheckboxManualDemo': dragonfly.checkbox
+    });
+
     if (typeof window !== 'undefined') {
       var path = window.location.protocol + '//' + window.location.host;
       this.setState({path : path});
@@ -87,7 +95,7 @@ class DragonflyStartComponent extends React.Component {
             <br/><br/>
             { this.showCustomText(dragonfly.customTexts, "welcome") }
             <br/><br/>
-            You can earn ${incentive} cash if you answer {totalQuestionCount} questions correctly.
+            You can earn ${incentive} payment if you answer {totalQuestionCount} questions appropriately.
             <br/><br/>
             { this.showCustomText(dragonfly.customTexts, "payment") }
             <br/><br/><br/>
@@ -116,7 +124,7 @@ class DragonflyStartComponent extends React.Component {
             <br/><br/>
             { this.showCustomText(dragonfly.customTexts, "welcome") }
             <br/><br/>
-            You can earn ${incentive} cash if you answer {totalQuestionCount} questions correctly.
+            You can earn ${incentive} payment if you answer {totalQuestionCount} questions appropriately.
             <br/><br/>
             { this.showCustomText(dragonfly.customTexts, "payment") }
             <br/><br/><br/>
@@ -149,6 +157,41 @@ class DragonflyStartComponent extends React.Component {
     return str.join(' ');
   }
 
+  checkIfTimestampExpired(expDate){
+    if (expDate === undefined) {
+      return false;
+    }
+
+    var currentDate = new Date().toLocaleString("en-US", {timeZone: "America/New_York"}).split(',')[0];
+    currentDate = this.getDateObject(currentDate, '/', 'mm/dd/yy');
+    var expirationDate = this.getDateObject(expDate, '-', 'yy/mm/dd');
+
+    if (currentDate.year > expirationDate.year) {
+      return true;
+    }
+
+    if (currentDate.year === expirationDate.year) {
+      if (currentDate.month > expirationDate.month) {
+        return true;
+      }
+
+      if (currentDate.month === expirationDate.month && currentDate.day >= expirationDate.day) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  getDateObject(stringDate, separator, format) {
+    var date = stringDate.split(separator);
+    if (format == 'mm/dd/yy'){
+      return {month: parseInt(date[0]), day: parseInt(date[1]), year: parseInt(date[2])};
+    } else if (format == 'yy/mm/dd'){
+      return {year: parseInt(date[0]), month: parseInt(date[1]), day: parseInt(date[2])};
+    }
+  }
+
   expiredNotice() {
     return (
       <div className="row">
@@ -163,7 +206,7 @@ class DragonflyStartComponent extends React.Component {
               </a>
             </div>
             <br/>
-            <h3>This Dragonfly link has expired</h3>
+            <h3>This Dragonfly link has expired. Please contact the sender if you have any questions.</h3>
           </div>
         </div>
       </div>
