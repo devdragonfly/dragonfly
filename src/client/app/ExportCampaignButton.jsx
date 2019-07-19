@@ -46,9 +46,8 @@ class ExportCampaignButton extends React.Component {
       'Prefered Contact Method',
       'Feedback'
     ];
+    var body = '';
     const dragonfliesData = this.props.dragonfliesData;
-    const columnsFilledByDefault = 6;
-    const columnsEmptyByDefault = headers.length - columnsFilledByDefault;
     const preferedContactInfo = preferences =>  {
       return preferences.emailOrText == 'email' ? preferences.email : preferences.mobile
     };
@@ -62,22 +61,22 @@ class ExportCampaignButton extends React.Component {
       return result;
     }
 
-    var body = '';
-
     // Append Headers with Campaign questions
-    console.log('Breakpoints', dragonfliesData[0].session.breakpoints);
     if (dragonfliesData[0].session.breakpoints) {
       dragonfliesData[0].session.breakpoints.forEach( breakpoint => {
-        breakpoint.questions.forEach( question => {
-          headers.push( wrapInQuotes(question.title) );
-        });
+        if (breakpoint.questions) {
+          breakpoint.questions.forEach( question => {
+            headers.push( wrapInQuotes(question.title) );
+          });
+        }
       });
     }
-
+    // These must be defined after all headers set up
+    const columnsFilledByDefault = 6;
+    const columnsEmptyByDefault = headers.length - columnsFilledByDefault;
     headers = headers.join() + '\n';
 
     // Generate CSV records
-    console.log('Dragonflies', dragonfliesData);
     dragonfliesData.forEach( dragonfly => {
       var record_attributes = [];
 
@@ -99,7 +98,6 @@ class ExportCampaignButton extends React.Component {
         );
 
 
-        console.log('Results', dragonfly.results);
         dragonfly.results.forEach( result => {
           if (result.type == 'openEnded') {
             record_attributes.push( wrapInQuotes(result.openEndedAnswer) );
