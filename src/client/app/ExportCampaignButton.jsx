@@ -63,21 +63,23 @@ class ExportCampaignButton extends React.Component {
 
     // Append Headers with Campaign questions
     if (dragonfliesData[0].session.breakpoints) {
-      dragonfliesData[0].session.breakpoints.forEach( breakpoint => {
-        if (breakpoint.questions) {
-          breakpoint.questions.forEach( question => {
-            headers.push( wrapInQuotes(question.title) );
-          });
+      dragonfliesData[0].session.breakpoints.forEach(breakpoint => {
+        if (!breakpoint.questions) {
+          return;
         }
+        breakpoint.questions.forEach(question => {
+          headers.push(wrapInQuotes(question.title));
+        });
       });
     }
+
     // These must be defined after all headers set up
     const columnsFilledByDefault = 6;
     const columnsEmptyByDefault = headers.length - columnsFilledByDefault;
     headers = headers.join() + '\n';
 
     // Generate CSV records
-    dragonfliesData.forEach( dragonfly => {
+    dragonfliesData.forEach(dragonfly => {
       var record_attributes = [];
 
       record_attributes.push(
@@ -98,7 +100,7 @@ class ExportCampaignButton extends React.Component {
         );
 
 
-        dragonfly.results.forEach( result => {
+        dragonfly.results.forEach(result => {
           if (result.type == 'openEnded') {
             record_attributes.push( wrapInQuotes(result.openEndedAnswer) );
             return;
