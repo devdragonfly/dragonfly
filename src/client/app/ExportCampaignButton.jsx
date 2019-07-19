@@ -2,59 +2,38 @@ import React from 'react';
 
 const buttonClassName = 'btn btn-primary';
 const errorMessage = 'Sorry! Error occured during CSV file generation'
+const fileBase = 'data:text/csv;charset=utf-8,';
 
 class ExportCampaignButton extends React.Component {
 
   constructor(props) {
     super(props);
-    this.href_base = 'data:text/csv;charset=utf-8,';
-
     this.state = {
-                  csvGenerated: false,
+                  csvAlreadyGenerated: false,
                   filename: 'dragonflies.csv',
-                  data: this.href_base + errorMessage
+                  fileContent: encodeURI(fileBase + errorMessage)
     };
-
-    this.handleOnClick = this.handleOnClick.bind(this)
+    this.handleOnClick = this.handleOnClick.bind(this);
   }
 
   render() {
     return (
-      <a className={buttonClassName} onClick={this.handleOnClick} href={this.state.data} download={this.state.filename}>
+      <a className={buttonClassName} onClick={this.handleOnClick} href={this.state.fileContent} download={this.state.filename}>
         Click to download CSV
       </a>
     );
   }
 
   handleOnClick() {
-    if (!this.state.csvGenerated) {
+    if (!this.state.csvAlreadyGenerated) {
       this.setState({
-        csvGenerated: true,
-        data: this.buildCsvData()
+        csvAlreadyGenerated: true,
+        fileContent: this.buildCsvData()
       });
     }
-
   }
 
   buildCsvData() {
-    var dragonfliesData = this.props.dragonfliesData;
-
-    var preferedContactInfo = (preferences) =>  {
-      return preferences.emailOrText == 'email' ? preferences.email : preferences.mobile
-    };
-
-    var formatDate = (date) => { return date ? new Date(date) : '' };
-
-    var wrapInQuotes = (sentence) => '\"' + sentence + '\"';
-
-    var fillEmptyFields = (fieldsCount) => {
-      var result = '';
-      for (var i = 0; i < emptyFieldsLength; i++) {
-        result += '-,'
-      }
-      return result;
-    }
-
     var headers = [
       'First Name',
       'Last Name',
@@ -67,25 +46,39 @@ class ExportCampaignButton extends React.Component {
       'Prefered Contact Method',
       'Feedback'
     ];
+    const dragonfliesData = this.props.dragonfliesData;
+    const columnsFilledByDefault = 6;
+    const columnsEmptyByDefault = headers.length - columnsFilledByDefault;
+    const preferedContactInfo = preferences =>  {
+      return preferences.emailOrText == 'email' ? preferences.email : preferences.mobile
+    };
+    const formatDate = date => date ? new Date(date) : '';
+    const wrapInQuotes = sentence => '\"' + sentence + '\"';
+    const fillEmptyFields = fieldsCount => {
+      var result = '';
+      for (var i = 0; i < columnsEmptyByDefault; i++) {
+        result += '-,'
+      }
+      return result;
+    }
+
     var body = '';
 
     // Append Headers with Campaign questions
+    console.log('Breakpoints', dragonfliesData[0].session.breakpoints);
     if (dragonfliesData[0].session.breakpoints) {
-      dragonfliesData[0].session.breakpoints.forEach(function(breakpoint) {
-        breakpoint.questions.forEach(function(question) {
+      dragonfliesData[0].session.breakpoints.forEach( breakpoint => {
+        breakpoint.questions.forEach( question => {
           headers.push( wrapInQuotes(question.title) );
         });
       });
     }
 
-    // Data for filling empty boxes
-    var filledByDefault = 6;
-    var emptyFieldsLength = headers.length - filledByDefault;
-
     headers = headers.join() + '\n';
 
     // Generate CSV records
-    dragonfliesData.forEach(function(dragonfly) {
+    console.log('Dragonflies', dragonfliesData);
+    dragonfliesData.forEach( dragonfly => {
       var record_attributes = [];
 
       record_attributes.push(
@@ -106,21 +99,25 @@ class ExportCampaignButton extends React.Component {
         );
 
 
-        dragonfly.results.forEach(function(result) {
+        console.log('Results', dragonfly.results);
+        dragonfly.results.forEach( result => {
           if (result.type == 'openEnded') {
-            record_attributes.push(wrapInQuotes(result.openEndedAnswer));
+            record_attributes.push( wrapInQuotes(result.openEndedAnswer) );
             return;
           }
-          record_attributes.push(wrapInQuotes(result.answerValues.join()));
+          record_attributes.push( wrapInQuotes(result.answerValues.join()) );
         });
       } else {
-        record_attributes.push(wrapInQuotes('Not Completed'), fillEmptyFields(emptyFieldsLength));
+        record_attributes.push(
+          wrapInQuotes('Not Completed'),
+          fillEmptyFields(columnsEmptyByDefault)
+        );
       }
 
       body += (record_attributes.join() + '\n');
     });
 
-    return encodeURI(this.href_base + headers + body);
+    return encodeURI(fileBase + headers + body);
   }
 
 }

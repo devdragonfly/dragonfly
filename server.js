@@ -33,23 +33,27 @@ router.use(fileUpload());
 
 io.on('connection', function (socket) {
     messages.forEach(function (data) {
+      console.log('connection s.io', data);
       socket.emit('message', data);
     });
 
     sockets.push(socket);
 
     socket.on('disconnect', function () {
+      console.log('disconnect s.io');
       sockets.splice(sockets.indexOf(socket), 1);
       updateRoster();
     });
 
     socket.on('message', function (msg) {
+      console.log('message s.io', msg);
       var text = String(msg || '');
 
       if (!text)
         return;
 
       socket.get('name', function (err, name) {
+        console.log('get name s.io', name);
         var data = {
           name: name,
           text: text
