@@ -77,36 +77,6 @@ class DragonflyStartComponent extends React.Component {
     var checkbox = dragonfly.checkbox;
 
     // checkbox manual demo
-    if (checkbox) {
-      return (
-      <div className="row">
-        <div className="col-sm-2"></div>
-        <div className="col-sm-8">
-          <br/><br/>
-          <div className="jumbotron dragon-enlarge bg-white">
-            <div className="clearfix">
-              <a href={this.state.path} target="_blank">
-                <div className="dragon-powered-by divLeft">
-                  <LogoComponent dragonfly={dragonfly} />
-                </div>
-              </a>
-            </div>
-            <h2>Hello {first} {last},</h2>
-            <br/><br/>
-            { this.showCustomText(dragonfly.customTexts, "welcome") }
-            <br/><br/>
-            You can earn ${incentive} payment if you answer {totalQuestionCount} questions appropriately.
-            <br/><br/>
-            { this.showCustomText(dragonfly.customTexts, "payment") }
-            <br/><br/><br/>
-            <Link to={`dragonflyplay`} className="btn btn-primary btn-lg">Start Now <i className='fa fa-chevron-circle-right'></i></Link>
-          </div>
-        </div>
-        <div className="col-sm-2"></div>
-      </div>
-    );
-    }
-
     return (
       <div className="row">
         <div className="col-sm-2"></div>
@@ -124,7 +94,9 @@ class DragonflyStartComponent extends React.Component {
             <br/><br/>
             { this.showCustomText(dragonfly.customTexts, "welcome") }
             <br/><br/>
-            You can earn ${incentive} payment if you answer {totalQuestionCount} questions appropriately.
+            <span>
+              You can earn ${incentive} if you answer {totalQuestionCount} questions appropriately and click the  blue SUBMIT button at the end of the session.
+            </span>
             <br/><br/>
             { this.showCustomText(dragonfly.customTexts, "payment") }
             <br/><br/><br/>

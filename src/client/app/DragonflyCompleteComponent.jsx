@@ -153,10 +153,14 @@ class DragonflyCompleteComponent extends React.Component {
     var mobile = preferences.mobile;
     var checkbox = dragonfly.checkbox;
 
-    var paymentText = "We will email you at " + email + " with your payment of $" + earned + ".";
+    var paymentText;
     if (preferences.emailOrText == "text") {
       paymentText = "We will send your payment of $" + earned + " using Venmo to " + mobile + ".";
+    } else {
+      paymentText = "We will email you at " + email + " with your payment of $" + earned + ".";
     }
+    paymentText += ' Please screenshot this confirmation page for your records and contact the sender if you have any questions or concerns.';
+
 
     // checkbox trigger manual deliver
     if (checkbox) {
@@ -179,7 +183,13 @@ class DragonflyCompleteComponent extends React.Component {
                     </a>
                   </div>
 
-                  <h2>Thank you {first} you earned ${earned}!</h2>
+                  <h1>
+                    Thank you {first} you earned ${earned}!
+                  </h1>
+
+                  <h2>
+                    Please screenshot this confirmation page for your records and contact the sender if you have any questions or concerns.
+                  </h2>
 
                   <br/>
 

@@ -58,8 +58,7 @@ class DragonflyPreferencesComponent extends React.Component {
   }
 
   onUnload(event) {
-    event.preventDefault();
-    return event.returnValue = 'Are you sure you want to close?';
+    return event.returnValue = 'Are you sure you want to leave this Session? The session is not complete. Any progress and data will be lost if you leave at this time without Submitting your answers at the end of the session.';
   }
 
   render() {
@@ -88,7 +87,13 @@ class DragonflyPreferencesComponent extends React.Component {
                 </a>
               </div>
 
-              <h2>Thank you {first} you earned ${earned}!</h2>
+
+              <h2>
+                Thank you {first} your session is almost finished.
+                <br/>
+                After you complete this page, please make sure to click the SUBMIT button at the bottom of the page
+                to complete the session and earn your {earned}.
+              </h2>
 
               <br/>
               <br/><br/>
@@ -108,7 +113,7 @@ class DragonflyPreferencesComponent extends React.Component {
                 <textarea rows="4" cols="50" value={this.state.openTextValue} onChange={this.handleOpenTextChange}></textarea>
                 <br/>
                 <br/>
-                <input type="submit" className={this.state.buttonRestClassName} value="Save" />
+                <input type="submit" className={this.state.buttonRestClassName} value="SUBMIT" />
                 <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Saving</div>
               </form>
             </div>
@@ -132,9 +137,13 @@ class DragonflyPreferencesComponent extends React.Component {
               </a>
             </div>
             <form onSubmit={this.handleSubmit}>
-              <h2>Congratulations {first}!</h2>
-              <br/>
-              <h4>Your session is complete and you have earned ${earned}.</h4>
+
+              <h2>
+                Thank you {first} your session is almost finished.
+                <br/>
+                After you complete this page, please make sure to click the SUBMIT button at the bottom of the page
+                to complete the session and earn your {earned}.
+              </h2>
               <br/>
               <h4>We are going to pay you through the Venmo App, please indicate your preferred contact method:</h4>
               <div className="dragon-select-list-row">
@@ -193,7 +202,7 @@ class DragonflyPreferencesComponent extends React.Component {
               <textarea rows="4" cols="50" value={this.state.openTextValue} onChange={this.handleOpenTextChange}></textarea>
               <br/>
               <br/>
-              <input type="submit" className={this.state.buttonRestClassName} value="Save" />
+              <input type="submit" className={this.state.buttonRestClassName} value="SUBMIT" />
               <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Saving</div>
             </form>
           </div>
