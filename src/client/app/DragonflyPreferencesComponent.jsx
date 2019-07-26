@@ -140,7 +140,6 @@ class DragonflyPreferencesComponent extends React.Component {
             </div>
             <form onSubmit={this.handleSubmit}>
 
-
               <h2>
                 Thank you {first} your session is almost finished.
               </h2>
