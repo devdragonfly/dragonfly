@@ -94,7 +94,7 @@ class DragonflyPreferencesComponent extends React.Component {
               <br/>
               <h3>
                 After you complete this page, please make sure to click the SUBMIT button at the bottom of the page
-                to complete the session and earn your ${earned}.
+                to end the session and earn your ${earned}.
               </h3>
 
               <br/>
@@ -146,7 +146,7 @@ class DragonflyPreferencesComponent extends React.Component {
               <br/>
               <h3>
                 After you complete this page, please make sure to click the SUBMIT button at the bottom of the page
-                to complete the session and earn your ${earned}.
+                to end the session and earn your ${earned}.
               </h3>
 
               <br/>
