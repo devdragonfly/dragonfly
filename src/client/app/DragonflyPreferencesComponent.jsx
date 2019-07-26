@@ -90,10 +90,12 @@ class DragonflyPreferencesComponent extends React.Component {
 
               <h2>
                 Thank you {first} your session is almost finished.
-                <br/>
-                After you complete this page, please make sure to click the SUBMIT button at the bottom of the page
-                to complete the session and earn your {earned}.
               </h2>
+              <br/>
+              <h3>
+                After you complete this page, please make sure to click the SUBMIT button at the bottom of the page
+                to complete the session and earn your ${earned}.
+              </h3>
 
               <br/>
               <br/><br/>
@@ -138,12 +140,16 @@ class DragonflyPreferencesComponent extends React.Component {
             </div>
             <form onSubmit={this.handleSubmit}>
 
+
               <h2>
                 Thank you {first} your session is almost finished.
-                <br/>
-                After you complete this page, please make sure to click the SUBMIT button at the bottom of the page
-                to complete the session and earn your {earned}.
               </h2>
+              <br/>
+              <h3>
+                After you complete this page, please make sure to click the SUBMIT button at the bottom of the page
+                to complete the session and earn your ${earned}.
+              </h3>
+
               <br/>
               <h4>We are going to pay you through the Venmo App, please indicate your preferred contact method:</h4>
               <div className="dragon-select-list-row">
