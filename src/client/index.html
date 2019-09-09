@@ -1,88 +1,140 @@
-<html>
-    <head>
-        <!-- start Mixpanel -->
-        <script src="mixpanel.js"></script>
+<!doctype html>
+<html lang="zxx">
+<head>
+  
+  <!-- Meta Tags-->
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="description" content="Dragonfly Incentivized Information">
+  <meta name="keywords" content="Dragonfly, Incentivized Information, Engagement">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+
+  <title>Dragonfly - Incentivized Information</title>
+  <!-- Favicon -->
+  <link rel="shortcut icon" type="image/x-icon" href="assets/favicon.ico">
+
+  <!-- Plugin CSS -->
+  <link href="assets/plugin/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/plugin/font-awesome/css/all.min.css" rel="stylesheet">
+  <link href="assets/plugin/et-line/style.css" rel="stylesheet">
+  <link href="assets/plugin/themify-icons/themify-icons.css" rel="stylesheet">
+  <link href="assets/plugin/owl-carousel/css/owl.carousel.min.css" rel="stylesheet">
+  <link href="assets/plugin/magnific/magnific-popup.css" rel="stylesheet">
+  <!-- End -->
+
+  <!-- Theme css -->
+  <link href="assets/style/style.css" rel="stylesheet">
+  <link href="assets/fonts/css/circular-std.css" rel="stylesheet">
+  <!-- End -->
+
+  <!-- start Mixpanel -->
+  <script src="mixpanel.js"></script>
+
+  <!-- Hotjar Tracking Code for dragonfly.one -->
+  <script>
+    if (window.location.hostname === "www.dragonfly.one" || window.location.hostname === "sample-env-1.jxswmapwkw.us-west-2.elasticbeanstalk.com") {
+      (function (h, o, t, j, a, r) {
+        h.hj = h.hj || function () { (h.hj.q = h.hj.q || []).push(arguments) };
+        h._hjSettings = { hjid: 972091, hjsv: 6 };
+        a = o.getElementsByTagName('head')[0];
+        r = o.createElement('script'); r.async = 1;
+        r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+        a.appendChild(r);
+      })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+    }
+  </script>
 
 
-        <!-- Hotjar Tracking Code for dragonfly.one -->
-        <script>
-          if (window.location.hostname === "www.dragonfly.one" || window.location.hostname === "sample-env-1.jxswmapwkw.us-west-2.elasticbeanstalk.com") {
-            (function(h,o,t,j,a,r){
-            h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-            h._hjSettings={hjid:972091,hjsv:6};
-            a=o.getElementsByTagName('head')[0];
-            r=o.createElement('script');r.async=1;
-            r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-            a.appendChild(r);
-            })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-          }
-        </script>
+  <!-- Hotjar Tracking Code for http://www.dragonfly.one/ Developer Account -->
+  <script>
+    if (window.location.hostname != "localhost") {
+      (function (h, o, t, j, a, r) {
+        h.hj = h.hj || function () { (h.hj.q = h.hj.q || []).push(arguments) };
+        h._hjSettings = { hjid: 1352267, hjsv: 6 };
+        a = o.getElementsByTagName('head')[0];
+        r = o.createElement('script'); r.async = 1;
+        r.src = t + h._hjSettings.hjid + j + h._hjSettings.hjsv;
+        a.appendChild(r);
+      })(window, document, 'https://static.hotjar.com/c/hotjar-', '.js?sv=');
+    }
+  </script>
+
+  <!-- Global site tag (gtag.js) - Developer Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-141832547-1"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'UA-141832547-1');
+  </script>
 
 
-        <!-- Hotjar Tracking Code for http://www.dragonfly.one/ Developer Account -->
-        <script>
-          if (window.location.hostname != "localhost") {
-            (function(h,o,t,j,a,r){
-              h.hj=h.hj||function(){(h.hj.q=h.hj.q||[]).push(arguments)};
-              h._hjSettings={hjid:1352267,hjsv:6};
-              a=o.getElementsByTagName('head')[0];
-              r=o.createElement('script');r.async=1;
-              r.src=t+h._hjSettings.hjid+j+h._hjSettings.hjsv;
-              a.appendChild(r);
-            })(window,document,'https://static.hotjar.com/c/hotjar-','.js?sv=');
-          }
-        </script>
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=UA-141842722-1"></script>
+  <script>
+    if (window.location.hostname === "www.dragonfly.one" || window.location.hostname === "sample-env-1.jxswmapwkw.us-west-2.elasticbeanstalk.com") {
+      window.dataLayer = window.dataLayer || [];
+      function gtag() { dataLayer.push(arguments); }
+      gtag('js', new Date());
+      gtag('config', 'UA-141842722-1');
+    }
+  </script>
 
-        <!-- Global site tag (gtag.js) - Developer Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-141832547-1"></script>
-        <script>
-          window.dataLayer = window.dataLayer || [];
-          function gtag(){dataLayer.push(arguments);}
-          gtag('js', new Date());
-          gtag('config', 'UA-141832547-1');
-        </script>
+  <script src="rollbar.js"></script>
 
 
-        <!-- Global site tag (gtag.js) - Google Analytics -->
-        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-141842722-1"></script>
-        <script>
-          if (window.location.hostname === "www.dragonfly.one" || window.location.hostname === "sample-env-1.jxswmapwkw.us-west-2.elasticbeanstalk.com") {
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'UA-141842722-1');
-          }
-        </script>
+  <base href="/" />
+  <link rel="stylesheet" type="text/css" href="custom.css">
+  <!-- <meta name="viewport" content="width=device-width, initial-scale=1"> -->
 
-        <script src="rollbar.js"></script>
+  <!-- Latest compiled and minified CSS -->
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css"
+    integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous"> -->
 
+  <!-- Optional theme -->
+  <!-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css"
+    integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous"> -->
 
-        <base href="/" />
-        <link rel="stylesheet" type="text/css" href="custom.css">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-
-        <!-- Latest compiled and minified CSS -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
-
-        <!-- Optional theme -->
-        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
-
-        <!-- Latest compiled and minified JavaScript -->
-        <script src="https://code.jquery.com/jquery-3.1.1.min.js" integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
-        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+  <!-- Latest compiled and minified JavaScript -->
+  <!-- <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+    integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"
+    integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script> -->
 
 
-        <script src="https://use.fontawesome.com/aa73041df6.js"></script>
+  <!-- <script src="https://use.fontawesome.com/aa73041df6.js"></script> -->
 
-        <!-- VIDEO.JS VIDEO PLAYER -->
-        <link href="http://vjs.zencdn.net/5.19/video-js.min.css" rel="stylesheet">
-        <script src="http://vjs.zencdn.net/5.19/video.min.js"></script>
+  <!-- VIDEO.JS VIDEO PLAYER -->
+  <link href="http://vjs.zencdn.net/5.19/video-js.min.css" rel="stylesheet">
+  <script src="http://vjs.zencdn.net/5.19/video.min.js"></script>
 
-    </head>
-    <body>
-        <!--Container for React rendering-->
-        <div id="container" class="container-fluid"></div>
-        <!--Bundled file-->
-        <script src="bundle.js"></script>
-    </body>
+</head>
+
+<body data-spy="scroll" data-target="#navbar" data-offset="98">
+  <!--Container for React rendering-->
+  <!-- <div id="container" class="container-fluid"></div> -->
+
+  <div id="container"></div>
+
+<!-- Jquery -->
+<script src="assets/js/jquery-3.2.1.min.js"></script>
+<script src="assets/js/jquery-migrate-3.0.0.min.js"></script>
+<!-- End -->
+
+<!-- Plugin JS -->
+<script src="assets/plugin/appear/jquery.appear.js"></script>
+<script src="assets/plugin/bootstrap/js/popper.min.js"></script>
+<script src="assets/plugin/bootstrap/js/bootstrap.js"></script>
+<!-- End -->
+
+<!-- Custom -->
+<script src="assets/js/custom.js"></script>
+<!-- End -->
+
+  <!--Bundled file-->
+  <script src="bundle.js"></script>
+</body>
+
 </html>

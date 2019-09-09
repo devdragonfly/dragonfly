@@ -6,7 +6,7 @@ class NavInsideComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {menuClass: "dragon-hidden"};
+    this.state = { menuClass: "dragon-hidden" };
     this.mouseOver = this.mouseOver.bind(this);
     this.mouseOut = this.mouseOut.bind(this);
     this.handleSelectCreateOrganization = this.handleSelectCreateOrganization.bind(this);
@@ -14,12 +14,12 @@ class NavInsideComponent extends React.Component {
 
 
   mouseOver() {
-      this.setState({menuClass: "dragon-menu-visible"});
-      
+    this.setState({ menuClass: "dragon-menu-visible" });
+
   }
 
   mouseOut() {
-      this.setState({menuClass: "dragon-hidden"});
+    this.setState({ menuClass: "dragon-hidden" });
   }
 
 
@@ -32,39 +32,39 @@ class NavInsideComponent extends React.Component {
     var history = this.props.history;
     var mouseOut = this.mouseOut;
     var organizations = this.props.organizations.map((organization, i) => {
-      return <Organization name={organization.name} organizationId={organization.organizationId} handleLoadOrganization={handleLoadOrganization} mouseOut={mouseOut} history={history}/>
+      return <Organization name={organization.name} organizationId={organization.organizationId} handleLoadOrganization={handleLoadOrganization} mouseOut={mouseOut} history={history} />
     });
-    
-    var userDropdown = function() {return <UserDropdownComponent handleSignOut={handleSignOut} email={email} history={history} /> }();
-    
-    var progressBar = function() { return '' }();
+
+    var userDropdown = function () { return <UserDropdownComponent handleSignOut={handleSignOut} email={email} history={history} /> }();
+
+    var progressBar = function () { return '' }();
     if (percent != 'not found') {
-      progressBar = function() {return <ProgressBar percent={percent} /> }();
+      progressBar = function () { return <ProgressBar percent={percent} /> }();
     }
-    
+
     return (
       <div className="row dragon-navbar-inside">
-        <div className="col-sm-2">
-            <div onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} className="dragon-org-menu">
-              <div className="dragon-org-name">{this.props.organizationName} <i className="fa fa-caret-down"></i></div>
-              <div className={this.state.menuClass}>
-                {organizations}
-                <div onClick={this.handleSelectCreateOrganization}>Create Organization</div>
-              </div>
+        <div className="col-sm-8">
+          <div onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} className="dragon-org-menu">
+            <div className="dragon-org-name">{this.props.organizationName} <i className="fa fa-caret-down"></i></div>
+            <div className={this.state.menuClass}>
+              {organizations}
+              <div onClick={this.handleSelectCreateOrganization}>Create Organization</div>
             </div>
+          </div>
         </div>
         <div className="col-sm-2">
           {progressBar}
         </div>
-        <div className="col-sm-8">
-            {userDropdown}
+        <div className="col-sm-2">
+          {userDropdown}
         </div>
-      </div>
+      </div >
     );
   }
-  
-  
-  
+
+
+
 
 
   handleSelectCreateOrganization() {
@@ -84,13 +84,13 @@ class Organization extends React.Component {
 
   render() {
     return (
-        <div onClick={this.handleSelectOrganization.bind(this, this.props.organizationId, this.props.name)}>
-          {this.props.name}
-        </div>
+      <div onClick={this.handleSelectOrganization.bind(this, this.props.organizationId, this.props.name)}>
+        {this.props.name}
+      </div>
     );
   }
-  
-  
+
+
   handleSelectOrganization(organizationid, name) {
     this.props.mouseOut();
     this.props.handleLoadOrganization(organizationid, name);
@@ -110,10 +110,10 @@ class ProgressBar extends React.Component {
   render() {
     var percent = this.props.percent;
     var width = percent + "%";
-    
+
     return (
       <div className="progress dragonfly-progress">
-        <div className="progress-bar" role="progressbar" aria-valuenow={percent} aria-valuemin="0" aria-valuemax="100" style={{width: width}}>
+        <div className="progress-bar" role="progressbar" aria-valuenow={percent} aria-valuemin="0" aria-valuemax="100" style={{ width: width }}>
           {percent}%
         </div>
       </div>

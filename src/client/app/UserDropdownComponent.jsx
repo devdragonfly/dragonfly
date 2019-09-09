@@ -33,7 +33,7 @@ class UserDropdownComponent extends React.Component {
   }
 
     mouseOver() {
-        this.setState({menuClass: "dragon-menu-visible dragon-menu-right"});
+        this.setState({menuClass: "dragon-menu-visible"});
 
     }
 
