@@ -42,11 +42,18 @@ class VideosComponent extends React.Component {
 
         <div className="row">
           {organizationMenu}
-          <div className="col-sm-6">
-            <h3>
-              Videos
-            </h3>
+          <div className="col-10">
 
+          <div className="row page_header_container">
+            <div className="col-12">
+              <h3 className="page_header_title float-left">Videos</h3>
+              <div className="page_header_action float-right">
+              <Link to={`uploadvideo`} className="btn btn-primary float-right"><i className='fa fa-plus'></i> Upload Video</Link>
+              </div>
+              <div className="clearfix"></div>
+              <hr className="page_header_divider" />
+            </div>
+          </div>
 
             <div className="dragon-select-list">
               {videosJsx}
@@ -54,11 +61,8 @@ class VideosComponent extends React.Component {
 
             <br/>
 
-            <Link to={`uploadvideo`} className="btn btn-primary"><i className='fa fa-plus'></i> Upload Video</Link>
-
           </div>
-          <div className="col-sm-4">
-          </div>
+          
         </div>
 
 

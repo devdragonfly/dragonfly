@@ -23,42 +23,53 @@ class CampaignsComponent extends React.Component {
     var handleLoadCampaign = this.props.handleLoadCampaign;
     var history = this.props.history;
 
-    var campaignsJsx = function() {return '' }();
+    var campaignsJsx = function () { return '' }();
 
     if (campaigns !== 'not found') {
-          if (campaigns.length === 0) {
-            campaignsJsx = function() {return 'No campaigns created yet.' }();
+      if (campaigns.length === 0) {
+        campaignsJsx = function () { return 'No campaigns created yet.' }();
 
-          } else {
-            campaignsJsx = this.props.campaigns.map((campaign, i) => {
-                return <Campaign campaign={campaign} handleLoadCampaign={handleLoadCampaign} history={history}/>
-            });
-          }
+      } else {
+        campaignsJsx = this.props.campaigns.map((campaign, i) => {
+          return <Campaign campaign={campaign} handleLoadCampaign={handleLoadCampaign} history={history} />
+        });
+      }
     }
 
-    var organizationMenu = function() {return <OrganizationMenuComponent current="campaigns" /> }();
+    var organizationMenu = function () { return <OrganizationMenuComponent current="campaigns" /> }();
 
 
     return (
+      <div id="comapings_component">
 
         <div className="row">
           {organizationMenu}
-          <div className="col-sm-6">
-            <h3>Campaigns</h3>
 
-            <div className="dragon-select-list">
+          <div className="col-10">
+
+            <div className="row page_header_container">
+              <div className="col-12">
+                <h3 className="page_header_title float-left">Campaigns</h3>
+                <div className="page_header_action float-right">
+                  <Link to={`createcampaign`} className="btn btn-primary float-right"><i className='fa fa-plus'></i> Create Campaign</Link>
+                </div>
+                <div className="clearfix"></div>
+                <hr className="page_header_divider"/>
+              </div>
+            </div>
+
+            <div className="row dragon-select-list">
               {campaignsJsx}
             </div>
 
-            <br/>
+            <br />
 
-            <Link to={`createcampaign`} className="btn btn-primary"><i className='fa fa-plus'></i> Create Campaign</Link>
 
           </div>
-          <div className="col-sm-4">
-          </div>
+
 
         </div>
+      </div>
 
 
 
@@ -80,14 +91,30 @@ class Campaign extends React.Component {
 
   render() {
     return (
-        <div onClick={this.handleSelectCampaign.bind(this, this.props.campaign)} className="dragon-select-list-row dragon-pointer">
+      <div>
+
+        <div id="campaign_component">
+          <div className="col-sm-4 campaign_card" onClick={this.handleSelectCampaign.bind(this, this.props.campaign)}>
+            <div className="card">
+              <img src="../assets/images/placeholders/placeholder_blue.png" class="card-img-top" alt="..." />
+              <div className="card-body">
+                <h5 className="card-title">{this.props.campaign.name}</h5>
+                <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {/* <div onClick={this.handleSelectCampaign.bind(this, this.props.campaign)} className="dragon-select-list-row dragon-pointer">
           <div className="dragon-select-list-cell">
             <i className='fa fa-line-chart fa-fw fa-lg'></i>
           </div>
           <div className="dragon-select-list-cell">
             {this.props.campaign.name}
           </div>
-        </div>
+        </div> */}
+
+      </div>
     );
   }
 

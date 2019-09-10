@@ -1,0 +1,30 @@
+// Color system
+$px-theme:						#265cdc !default; // Main theme
+$px-theme2nd:					#00c99c !default; // 2nd theme
+$px-body-color:					#57667E !default; // Body text color
+$px-black:						#000000 !default; 
+$px-white:						#ffffff !default;
+$px-dark:						#233D63 !default; // Dark Text Color
+$px-gray:						#f5f6ff !default; // Gray Color
+
+// Font system
+$px-base-font:					17px !default;
+$px-h1-font:                	40px !default;
+$px-h2-font:                	30px !default;
+$px-h3-font:                	28px !default;
+$px-h4-font:                	24px !default;
+$px-h5-font:                	20px !default;
+$px-h6-font:                	$px-base-font !default;
+
+// Custom Bg
+$px-yellow:						#f5a416 !default;
+$px-green:						#11e279 !default;
+$px-blue:						#15b2ec !default;
+$px-pink:						#f12699 !default;
+
+
+// Breakpoints
+$px-media-xsm:					567px !default;
+$px-media-sm:					767px !default;
+$px-media-md:					991px !default;
+$px-media-lg:					1200px !default;
