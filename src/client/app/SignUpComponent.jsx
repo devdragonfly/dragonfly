@@ -42,6 +42,7 @@ class SignUpComponent extends React.Component {
 
 
 
+  
   render() {
     return (
       <div className="row"><div className="col-sm-12 dragon-white">
