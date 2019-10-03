@@ -2,7 +2,43 @@
 /* --- BLUES --- */
 /* --- DARKS --- */
 /* --- WHITES --- */
+body {
+  background: #f5f7fb; }
+
+#container {
+  background: #f5f7fb; }
+
 /* ----- COMPONENTS ----- */
+.app-menu {
+  background-color: #fff !important;
+  border-bottom: 1px solid rgba(0, 40, 100, 0.12); }
+  .app-menu .nav .nav-item {
+    padding: 0 0.75rem; }
+    .app-menu .nav .nav-item .nav-link {
+      padding: 1rem 0 !important;
+      margin: 0 !important;
+      text-decoration: none !important;
+      color: #9aa0ac;
+      font-size: 15px; }
+      .app-menu .nav .nav-item .nav-link i {
+        margin-right: 3px; }
+      .app-menu .nav .nav-item .nav-link.active {
+        border-right: none !important;
+        border-left: none !important;
+        border-bottom: 1px solid #1ba5e7;
+        color: #467fcf; }
+      .app-menu .nav .nav-item .nav-link:hover {
+        padding: 1rem 0 !important;
+        margin: 0 !important;
+        border-right: none !important;
+        border-left: none !important;
+        border-bottom: 1px solid #495057;
+        color: #495057;
+        -webkit-transition: color 0.2s ease, border 0.5s ease;
+        -moz-transition: color 0.2s ease, border 0.5s ease;
+        -o-transition: color 0.2s ease, border 0.5s ease;
+        transition: color 0.2s ease, border 0.5s ease; }
+
 .page_header_container {
   padding-right: 15px; }
   .page_header_container .page_header_title {

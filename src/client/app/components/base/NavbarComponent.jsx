@@ -2,9 +2,6 @@ import React from 'react';
 import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 'react-router';
 import UserDropdownComponent from './UserDropdownComponent.jsx';
 
-// import "./theme/Tabler.css";
-
-// import { Card, Button } from "tabler-react";
 
 class NavbarComponent extends React.Component {
 

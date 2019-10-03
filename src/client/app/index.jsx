@@ -57,7 +57,7 @@ import DashboardPage from './pages/DashboardPage.jsx';
 
 render(
     <Router>
-        <Route path="" component={Main} history={browserHistory}>
+        <Route path="/" component={Main} history={browserHistory}>
             <IndexRoute component={LandingPageMain} />
             <Route path="" component={LandingPageMain}/>
             <Route path="signup" component={LandingPageMain} />
