@@ -53,9 +53,11 @@ import ImportAlertComponent from './ImportAlertComponent.jsx';
 
 import LandingPageMain from './landing/LandingPageMain.jsx';
 
+import DashboardPage from './pages/DashboardPage.jsx';
+
 render(
     <Router>
-        <Route path="/" component={Main} history={browserHistory}>
+        <Route path="" component={Main} history={browserHistory}>
             <IndexRoute component={LandingPageMain} />
             <Route path="" component={LandingPageMain}/>
             <Route path="signup" component={LandingPageMain} />
@@ -105,6 +107,7 @@ render(
             <Route path="dragonflypreferences" component={DragonflyPreferencesComponent}/>
             <Route path="dragonflycomplete" component={DragonflyCompleteComponent}/>
             <Route path="importalert" component={ImportAlertComponent}/>
+            <Route path="dashboard" component={DashboardPage}/>
         </Route>
     </Router>,
     document.getElementById('container')

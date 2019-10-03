@@ -6,7 +6,7 @@ import UserDropdownComponent from './UserDropdownComponent.jsx';
 
 // import { Card, Button } from "tabler-react";
 
-class NavInsideComponent extends React.Component {
+class NavbarComponent extends React.Component {
 
   constructor(props) {
     super(props);
@@ -127,4 +127,4 @@ class ProgressBar extends React.Component {
 }
 
 
-export default NavInsideComponent;
+export default NavbarComponent;
