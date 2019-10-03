@@ -2,6 +2,8 @@ import React from 'react';
 import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 'react-router';
 import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
 
+import AppMenuComponent from './components/base/AppMenuComponent.jsx';
+
 class CampaignsComponent extends React.Component {
 
   constructor(props) {
@@ -37,15 +39,16 @@ class CampaignsComponent extends React.Component {
     }
 
     var organizationMenu = function () { return <OrganizationMenuComponent current="campaigns" /> }();
+    var appMenu = function () { return <AppMenuComponent current="campaigns" /> }();
 
 
     return (
       <div id="comapings_component">
+          {appMenu}
 
         <div className="row">
-          {organizationMenu}
 
-          <div className="col-10">
+          <div className="col-12">
 
             <div className="row page_header_container">
               <div className="col-12">
