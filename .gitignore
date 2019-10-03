@@ -6,3 +6,6 @@
 src/client/app/appconfig.js
 node_modules/
 package-lock.json
+
+#Sass Cache Files
+.sass-cache/*

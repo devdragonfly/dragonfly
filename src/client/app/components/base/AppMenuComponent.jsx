@@ -30,7 +30,7 @@ class AppMenuComponent extends React.Component {
 
 
       <div className="dragonfly-menu-container">
-        <div className="row header">
+        <div className="row app-menu">
           <ul className="nav nav-tabs border-0 flex-column flex-lg-row">
             <li className={campaignsClass}><Link className="nav-link" to={`campaigns`}><i className="fe fe-box"></i> Campaigns</Link></li>
             <li className={sessionsClass}><Link className="nav-link" to={`sessions`}><i className="fe fe-calendar"></i> Sessions</Link></li>

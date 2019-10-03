@@ -46,9 +46,8 @@ class CampaignsComponent extends React.Component {
       <div id="comapings_component">
           {appMenu}
 
-        <div className="row">
-
-          <div className="col-12">
+        <div className="row justify-content-center">
+          <div className="col-12 col-lg-10">
 
             <div className="row page_header_container">
               <div className="col-12">
@@ -69,9 +68,8 @@ class CampaignsComponent extends React.Component {
 
 
           </div>
-
-
         </div>
+        
       </div>
 
 
