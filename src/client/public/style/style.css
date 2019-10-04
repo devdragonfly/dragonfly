@@ -9,6 +9,40 @@ body {
   background: #f5f7fb; }
 
 /* ----- COMPONENTS ----- */
+.app-nav {
+  background-color: #fff !important;
+  color: #495057;
+  border-bottom: 1px solid rgba(0, 40, 100, 0.12);
+  padding-bottom: 0 !important;
+  height: 65px; }
+  .app-nav .app-nav-container {
+    padding-bottom: 0 !important;
+    height: 65px !important; }
+    .app-nav .app-nav-container .app-organization-select {
+      padding: 0 0.75rem; }
+      .app-nav .app-nav-container .app-organization-select .app-nav-logo {
+        float: left;
+        height: 25px;
+        margin-right: 5px;
+        margin-top: -2px; }
+      .app-nav .app-nav-container .app-organization-select .nav-organization-dropdown {
+        color: #495057 !important;
+        height: 65px; }
+        .app-nav .app-nav-container .app-organization-select .nav-organization-dropdown .nav-organization-name {
+          color: #495057 !important; }
+    .app-nav .app-nav-container .app-user-dropdown .avatar-dropdown {
+      float: right;
+      height: 25px;
+      width: 25px;
+      border-radius: 50%;
+      border: 1px solid #9aa0ac; }
+      .app-nav .app-nav-container .app-user-dropdown .avatar-dropdown:hover {
+        border: 1px solid #1ba5e7;
+        -webkit-transition: color 0.2s ease, border 0.5s ease;
+        -moz-transition: color 0.2s ease, border 0.5s ease;
+        -o-transition: color 0.2s ease, border 0.5s ease;
+        transition: color 0.2s ease, border 0.5s ease; }
+
 .app-menu {
   background-color: #fff !important;
   border-bottom: 1px solid rgba(0, 40, 100, 0.12); }
@@ -19,12 +53,15 @@ body {
       margin: 0 !important;
       text-decoration: none !important;
       color: #9aa0ac;
-      font-size: 15px; }
+      font-size: 15px;
+      border-radius: 0; }
       .app-menu .nav .nav-item .nav-link i {
         margin-right: 3px; }
       .app-menu .nav .nav-item .nav-link.active {
         border-right: none !important;
         border-left: none !important;
+        border-top: none !important;
+        border-radius: 0;
         border-bottom: 1px solid #1ba5e7;
         color: #467fcf; }
       .app-menu .nav .nav-item .nav-link:hover {
@@ -32,6 +69,8 @@ body {
         margin: 0 !important;
         border-right: none !important;
         border-left: none !important;
+        border-top: none !important;
+        border-radius: 0;
         border-bottom: 1px solid #495057;
         color: #495057;
         -webkit-transition: color 0.2s ease, border 0.5s ease;

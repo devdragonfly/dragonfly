@@ -1,23 +1,69 @@
 .app-nav {
+  background-color: #fff !important;
+  color: #495057;
+  border-bottom: 1px solid rgba(0, 40, 100, 0.12);
+  padding-bottom: 0 !important;
+  height: 65px;
+
+  .app-nav-container {
+    padding-bottom: 0 !important;
+    height: 65px !important;
+    // display: inline-flex;
     
+
+    .app-organization-select {
+        // display: inline-block;        
+        padding: 0 0.75rem;
+
+      .app-nav-logo {
+        float: left;
+        height: 25px;
+        margin-right: 5px;
+        // margin-left: 45px;
+        margin-top: -2px;
+      }
+
+      .nav-organization-dropdown {
+        //   float: right;
+        color: #495057 !important;
+        height: 65px;
+
+        .nav-organization-name {
+          color: #495057 !important;
+        }
+      }
+    }
+
+    .app-user-dropdown {
+    
+        // margin-right: auto;
+        // margin-left: auto;
+
+        .avatar-dropdown {
+            float: right;
+            height: 25px;
+            width: 25px;
+            border-radius: 50%;
+            border: 1px solid #9aa0ac;
+
+
+            &:hover {
+                border: 1px solid #1ba5e7;
+                -webkit-transition: color 0.2s ease, border 0.5s ease;
+                -moz-transition: color 0.2s ease, border 0.5s ease;
+                -o-transition: color 0.2s ease, border 0.5s ease;
+                transition: color 0.2s ease, border 0.5s ease;
+
+            }
+        }
+    }
+
+  }
 }
 
-
 .app-menu {
-    background-color: #fff !important;
+  background-color: #fff !important;
   border-bottom: 1px solid rgba(0, 40, 100, 0.12);
-
-//   .app-nav-container {
-//     width: 100%;
-//     padding-right: 0.75rem;
-//     padding-left: 0.75rem;
-//     margin-right: auto;
-//     margin-left: auto;
-
-//     @media (min-width: 1280px) {
-//       max-width: 1200px;
-//     }
-//   }
 
   .nav {
     .nav-item {
@@ -29,6 +75,7 @@
         text-decoration: none !important;
         color: #9aa0ac;
         font-size: 15px;
+        border-radius: 0;
 
         i {
           margin-right: 3px;
@@ -37,6 +84,8 @@
         &.active {
           border-right: none !important;
           border-left: none !important;
+          border-top: none !important;
+          border-radius: 0;
           border-bottom: 1px solid #1ba5e7;
           color: #467fcf;
         }
@@ -46,6 +95,8 @@
           margin: 0 !important;
           border-right: none !important;
           border-left: none !important;
+          border-top: none !important;
+          border-radius: 0;
           border-bottom: 1px solid #495057;
           color: #495057;
           -webkit-transition: color 0.2s ease, border 0.5s ease;

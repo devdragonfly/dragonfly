@@ -9,6 +9,8 @@ import ReactGA from 'react-ga';
 //const fs = require('file-system');
 //const zlib = require("zlib");
 
+import NavbarComponent from './components/base/NavbarComponent.jsx';
+
 var AWS_unauth = require("aws-sdk");
 var dragonfly_unauth = {};
 const userPool_unauth = new CognitoUserPool({ UserPoolId: appconfig.UserPoolId, ClientId: appconfig.ClientId});
@@ -518,7 +520,9 @@ class Main extends Component {
         }
 
         if (organizationName !== 'not found') {
-            nav = function() {return <NavInsideComponent handleLoadOrganization={handleLoadOrganization} organizationName={organizationName}  organizations={organizations} userId={userId} email={email}   handleSignOut={handleSignOut}  history={history} percent={percent}/> }();
+            // nav = function() {return <NavInsideComponent handleLoadOrganization={handleLoadOrganization} organizationName={organizationName}  organizations={organizations} userId={userId} email={email}   handleSignOut={handleSignOut}  history={history} percent={percent}/> }();
+            nav = function() {return <NavbarComponent handleLoadOrganization={handleLoadOrganization} organizationName={organizationName}  organizations={organizations} userId={userId} email={email}   handleSignOut={handleSignOut}  history={history} percent={percent}/> }();
+
         }
         if (dragonflyId !== 'not found') {
             nav = function() { return '' }();
