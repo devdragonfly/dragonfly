@@ -2,6 +2,9 @@ import React from 'react';
 import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 'react-router';
 import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
 
+import AppMenuComponent from './components/base/AppMenuComponent.jsx';
+
+
 class SettingsComponent extends React.Component {
 
   constructor(props) {
@@ -11,14 +14,18 @@ class SettingsComponent extends React.Component {
 
   render() {
     
-    var organizationMenu = function() {return <OrganizationMenuComponent current="settings" /> }();
-    
+    // var organizationMenu = function() {return <OrganizationMenuComponent current="settings" /> }();
+    var appMenu = function () { return <AppMenuComponent current="settings" /> }();
+
     
     return (
 
-        <div className="row">
-          {organizationMenu}
-          <div className="col-sm-10">
+      <div className="settings-container">
+        {appMenu}
+
+        <div className="row justify-content-center">
+          
+          <div className="col-12 col-lg-10">
             
             
             <h3>Settings</h3>
@@ -41,6 +48,9 @@ class SettingsComponent extends React.Component {
             
           </div>
         </div>
+
+      </div>
+        
 
 
 

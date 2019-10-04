@@ -5,9 +5,14 @@
     .card-body {
       padding-bottom: 0;
 
-    
+      h6 {
+        font-size: 15px;
+        color: #467fcf !important;
+
+      }
 
       .card-action-links {
+        z-index: 999999;
 
         .card-link {
           padding: 1rem 0 !important;
