@@ -108,6 +108,7 @@ class Video extends React.Component {
     if (status === "Uploading") {
       statusIconClassName = 'fa fa-circle-o-notch fa-spin';
     }
+    
 
     return (
 

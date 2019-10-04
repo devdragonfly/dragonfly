@@ -176,8 +176,8 @@ class Campaign extends React.Component {
           2,
           6,
           30,
-          10,
-          10,
+          18,
+          18,
           15,
           14,
           47,
@@ -257,7 +257,7 @@ class Campaign extends React.Component {
               <div className="card-body">
 
                 <h5 className="card-title">{this.props.campaign.name}</h5>
-                <h6 className="card-subtitle mb-2">Card subtitle</h6>
+                <h6 className="card-subtitle mb-2">1,357 Views</h6>
 
                 {/* <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> */}
                 <div className="c3-chart-container">

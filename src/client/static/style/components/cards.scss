@@ -55,9 +55,15 @@
         }
       }
   
-      border-radius: 3px;
+      border-radius: 5px;
   
       margin-bottom: 10px;
+
+      &:hover {
+        -webkit-box-shadow: 1px 1px 0.5px 0px rgba(70,127,207,0.3);
+        -moz-box-shadow: 1px 1px 0.5px 0px rgba(70,127,207,0.3);
+        box-shadow: 1px 1px 0.5px 0px rgba(70,127,207,0.3);
+      }
     }
   }
   

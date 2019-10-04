@@ -55,11 +55,13 @@ class ContactListsComponent extends React.Component {
         {appMenu}
 
 
+
+
         <div className="row justify-content-center">
           <div className="col-12 col-lg-10">
             <div className="row page_header_container">
               <div className="col-12">
-                <h3 className="page_header_title float-left">Contacts</h3>
+                <h3 className="page_header_title float-left">Contact Lists</h3>
                 <div className="page_header_action float-right">
                   <Link to={`createcontactlist`} className="btn btn-primary float-right"><i className='fa fa-plus'></i> Create Contact List</Link>
                 </div>
@@ -69,7 +71,7 @@ class ContactListsComponent extends React.Component {
             </div>
 
 
-            <div className="dragon-select-list">
+            <div className="row">
               {contactListsJsx}
             </div>
 
@@ -127,26 +129,53 @@ class ContactList extends React.Component {
         </div>
       );
     } else {
-      contactName = (
-        <div className="dragon-select-list-cell" onClick={this.handleSelectContactList.bind(this, this.props.contactList)}>
-          {adressBookIcon}
-          <div className="dragon-list-cell">
-            {this.props.contactList.name}
-          </div>
-        </div>
-      );
+      contactName = this.props.contactList.name;
+      
+      // (
+      //   {this.props.contactList.name}
+
+      //   // <div className="dragon-select-list-cell" onClick={this.handleSelectContactList.bind(this, this.props.contactList)}>
+      //   //   {adressBookIcon}
+      //   //   <div className="dragon-list-cell">
+      //   //     {this.props.contactList.name}
+      //   //   </div>
+      //   // </div>
+      // );
     }
 
     return (
-      <div className="dragon-select-list-row dragon-pointer">
-        {contactName}
-        <div className="dragon-select-list-cell" onClick={this.handleEditContactList.bind(this)}>
-          <i className="fa fa-pencil-square-o fa-fw fa-lg" aria-hidden="true"></i>
+
+      <div className="col-12 col-md-4 col-lg-3 campaign-cards-container">
+
+        <div id="video_component" className="" onClick={this.handleKeyDown.bind(this)}>
+          <div className="dragonfly-card">
+            <div className="card">
+              <div className="card-body">
+
+                <h5 className="card-title">{contactName}</h5>
+                <h6 className="card-subtitle mb-2"><i className="fas fa-user"></i> 0 </h6>
+
+                <div className="card-action-links">
+                  <a onClick={this.handleEditContactList.bind(this)} className="card-link link-video-view"><i className="fas fa-user-friends"></i> View</a>
+                  <a onClick={this.handleDeleteContactList.bind(this)} className="card-link link-video-edit"><i className="fas fa-plus"></i> Quick Add</a>
+                </div>
+
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="dragon-select-list-cell" onClick={this.handleDeleteContactList.bind(this)}>
-          <i className='fa fa-trash fa-fw fa-lg'></i>
-        </div>
+
       </div>
+
+      // <div className="dragon-select-list-row dragon-pointer">
+      //   {contactName}
+      //   <div className="dragon-select-list-cell" onClick={this.handleEditContactList.bind(this)}>
+      //     <i className="fa fa-pencil-square-o fa-fw fa-lg" aria-hidden="true"></i>
+      //   </div>
+      //   <div className="dragon-select-list-cell" onClick={this.handleDeleteContactList.bind(this)}>
+      //     <i className='fa fa-trash fa-fw fa-lg'></i>
+      //   </div>
+      // </div>
     );
 
   }

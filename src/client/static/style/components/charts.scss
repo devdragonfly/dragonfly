@@ -2,7 +2,12 @@
     max-height: 214px;
     margin-right: -25px;
     padding-bottom: 20px;
+    opacity:0.3;
   /*-- Chart --*/
+
+    &:hover {
+      opacity:1;
+    }
 
   .c3 {
     svg {

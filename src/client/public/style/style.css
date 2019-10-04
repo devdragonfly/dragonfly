@@ -22,9 +22,10 @@ body {
       padding: 0 0.75rem; }
       .app-nav .app-nav-container .app-organization-select .app-nav-logo {
         float: left;
-        height: 25px;
+        height: 35px;
         margin-right: 5px;
-        margin-top: -2px; }
+        margin-left: 10px;
+        margin-top: -8px; }
       .app-nav .app-nav-container .app-organization-select .nav-organization-dropdown {
         color: #495057 !important;
         height: 65px; }
@@ -32,8 +33,9 @@ body {
           color: #495057 !important; }
     .app-nav .app-nav-container .app-user-dropdown .avatar-dropdown {
       float: right;
-      height: 25px;
-      width: 25px;
+      height: 35px;
+      width: 35px;
+      margin-top: -8px;
       border-radius: 50%;
       border: 1px solid #9aa0ac; }
       .app-nav .app-nav-container .app-user-dropdown .avatar-dropdown:hover {
@@ -108,7 +110,7 @@ body {
         border-color: #1E599C; }
 
 .dragonfly-card .card {
-  border-radius: 3px;
+  border-radius: 5px;
   margin-bottom: 10px; }
   .dragonfly-card .card .card-body {
     padding-bottom: 0; }
@@ -142,12 +144,19 @@ body {
       .dragonfly-card .card .card-body .card-action-links .link-campaign-view,
       .dragonfly-card .card .card-body .card-action-links .link-video-view {
         float: left; }
+  .dragonfly-card .card:hover {
+    -webkit-box-shadow: 1px 1px 0.5px 0px rgba(70, 127, 207, 0.3);
+    -moz-box-shadow: 1px 1px 0.5px 0px rgba(70, 127, 207, 0.3);
+    box-shadow: 1px 1px 0.5px 0px rgba(70, 127, 207, 0.3); }
 
 .c3-chart-container {
   max-height: 214px;
   margin-right: -25px;
   padding-bottom: 20px;
+  opacity: 0.3;
   /*-- Chart --*/ }
+  .c3-chart-container:hover {
+    opacity: 1; }
   .c3-chart-container .c3 {
     /*-- Axis --*/
     /*-- Grid --*/
@@ -344,7 +353,7 @@ body {
 
 /* ----- PAGES ----- */
 .campaign_card .card {
-  border-radius: 3px;
+  border-radius: 5px;
   margin-bottom: 10px; }
   .campaign_card .card .card-body {
     padding-bottom: 0; }
@@ -376,5 +385,9 @@ body {
         float: right; }
       .campaign_card .card .card-body .card-action-links .link-campaign-view {
         float: left; }
+  .campaign_card .card:hover {
+    -webkit-box-shadow: 1px 1px 0.5px 0px rgba(70, 127, 207, 0.3);
+    -moz-box-shadow: 1px 1px 0.5px 0px rgba(70, 127, 207, 0.3);
+    box-shadow: 1px 1px 0.5px 0px rgba(70, 127, 207, 0.3); }
 
 /*# sourceMappingURL=style.css.map */
