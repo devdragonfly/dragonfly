@@ -107,6 +107,42 @@ body {
         color: #1E599C;
         border-color: #1E599C; }
 
+.dragonfly-card .card {
+  border-radius: 3px;
+  margin-bottom: 10px; }
+  .dragonfly-card .card .card-body {
+    padding-bottom: 0; }
+    .dragonfly-card .card .card-body h6 {
+      font-size: 15px;
+      color: #467fcf !important; }
+    .dragonfly-card .card .card-body .card-action-links {
+      z-index: 999999; }
+      .dragonfly-card .card .card-body .card-action-links .card-link {
+        padding: 1rem 0 !important;
+        margin: 0 !important;
+        text-decoration: none !important;
+        color: #9aa0ac;
+        font-size: 14px;
+        border-radius: 0; }
+        .dragonfly-card .card .card-body .card-action-links .card-link i {
+          margin-right: 3px; }
+        .dragonfly-card .card .card-body .card-action-links .card-link.active {
+          color: #467fcf; }
+        .dragonfly-card .card .card-body .card-action-links .card-link:hover {
+          padding: 1rem 0 !important;
+          margin: 0 !important;
+          color: #495057;
+          -webkit-transition: color 0.2s ease;
+          -moz-transition: color 0.2s ease;
+          -o-transition: color 0.2s ease;
+          transition: color 0.2s ease; }
+      .dragonfly-card .card .card-body .card-action-links .link-campaign-edit,
+      .dragonfly-card .card .card-body .card-action-links .link-video-edit {
+        float: right; }
+      .dragonfly-card .card .card-body .card-action-links .link-campaign-view,
+      .dragonfly-card .card .card-body .card-action-links .link-video-view {
+        float: left; }
+
 .c3-chart-container {
   max-height: 214px;
   margin-right: -25px;
@@ -266,6 +302,45 @@ body {
       opacity: 1; }
     .c3-chart-container .c3 .c3-axis {
       fill: #9aa0ac; }
+
+.search-container {
+  margin-bottom: 5px; }
+  .search-container .search-box {
+    display: inline-block;
+    width: 100%;
+    border-radius: 3px;
+    padding: 4px 15px 4px 15px;
+    position: relative;
+    background: #fff;
+    border: 1px solid #ddd; }
+    .search-container .search-box.hovered, .search-container .search-box:hover, .search-container .search-box:active {
+      border: 1px solid #467fcf;
+      background: #fff; }
+    .search-container .search-box input[type=text] {
+      border: none;
+      box-shadow: none;
+      display: inline-block;
+      padding: 0;
+      background: transparent;
+      margin-left: 30px; }
+      .search-container .search-box input[type=text]:hover, .search-container .search-box input[type=text]:focus, .search-container .search-box input[type=text]:active {
+        box-shadow: none; }
+    .search-container .search-box .search-btn {
+      position: absolute;
+      left: 0;
+      top: 0;
+      bottom: 0;
+      color: #aaa;
+      border-radius: 3px;
+      font-size: 21px;
+      padding: 5px 10px 1px;
+      border: none; }
+      .search-container .search-box .search-btn i {
+        margin-bottom: 5px; }
+      .search-container .search-box .search-btn:hover {
+        color: #fff; }
+        .search-container .search-box .search-btn:hover i {
+          color: #467fcf; }
 
 /* ----- PAGES ----- */
 .campaign_card .card {

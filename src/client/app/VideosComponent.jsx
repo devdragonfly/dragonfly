@@ -4,7 +4,6 @@ import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
 
 import AppMenuComponent from './components/base/AppMenuComponent.jsx';
 
-
 class VideosComponent extends React.Component {
 
   constructor(props) {
@@ -54,14 +53,14 @@ class VideosComponent extends React.Component {
               <div className="col-12">
                 <h3 className="page_header_title float-left">Videos</h3>
                 <div className="page_header_action float-right">
-                  <Link to={`uploadvideo`} className="btn btn-primary float-right"><i className='fa fa-plus'></i> Upload Video</Link>
+                  <Link to={`uploadvideo`} className="btn btn-primary float-right"><i className='fa fa-plus'></i> Add Video</Link>
                 </div>
                 <div className="clearfix"></div>
                 <hr className="page_header_divider" />
               </div>
             </div>
 
-            <div className="dragon-select-list">
+            <div className="row">
               {videosJsx}
             </div>
 
@@ -93,7 +92,7 @@ class Video extends React.Component {
 
   render() {
     var status = this.props.video.uploadStatus;
-    var statusIconClassName = "fa fa-check";
+    var statusIconClassName = "fas fa-spinner fa-spin";
 
     var dt = new Date();
     var utc = dt.getTime();
@@ -111,19 +110,43 @@ class Video extends React.Component {
     }
 
     return (
-      <div onClick={this.handleSelectVideo.bind(this, this.props.video)} className="dragon-select-list-row dragon-pointer">
-        <div className="dragon-select-list-cell">
-          <i className='fa fa-file-video-o fa-fw fa-lg'></i>
+
+      <div className="col-12 col-md-4 col-lg-3 campaign-cards-container">
+
+        <div id="video_component" className="" onClick={this.handleSelectVideo.bind(this, this.props.video)}>
+          <div className="dragonfly-card">
+            <div className="card">
+              <div className="card-body">
+
+                <h5 className="card-title">{this.props.video.name}</h5>
+                <h6 className="card-subtitle mb-2"><i className={statusIconClassName}></i> {status}</h6>
+
+                <div className="card-action-links">
+                  <a className="card-link link-video-view"><i className="fab fa-youtube"></i> View</a>
+                  <a className="card-link link-video-edit"><i className="far fa-dot-circle"></i> Breakpoints</a>
+                </div>
+
+              </div>
+            </div>
+          </div>
         </div>
-        <div className="dragon-select-list-cell">
-          {this.props.video.name}
-        </div>
-        <div className="dragon-select-list-cell">
-          <i className={statusIconClassName}></i>
-          &nbsp;
-            {status}
-        </div>
+
       </div>
+
+
+      // <div onClick={this.handleSelectVideo.bind(this, this.props.video)} className="dragon-select-list-row dragon-pointer">
+      //   <div className="dragon-select-list-cell">
+      //     <i className='fa fa-file-video-o fa-fw fa-lg'></i>
+      //   </div>
+      //   <div className="dragon-select-list-cell">
+      //     {this.props.video.name}
+      //   </div>
+      //   <div className="dragon-select-list-cell">
+      //     <i className={statusIconClassName}></i>
+      //     &nbsp;
+      //       {status}
+      //   </div>
+      // </div>
     );
   }
 

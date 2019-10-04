@@ -24,6 +24,25 @@ class CampaignsComponent extends React.Component {
     }
   }
 
+
+  // searchInput() {
+
+  //   let value = $(this).val().toLowerCase();
+  //   documentCards.removeClass('hidden');
+
+  //   if (value.length === 0) {
+  //       documentCards.removeClass('hidden');
+  //       return;
+  //   }
+
+  //   console.log(value);
+
+  //   documentCards.filter(function() {
+  //       return ($(this).find('.document-info').text().toLowerCase().indexOf(value) < 1);
+  //   }).addClass('hidden');
+  // }
+    
+
   render() {
     var campaigns = this.props.campaigns;
     var handleLoadCampaign = this.props.handleLoadCampaign;
@@ -61,6 +80,19 @@ class CampaignsComponent extends React.Component {
                 </div>
                 <div className="clearfix"></div>
                 <hr className="page_header_divider" />
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-12">
+                <div className="search-container">
+                  <div className="form-group search-box">
+                    <input id="search-input" type="text" className="form-control" placeholder="Find Campaign..." />
+                    <button className="search-btn">
+                      <i className='fa fa-search'></i>
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
 
