@@ -4,6 +4,9 @@ import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
 
 import AppMenuComponent from './components/base/AppMenuComponent.jsx';
 
+import C3Chart from 'react-c3js';
+// import 'c3/c3.css';
+
 class CampaignsComponent extends React.Component {
 
   constructor(props) {
@@ -51,7 +54,7 @@ class CampaignsComponent extends React.Component {
 
             <div className="row page_header_container">
               <div className="col-12">
-                <h3 className="page_header_title float-left">Campaigns</h3>
+                <h3 className="page_header_title float-left align-items-center">Campaigns</h3>
                 <div className="page_header_action float-right">
                   <Link to={`createcampaign`} className="btn btn-primary float-right"><i className='fa fa-plus'></i> Create Campaign</Link>
                 </div>
@@ -91,6 +94,22 @@ class Campaign extends React.Component {
   }
 
   render() {
+
+    const data = {
+      columns: [
+        ['data1', 30, 200, 100, 400, 150, 250],
+        ['data2', 50, 20, 10, 40, 15, 25]
+      ]
+    };
+    
+    const mountNode = document.getElementById('react-c3js');
+    
+    // ReactDOM.render(<C3Chart data={data} />, mountNode);
+
+
+    var compaignAnalytics = function () { return <C3Chart data={data} /> }();
+
+
     return (
       <div className="col-3 campaign-cards-container">
 
@@ -100,11 +119,18 @@ class Campaign extends React.Component {
               <div className="card-body">
 
                 <h5 className="card-title">{this.props.campaign.name}</h5>
-                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+                <h6 className="card-subtitle mb-2 text-muted">Card subtitle</h6>
 
                 <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
-                <a href="#" class="card-link">Card link</a>
-                <a href="#" class="card-link">Another link</a>
+                <div class="c3-chart-container">
+                  {compaignAnalytics}
+                </div>
+
+                <div className="card-action-links">
+                  <a href="#" className="card-link link-campaign-view"><i className="fas fa-chart-line"></i> View</a>
+                  <a href="#" className="card-link link-campaign-edit"><i className="fas fa-pencil-alt"></i> Edit</a>
+                </div>
+
               </div>
             </div>
           </div>

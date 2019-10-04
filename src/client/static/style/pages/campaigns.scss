@@ -2,12 +2,54 @@
 
   .card {
 
-      img {
-        height: 200px !important;
-        border-top-left-radius: 50px !important;
-        border-top-right-radius: 50px !important;
+    .card-body {
+      padding-bottom: 0;
+
+    
+
+      .card-action-links {
+
+        .card-link {
+          padding: 1rem 0 !important;
+          margin: 0 !important;
+          text-decoration: none !important;
+          color: #9aa0ac;
+          font-size: 14px;
+          border-radius: 0;
+  
+          i {
+            margin-right: 3px;
+          }
+  
+          &.active {
+           
+            color: #467fcf;
+          }
+  
+          &:hover {
+            padding: 1rem 0 !important;
+            margin: 0 !important;
+          
+            color: #495057;
+            -webkit-transition: color 0.2s ease;
+            -moz-transition: color 0.2s ease;
+            -o-transition: color 0.2s ease;
+            transition: color 0.2s ease;
+          }
+        }
+
+        .link-campaign-edit {
+          float:right;
+        }
+
+        .link-campaign-view {
+          float: left;
+        }
       }
+    }
 
     border-radius: 3px;
+
+    margin-bottom: 10px;
   }
 }
