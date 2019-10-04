@@ -4,6 +4,7 @@ import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
 
 import AppMenuComponent from './components/base/AppMenuComponent.jsx';
 
+
 import C3Chart from 'react-c3js';
 // import 'c3/c3.css';
 
@@ -216,7 +217,7 @@ class Campaign extends React.Component {
 
 
     return (
-      <div className="col-3 campaign-cards-container">
+      <div className="col-12 col-md-4 col-lg-3 campaign-cards-container">
 
         <div id="campaign_component" className="" onClick={this.handleSelectCampaign.bind(this, this.props.campaign)}>
           <div className="campaign_card">

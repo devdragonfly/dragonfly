@@ -2,6 +2,9 @@ import React from 'react';
 import { Link } from 'react-router';
 import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
 
+import AppMenuComponent from './components/base/AppMenuComponent.jsx';
+
+
 class ContactListsComponent extends React.Component {
 
   constructor(props) {
@@ -43,33 +46,42 @@ class ContactListsComponent extends React.Component {
 
 
     var organizationMenu = function () { return <OrganizationMenuComponent current="contactlists" /> }();
+    var appMenu = function () { return <AppMenuComponent current="contactlists" /> }();
+
 
     return (
 
-      <div className="row">
-        {organizationMenu}
-        <div className="col-10">
-          <div className="row page_header_container">
-            <div className="col-12">
-              <h3 className="page_header_title float-left">Contact Lists</h3>
-              <div className="page_header_action float-right">
-                <Link to={`createcontactlist`} className="btn btn-primary float-right"><i className='fa fa-plus'></i> Create Contact List</Link>
+      <div className="contacts-container">
+        {appMenu}
+
+
+        <div className="row justify-content-center">
+          <div className="col-12 col-lg-10">
+            <div className="row page_header_container">
+              <div className="col-12">
+                <h3 className="page_header_title float-left">Contacts</h3>
+                <div className="page_header_action float-right">
+                  <Link to={`createcontactlist`} className="btn btn-primary float-right"><i className='fa fa-plus'></i> Create Contact List</Link>
+                </div>
+                <div className="clearfix"></div>
+                <hr className="page_header_divider" />
               </div>
-              <div className="clearfix"></div>
-              <hr className="page_header_divider" />
             </div>
+
+
+            <div className="dragon-select-list">
+              {contactListsJsx}
+            </div>
+
+            <br />
+
           </div>
-
-
-          <div className="dragon-select-list">
-            {contactListsJsx}
-          </div>
-
-          <br />
 
         </div>
 
+
       </div>
+
 
 
 
