@@ -44,7 +44,7 @@ class CampaignsComponent extends React.Component {
 
     return (
       <div id="comapings_component">
-          {appMenu}
+        {appMenu}
 
         <div className="row justify-content-center">
           <div className="col-12 col-lg-10">
@@ -56,11 +56,11 @@ class CampaignsComponent extends React.Component {
                   <Link to={`createcampaign`} className="btn btn-primary float-right"><i className='fa fa-plus'></i> Create Campaign</Link>
                 </div>
                 <div className="clearfix"></div>
-                <hr className="page_header_divider"/>
+                <hr className="page_header_divider" />
               </div>
             </div>
 
-            <div className="row dragon-select-list">
+            <div className="row">
               {campaignsJsx}
             </div>
 
@@ -69,7 +69,7 @@ class CampaignsComponent extends React.Component {
 
           </div>
         </div>
-        
+
       </div>
 
 
@@ -92,15 +92,19 @@ class Campaign extends React.Component {
 
   render() {
     return (
-      <div>
+      <div className="col-3 campaign-cards-container">
 
-        <div id="campaign_component">
-          <div className="col-sm-4 campaign_card" onClick={this.handleSelectCampaign.bind(this, this.props.campaign)}>
+        <div id="campaign_component" className="">
+          <div className="campaign_card" onClick={this.handleSelectCampaign.bind(this, this.props.campaign)}>
             <div className="card">
-              <img src="../assets/images/placeholders/placeholder_blue.png" class="card-img-top" alt="..." />
               <div className="card-body">
+
                 <h5 className="card-title">{this.props.campaign.name}</h5>
+                <h6 class="card-subtitle mb-2 text-muted">Card subtitle</h6>
+
                 <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p>
+                <a href="#" class="card-link">Card link</a>
+                <a href="#" class="card-link">Another link</a>
               </div>
             </div>
           </div>

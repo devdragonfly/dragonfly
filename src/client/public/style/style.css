@@ -109,7 +109,7 @@ body {
 
 /* ----- PAGES ----- */
 .campaign_card .card {
-  border-radius: 50px; }
+  border-radius: 3px; }
   .campaign_card .card img {
     height: 200px !important;
     border-top-left-radius: 50px !important;

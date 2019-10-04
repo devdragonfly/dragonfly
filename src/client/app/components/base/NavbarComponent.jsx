@@ -51,8 +51,8 @@ class NavbarComponent extends React.Component {
             <div className="row">
             <div className="col app-organization-select pt-4 justify-content-start">
                 <img className="app-nav-logo" src="../../images/dragonfly2.png" />
-                <div onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} className="nav-organization-dropdown">
-                  <div className="nav-organization-name">{this.props.organizationName} <i className="fa fa-caret-down"></i></div>
+                <div className="nav-organization-dropdown">
+                  <div className="nav-organization-name" onMouseOver={this.mouseOver} onMouseOut={this.mouseOut}>{this.props.organizationName} <i className="fa fa-caret-down"></i></div>
                   <div className={this.state.menuClass}>
                     {organizations}
                     <div onClick={this.handleSelectCreateOrganization}>Create Organization1</div>
