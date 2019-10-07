@@ -1,0 +1,27 @@
+
+.page-loader-container {
+    height: 100%;
+    align-items: center;
+    justify-content: center;
+
+    // display: flex; 
+
+    .page-loader {
+        padding-top: 10em;
+        padding-bottom: 2em;
+        margin: auto 0;
+        height: 100% !important;
+        text-align: center;
+
+        i {
+            color: $dragonfly-blue-dark;
+            font-size: 2em;
+        }
+
+        .loader-text {
+            color: $dragonfly-blue-dark;
+        }
+        
+    }
+
+}

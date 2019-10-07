@@ -413,6 +413,22 @@ body {
         .search-container .search-box .search-btn:hover i {
           color: #467fcf; }
 
+.page-loader-container {
+  height: 100%;
+  align-items: center;
+  justify-content: center; }
+  .page-loader-container .page-loader {
+    padding-top: 10em;
+    padding-bottom: 2em;
+    margin: auto 0;
+    height: 100% !important;
+    text-align: center; }
+    .page-loader-container .page-loader i {
+      color: #2a60d9;
+      font-size: 2em; }
+    .page-loader-container .page-loader .loader-text {
+      color: #2a60d9; }
+
 /* ----- PAGES ----- */
 .campaign_card .card {
   border-radius: 5px;
