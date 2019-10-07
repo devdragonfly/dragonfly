@@ -4,6 +4,9 @@ import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
 import ExportCampaignButton from './ExportCampaignButton.jsx';
 import Chart from 'chart.js';
 
+import AppMenuComponent from './components/base/AppMenuComponent.jsx';
+
+
 class CampaignComponent extends React.Component {
 
   constructor(props) {
@@ -104,15 +107,18 @@ class CampaignComponent extends React.Component {
       }
     }
 
-    var organizationMenu = function() {return <OrganizationMenuComponent current="campaigns" />}();
+    // var organizationMenu = function() {return <OrganizationMenuComponent current="campaigns" />}();
     var exportCsvButton  = function() {return <ExportCampaignButton dragonfliesData={dragonflies}/>}();
+    var appMenu = function () { return <AppMenuComponent current="campaigns" /> }();
+
 
     return (
+      <div id="comapings_component">
+        {appMenu}
 
-        <div className="row">
-          {organizationMenu}
+        <div className="row justify-content-center">
 
-          <div className="col-sm-8">
+          <div className="col-12 col-lg-10">
 
             <h3><i className='fa fa-line-chart fa-fw'></i> {this.props.campaign.name}</h3>
 
@@ -150,8 +156,8 @@ class CampaignComponent extends React.Component {
 
 
           </div>
-          <div className="col-sm-2">
-          </div>
+          
+        </div>
         </div>
 
     );
