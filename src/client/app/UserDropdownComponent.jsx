@@ -56,7 +56,7 @@ class UserDropdownComponent extends React.Component {
         </a>
         <ul className="dropdown-menu" id="dropdown">
           <li><a className="dropdown-item" onClick={this.handleSelectProfile}><i className="fas fa-user dropdown-icon"></i> Profile</a></li>
-          <li><a className="dropdown-item"><i className="fas fa-wrench dropdown-icon"></i> Settings</a></li>
+          <li><a className="dropdown-item" onClick={this.handlePushSettingsPage}><i className="fas fa-wrench dropdown-icon"></i> Settings</a></li>
           <div className="dropdown-divider"></div>
           <li><a className="dropdown-item" onClick={this.handleSignOut}><i className="fas fa-sign-out-alt dropdown-icon"></i> Sign Out</a></li>
         </ul>
@@ -67,6 +67,10 @@ class UserDropdownComponent extends React.Component {
 
   handleSelectProfile() {
     this.props.history.push('profile');
+  }
+
+  handlePushSettingsPage() {
+    this.props.history.push('settings');
   }
 
 
