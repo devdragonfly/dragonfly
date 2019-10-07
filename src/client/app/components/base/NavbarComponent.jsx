@@ -49,16 +49,40 @@ class NavbarComponent extends React.Component {
         <div className="row app-nav justify-content-center">
           <div className="col-12 col-lg-10 app-nav-container">
             <div className="row">
-              <div className="col app-organization-select pt-4 justify-content-start">
-                <img className="app-nav-logo" src="../../images/dragonfly2.png" />
-                <div className="nav-organization-dropdown">
-                  <div className="nav-organization-name" onMouseOver={this.mouseOver} onMouseOut={this.mouseOut}>{this.props.organizationName} <i className="fa fa-caret-down"></i></div>
-                  <div className={this.state.menuClass}>
-                    {organizations}
-                    <div onClick={this.handleSelectCreateOrganization}>Create Organization1</div>
+
+
+              <div className="app-organization-dropdown justify-content-end">
+
+                <a onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} id="organizationDropdownLink" className="dropdown-container dropdown-toggle align-items-center" data-toggle="dropdown">
+                  <div className="organization-dropdown-info">
+                    <img className="avatar-org-dropdown" src="../../images/dragonfly2.png"></img>
+                    <div className="organization-dropdown-name">
+                      <div className="organization-dropdown-title">{this.props.organizationName} <i className="fa fa-caret-down"></i></div>
+                    </div>
                   </div>
-                </div>
+                </a>
+                <ul className="dropdown-menu" id="dropdown">
+                {organizations}
+                  <div className="dropdown-divider"></div>
+                  <li><a className="dropdown-item"  onClick={this.handleSelectCreateOrganization}><i className="fa fa-plus dropdown-icon"></i> Create Organization</a></li>
+                </ul>
               </div>
+
+
+              {/* <div className="col app-organization-select pt-4 justify-content-start">
+                <img className="app-nav-logo" src="../../images/dragonfly2.png" />
+
+                <div className="nav-organization-dropdown dropdown-container dropdown-toggle align-items-center" data-toggle="dropdown">
+                  <div className="nav-organization-name" onMouseOver={this.mouseOver} onMouseOut={this.mouseOut}></div>
+                  <ul className="dropdown-menu" id="dropdown">
+                    <div className="dropdown-divider"></div>
+                    <li><a className="dropdown-item"></a></li>
+                  </ul>
+
+                </div>
+
+              </div> */}
+
               {/* <div className="col-sm py-0">
                 {progressBar}
               </div> */}
@@ -96,9 +120,7 @@ class Organization extends React.Component {
 
   render() {
     return (
-      <div onClick={this.handleSelectOrganization.bind(this, this.props.organizationId, this.props.name)}>
-        {this.props.name}
-      </div>
+      <li><a className="dropdown-item" onClick={this.handleSelectOrganization.bind(this, this.props.organizationId, this.props.name)}><i className="fas fa-user dropdown-icon"></i> {this.props.name}</a></li>
     );
   }
 

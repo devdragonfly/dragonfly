@@ -47,7 +47,7 @@ body {
             border-radius: 50%;
             border: 1px solid #9aa0ac; }
             .app-nav .app-nav-container .app-user-dropdown-container .app-user-dropdown .dropdown-toggle .user-dropdown-info .avatar-dropdown:hover {
-              border: 1px solid #1ba5e7;
+              border: 1px solid #2a60d9;
               -webkit-transition: color 0.2s ease, border 0.5s ease;
               -moz-transition: color 0.2s ease, border 0.5s ease;
               -o-transition: color 0.2s ease, border 0.5s ease;
@@ -62,7 +62,7 @@ body {
             .app-nav .app-nav-container .app-user-dropdown-container .app-user-dropdown .dropdown-toggle .user-dropdown-info .user-dropdown-username .user-dropdown-subtitle {
               font-size: 0.6em; }
           .app-nav .app-nav-container .app-user-dropdown-container .app-user-dropdown .dropdown-toggle .user-dropdown-info:hover {
-            color: #1ba5e7;
+            color: #2a60d9;
             -webkit-transition: color 0.2s ease;
             -moz-transition: color 0.2s ease;
             -o-transition: color 0.2s ease;
@@ -412,6 +412,75 @@ body {
         color: #fff; }
         .search-container .search-box .search-btn:hover i {
           color: #467fcf; }
+
+.app-organization-dropdown {
+  align-items: center; }
+  .app-organization-dropdown .dropdown-toggle {
+    float: right; }
+    .app-organization-dropdown .dropdown-toggle .organization-dropdown-info {
+      display: inline-block;
+      width: auto;
+      padding-top: 16px; }
+      .app-organization-dropdown .dropdown-toggle .organization-dropdown-info .avatar-org-dropdown {
+        float: left;
+        height: 35px;
+        margin-right: 5px;
+        margin-left: 10px;
+        margin-top: -8px; }
+      .app-organization-dropdown .dropdown-toggle .organization-dropdown-info .organization-dropdown-name {
+        float: right;
+        align-items: center;
+        margin-top: 7px; }
+        .app-organization-dropdown .dropdown-toggle .organization-dropdown-info .organization-dropdown-name .organization-dropdown-title {
+          font-size: 1em;
+          line-height: 1; }
+        .app-organization-dropdown .dropdown-toggle .organization-dropdown-info .organization-dropdown-name .user-dropdown-subtitle {
+          font-size: 0.6em; }
+      .app-organization-dropdown .dropdown-toggle .organization-dropdown-info:hover {
+        color: #2a60d9;
+        -webkit-transition: color 0.2s ease;
+        -moz-transition: color 0.2s ease;
+        -o-transition: color 0.2s ease;
+        transition: color 0.2s ease; }
+    .app-organization-dropdown .dropdown-toggle:after {
+      display: none; }
+  .app-organization-dropdown .dropdown-menu {
+    float: right;
+    padding: 0.5rem 0;
+    margin: 0.125rem 0 0;
+    font-size: 0.9375rem;
+    color: #495057;
+    text-align: left;
+    list-style: none;
+    background-color: #fff;
+    background-clip: padding-box;
+    border: 1px solid rgba(0, 40, 100, 0.12);
+    border-radius: 3px; }
+    .app-organization-dropdown .dropdown-menu .dropdown-item {
+      display: block;
+      width: 100%;
+      padding: 0.25rem 1.5rem;
+      clear: both;
+      font-weight: 400;
+      text-align: inherit;
+      white-space: nowrap;
+      background-color: initial;
+      border: 0; }
+      .app-organization-dropdown .dropdown-menu .dropdown-item .dropdown-icon {
+        color: #9aa0ac;
+        margin-right: 0.5rem;
+        margin-left: -0.5rem;
+        width: 1em;
+        display: inline-block;
+        text-align: center;
+        vertical-align: -1px; }
+      .app-organization-dropdown .dropdown-menu .dropdown-item:hover {
+        background: #f8f9fa; }
+    .app-organization-dropdown .dropdown-menu .dropdown-divider {
+      height: 0;
+      margin: 0.5rem 0;
+      overflow: hidden;
+      border-top: 1px solid #e9ecef; }
 
 .page-loader-container {
   height: 100%;

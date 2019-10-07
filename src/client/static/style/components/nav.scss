@@ -51,7 +51,7 @@
               border: 1px solid #9aa0ac;
 
               &:hover {
-                border: 1px solid #1ba5e7;
+                border: 1px solid $dragonfly-blue-dark;
                 -webkit-transition: color 0.2s ease, border 0.5s ease;
                 -moz-transition: color 0.2s ease, border 0.5s ease;
                 -o-transition: color 0.2s ease, border 0.5s ease;
@@ -73,7 +73,7 @@
             }
 
             &:hover {
-              color:#1ba5e7;
+              color:$dragonfly-blue-dark;
               -webkit-transition: color 0.2s ease;
               -moz-transition: color 0.2s ease;
               -o-transition: color 0.2s ease;
