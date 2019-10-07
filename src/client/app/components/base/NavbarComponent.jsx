@@ -62,7 +62,7 @@ class NavbarComponent extends React.Component {
               {/* <div className="col-sm py-0">
                 {progressBar}
               </div> */}
-              <div className="col app-user-dropdown-container justify-content-end pt-4">
+              <div className="col app-user-dropdown-container justify-content-end align-items-center">
                 {userDropdown}
               </div>
             </div>

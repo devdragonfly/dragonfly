@@ -43,13 +43,15 @@ class UserDropdownComponent extends React.Component {
 
   render() {
     return (
-      <div className="app-user-dropdown dropdown justify-content-end">
+      <div className="app-user-dropdown justify-content-end">
 
-        <a onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} id="userDropdownLink" className="dropdown-container dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">
-          <img className="avatar-dropdown" src="../../images/placeholders/default.jpeg"></img>
+        <a onMouseOver={this.mouseOver} onMouseOut={this.mouseOut} id="userDropdownLink" className="dropdown-container dropdown-toggle align-items-center" data-toggle="dropdown">
           <div className="user-dropdown-info">
-            <div className="user-dropdown-title">Matt Twardowski</div>
-            <div className="user-dropdown-subtitle">matt@greekrow.online</div>
+            <img className="avatar-dropdown" src="../../images/placeholders/default.jpeg"></img>
+            <div className="user-dropdown-username">
+              <div className="user-dropdown-title">Matt Twardowski</div>
+              <div className="user-dropdown-subtitle">matt@greekrow.online</div>
+            </div>
           </div>
         </a>
         <ul className="dropdown-menu" id="dropdown">
