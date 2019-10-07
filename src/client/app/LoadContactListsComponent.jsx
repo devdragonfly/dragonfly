@@ -1,5 +1,6 @@
 import React from 'react';
-import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
+
+import AppMenuComponent from './components/base/AppMenuComponent.jsx';
 
 
 class LoadContactListsComponent extends React.Component {
@@ -50,30 +51,30 @@ class LoadContactListsComponent extends React.Component {
 
   render() {
 
-    var organizationMenu = function() {return <OrganizationMenuComponent current="contactlists" /> }();
+    var appMenu = function () { return <AppMenuComponent current="contactlists" /> }();
+
 
     return (
 
+      <div id="loadContactListsComponent" className="page-loader-container">
+        {appMenu}
 
-        <div className="row">
-          {organizationMenu}
+        <div className="row justify-content-center">
+          <div className="col-12 col-lg-10">
+            <div className="row justify-content-center">
+              <div className="col page-loader">
+                <i className='fas fa-circle-notch fa-spin'></i>
+                <p className="loader-text">Loading Contacts...</p>
+              </div>
 
-          <div className="col-sm-10">
-                <h3>Contact Lists</h3>
-
-                <br/><br/>
-
-                <i className='fa fa-circle-o-notch fa-spin'></i> Loading Contact Lists
-
+            </div>
           </div>
-
         </div>
 
-
+      </div>
 
     );
   }
-
 
 }
 

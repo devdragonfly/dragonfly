@@ -1,7 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router';
-import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
-
 
 import AppMenuComponent from './components/base/AppMenuComponent.jsx';
 

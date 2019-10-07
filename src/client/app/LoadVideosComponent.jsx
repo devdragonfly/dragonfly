@@ -1,6 +1,6 @@
 import React from 'react';
-import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
 
+import AppMenuComponent from './components/base/AppMenuComponent.jsx';
 
 class LoadVideosComponent extends React.Component {
 
@@ -33,33 +33,28 @@ class LoadVideosComponent extends React.Component {
     
     
   }
-  
 
   render() {
-    
-    var organizationMenu = function() {return <OrganizationMenuComponent current="videos" /> }();
-    
+    var appMenu = function () { return <AppMenuComponent current="videos" /> }();
     return (
+      <div id="loadVideosComponent" className="page-loader-container">
+        {appMenu}
+        <div className="row justify-content-center">
+          <div className="col-12 col-lg-10">
+            <div className="row justify-content-center">
+              <div className="col page-loader">
+                <i className='fas fa-circle-notch fa-spin'></i>
+                <p className="loader-text">Loading Videos...</p>
+              </div>
 
-      
-        <div className="row">
-          {organizationMenu}
-
-          <div className="col-sm-10">
-                <h3>Videos</h3>
-                
-                <br/><br/>
-                
-                <i className='fa fa-circle-o-notch fa-spin'></i> Loading Videos
-                
-          </div> 
-          
+            </div>
+          </div>
         </div>
-      
-      
-      
+      </div>
     );
   }
+  
+
 
 
 }

@@ -1,5 +1,4 @@
 import React from 'react';
-import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
 
 import AppMenuComponent from './components/base/AppMenuComponent.jsx';
 
