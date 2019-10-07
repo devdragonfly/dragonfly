@@ -3,6 +3,8 @@ import { Link } from 'react-router';
 import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
 
 
+import AppMenuComponent from './components/base/AppMenuComponent.jsx';
+
 
 const buttonClassName = "btn btn-primary";
 
@@ -10,10 +12,11 @@ class CreateCampaignComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {nameValue : '',
-                  validationMessage : '',
-                  buttonRestClassName : buttonClassName,
-                  buttonClickedClassName : "dragon-hidden"
+    this.state = {
+      nameValue: '',
+      validationMessage: '',
+      buttonRestClassName: buttonClassName,
+      buttonClickedClassName: "dragon-hidden"
     };
     this.updateNameValue = this.updateNameValue.bind(this);
     this.showClickedButtonState = this.showClickedButtonState.bind(this);
@@ -24,33 +27,45 @@ class CreateCampaignComponent extends React.Component {
 
   render() {
 
-    var organizationMenu = function() {return <OrganizationMenuComponent current="campaigns" /> }();
-
+    var appMenu = function () { return <AppMenuComponent current="campaigns" /> }();
 
     return (
 
-        <div className="row">
-          {organizationMenu}
+      <div id="addCampaignComponent">
+        {appMenu}
 
-          <div className="col-sm-4">
-            <form onSubmit={this.handleSubmit}>
-                <h3>Create Campaign</h3>
+        <div className="row justify-content-center">
+          <div className="col-12 col-lg-10">
 
-                <br/><br/>
+            <div className="row page_header_container">
+              <div className="col-12">
+                <h3 className="page_header_title float-left align-items-center">Add Campaign</h3>
+                <div className="page_header_action float-right">
 
-                <input value={this.state.nameValue} onChange={this.updateNameValue} className="form-control input-lg" placeholder="name of campaign"/>
-                <div className="dragon-validation-message">{this.state.validationMessage}</div>
-              <input type="submit" className={this.state.buttonRestClassName} value="Save" />
-              <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Saving</div>
-            </form>
+                </div>
+                <div className="clearfix"></div>
+                <hr className="page_header_divider" />
+              </div>
+            </div>
+
+
+            <div className="row">
+              <div className="col-12">
+                <form onSubmit={this.handleSubmit}>
+                  <input value={this.state.nameValue} onChange={this.updateNameValue} className="form-control input-lg" placeholder="name of campaign" />
+                  <div className="dragon-validation-message">{this.state.validationMessage}</div>
+                  <input type="submit" className={this.state.buttonRestClassName} value="Save" />
+                  <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Saving</div>
+                </form>
+              </div>
+            </div>
+
+
           </div>
-
-
-
-          <div className="col-sm-6">
-          </div>
-
         </div>
+      </div>
+
+
 
 
 
@@ -63,11 +78,11 @@ class CreateCampaignComponent extends React.Component {
 
   showClickedButtonState(yes) {
     if (yes) {
-          this.setState({ buttonRestClassName: "dragon-hidden" });
-          this.setState({ buttonClickedClassName: buttonClassName });
+      this.setState({ buttonRestClassName: "dragon-hidden" });
+      this.setState({ buttonClickedClassName: buttonClassName });
     } else {
-          this.setState({ buttonRestClassName: buttonClassName });
-          this.setState({ buttonClickedClassName: "dragon-hidden" });
+      this.setState({ buttonRestClassName: buttonClassName });
+      this.setState({ buttonClickedClassName: "dragon-hidden" });
     }
   }
 
@@ -98,23 +113,23 @@ class CreateCampaignComponent extends React.Component {
 
     const organizationIdValue = this.props.organizationId;
 
-    var campaignIdValue = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
-        return v.toString(16);
+    var campaignIdValue = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
     });
 
 
 
     var params = {
-        TableName:"Campaigns",
-        Item:{
-            organizationId : organizationIdValue,
-            campaignId : campaignIdValue,
-            name : nameValue
-        }
+      TableName: "Campaigns",
+      Item: {
+        organizationId: organizationIdValue,
+        campaignId: campaignIdValue,
+        name: nameValue
+      }
     };
 
-    this.props.dbPut(params, function(result){
+    this.props.dbPut(params, function (result) {
       myThis.showClickedButtonState(false);
       mixpanel.track('Create Campaign', {
         'CampaignName': nameValue,

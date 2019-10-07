@@ -1,6 +1,5 @@
 import React from 'react';
 import { Router, Route, Link, IndexRoute, hashHistory, browserHistory } from 'react-router';
-import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
 
 import AppMenuComponent from './components/base/AppMenuComponent.jsx';
 
@@ -61,7 +60,6 @@ class CampaignsComponent extends React.Component {
       }
     }
 
-    var organizationMenu = function () { return <OrganizationMenuComponent current="campaigns" /> }();
     var appMenu = function () { return <AppMenuComponent current="campaigns" /> }();
 
 
