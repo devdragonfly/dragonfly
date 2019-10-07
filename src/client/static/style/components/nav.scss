@@ -8,10 +8,8 @@
   .app-nav-container {
     padding-bottom: 0 !important;
     height: 65px !important;
-    // display: inline-flex;
 
     .app-organization-select {
-      // display: inline-block;
       padding: 0 0.75rem;
 
       .app-nav-logo {
@@ -34,15 +32,11 @@
     }
 
     .app-user-dropdown-container {
-      // margin-right: auto;
-      // margin-left: auto;
-
       .app-user-dropdown {
         align-items: center;
 
         .dropdown-toggle {
           float: right;
-          // width: 100%;
 
           .user-dropdown-info {
             display: inline-block;
@@ -112,7 +106,6 @@
             padding: 0.25rem 1.5rem;
             clear: both;
             font-weight: 400;
-            // color: #212529;
             text-align: inherit;
             white-space: nowrap;
             background-color: initial;
