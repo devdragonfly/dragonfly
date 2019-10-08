@@ -504,6 +504,18 @@ body {
   margin-bottom: 10px; }
   .campaign_card .card .card-body {
     padding-bottom: 0; }
+    .campaign_card .card .card-body .card-actions-icon {
+      float: right;
+      color: #9aa0ac;
+      font-size: 14px; }
+      .campaign_card .card .card-body .card-actions-icon.active {
+        color: #2a60d9; }
+      .campaign_card .card .card-body .card-actions-icon:hover {
+        color: #495057;
+        -webkit-transition: color 0.2s ease;
+        -moz-transition: color 0.2s ease;
+        -o-transition: color 0.2s ease;
+        transition: color 0.2s ease; }
     .campaign_card .card .card-body h6 {
       font-size: 15px;
       color: #467fcf !important; }

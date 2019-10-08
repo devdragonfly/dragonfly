@@ -5,6 +5,25 @@
     .card-body {
       padding-bottom: 0;
 
+      .card-actions-icon {
+        float: right;
+        color: #9aa0ac;
+          font-size: 14px;
+
+          &.active {
+           
+            color: $dragonfly-blue-dark;
+          }
+  
+          &:hover {
+            color: #495057;
+            -webkit-transition: color 0.2s ease;
+            -moz-transition: color 0.2s ease;
+            -o-transition: color 0.2s ease;
+            transition: color 0.2s ease;
+          }
+      }
+
       h6 {
         font-size: 15px;
         color: #467fcf !important;

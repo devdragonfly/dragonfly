@@ -40,7 +40,7 @@ class CampaignsComponent extends React.Component {
   //       return ($(this).find('.document-info').text().toLowerCase().indexOf(value) < 1);
   //   }).addClass('hidden');
   // }
-    
+
 
   render() {
     var campaigns = this.props.campaigns;
@@ -253,6 +253,9 @@ class Campaign extends React.Component {
           <div className="campaign_card">
             <div className="card">
               <div className="card-body">
+                <div className="card-actions-icon">
+                  <i className="fas fa-ellipsis-h pull-right"></i>
+                </div>
 
                 <h5 className="card-title">{this.props.campaign.name}</h5>
                 <h6 className="card-subtitle mb-2">1,357 Views</h6>
