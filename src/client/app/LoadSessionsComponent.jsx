@@ -1,6 +1,6 @@
 import React from 'react';
-import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
 
+import AppMenuComponent from './components/base/AppMenuComponent.jsx';
 
 class LoadSessionsComponent extends React.Component {
 
@@ -32,33 +32,28 @@ class LoadSessionsComponent extends React.Component {
     
     
   }
-  
+
 
   render() {
-    
-    var organizationMenu = function() {return <OrganizationMenuComponent current="sessions" /> }();
-    
+    var appMenu = function () { return <AppMenuComponent current="sessions" /> }();
     return (
+      <div id="loadSessionsComponent" className="page-loader-container">
+        {appMenu}
+        <div className="row justify-content-center">
+          <div className="col-12 col-lg-10">
+            <div className="row justify-content-center">
+              <div className="col page-loader">
+                <i className='fas fa-circle-notch fa-spin'></i>
+                <p className="loader-text">Loading Sessions...</p>
+              </div>
 
-      
-        <div className="row">
-          {organizationMenu}
-
-          <div className="col-sm-10">
-                <h3>Sessions</h3>
-                
-                <br/><br/>
-                
-                <i className='fa fa-circle-o-notch fa-spin'></i> Loading Sessions
-                
-          </div> 
-          
+            </div>
+          </div>
         </div>
-      
-      
-      
+      </div>
     );
   }
+
 
 
 }

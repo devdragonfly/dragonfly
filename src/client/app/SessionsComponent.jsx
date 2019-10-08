@@ -40,7 +40,7 @@ class SessionsComponent extends React.Component {
       }
     }
 
-    var appMenu = function () { return <AppMenuComponent current="campaigns" /> }();
+    var appMenu = function () { return <AppMenuComponent current="sessions" /> }();
 
 
     return (
@@ -49,25 +49,25 @@ class SessionsComponent extends React.Component {
         {appMenu}
         <div className="row justify-content-center">
           <div className="col-12 col-lg-10">
-          <div className="row page_header_container">
-            <div className="col-12">
-              <h3 className="page_header_title float-left">Sessions</h3>
-              <div className="page_header_action float-right">
-                <Link to={`createsession`} className="btn btn-primary float-right"><i className='fa fa-plus'></i> Create Session</Link>
+            <div className="row page_header_container">
+              <div className="col-12">
+                <h3 className="page_header_title float-left">Sessions</h3>
+                <div className="page_header_action float-right">
+                  <Link to={`createsession`} className="btn btn-primary float-right"><i className='fa fa-plus'></i> Create Session</Link>
+                </div>
+                <div className="clearfix"></div>
+                <hr className="page_header_divider" />
               </div>
-              <div className="clearfix"></div>
-              <hr className="page_header_divider" />
             </div>
-          </div>
 
 
-          <div className="dragon-select-list">
-            {sessionsJsx}
-          </div>
+            <div className="dragon-select-list">
+              {sessionsJsx}
+            </div>
           </div>
         </div>
       </div>
-      
+
     );
   }
 
@@ -86,32 +86,29 @@ class Session extends React.Component {
 
   render() {
     return (
-      <div>
+      <div id="sessionCardComponent">
 
 
-        <div id="sessions_component">
-          <div className="col-sm-4 campaign_card" onClick={this.handleSelectSession.bind(this, this.props.session)}>
-            <div className="card">
-              <img src="../assets/images/placeholders/placeholder_blue.png" class="card-img-top" alt="..." />
-              <div className="card-body">
-                <h5 className="card-title">{this.props.session.name}</h5>
-                <p className="card-text">Breakpoints ({this.props.breakpointCount})</p>
+        <div className="col-12 col-md-4 col-lg-3 campaign-cards-container">
+
+          <div id="sessionCardComponent" className="" onClick={this.handleSelectSession.bind(this, this.props.session)}>
+            <div className="dragonfly-card">
+              <div className="card">
+                <div className="card-body">
+
+                  <h5 className="card-title">{this.props.session.name}</h5>
+                  {/* <h6 className="card-subtitle mb-2"><i className={statusIconClassName}></i> {status}</h6> */}
+
+                  <div className="card-action-links">
+                    <a className="card-link link-video-view"><i className="fab fa-youtube"></i> View</a>
+                    <a className="card-link link-video-edit"><i className="far fa-dot-circle"></i> Breakpoints ({this.props.breakpointCount})</a>
+                  </div>
+
+                </div>
               </div>
             </div>
           </div>
         </div>
-
-        {/* <div onClick={this.handleSelectSession.bind(this, this.props.session)} className="dragon-select-list-row dragon-pointer">
-          <div className="dragon-select-list-cell">
-            <i className='fa fa-graduation-cap fa-fw fa-lg'></i>
-          </div>
-          <div className="dragon-select-list-cell">
-            {this.props.session.name}
-          </div>
-          <div className="dragon-select-list-cell">
-            Breakpoints ({this.props.breakpointCount})
-          </div>
-        </div> */}
 
       </div>
 

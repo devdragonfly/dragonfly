@@ -557,4 +557,15 @@ body {
     -moz-box-shadow: 1px 1px 0.5px 0px rgba(70, 127, 207, 0.3);
     box-shadow: 1px 1px 0.5px 0px rgba(70, 127, 207, 0.3); }
 
+.session-add-breakpoint {
+  width: 100%; }
+  .session-add-breakpoint .session-add-breakpoint-viewer {
+    width: 100% !important; }
+    .session-add-breakpoint .session-add-breakpoint-viewer img {
+      width: 100%; }
+    .session-add-breakpoint .session-add-breakpoint-viewer .session-breakpoint-video-footer {
+      margin-top: 10px; }
+  .session-add-breakpoint .session-add-breakpoint-questions {
+    width: 100%; }
+
 /*# sourceMappingURL=style.css.map */

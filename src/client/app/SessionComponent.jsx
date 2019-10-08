@@ -1,8 +1,10 @@
 import React from 'react';
 import { Link } from 'react-router';
-import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
 import BreakpointComponent from './BreakpointComponent.jsx';
 import MillisecondsComponent from './MillisecondsComponent.jsx';
+
+
+import AppMenuComponent from './components/base/AppMenuComponent.jsx';
 
 
 const buttonClassName = "btn btn-primary";
@@ -21,11 +23,12 @@ class SessionComponent extends React.Component {
       currentThumbnailUrl = "https://s3-us-west-2.amazonaws.com/dragonfly-videos-thumbnails/" + key;
     }
 
-    this.state = {seconds : 0,
-                  currentThumbnailUrl: currentThumbnailUrl,
-                  thumbnails: thumbnails,
-                  buttonRestClassName : buttonClassName,
-                  buttonClickedClassName : "dragon-hidden"
+    this.state = {
+      seconds: 0,
+      currentThumbnailUrl: currentThumbnailUrl,
+      thumbnails: thumbnails,
+      buttonRestClassName: buttonClassName,
+      buttonClickedClassName: "dragon-hidden"
     };
     this.updateSeconds = this.updateSeconds.bind(this);
     this.updateCurrentThumbnailUrl = this.updateCurrentThumbnailUrl.bind(this);
@@ -65,88 +68,145 @@ class SessionComponent extends React.Component {
     var handleLoadQuestion = this.props.handleLoadQuestion;
     var thumbnails = this.state.thumbnails;
 
-    var breakpointsJsx = function() {return '' }();
+    var breakpointsJsx = function () { return '' }();
 
 
     var thumbnailUrl = "./images/video-play.jpg";
     var second = 0;
 
-    if (breakpoints == null){
-      breakpointsJsx = function() {return 'No breakpoints added to this session yet.' }();
+    if (breakpoints == null) {
+      breakpointsJsx = function () { return 'No breakpoints added to this session yet.' }();
     } else {
       breakpointsJsx = breakpoints.map((breakpoint, i) => {
-          if (thumbnails.length !== 0) {
-            second = Math.round(breakpoint.milliseconds / 1000);
-            if (second >= thumbnails.length - 1) { second = thumbnails.length - 1; }
-            var key = thumbnails[second].Key;
-            thumbnailUrl = "https://s3-us-west-2.amazonaws.com/dragonfly-videos-thumbnails/" + key;
-          }
+        if (thumbnails.length !== 0) {
+          second = Math.round(breakpoint.milliseconds / 1000);
+          if (second >= thumbnails.length - 1) { second = thumbnails.length - 1; }
+          var key = thumbnails[second].Key;
+          thumbnailUrl = "https://s3-us-west-2.amazonaws.com/dragonfly-videos-thumbnails/" + key;
+        }
 
-          return <BreakpointComponent organizationId={organizationId} dbUpdate={dbUpdate} handleLoadSession={handleLoadSession}
-                                      session={session} breakpoint={breakpoint} thumbnailUrl={thumbnailUrl}
-                                      handleLoadBreakpoint={handleLoadBreakpoint}
-                                      handleLoadQuestion={handleLoadQuestion} history={history}/>;
+        return <BreakpointComponent organizationId={organizationId} dbUpdate={dbUpdate} handleLoadSession={handleLoadSession}
+          session={session} breakpoint={breakpoint} thumbnailUrl={thumbnailUrl}
+          handleLoadBreakpoint={handleLoadBreakpoint}
+          handleLoadQuestion={handleLoadQuestion} history={history} />;
       });
 
     }
 
-    var organizationMenu = function() {return <OrganizationMenuComponent current="sessions" /> }();
-    var millisecondsJsx = function() {return <MillisecondsComponent milliseconds={milliseconds} /> }();
+    var appMenu = function () { return <AppMenuComponent current="sessions" /> }();
+    var millisecondsJsx = function () { return <MillisecondsComponent milliseconds={milliseconds} /> }();
 
     return (
 
-        <div className="row">
-          {organizationMenu}
+      <div id="viewSessionsComponent">
+        {appMenu}
+
+        <div className="row justify-content-center">
+          <div className="col-12 col-lg-10">
 
 
-
-          <div className="col-sm-6">
-
-                <h3><i className='fa fa-graduation-cap fa-fw'></i> {this.props.session.name}</h3>
-
-                <div className="dragon-breakpoints">
-                  {breakpointsJsx}
+            <div className="row page_header_container">
+              <div className="col-12">
+                <div className="page_header_title float-left">
+                  <h3 className="page-title">Edit Session: {this.props.session.name}</h3>
+                  <p><b>Breakpoints: </b> {session.breakpoints.length}</p>
                 </div>
 
-                <br/><br/>
+                <div className="page_header_action float-right">
+                  <a className="btn btn-primary float-right"><i className='fa fa-plus'></i> Add Breakpoint</a>
+                </div>
+                <div className="clearfix"></div>
+                <hr className="page_header_divider" />
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-12 col-lg-6 campaign-cards-container float-left">
+
+                <div id="sessionViewBreakpointComponent" className="">
+                  <div className="dragonfly-card">
+                    <div className="card">
+                      <div className="card-body">
+
+                        <h5 className="card-title">Add Breakpoint</h5>
+                        {/* <h6 className="card-subtitle mb-2"><i className={statusIconClassName}></i> {status}</h6> */}
+
+                        <div className="session-add-breakpoint">
+                          <div className="row">
+                            <div className="col session-add-breakpoint-viewer">
+                              <img src={this.state.currentThumbnailUrl} />
+                              <div className="session-breakpoint-video-footer">
+                                <h6 className="session-breakpoint-video-title">{this.props.session.video.name} <Link to={'selectvideo'}><i className='fa fa-edit fa-fw'></i></Link></h6>
+                                <p className="session-breakpoint-video-timer">{millisecondsJsx}</p>
+                              </div>
+                            </div>
+                          </div>
+
+                          <div className="row">
+                            <div className="col session-add-breakpoint-questions">
+                              <div className="dragon-select-list">
+
+                                <form onSubmit={this.handleSubmit}>
+                                  <input type="range" min="0" max={thumbnails.length} step="0.5" value={this.state.seconds} onChange={this.updateSeconds} />
+                                  <br />
+
+                                  <input type="submit" className={this.state.buttonRestClassName} value="Add Breakpoint" />
+                                  <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Adding Breakpoint</div>
+                                </form>
 
 
-                <div className="dragon-breakpoint">
-                  <div className="dragon-breakpoint-info">
-                    <img src={this.state.currentThumbnailUrl}/>
-                    <br/>
-                    {millisecondsJsx}
-                    <br/>
-                  </div>
-                  <div className="dragon-breakpoint-questions">
-                    <div className="dragon-select-list">
-                      {this.props.session.video.name}
-                      &nbsp;
-                      <Link to={'selectvideo'}><i className='fa fa-edit fa-fw'></i></Link>
+                              </div>
+
+                            </div>
+                          </div>
 
 
-                      <form onSubmit={this.handleSubmit}>
-                          <input type="range" min="0" max={thumbnails.length} step="0.5" value={this.state.seconds} onChange={this.updateSeconds}/>
-                          <br/>
+                        </div>
 
-                        <input type="submit" className={this.state.buttonRestClassName} value="Add Breakpoint" />
-                        <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Adding Breakpoint</div>
-                      </form>
+                        <div className="card-action-links">
+                          <a className="card-link link-video-edit"><i className="far fa-dot-circle"></i> Save Breakpoint</a>
+                        </div>
 
-
+                      </div>
                     </div>
+                  </div>
+                </div>
+              </div>
 
+              <div className="col-12 col-lg-6 campaign-cards-container float-right">
+
+                <div id="sessionBreakpointsComponent" className="">
+                  <div className="dragonfly-card">
+                    <div className="card">
+                      <div className="card-body">
+
+                        <h5 className="card-title">All Breakpoints</h5>
+                        {/* <h6 className="card-subtitle mb-2"><i className={statusIconClassName}></i> {status}</h6> */}
+
+                        <div className="dragon-breakpoints">
+                          {breakpointsJsx}
+                        </div>
+
+                        {/* <div className="card-action-links">
+          <a className="card-link link-video-view"><i className="fab fa-youtube"></i> View</a>
+          <a className="card-link link-video-edit"><i className="far fa-dot-circle"></i> Breakpoints ({this.props.breakpointCount})</a>
+        </div> */}
+
+                      </div>
+                    </div>
                   </div>
                 </div>
 
+              </div>
+            </div>
+
+
 
           </div>
-
-
-          <div className="col-sm-4">
-          </div>
-
         </div>
+      </div>
+
+
 
 
 
@@ -155,11 +215,11 @@ class SessionComponent extends React.Component {
 
   showClickedButtonState(yes) {
     if (yes) {
-          this.setState({ buttonRestClassName: "dragon-hidden" });
-          this.setState({ buttonClickedClassName: buttonClassName });
+      this.setState({ buttonRestClassName: "dragon-hidden" });
+      this.setState({ buttonClickedClassName: buttonClassName });
     } else {
-          this.setState({ buttonRestClassName: buttonClassName });
-          this.setState({ buttonClickedClassName: "dragon-hidden" });
+      this.setState({ buttonRestClassName: buttonClassName });
+      this.setState({ buttonClickedClassName: "dragon-hidden" });
     }
   }
 
@@ -192,14 +252,14 @@ class SessionComponent extends React.Component {
     const sessionId = this.props.session.sessionId;
     var session = this.props.session;
 
-    var breakpointId = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
-        return v.toString(16);
+    var breakpointId = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
     });
 
 
 
-    var breakpoint = { breakpointId: breakpointId, milliseconds : milliseconds};
+    var breakpoint = { breakpointId: breakpointId, milliseconds: milliseconds };
     var breakpoints = [];
 
     if (this.props.session.breakpoints != null) {
@@ -209,20 +269,20 @@ class SessionComponent extends React.Component {
     breakpoints.push(breakpoint);
 
     var params = {
-            TableName:"Sessions",
-            Key: {
-                organizationId : organizationId,
-                sessionId : sessionId
-            },
-            UpdateExpression: "set breakpoints = :breakpoints",
-            ExpressionAttributeValues:{
-                ":breakpoints" : breakpoints
-            },
-            ReturnValues:"UPDATED_NEW"
-        };
+      TableName: "Sessions",
+      Key: {
+        organizationId: organizationId,
+        sessionId: sessionId
+      },
+      UpdateExpression: "set breakpoints = :breakpoints",
+      ExpressionAttributeValues: {
+        ":breakpoints": breakpoints
+      },
+      ReturnValues: "UPDATED_NEW"
+    };
 
 
-    this.props.dbUpdate(params, function(result) {
+    this.props.dbUpdate(params, function (result) {
       myThis.showClickedButtonState(false);
       session.breakpoints = breakpoints;
       myThis.props.handleLoadSession(session);
