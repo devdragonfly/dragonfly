@@ -1,6 +1,5 @@
 import React from 'react';
 import { Link } from 'react-router';
-import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
 
 import AppMenuComponent from './components/base/AppMenuComponent.jsx';
 
@@ -45,7 +44,6 @@ class ContactListsComponent extends React.Component {
     }
 
 
-    var organizationMenu = function () { return <OrganizationMenuComponent current="contactlists" /> }();
     var appMenu = function () { return <AppMenuComponent current="contactlists" /> }();
 
 
@@ -53,9 +51,6 @@ class ContactListsComponent extends React.Component {
 
       <div className="contacts-container">
         {appMenu}
-
-
-
 
         <div className="row justify-content-center">
           <div className="col-12 col-lg-10">
@@ -145,9 +140,9 @@ class ContactList extends React.Component {
 
     return (
 
-      <div className="col-12 col-md-4 col-lg-3 campaign-cards-container">
+      <div className="col-12 col-md-4 col-lg-3 campaign-cards-container" onClick={this.handleSelectContactList.bind(this, this.props.contactList)}>
 
-        <div id="video_component" className="" onClick={this.handleKeyDown.bind(this)}>
+        <div id="video_component" className="">
           <div className="dragonfly-card">
             <div className="card">
               <div className="card-body">

@@ -1,10 +1,13 @@
 import React from 'react';
 import { Link } from 'react-router';
-import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
+
+import AppMenuComponent from './components/base/AppMenuComponent.jsx';
 import ImportAlertComponent from './ImportAlertComponent.jsx';
+
 import ReactDOM from 'react-dom';
 import readXlsxFile from 'read-excel-file'
 import EditContact from './EditContactComponet.jsx'
+
 
 
 
@@ -29,23 +32,23 @@ class ContactListComponent extends React.Component {
     var myThis = this;
     const organizationId = this.props.organizationId;
     const contactListId = this.props.contactList.contactListId;
-    if ( confirm("Are you sure?") ) {
+    if (confirm("Are you sure?")) {
       this.props.contactList.contacts.splice(id, 1);
       var contacts = this.props.contactList.contacts;
       var params = {
-              TableName:"ContactLists",
-              Key: {
-                  organizationId : organizationId,
-                  contactListId : contactListId
-              },
-              UpdateExpression: "set contacts = :contacts",
-              ExpressionAttributeValues:{
-                  ":contacts":contacts
-              },
-              ReturnValues:"UPDATED_NEW"
-          };
+        TableName: "ContactLists",
+        Key: {
+          organizationId: organizationId,
+          contactListId: contactListId
+        },
+        UpdateExpression: "set contacts = :contacts",
+        ExpressionAttributeValues: {
+          ":contacts": contacts
+        },
+        ReturnValues: "UPDATED_NEW"
+      };
 
-      this.props.dbUpdate(params, function(result) {
+      this.props.dbUpdate(params, function (result) {
         myThis.props.handleLoadContacts(result.Attributes.contacts);
         myThis.props.history.push('contactlist');
       });
@@ -60,19 +63,19 @@ class ContactListComponent extends React.Component {
     this.props.contactList.contacts[id] = contact;
     var contacts = this.props.contactList.contacts;
     var params = {
-            TableName:"ContactLists",
-            Key: {
-                organizationId : organizationId,
-                contactListId : contactListId
-            },
-            UpdateExpression: "set contacts = :contacts",
-            ExpressionAttributeValues:{
-                ":contacts":contacts
-            },
-            ReturnValues:"UPDATED_NEW"
-        };
+      TableName: "ContactLists",
+      Key: {
+        organizationId: organizationId,
+        contactListId: contactListId
+      },
+      UpdateExpression: "set contacts = :contacts",
+      ExpressionAttributeValues: {
+        ":contacts": contacts
+      },
+      ReturnValues: "UPDATED_NEW"
+    };
 
-    this.props.dbUpdate(params, function(result) {
+    this.props.dbUpdate(params, function (result) {
       myThis.props.handleLoadContacts(result.Attributes.contacts);
       callback();
     });
@@ -81,54 +84,61 @@ class ContactListComponent extends React.Component {
   render() {
 
     var contacts = this.props.contactList.contacts;
-    var contactsJsx = function() {return '' }();
+    var contactsJsx = function () { return '' }();
 
-    if (contacts == null){
-      contactsJsx = function() {return 'No contacts added to this list yet.' }();
+    if (contacts == null) {
+      contactsJsx = function () { return 'No contacts added to this list yet.' }();
     } else {
       contactsJsx = contacts.map((contact, i) => {
-          return <Contact contact={contact} contactIndex={i} deleteContact={this.deleteContact} editContact={this.editContact} />
+        return <Contact contact={contact} contactIndex={i} deleteContact={this.deleteContact} editContact={this.editContact} />
       });
 
     }
 
-    var organizationMenu = function() {return <OrganizationMenuComponent current="contactlists" /> }();
+    var appMenu = function () { return <AppMenuComponent current="contactlists" /> }();
 
     return (
+      <div id="contactListComponent">
+        {appMenu}
 
-        <div className="row">
-          {organizationMenu}
 
-          <div className="col-sm-6">
-            <h3><i className='fa fa-address-book-o fa-fw'></i> {this.props.contactList.name}</h3>
+        <div className="row justify-content-center">
+          <div className="col-12 col-lg-10">
+
+            <div className="row page_header_container">
+              <div className="col-12">
+                <h3 className="page_header_title float-left"> {this.props.contactList.name}</h3>
+                <div className="page_header_action float-right">
+                  <Link to={`addcontacts`} className="btn btn-primary float-right"><i className='fa fa-plus'></i> Add Contact</Link>
+                </div>
+                <div className="clearfix"></div>
+                <hr className="page_header_divider" />
+              </div>
+            </div>
 
             <div className="dragon-select-list">
               {contactsJsx}
             </div>
 
-            <br/>
 
-            <Link to={`addcontacts`} className="btn btn-primary"><i className='fa fa-plus'></i> Add Contacts</Link>
-
-            <br/>
-
-            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-
-            <br/>
             <div className="row">
               <div className="col-sm-6">
                 {/*onClick={this.showAlert} */}
                 <label for="input">Import your contact list in .xlsx format</label>
-                <input type="file" accept=".xlsx" onChange={this.handleFile} className="form-control" id="input" placeholder="exel file"/>
+                <input type="file" accept=".xlsx" onChange={this.handleFile} className="form-control" id="input" placeholder="exel file" />
               </div>
             </div>
 
+
+            <ImportAlertComponent show={this.state.show} onClose={this.showAlert} alertMessage={this.state.alertMessage} />
+
           </div>
-          <div className="col-sm-4">
-          </div>
-          <ImportAlertComponent show={this.state.show} onClose={this.showAlert} alertMessage={this.state.alertMessage}/>
+
 
         </div>
+      </div>
+
+
 
     );
   }
@@ -149,13 +159,13 @@ class ContactListComponent extends React.Component {
       titles = rows[0];
 
       for (var i = 0; i < titles.length; i++) {
-        if ( titles[i] == 'First name' ) {
+        if (titles[i] == 'First name') {
           titlesIndex.first = i;
         }
-        if ( titles[i] == 'Last name' ) {
+        if (titles[i] == 'Last name') {
           titlesIndex.last = i;
         }
-        if ( titles[i] == 'Email' ) {
+        if (titles[i] == 'Email') {
           titlesIndex.email = i;
         }
       }
@@ -171,35 +181,35 @@ class ContactListComponent extends React.Component {
         }
 
         for (var i = 1; i < rows.length; i++) {
-            contacts.push({
-              first: rows[i][titlesIndex.first],
-              last:  rows[i][titlesIndex.last],
-              email: rows[i][titlesIndex.email],
-              isValid: this.validate(rows[i][titlesIndex.first], rows[i][titlesIndex.last], rows[i][titlesIndex.email])
-            });
+          contacts.push({
+            first: rows[i][titlesIndex.first],
+            last: rows[i][titlesIndex.last],
+            email: rows[i][titlesIndex.email],
+            isValid: this.validate(rows[i][titlesIndex.first], rows[i][titlesIndex.last], rows[i][titlesIndex.email])
+          });
 
         }
 
         for (var i = 0; i < contacts.length; i++) {
-            if (contacts[i].isValid) {
-              validContacts.push({first: contacts[i].first, last: contacts[i].last, email: contacts[i].email});
-            }
+          if (contacts[i].isValid) {
+            validContacts.push({ first: contacts[i].first, last: contacts[i].last, email: contacts[i].email });
+          }
         }
 
         var params = {
-                TableName:"ContactLists",
-                Key: {
-                    organizationId : organizationId,
-                    contactListId : contactListId
-                },
-                UpdateExpression: "set contacts = :contacts",
-                ExpressionAttributeValues:{
-                    ":contacts":validContacts
-                },
-                ReturnValues:"UPDATED_NEW"
-            };
+          TableName: "ContactLists",
+          Key: {
+            organizationId: organizationId,
+            contactListId: contactListId
+          },
+          UpdateExpression: "set contacts = :contacts",
+          ExpressionAttributeValues: {
+            ":contacts": validContacts
+          },
+          ReturnValues: "UPDATED_NEW"
+        };
 
-        this.props.dbUpdate(params, function(result) {
+        this.props.dbUpdate(params, function (result) {
           myThis.props.handleLoadContacts(result.Attributes.contacts);
           myThis.props.history.push('contactlist');
           mixpanel.track('Upload Contacts', {
@@ -237,8 +247,8 @@ class ContactListComponent extends React.Component {
 
 
   validateEmail(email) {
-      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(email);
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
   }
 
 
@@ -260,11 +270,11 @@ class Contact extends React.Component {
   }
 
   handleEditContact() {
-    this.setState({edit: true});
+    this.setState({ edit: true });
   }
 
   handleCloseContactEdit() {
-    this.setState({edit: false});
+    this.setState({ edit: false });
   }
 
   handleDeleteContact() {
@@ -274,9 +284,9 @@ class Contact extends React.Component {
   handleLoadContact(first, last, email, isValid) {
     var myThis = this;
     if (isValid) {
-      var contact = { first : first, last : last, email : email};
-      this.props.editContact(this.props.contactIndex, contact, function(){
-        myThis.setState({edit: false});
+      var contact = { first: first, last: last, email: email };
+      this.props.editContact(this.props.contactIndex, contact, function () {
+        myThis.setState({ edit: false });
       });
     } else {
       alert('Your contact is not valid!');
@@ -291,37 +301,37 @@ class Contact extends React.Component {
 
     if (edit) {
       contactForm = (
-        <EditContact i={index} contact={this.props.contact} handleCloseContactEdit={this.handleCloseContactEdit} handleLoadContact={this.handleLoadContact}/>
+        <EditContact i={index} contact={this.props.contact} handleCloseContactEdit={this.handleCloseContactEdit} handleLoadContact={this.handleLoadContact} />
       );
     } else {
       contactForm = (<div className="dragon-select-list">
-                <div className="dragon-select-list-cell">
-                  {this.props.contact.first}
-                </div>
-                <div className="dragon-select-list-cell">
-                  {this.props.contact.last}
-                </div>
-                <div className="dragon-select-list-cell">
-                  {this.props.contact.email}
-                </div>
-                <div className="dragon-select-list-cell" onClick={this.handleEditContact.bind(this)}>
-                  <i className="fa fa-pencil-square-o fa-fw fa-lg" aria-hidden="true"></i>
-                </div>
-                <div className="dragon-select-list-cell" onClick={this.handleDeleteContact.bind(this)}>
-                  <i className='fa fa-trash fa-fw fa-lg'></i>
-                </div>
-              </div>
-            );
+        <div className="dragon-select-list-cell">
+          {this.props.contact.first}
+        </div>
+        <div className="dragon-select-list-cell">
+          {this.props.contact.last}
+        </div>
+        <div className="dragon-select-list-cell">
+          {this.props.contact.email}
+        </div>
+        <div className="dragon-select-list-cell" onClick={this.handleEditContact.bind(this)}>
+          <i className="fa fa-pencil-square-o fa-fw fa-lg" aria-hidden="true"></i>
+        </div>
+        <div className="dragon-select-list-cell" onClick={this.handleDeleteContact.bind(this)}>
+          <i className='fa fa-trash fa-fw fa-lg'></i>
+        </div>
+      </div>
+      );
     }
 
 
     return (
-        <div className="dragon-select-list-row">
-          <div className="dragon-select-list-cell">
-            <i className='fa fa-address-card fa-fw fa-lg'></i>
-          </div>
-          {contactForm}
+      <div className="dragon-select-list-row">
+        <div className="dragon-select-list-cell">
+          <i className='fa fa-address-card fa-fw fa-lg'></i>
         </div>
+        {contactForm}
+      </div>
     );
   }
 
