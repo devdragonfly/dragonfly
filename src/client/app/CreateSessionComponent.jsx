@@ -1,8 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
-import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
 
-
+import AppMenuComponent from './components/base/AppMenuComponent.jsx';
 
 const buttonClassName = "btn btn-primary";
 
@@ -10,10 +9,11 @@ class CreateSessionComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {nameValue : '',
-                  validationMessage : '',
-                  buttonRestClassName : buttonClassName,
-                  buttonClickedClassName : "dragon-hidden"
+    this.state = {
+      nameValue: '',
+      validationMessage: '',
+      buttonRestClassName: buttonClassName,
+      buttonClickedClassName: "dragon-hidden"
     };
     this.updateNameValue = this.updateNameValue.bind(this);
     this.showClickedButtonState = this.showClickedButtonState.bind(this);
@@ -23,33 +23,40 @@ class CreateSessionComponent extends React.Component {
 
   render() {
 
-    var organizationMenu = function() {return <OrganizationMenuComponent current="sessions" /> }();
+    var appMenu = function () { return <AppMenuComponent current="sessions" /> }();
 
 
     return (
 
-        <div className="row">
-          {organizationMenu}
+      <div id="createSessionComponent">
+        {appMenu}
+        <div className="row justify-content-center">
+          <div className="col-12 col-lg-10">
 
-          <div className="col-sm-4">
+            <div className="row page_header_container">
+              <div className="col-12">
+                <h3 className="page_header_title float-left">Create Session</h3>
+                <div className="page_header_action float-right">
+                  {/* <Link to={`createsession`} className="btn btn-primary float-right"><i className='fa fa-plus'></i> Create Session</Link> */}
+                </div>
+                <div className="clearfix"></div>
+                <hr className="page_header_divider" />
+              </div>
+            </div>
+
             <form onSubmit={this.handleSubmit}>
-                <h3>Create Session</h3>
 
-                <br/><br/>
-
-                <input value={this.state.nameValue} onChange={this.updateNameValue} className="form-control input-lg" placeholder="name of session"/>
-                <div className="dragon-validation-message">{this.state.validationMessage}</div>
+              <input value={this.state.nameValue} onChange={this.updateNameValue} className="form-control input-lg" placeholder="name of session" />
+              <div className="dragon-validation-message">{this.state.validationMessage}</div>
               <input type="submit" className={this.state.buttonRestClassName} value="Save" />
               <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Saving</div>
             </form>
           </div>
 
-
-
-          <div className="col-sm-6">
-          </div>
-
         </div>
+      </div>
+
+
 
 
 
@@ -62,11 +69,11 @@ class CreateSessionComponent extends React.Component {
 
   showClickedButtonState(yes) {
     if (yes) {
-          this.setState({ buttonRestClassName: "dragon-hidden" });
-          this.setState({ buttonClickedClassName: buttonClassName });
+      this.setState({ buttonRestClassName: "dragon-hidden" });
+      this.setState({ buttonClickedClassName: buttonClassName });
     } else {
-          this.setState({ buttonRestClassName: buttonClassName });
-          this.setState({ buttonClickedClassName: "dragon-hidden" });
+      this.setState({ buttonRestClassName: buttonClassName });
+      this.setState({ buttonClickedClassName: "dragon-hidden" });
     }
   }
 
@@ -104,23 +111,23 @@ class CreateSessionComponent extends React.Component {
 
     const organizationIdValue = this.props.organizationId;
 
-    var sessionIdValue = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
-        return v.toString(16);
+    var sessionIdValue = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
     });
 
 
 
     var params = {
-        TableName:"Sessions",
-        Item:{
-            organizationId : organizationIdValue,
-            sessionId : sessionIdValue,
-            name : nameValue
-        }
+      TableName: "Sessions",
+      Item: {
+        organizationId: organizationIdValue,
+        sessionId: sessionIdValue,
+        name: nameValue
+      }
     };
 
-    this.props.dbPut(params, function(result){
+    this.props.dbPut(params, function (result) {
       myThis.props.handleLoadNext('sessions');
       myThis.showClickedButtonState(false);
       mixpanel.track("Generate Dragonfly Sessions", {

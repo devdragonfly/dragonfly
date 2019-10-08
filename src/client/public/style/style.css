@@ -524,6 +524,10 @@ body {
         -moz-transition: color 0.2s ease;
         -o-transition: color 0.2s ease;
         transition: color 0.2s ease; }
+    .campaign_card .card .card-body .card-title {
+      max-height: 24px;
+      overflow: hidden;
+      text-overflow: ellipsis; }
     .campaign_card .card .card-body h6 {
       font-size: 15px;
       color: #467fcf !important; }

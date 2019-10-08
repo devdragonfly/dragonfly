@@ -61,7 +61,7 @@ class SessionsComponent extends React.Component {
             </div>
 
 
-            <div className="dragon-select-list">
+            <div className="row">
               {sessionsJsx}
             </div>
           </div>
@@ -86,7 +86,6 @@ class Session extends React.Component {
 
   render() {
     return (
-      <div id="sessionCardComponent">
 
 
         <div className="col-12 col-md-4 col-lg-3 campaign-cards-container">
@@ -109,8 +108,6 @@ class Session extends React.Component {
             </div>
           </div>
         </div>
-
-      </div>
 
     );
   }

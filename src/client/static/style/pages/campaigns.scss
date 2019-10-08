@@ -24,6 +24,13 @@
           }
       }
 
+      .card-title {
+        max-height: 24px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+
       h6 {
         font-size: 15px;
         color: #467fcf !important;
