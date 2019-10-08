@@ -2,6 +2,20 @@
     padding-right: 15px;
   .page_header_title {
     margin-top: 20px;
+
+    .page-title {
+      margin-bottom: 5px;
+      line-height: 1;
+    
+    }
+
+    p {
+      font-size: 15px;
+      padding-bottom: 0;
+      margin-bottom: 2px;
+      line-height: 1;
+    }
+
   }
   .page_header_action {
     margin-top: 20px;

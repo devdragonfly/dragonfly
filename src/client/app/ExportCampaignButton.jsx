@@ -1,6 +1,6 @@
 import React from 'react';
 
-const buttonClassName = 'btn btn-primary';
+const buttonClassName = 'btn btn-primary float-right';
 const errorMessage = 'Sorry! Error occured during CSV file generation'
 const fileBase = 'data:text/csv;charset=utf-8,';
 
@@ -18,8 +18,8 @@ class ExportCampaignButton extends React.Component {
 
   render() {
     return (
-      <a className={buttonClassName} onClick={this.handleOnClick} href={this.state.fileContent} download={this.state.filename}>
-        Click to download CSV
+      <a className={buttonClassName}  onClick={this.handleOnClick} href={this.state.fileContent} download={this.state.filename}>
+        <i className='fa fa-plus'></i> Export Data
       </a>
     );
   }

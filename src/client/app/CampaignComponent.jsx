@@ -1,10 +1,11 @@
 import React from 'react';
 import { Link } from 'react-router';
-import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
 import ExportCampaignButton from './ExportCampaignButton.jsx';
 import Chart from 'chart.js';
 
 import AppMenuComponent from './components/base/AppMenuComponent.jsx';
+
+import C3Chart from 'react-c3js';
 
 
 class CampaignComponent extends React.Component {
@@ -13,8 +14,9 @@ class CampaignComponent extends React.Component {
     super(props);
 
 
-    this.state = {path : "not found",
-                  totals: []
+    this.state = {
+      path: "not found",
+      totals: []
     };
 
 
@@ -33,7 +35,7 @@ class CampaignComponent extends React.Component {
   componentDidMount() {
     if (typeof window !== 'undefined') {
       var path = window.location.protocol + '//' + window.location.host;
-      this.setState({path : path});
+      this.setState({ path: path });
     } else {
       // work out what you want to do server-side...
     }
@@ -53,7 +55,7 @@ class CampaignComponent extends React.Component {
       var numberOfQuestions = data[0].length;
 
 
-      totals = Array.apply(null, Array(numberOfQuestions)).map(Number.prototype.valueOf,0);
+      totals = Array.apply(null, Array(numberOfQuestions)).map(Number.prototype.valueOf, 0);
       for (var i = 0; i < numberOfCompletedDragonflies; i++) {
         for (var j = 0; j < numberOfQuestions; j++) {
           if (data[i][j].correct) totals[j] = totals[j] + 1;
@@ -67,7 +69,7 @@ class CampaignComponent extends React.Component {
     var myChart = new Chart(ctx, {
       type: 'line',
       options: {
-        scales: {yAxes: [{display: true, ticks: { beginAtZero: true }}]}
+        scales: { yAxes: [{ display: true, ticks: { beginAtZero: true } }] }
 
       },
       data: {
@@ -81,7 +83,7 @@ class CampaignComponent extends React.Component {
     });
 
 
-    this.setState({totals : totals});
+    this.setState({ totals: totals });
 
   }
 
@@ -91,74 +93,213 @@ class CampaignComponent extends React.Component {
     var dragonflies = this.props.results;
     var sessionName = "session name";
 
-    var dragonfliesJsx = function() {return '' }();
+    var dragonfliesJsx = function () { return '' }();
 
     if (dragonflies !== 'not found') {
       dragonflies = dragonflies.Items;
       if (dragonflies.length === 0) {
-        dragonfliesJsx = function() {return 'ERROR: No dragonflies created.' }();
+        dragonfliesJsx = function () { return 'ERROR: No dragonflies created.' }();
 
       } else {
         dragonfliesJsx = dragonflies.map((dragonfly, i) => {
-            sessionName = dragonfly.session.name;
-            return <Dragonfly dragonfly={dragonfly} path={path}/>
+          sessionName = dragonfly.session.name;
+          return <Dragonfly dragonfly={dragonfly} path={path} />
 
         });
       }
     }
 
+
+    const data = {
+      size: {
+        height: 200,
+        width: 324
+      },
+      columns: [
+        // each columns data
+        [
+          "data1",
+          0,
+          5,
+          1,
+          2,
+          7,
+          5,
+          6,
+          8,
+          14,
+          7,
+          12,
+          5,
+          16,
+          3,
+          10,
+          2,
+          6,
+          30,
+          18,
+          18,
+          15,
+          14,
+          47,
+          59,
+          55,
+        ],
+      ],
+      type: "area", // default type of chart
+      groups: [["data1"]],
+      // colors: {
+      //   data1: colors["blue"],
+      // },
+      names: {
+        // name of each serie
+        data1: "Impressions",
+      },
+      axis: {
+        y: {
+          padding: {
+            bottom: 0,
+          },
+          show: false,
+          tick: {
+            outer: false,
+          },
+        },
+        x: {
+          padding: {
+            left: 0,
+            right: 0,
+            bottom: 0,
+          },
+          show: false,
+        },
+      },
+      legend: {
+        position: "inset",
+        padding: 0,
+        inset: {
+          anchor: "top-left",
+          x: 20,
+          y: 8,
+          step: 10,
+        },
+      },
+      tooltip: {
+        format: {
+          title: function (x) {
+            return "";
+          },
+        },
+      },
+      padding: {
+        bottom: 0,
+        left: -1,
+        right: -1,
+      },
+      point: {
+        show: false,
+      },
+    };
+
+    var compaignAnalytics = function () { return <C3Chart data={data} /> }();
+
     // var organizationMenu = function() {return <OrganizationMenuComponent current="campaigns" />}();
-    var exportCsvButton  = function() {return <ExportCampaignButton dragonfliesData={dragonflies}/>}();
+    var exportCsvButton = function () { return <ExportCampaignButton dragonfliesData={dragonflies} /> }();
     var appMenu = function () { return <AppMenuComponent current="campaigns" /> }();
 
 
+
     return (
-      <div id="comapings_component">
+      <div id="viewCampaignComponent">
         {appMenu}
 
         <div className="row justify-content-center">
 
           <div className="col-12 col-lg-10">
 
-            <h3><i className='fa fa-line-chart fa-fw'></i> {this.props.campaign.name}</h3>
-
-            <br/><br/>
-
-            <div className="row">
-              <div className="col-sm-4">
-                <h4>Session</h4>
-                <i className='fa fa-graduation-cap fa-fw'></i>
-                {sessionName}
-              </div>
-              <div className="col-sm-4">
-                <h4>Expiration Date</h4>
-                <i className='fa fa-calendar-times-o fa-fw'></i>
-                {this.props.campaign.expirationDate ?
+            <div className="row page_header_container">
+              <div className="col-12">
+                <div className="page_header_title float-left">
+                  <h3 className="page-title">{this.props.campaign.name}</h3>
+                  <p><b>Session: </b> {sessionName}</p>
+                  <p><b>Expires: </b> {this.props.campaign.expirationDate ?
                     (this.props.campaign.expirationDate + ' at 00:00:00 GMT-4')
                     :
                     'Not set'
-                }
+                  }</p>
+                </div>
+
+                <div className="page_header_action float-right">
+                  {exportCsvButton}
+                </div>
+                <div className="clearfix"></div>
+                <hr className="page_header_divider" />
               </div>
             </div>
 
-            <br/><br/>
-            <h4>Results</h4>
-            <canvas id="questionResultsChart"></canvas>
+            <div className="row">
+              <div className="col-12">
+                <div className="campaign_card">
+                  <div className="card">
+                    <div className="card-body">
+                      <div className="card-actions-icon">
+                        <i className="fas fa-ellipsis-h pull-right"></i>
+                      </div>
 
-            <br/><br/>
+                      <h5 className="card-title">Results</h5>
+                      <h6 className="card-subtitle mb-2">1,357 Views</h6>
 
-            <h4>Export CSV</h4>
-            {exportCsvButton}
+                      {/* <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> */}
+                      <div className="c3-chart-container">
+                        {compaignAnalytics}
+                      </div>
 
-            <br/><br/>
-            <h4>Dragonflies</h4>
-            {dragonfliesJsx}
+                      <div className="card-action-links">
+                        <a className="card-link link-campaign-view"><i className="fas fa-chart-line"></i> View</a>
+                        <a className="card-link link-campaign-edit"><i className="fas fa-pencil-alt"></i> Edit</a>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+                {/* <canvas id="questionResultsChart"></canvas> */}
+              </div>
+              <div className="col-12">
+
+              <div className="campaign_card">
+                  <div className="card">
+                    <div className="card-body">
+                      <div className="card-actions-icon">
+                        <i className="fas fa-ellipsis-h pull-right"></i>
+                      </div>
+
+                      <h5 className="card-title">Dragonflies</h5>
+                      <h6 className="card-subtitle mb-2">1,912 Contacts</h6>
+
+                      {/* <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> */}
+                      <div className="c3-chart-container">
+                      {dragonfliesJsx}
+
+                      </div>
+
+                      <div className="card-action-links">
+                        <a className="card-link link-campaign-view"><i className="fas fa-chart-line"></i> View</a>
+                        <a className="card-link link-campaign-edit"><i className="fas fa-pencil-alt"></i> Edit</a>
+                      </div>
+
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+
 
 
           </div>
-          
+
         </div>
-        </div>
+      </div>
 
     );
   }
@@ -178,35 +319,35 @@ class Dragonfly extends React.Component {
     var path = this.props.path;
     var dragonflyPath = path + "/#/view?id=" + this.props.dragonfly.dragonflyId;
     var status = "not opened";
-    if (this.props.dragonfly.results != null) {status = "completed"}
+    if (this.props.dragonfly.results != null) { status = "completed" }
     return (
-        <div className="dragon-select-list-row dragon-pointer">
-          <div className="dragon-select-list-cell">
-            <i className='fa fa-address-book-o fa-fw fa-lg'></i>
-          </div>
-          <div className="dragon-select-list-cell">
-            {this.props.dragonfly.contact.first}
-            &nbsp;
+      <div className="dragon-select-list-row dragon-pointer">
+        <div className="dragon-select-list-cell">
+          <i className='fa fa-address-book-o fa-fw fa-lg'></i>
+        </div>
+        <div className="dragon-select-list-cell">
+          {this.props.dragonfly.contact.first}
+          &nbsp;
             {this.props.dragonfly.contact.last}
-          </div>
-          <div className="dragon-select-list-cell">
-            {this.props.dragonfly.contact.email}
-          </div>
-          <div className="dragon-select-list-cell">
-            <span onClick={this.copyToClipboard.bind(this, dragonflyPath)}>
+        </div>
+        <div className="dragon-select-list-cell">
+          {this.props.dragonfly.contact.email}
+        </div>
+        <div className="dragon-select-list-cell">
+          <span onClick={this.copyToClipboard.bind(this, dragonflyPath)}>
             <i className='fa fa-clipboard fa-fw'></i>
             Copy URL
             </span>
-          </div>
-          <div className="dragon-select-list-cell">
-            {this.props.dragonfly.reward}
-          </div>
-          <div className="dragon-select-list-cell">
-            <span onClick={this.showResults.bind(this, this.props.dragonfly)}>
-            {status}
-            </span>
-          </div>
         </div>
+        <div className="dragon-select-list-cell">
+          {this.props.dragonfly.reward}
+        </div>
+        <div className="dragon-select-list-cell">
+          <span onClick={this.showResults.bind(this, this.props.dragonfly)}>
+            {status}
+          </span>
+        </div>
+      </div>
     );
   }
 

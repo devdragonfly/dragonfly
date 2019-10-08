@@ -1,5 +1,6 @@
 import React from 'react';
-import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
+import AppMenuComponent from './components/base/AppMenuComponent.jsx';
+
 
 
 class LoadResultsComponent extends React.Component {
@@ -7,6 +8,7 @@ class LoadResultsComponent extends React.Component {
   constructor(props) {
     super(props);
   }
+
 
   componentDidMount() {
     var myThis = this;
@@ -33,29 +35,29 @@ class LoadResultsComponent extends React.Component {
 
   }
 
-
   render() {
 
-    var organizationMenu = function() {return <OrganizationMenuComponent current="campaigns" /> }();
+    var appMenu = function () { return <AppMenuComponent current="campaigns" /> }();
+
 
     return (
 
+      <div id="loadCompaignComponent" className="page-loader-container">
+        {appMenu}
 
-        <div className="row">
-          {organizationMenu}
+        <div className="row justify-content-center">
+          <div className="col-12 col-lg-10">
+            <div className="row justify-content-center">
+              <div className="col page-loader">
+                <i className='fas fa-circle-notch fa-spin'></i>
+                <p className="loader-text">Loading Campaign...</p>
+              </div>
 
-          <div className="col-sm-10">
-                <h3><i className='fa fa-line-chart fa-fw'></i> {this.props.campaign.name}</h3>
-
-                <br/><br/>
-
-                <i className='fa fa-circle-o-notch fa-spin'></i> Loading Campaign
-
+            </div>
           </div>
-
         </div>
 
-
+      </div>
 
     );
   }

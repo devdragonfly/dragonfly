@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
-import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
+import AppMenuComponent from './components/base/AppMenuComponent.jsx';
 
 class SessionsComponent extends React.Component {
 
@@ -40,15 +40,15 @@ class SessionsComponent extends React.Component {
       }
     }
 
-    var organizationMenu = function () { return <OrganizationMenuComponent current="sessions" /> }();
+    var appMenu = function () { return <AppMenuComponent current="campaigns" /> }();
 
 
     return (
 
-      <div className="row">
-        {organizationMenu}
-        <div className="col-10">
-
+      <div id="sessionsComponent">
+        {appMenu}
+        <div className="row justify-content-center">
+          <div className="col-12 col-lg-10">
           <div className="row page_header_container">
             <div className="col-12">
               <h3 className="page_header_title float-left">Sessions</h3>
@@ -64,15 +64,10 @@ class SessionsComponent extends React.Component {
           <div className="dragon-select-list">
             {sessionsJsx}
           </div>
-
-          <br />
-
+          </div>
         </div>
-
       </div>
-
-
-
+      
     );
   }
 

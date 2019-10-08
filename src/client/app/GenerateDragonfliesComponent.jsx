@@ -53,130 +53,150 @@ class GenerateDragonfliesComponent extends React.Component {
     return (
       <div id="generate_campaign_component">
         {appMenu}
-        <div className="row">
-          {/* {organizationMenu} */}
-          <div className="col-sm-6">
-            <h3><i className='fa fa-line-chart fa-fw'></i> {this.props.campaign.name}</h3>
+        <div className="row justify-content-center">
+          <div className="col-12 col-lg-10">
+
+
+            <div className="row page_header_container">
+              <div className="col-12">
+                <div className="page_header_title float-left">
+                  <h3 className="page-title">Getting Started</h3>
+                  <p><b>Campaign: </b> {this.props.campaign.name} </p>
+                </div>
+
+                <div className="page_header_action float-right">
+
+                </div>
+                <div className="clearfix"></div>
+                <hr className="page_header_divider" />
+              </div>
+            </div>
+          </div>
+
+          <div className="form-group row">
+            <div className="col">
+              <label for="ex1"><i className='fa fa-graduation-cap fa-fw fa-lg'></i> Session</label><br />
+              &nbsp;{sessionName}
+            </div>
+            <div className="col">
+              <label for="ex2"><i className='fa fa-address-book-o fa-fw fa-lg'></i> Contact List</label><br />
+              &nbsp;{contactListName}
+            </div>
+            <div className="col">
+              <label for="ex3"><i className='fa fa-credit-card fa-fw fa-lg'></i> Incentive per Dragonfly</label><br />
+              <input value={this.state.incentiveValue} id="ex3" onChange={this.updateIncentiveValue} className="form-control" placeholder="dollar amount" />
+            </div>
+          </div>
+
+          <div className="row">
+          <div className="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+            <div className="panel panel-default">
+              <div className="panel-heading" role="tab" id="headingOne">
+                <h4 className="panel-title">
+                  <a role="button" data-toggle="collapse" data-parent="#accordion" href="#logo" aria-expanded="true" aria-controls="collapseOne">
+                    Change Logo for company`s pages
+                  </a>
+                </h4>
+              </div>
+              <div id="logo" className="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                <div className="panel-body">
+                  <div className="row form-group">
+                    <ImageModalComponent image="./images/screenshots/logo-intro-page.jpg" columnClass="col-md-4" />
+                    <ImageModalComponent image="./images/screenshots/logo-compl-page.jpg" columnClass="col-md-4" />
+                    <ImageModalComponent image="./images/screenshots/logo-confirm-page.jpg" columnClass="col-md-4" />
+                  </div>
+                  <div className="row form-group">
+                    <div className="col-md-12">
+                      <div className="input-group">
+                        <label className="input-group-btn">
+                          <span className="btn btn-primary">
+                            Choose File <input type="file" accept="image/*" style={{ display: 'none' }} onChange={this.handleFile} />
+                          </span>
+                        </label>
+                        <input type="text" className="form-control bg-white" placeholder="Select the Logo File" value={this.state.logo ? this.state.logo.name : ''} readOnly />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="panel panel-default">
+              <div className="panel-heading" role="tab" id="headingTwo">
+                <h4 className="panel-title">
+                  <a className="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#introPage" aria-expanded="false" aria-controls="collapseTwo">
+                    Introduction page
+                  </a>
+                </h4>
+              </div>
+              <div id="introPage" className="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                <div className="panel-body">
+                  <div className="row form-group">
+                    <ImageModalComponent image="./images/screenshots/text-intro-page.jpg" columnClass="col-md-4" />
+                  </div>
+                  <div className="row">
+                    <div className="col-md-10 form-group">
+                      <label for="intro1">Welcome Line</label><br />
+                      <textarea id="intro1" className="form-control" value={this.state.customTexts.welcome} onChange={this.handleTextareaChange} name="welcome" rows="3" placeholder="custom text"></textarea>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-10 form-group" >
+                      <label for="intro2">Payment Info</label><br />
+                      <textarea id="intro2" className="form-control" value={this.state.customTexts.payment} onChange={this.handleTextareaChange} name="payment" rows="3" placeholder="custom text"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="panel panel-default">
+              <div className="panel-heading" role="tab" id="headingThree">
+                <h4 className="panel-title">
+                  <a className="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#confirmPage" aria-expanded="false" aria-controls="collapseThree">
+                    Confirmation page
+                  </a>
+                </h4>
+              </div>
+              <div id="confirmPage" className="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                <div className="panel-body">
+                  <div className="row form-group">
+                    <ImageModalComponent image="./images/screenshots/text-conf-page.jpg" columnClass="col-md-4" />
+                  </div>
+                  <div className="row">
+                    <div className="col-md-10 form-group">
+                      <label for="confirm1">Custom Text</label><br />
+                      <textarea id="confirm1" className="form-control" value={this.state.customTexts.complete} onChange={this.handleTextareaChange} name="complete" rows="3" placeholder="Custom text"></textarea>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
             <br /><br />
             <div className="form-group row">
-              <div className="col-xs-3">
-                <label for="ex1"><i className='fa fa-graduation-cap fa-fw fa-lg'></i> Session</label><br />
-                &nbsp;{sessionName}
-              </div>
-              <div className="col-xs-3">
-                <label for="ex2"><i className='fa fa-address-book-o fa-fw fa-lg'></i> Contact List</label><br />
-                &nbsp;{contactListName}
-              </div>
-              <div className="col-xs-4">
-                <label for="ex3"><i className='fa fa-credit-card fa-fw fa-lg'></i> Incentive per Dragonfly</label><br />
-                <input value={this.state.incentiveValue} id="ex3" onChange={this.updateIncentiveValue} className="form-control" placeholder="dollar amount" />
-              </div>
-            </div>
-            <div className="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
-              <div className="panel panel-default">
-                <div className="panel-heading" role="tab" id="headingOne">
-                  <h4 className="panel-title">
-                    <a role="button" data-toggle="collapse" data-parent="#accordion" href="#logo" aria-expanded="true" aria-controls="collapseOne">
-                      Change Logo for company`s pages
-                  </a>
-                  </h4>
-                </div>
-                <div id="logo" className="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
-                  <div className="panel-body">
-                    <div className="row form-group">
-                      <ImageModalComponent image="./images/screenshots/logo-intro-page.jpg" columnClass="col-md-4" />
-                      <ImageModalComponent image="./images/screenshots/logo-compl-page.jpg" columnClass="col-md-4" />
-                      <ImageModalComponent image="./images/screenshots/logo-confirm-page.jpg" columnClass="col-md-4" />
-                    </div>
-                    <div className="row form-group">
-                      <div className="col-md-12">
-                        <div className="input-group">
-                          <label className="input-group-btn">
-                            <span className="btn btn-primary">
-                              Choose File <input type="file" accept="image/*" style={{ display: 'none' }} onChange={this.handleFile} />
-                            </span>
-                          </label>
-                          <input type="text" className="form-control bg-white" placeholder="Select the Logo File" value={this.state.logo ? this.state.logo.name : ''} readOnly />
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="panel panel-default">
-                <div className="panel-heading" role="tab" id="headingTwo">
-                  <h4 className="panel-title">
-                    <a className="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#introPage" aria-expanded="false" aria-controls="collapseTwo">
-                      Introduction page
-                  </a>
-                  </h4>
-                </div>
-                <div id="introPage" className="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
-                  <div className="panel-body">
-                    <div className="row form-group">
-                      <ImageModalComponent image="./images/screenshots/text-intro-page.jpg" columnClass="col-md-4" />
-                    </div>
-                    <div className="row">
-                      <div className="col-md-10 form-group">
-                        <label for="intro1">Welcome Line</label><br />
-                        <textarea id="intro1" className="form-control" value={this.state.customTexts.welcome} onChange={this.handleTextareaChange} name="welcome" rows="3" placeholder="custom text"></textarea>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-10 form-group" >
-                        <label for="intro2">Payment Info</label><br />
-                        <textarea id="intro2" className="form-control" value={this.state.customTexts.payment} onChange={this.handleTextareaChange} name="payment" rows="3" placeholder="custom text"></textarea>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <div className="panel panel-default">
-                <div className="panel-heading" role="tab" id="headingThree">
-                  <h4 className="panel-title">
-                    <a className="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#confirmPage" aria-expanded="false" aria-controls="collapseThree">
-                      Confirmation page
-                  </a>
-                  </h4>
-                </div>
-                <div id="confirmPage" className="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
-                  <div className="panel-body">
-                    <div className="row form-group">
-                      <ImageModalComponent image="./images/screenshots/text-conf-page.jpg" columnClass="col-md-4" />
-                    </div>
-                    <div className="row">
-                      <div className="col-md-10 form-group">
-                        <label for="confirm1">Custom Text</label><br />
-                        <textarea id="confirm1" className="form-control" value={this.state.customTexts.complete} onChange={this.handleTextareaChange} name="complete" rows="3" placeholder="Custom text"></textarea>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-              <br /><br />
-              <div className="form-group row">
-                <div className="col-xs-6">
-                  <label for="exp_date">
-                    <i className='fa fa-calendar-times-o fa-fw fa-lg'></i>
-                    Campaign Expiration Date
+              <div className="col-xs-6">
+                <label for="exp_date">
+                  <i className='fa fa-calendar-times-o fa-fw fa-lg'></i>
+                  Campaign Expiration Date
                 </label>
-                  <br />
-                  <input id="exp_date" onChange={this.updateExpirationDate} className="form-control" min={this.dateTomorrow} type="date" />
-                  <span className="generate-dragonfly__hind-text">Campaign becomes unaccessible on a selected date at 00:00:00 GTM-4</span>
-                </div>
-                <div className="col-xs-6">
-                  <input type="checkbox" id="myCheck"></input>: Manual Delivery
+                <br />
+                <input id="exp_date" onChange={this.updateExpirationDate} className="form-control" min={this.dateTomorrow} type="date" />
+                <span className="generate-dragonfly__hind-text">Campaign becomes unaccessible on a selected date at 00:00:00 GTM-4</span>
               </div>
+              <div className="col-xs-6">
+                <input type="checkbox" id="myCheck"></input>: Manual Delivery
               </div>
             </div>
-            <br /><br />
-            <form onSubmit={this.handleSubmit}>
-              <input type="submit" className={this.state.buttonRestClassName} value="Generate Dragonflies" />
-              <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Generating Dragonflies</div>
-            </form>
           </div>
+          </div>
+          
+          <form onSubmit={this.handleSubmit}>
+            <input type="submit" className={this.state.buttonRestClassName} value="Generate Dragonflies" />
+            <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Generating Dragonflies</div>
+          </form>
+
+
         </div>
       </div>
+
     );
   }
 
