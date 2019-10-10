@@ -1,15 +1,18 @@
 .page_header_container {
-    padding-right: 15px;
+    // padding-right: 15px;
   .page_header_title {
     margin-top: 20px;
+    
 
     .page-title {
-      margin-bottom: 5px;
+      margin-bottom: 8px;
       line-height: 1;
+      color: #000000;
     
     }
 
     p {
+      color: $dragonfly-grey;
       font-size: 15px;
       padding-bottom: 0;
       margin-bottom: 2px;
@@ -40,6 +43,11 @@
       -webkit-transition: ease-in-out all 0.55s;
       transition: ease-in-out all 0.55s;
 
+      i {
+        margin-right: 5px;
+
+      }
+
       &:hover {
         background: $color_white;
         color: $color_blue_dark;
@@ -48,4 +56,47 @@
       }
     }
   }
+
+  hr {
+    margin-top: 5px;
+    margin-bottom: 10px;
+  }
+
+}
+
+
+.page-section-header-container {
+
+  .page-section-header {
+
+    .page-section-title {
+      color: #000000;
+      font-size: 0.9em;
+      font-weight: 500;
+
+    }
+
+  }
+
+
+  .page-section-header-actions {
+
+    .page-section-header-link {
+      cursor: pointer;
+
+      &:hover {
+        color: $dragonfly-blue-dark;
+      }
+    }
+
+    i {
+      font-size: 1em;
+
+      &:hover {
+        color: $dragonfly-blue-dark;
+      }
+    }
+
+  }
+
 }

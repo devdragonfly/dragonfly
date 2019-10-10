@@ -72,9 +72,13 @@ class CampaignsComponent extends React.Component {
 
             <div className="row page_header_container">
               <div className="col-12">
-                <h3 className="page_header_title float-left align-items-center">Campaigns</h3>
+                <div className="page_header_title float-left">
+                  <h3 className="page-title">My Dragonflies</h3>
+                  <p>Send a Dragonfly, analyze it in real-time, and measure how it performs.</p>
+                </div>
+
                 <div className="page_header_action float-right">
-                  <Link to={`createcampaign`} className="btn btn-primary float-right"><i className='fa fa-plus'></i> Add Campaign</Link>
+                  <Link to={`createcampaign`} className="btn btn-primary float-right"><i className="far fa-paper-plane"></i> Send a Dragonfly</Link>
                 </div>
                 <div className="clearfix"></div>
                 <hr className="page_header_divider" />
@@ -85,7 +89,7 @@ class CampaignsComponent extends React.Component {
               <div className="col-12">
                 <div className="search-container">
                   <div className="form-group search-box">
-                    <input id="search-input" type="text" className="form-control" placeholder="Find Campaign..." />
+                    <input id="search-input" type="text" className="form-control" placeholder="Search Dragonfly Campaigns..." />
                     <button className="search-btn">
                       <i className='fa fa-search'></i>
                     </button>
@@ -179,7 +183,7 @@ class Campaign extends React.Component {
           15,
           14,
           47,
-          59,
+          43,
           55,
         ],
       ],
@@ -258,7 +262,7 @@ class Campaign extends React.Component {
                 </div>
 
                 <h5 className="card-title">{this.props.campaign.name}</h5>
-                <h6 className="card-subtitle mb-2">1,357 Views</h6>
+                <h6 className="card-subtitle mb-2">Ends in 3 weeks</h6>
 
                 {/* <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> */}
                 <div className="c3-chart-container">

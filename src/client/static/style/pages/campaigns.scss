@@ -1,92 +1,97 @@
-.campaign_card {
+.campaign-cards-container {
+  // padding-left: 0;
+  margin-left: 0;
+  .campaign_card {
 
-  .card {
-
-    .card-body {
-      padding-bottom: 0;
-
-      .card-actions-icon {
-        float: right;
-        color: #9aa0ac;
-          font-size: 14px;
-
-          &.active {
-           
-            color: $dragonfly-blue-dark;
-          }
+    .card {
   
-          &:hover {
-            color: #495057;
-            -webkit-transition: color 0.2s ease;
-            -moz-transition: color 0.2s ease;
-            -o-transition: color 0.2s ease;
-            transition: color 0.2s ease;
-          }
-      }
-
-      .card-title {
-        max-height: 24px;
-        overflow: hidden;
-        text-overflow: ellipsis;
-      }
-
-
-      h6 {
-        font-size: 15px;
-        color: #467fcf !important;
-
-      }
-
-      .card-action-links {
-        z-index: 999999;
-
-        .card-link {
-          padding: 1rem 0 !important;
-          margin: 0 !important;
-          text-decoration: none !important;
+      .card-body {
+        padding-bottom: 0;
+  
+        .card-actions-icon {
+          float: right;
           color: #9aa0ac;
-          font-size: 14px;
-          border-radius: 0;
+            font-size: 14px;
   
-          i {
-            margin-right: 3px;
-          }
+            &.active {
+             
+              color: $dragonfly-blue-dark;
+            }
+    
+            &:hover {
+              color: #495057;
+              -webkit-transition: color 0.2s ease;
+              -moz-transition: color 0.2s ease;
+              -o-transition: color 0.2s ease;
+              transition: color 0.2s ease;
+            }
+        }
   
-          &.active {
-           
-            color: #467fcf;
-          }
+        .card-title {
+          max-height: 24px;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
   
-          &:hover {
+  
+        h6 {
+          font-size: 15px;
+          color: #467fcf !important;
+  
+        }
+  
+        .card-action-links {
+          z-index: 999999;
+  
+          .card-link {
             padding: 1rem 0 !important;
             margin: 0 !important;
-          
-            color: #495057;
-            -webkit-transition: color 0.2s ease;
-            -moz-transition: color 0.2s ease;
-            -o-transition: color 0.2s ease;
-            transition: color 0.2s ease;
+            text-decoration: none !important;
+            color: #9aa0ac;
+            font-size: 14px;
+            border-radius: 0;
+    
+            i {
+              margin-right: 3px;
+            }
+    
+            &.active {
+             
+              color: #467fcf;
+            }
+    
+            &:hover {
+              padding: 1rem 0 !important;
+              margin: 0 !important;
+            
+              color: #495057;
+              -webkit-transition: color 0.2s ease;
+              -moz-transition: color 0.2s ease;
+              -o-transition: color 0.2s ease;
+              transition: color 0.2s ease;
+            }
+          }
+  
+          .link-campaign-edit {
+            float:right;
+          }
+  
+          .link-campaign-view {
+            float: left;
           }
         }
-
-        .link-campaign-edit {
-          float:right;
-        }
-
-        .link-campaign-view {
-          float: left;
-        }
       }
-    }
-
-    border-radius: 5px;
-
-    margin-bottom: 10px;
-
-    &:hover {
-      -webkit-box-shadow: 1px 1px 0.5px 0px rgba(70,127,207,0.3);
-      -moz-box-shadow: 1px 1px 0.5px 0px rgba(70,127,207,0.3);
-      box-shadow: 1px 1px 0.5px 0px rgba(70,127,207,0.3);
+  
+      border-radius: 5px;
+  
+      margin-bottom: 10px;
+  
+      &:hover {
+        -webkit-box-shadow: 1px 1px 0.5px 0px rgba(70,127,207,0.3);
+        -moz-box-shadow: 1px 1px 0.5px 0px rgba(70,127,207,0.3);
+        box-shadow: 1px 1px 0.5px 0px rgba(70,127,207,0.3);
+      }
     }
   }
 }
+
