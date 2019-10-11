@@ -10,6 +10,29 @@ class SessionsComponent extends React.Component {
   }
 
   componentWillMount() {
+
+    var myThis = this;
+    var organizationId = this.props.organizationId;
+    
+    var params = {
+        TableName : "Videos",
+        KeyConditionExpression: "#organizationId = :organizationId",
+        ExpressionAttributeNames:{
+            "#organizationId": "organizationId"
+        },
+        ExpressionAttributeValues: {
+            ":organizationId":organizationId
+        }
+    };
+
+    this.props.dbQuery(params, function(result) {
+      var next = myThis.props.next;
+      
+      myThis.props.handleLoadVideos(result);
+      myThis.props.history.push(next);    
+      
+    });
+
     var sessions = this.props.sessions;
     if (sessions === 'not found') {
       this.props.handleLoadNext('sessions');
@@ -18,9 +41,27 @@ class SessionsComponent extends React.Component {
   }
 
   render() {
+
+    var videos = this.props.videos;
+    var handleLoadVideo = this.props.handleLoadVideo;
+    // var history = this.props.history;
+
     var sessions = this.props.sessions;
     var handleLoadSession = this.props.handleLoadSession;
     var history = this.props.history;
+
+    var videosJsx = function () { return '' }();
+
+    if (videos !== 'not found') {
+      if (videos.length === 0) {
+        videosJsx = function () { return 'No videos uploaded yet.' }();
+
+      } else {
+        videosJsx = videos.map((video, i) => {
+          return <VideoThumbnail video={video} handleLoadVideo={handleLoadVideo} history={history} />
+        });
+      }
+    }
 
     var sessionsJsx = function () { return '' }();
 
@@ -96,7 +137,7 @@ class SessionsComponent extends React.Component {
                         <div className="video-slider-body">
 
                           <div className="video-slider-hover-action-icon justify-content-cetner align-items-center">
-                          <Link to={`uploadvideo`} className=""><i className='fa fa-plus'></i></Link>
+                            <Link to={`uploadvideo`} className=""><i className='fa fa-plus'></i></Link>
                             {/* <i className="fa fa-plus"></i> */}
                           </div>
                           {/* <h6 className="card-subtitle mb-2"><i className={statusIconClassName}></i> {status}</h6> */}
@@ -169,6 +210,12 @@ class SessionsComponent extends React.Component {
                   </div>
 
                 </div>
+
+                <div className="row">
+                  {videosJsx}
+
+                </div>
+
               </div>
 
 
@@ -206,6 +253,80 @@ class SessionsComponent extends React.Component {
     );
   }
 
+
+}
+
+class VideoThumbnail extends React.Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  render() {
+    var status = this.props.video.uploadStatus;
+    var statusIconClassName = "fas fa-spinner fa-spin";
+
+    var dt = new Date();
+    var utc = dt.getTime();
+    var utcVideo = this.props.video.utc;
+    if (utcVideo == null) utcVideo = 1451635200000;
+    var utcDelta = utc - utcVideo;
+
+    if (utcDelta > 1000000) {
+      if (status === "Uploading") { status = "Upload Failed"; statusIconClassName = "fa fa-warning"; }
+    }
+
+
+    if (status === "Uploading") {
+      statusIconClassName = 'fa fa-circle-o-notch fa-spin';
+    }
+
+
+    return (
+
+      <div className="col-12 col-md-4 col-lg-3 campaign-cards-container">
+
+        <div id="video_component" className="" onClick={this.handleSelectVideo.bind(this, this.props.video)}>
+          <div className="dragonfly-card">
+            <div className="card">
+              <div className="card-body">
+
+                <h5 className="card-title">{this.props.video.name}</h5>
+                <h6 className="card-subtitle mb-2"><i className={statusIconClassName}></i> {status}</h6>
+
+                <div className="card-action-links">
+                  <a className="card-link link-video-view"><i className="fab fa-youtube"></i> View</a>
+                  <a className="card-link link-video-edit"><i className="far fa-dot-circle"></i> Breakpoints</a>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+
+      // <div onClick={this.handleSelectVideo.bind(this, this.props.video)} className="dragon-select-list-row dragon-pointer">
+      //   <div className="dragon-select-list-cell">
+      //     <i className='fa fa-file-video-o fa-fw fa-lg'></i>
+      //   </div>
+      //   <div className="dragon-select-list-cell">
+      //     {this.props.video.name}
+      //   </div>
+      //   <div className="dragon-select-list-cell">
+      //     <i className={statusIconClassName}></i>
+      //     &nbsp;
+      //       {status}
+      //   </div>
+      // </div>
+    );
+  }
+
+  handleSelectVideo(video) {
+    this.props.handleLoadVideo(video);
+    this.props.history.push('video');
+  }
 
 }
 
