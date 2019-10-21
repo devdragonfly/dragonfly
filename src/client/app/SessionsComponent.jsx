@@ -286,7 +286,7 @@ class VideoThumbnail extends React.Component {
 
       <div className="col-12 col-md-4 col-lg-3 campaign-cards-container">
 
-        <div id="video_component" className="" onClick={this.handleSelectVideo.bind(this, this.props.video)}>
+        {/* <div id="video_component" className="" onClick={this.handleSelectVideo.bind(this, this.props.video)}>
           <div className="dragonfly-card">
             <div className="card">
               <div className="card-body">
@@ -302,7 +302,7 @@ class VideoThumbnail extends React.Component {
               </div>
             </div>
           </div>
-        </div>
+        </div> */}
 
       </div>
 
