@@ -1,14 +1,17 @@
 import React from 'react';
-// import ReactDOM from "react-dom";
 import { Link } from 'react-router';
 import AppMenuComponent from './components/base/AppMenuComponent.jsx';
+
+import BuildNewDragonflyModal from './components/modals/BuildNewDragonflyModal.jsx';
+
 
 class SessionsComponent extends React.Component {
 
   constructor(props) {
     super(props);
-
   }
+
+
 
   componentWillMount() {
 
@@ -86,6 +89,7 @@ class SessionsComponent extends React.Component {
 
     var appMenu = function () { return <AppMenuComponent current="sessions" /> }();
 
+    var buildNewDragonflyModal = function () { return <BuildNewDragonflyModal />}();
 
     return (
 
@@ -160,8 +164,6 @@ class SessionsComponent extends React.Component {
 
 
               </div>
-
-
             </div>
 
             <div className="row">
@@ -188,6 +190,11 @@ class SessionsComponent extends React.Component {
                 </div>
               </div>
             </div>
+
+            
+            {/* Build Dragonfly Modal */}
+            {buildNewDragonflyModal}
+
           </div>
 
         </div>
@@ -195,6 +202,7 @@ class SessionsComponent extends React.Component {
 
     );
   }
+  
 
 
 }
@@ -225,17 +233,18 @@ class VideoThumbnail extends React.Component {
     }
 
 
-    const videoThumbnailURL = 'https://s3-us-west-2.amazonaws.com/dragonfly-videos-thumbnails/' + this.props.video.videoId + '/thumbs-' + this.props.video.videoId + '-00001.jpg';
+    const imgURL = 'https://s3-us-west-2.amazonaws.com/dragonfly-videos-thumbnails/' + this.props.video.videoId + '/thumbs-' + this.props.video.videoId + '-00001.jpg';
 
-
+    var divStyle = {
+      backgroundImage: 'url(' + imgURL + ')'
+  }
 
     return (
 
-
       <div className="video-slider-card">
 
-        <div className="video-slider-item" onClick={this.handleSelectVideo.bind(this, this.props.video)}>
-          <img className="video-img-thumbnail" src={videoThumbnailURL} />
+        <div className="video-slider-item" style={divStyle} onClick={this.handleSelectVideo.bind(this, this.props.video)}>
+          {/* <img className="video-img-thumbnail" src={videoThumbnailURL} /> */}
           <div className="video-slider-body">
 
             <div className="video-slider-hover-action-icon justify-content-cetner align-items-center">
@@ -243,15 +252,15 @@ class VideoThumbnail extends React.Component {
             </div>
 
             <div className="video-slider-info">
-          <h5 className="video-title">{this.props.video.name}</h5>
-          {/* <i className={statusIconClassName}></i> {status} */}
-        </div>
+              <h5 className="video-title">{this.props.video.name}</h5>
+              {/* <i className={statusIconClassName}></i> {status} */}
+            </div>
 
           </div>
 
         </div>
 
-        
+
 
       </div>
 

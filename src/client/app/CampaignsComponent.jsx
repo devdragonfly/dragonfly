@@ -24,6 +24,7 @@ class CampaignsComponent extends React.Component {
   }
 
 
+
   // searchInput() {
 
   //   let value = $(this).val().toLowerCase();
@@ -129,27 +130,6 @@ class Campaign extends React.Component {
   }
 
   render() {
-
-    // const data = {
-    //   type: "area",
-    //   columns: [
-    //     ['data1', 30, 200, 100, 400, 150, 250]
-    //   ],
-    //   axis: {
-    //     x: {
-    //       show: false,
-    //       tick: {
-    //         outer: false
-    //       }
-    //     },
-    //     y: {
-    //       show: false
-    //     }
-    //   },
-    //   legend: {
-    //     show: false
-    //   }
-    // };
 
     const data = {
       size: {
@@ -262,7 +242,7 @@ class Campaign extends React.Component {
                 </div>
 
                 <h5 className="card-title">{this.props.campaign.name}</h5>
-                <h6 className="card-subtitle mb-2">Ends in 3 weeks</h6>
+                <h6 className="card-subtitle mb-2">Ends: {this.props.campaign.expirationDate}</h6>
 
                 {/* <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> */}
                 <div className="c3-chart-container">
