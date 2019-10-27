@@ -1,4 +1,5 @@
 import React from 'react';
+// import ReactDOM from "react-dom";
 import { Link } from 'react-router';
 import AppMenuComponent from './components/base/AppMenuComponent.jsx';
 
@@ -13,24 +14,24 @@ class SessionsComponent extends React.Component {
 
     var myThis = this;
     var organizationId = this.props.organizationId;
-    
+
     var params = {
-        TableName : "Videos",
-        KeyConditionExpression: "#organizationId = :organizationId",
-        ExpressionAttributeNames:{
-            "#organizationId": "organizationId"
-        },
-        ExpressionAttributeValues: {
-            ":organizationId":organizationId
-        }
+      TableName: "Videos",
+      KeyConditionExpression: "#organizationId = :organizationId",
+      ExpressionAttributeNames: {
+        "#organizationId": "organizationId"
+      },
+      ExpressionAttributeValues: {
+        ":organizationId": organizationId
+      }
     };
 
-    this.props.dbQuery(params, function(result) {
+    this.props.dbQuery(params, function (result) {
       var next = myThis.props.next;
-      
+
       myThis.props.handleLoadVideos(result);
-      myThis.props.history.push(next);    
-      
+      myThis.props.history.push(next);
+
     });
 
     var sessions = this.props.sessions;
@@ -49,6 +50,8 @@ class SessionsComponent extends React.Component {
     var sessions = this.props.sessions;
     var handleLoadSession = this.props.handleLoadSession;
     var history = this.props.history;
+
+    var numVideos = videos.length;
 
     var videosJsx = function () { return '' }();
 
@@ -120,14 +123,14 @@ class SessionsComponent extends React.Component {
                     </div>
 
                     <div className="page-section-header-actions float-right">
-                      <Link className="page-section-header-link btn btn-sm" to={`videos`}> View All (0)</Link>
+                      <Link className="page-section-header-link btn btn-sm" to={`videos`}> View All ({numVideos})</Link>
                     </div>
 
                     <div className="clearfix"></div>
                   </div>
                 </div>
 
-                {/* Video Slider */}
+                {/* Video Slider - Add Video */}
                 <div className="row">
 
                   <div className="col-12 video-slider-container">
@@ -140,81 +143,21 @@ class SessionsComponent extends React.Component {
                             <Link to={`uploadvideo`} className=""><i className='fa fa-plus'></i></Link>
                             {/* <i className="fa fa-plus"></i> */}
                           </div>
-                          {/* <h6 className="card-subtitle mb-2"><i className={statusIconClassName}></i> {status}</h6> */}
 
-                          {/* <div className="card-action-links">
-                          <a className="card-link link-video-view"><i className="fab fa-youtube"></i> View</a>
-                          <a className="card-link link-video-edit"><i className="far fa-dot-circle"></i> Breakpoints ({this.props.breakpointCount})</a>
-                        </div> */}
-
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Video Slider Item - Video Icon */}
-                    <div className="video-slider-card">
-                      <div className="video-slider-item">
-                        <div className="video-slider-body">
-
-                          <div className="video-slider-hover-action-icon justify-content-cetner align-items-center">
-                            <i className="fas fa-play"></i>
+                          <div className="video-slider-info">
+                            <h5 className="video-title">Add New</h5>
                           </div>
-                          {/* <h6 className="card-subtitle mb-2"><i className={statusIconClassName}></i> {status}</h6> */}
-
-                          {/* <div className="card-action-links">
-                          <a className="card-link link-video-view"><i className="fab fa-youtube"></i> View</a>
-                          <a className="card-link link-video-edit"><i className="far fa-dot-circle"></i> Breakpoints ({this.props.breakpointCount})</a>
-                        </div> */}
 
                         </div>
                       </div>
                     </div>
 
-                    {/* Video Slider Item - Video Icon */}
-                    <div className="video-slider-card">
-                      <div className="video-slider-item">
-                        <div className="video-slider-body">
 
-                          <div className="video-slider-hover-action-icon justify-content-cetner align-items-center">
-                            <i className="fas fa-play"></i>
-                          </div>
-                          {/* <h6 className="card-subtitle mb-2"><i className={statusIconClassName}></i> {status}</h6> */}
-
-                          {/* <div className="card-action-links">
-                          <a className="card-link link-video-view"><i className="fab fa-youtube"></i> View</a>
-                          <a className="card-link link-video-edit"><i className="far fa-dot-circle"></i> Breakpoints ({this.props.breakpointCount})</a>
-                        </div> */}
-
-                        </div>
-                      </div>
-                    </div>
-
-                    {/* Video Slider Item - Video Icon */}
-                    <div className="video-slider-card">
-                      <div className="video-slider-item">
-                        <div className="video-slider-body">
-
-                          <div className="video-slider-hover-action-icon justify-content-cetner align-items-center">
-                            <i className="fas fa-play"></i>
-                          </div>
-                          {/* <h6 className="card-subtitle mb-2"><i className={statusIconClassName}></i> {status}</h6> */}
-
-                          {/* <div className="card-action-links">
-                          <a className="card-link link-video-view"><i className="fab fa-youtube"></i> View</a>
-                          <a className="card-link link-video-edit"><i className="far fa-dot-circle"></i> Breakpoints ({this.props.breakpointCount})</a>
-                        </div> */}
-
-                        </div>
-                      </div>
-                    </div>
+                    {videosJsx}
                   </div>
 
                 </div>
 
-                <div className="row">
-                  {videosJsx}
-
-                </div>
 
               </div>
 
@@ -282,44 +225,39 @@ class VideoThumbnail extends React.Component {
     }
 
 
+    const videoThumbnailURL = 'https://s3-us-west-2.amazonaws.com/dragonfly-videos-thumbnails/' + this.props.video.videoId + '/thumbs-' + this.props.video.videoId + '-00001.jpg';
+
+
+
     return (
 
-      <div className="col-12 col-md-4 col-lg-3 campaign-cards-container">
 
-        {/* <div id="video_component" className="" onClick={this.handleSelectVideo.bind(this, this.props.video)}>
-          <div className="dragonfly-card">
-            <div className="card">
-              <div className="card-body">
+      <div className="video-slider-card">
 
-                <h5 className="card-title">{this.props.video.name}</h5>
-                <h6 className="card-subtitle mb-2"><i className={statusIconClassName}></i> {status}</h6>
+        <div className="video-slider-item" onClick={this.handleSelectVideo.bind(this, this.props.video)}>
+          <img className="video-img-thumbnail" src={videoThumbnailURL} />
+          <div className="video-slider-body">
 
-                <div className="card-action-links">
-                  <a className="card-link link-video-view"><i className="fab fa-youtube"></i> View</a>
-                  <a className="card-link link-video-edit"><i className="far fa-dot-circle"></i> Breakpoints</a>
-                </div>
-
-              </div>
+            <div className="video-slider-hover-action-icon justify-content-cetner align-items-center">
+              <i className="fas fa-play"></i>
             </div>
+
+            <div className="video-slider-info">
+          <h5 className="video-title">{this.props.video.name}</h5>
+          {/* <i className={statusIconClassName}></i> {status} */}
+        </div>
+
           </div>
-        </div> */}
+
+        </div>
+
+        
 
       </div>
 
 
-      // <div onClick={this.handleSelectVideo.bind(this, this.props.video)} className="dragon-select-list-row dragon-pointer">
-      //   <div className="dragon-select-list-cell">
-      //     <i className='fa fa-file-video-o fa-fw fa-lg'></i>
-      //   </div>
-      //   <div className="dragon-select-list-cell">
-      //     {this.props.video.name}
-      //   </div>
-      //   <div className="dragon-select-list-cell">
-      //     <i className={statusIconClassName}></i>
-      //     &nbsp;
-      //       {status}
-      //   </div>
-      // </div>
+
+
     );
   }
 
