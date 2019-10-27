@@ -8,6 +8,11 @@ body {
 #container {
   background: #f5f7fb; }
 
+.home-banner .hb-text h3 {
+  font-size: 4.5em; }
+.home-banner .hb-text p {
+  font-size: 1.4em; }
+
 /* ----- COMPONENTS ----- */
 .app-nav {
   background-color: #fff !important;
