@@ -49,8 +49,8 @@ class UserDropdownComponent extends React.Component {
           <div className="user-dropdown-info">
             <img className="avatar-dropdown" src="../../images/placeholders/default.jpeg"></img>
             <div className="user-dropdown-username">
-              <div className="user-dropdown-title">Matt Twardowski</div>
-              <div className="user-dropdown-subtitle">matt@greekrow.online</div>
+              <div className="user-dropdown-title"></div>
+              <div className="user-dropdown-subtitle">{this.props.email}</div>
             </div>
           </div>
         </a>

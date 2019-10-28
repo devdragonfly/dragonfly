@@ -12,6 +12,8 @@ class CampaignsComponent extends React.Component {
   constructor(props) {
     super(props);
 
+
+    this.searchInput = this.searchInput.bind(this);
   }
 
 
@@ -21,30 +23,39 @@ class CampaignsComponent extends React.Component {
     if (campaigns === 'not found') {
       this.props.history.push('loadcampaigns');
     }
+
+    this.state = {
+      allCampaigns: this.props.campaigns,
+      loadedCampaigns: [],
+      searchInput: '',
+    }
+    this.state.allCampaigns = 
+    this.state.loadedCampaigns = 
+    
+    console.log("STATE AFTER: ", this.state);
+    console.log(this.refs);
+    console.log(this.props);
   }
 
 
 
-  // searchInput() {
+  searchInput(event) {
+    console.log("Searching...: ");
+    console.log(event);
+    console.log(event.target.value);
 
-  //   let value = $(this).val().toLowerCase();
-  //   documentCards.removeClass('hidden');
-
-  //   if (value.length === 0) {
-  //       documentCards.removeClass('hidden');
-  //       return;
-  //   }
-
-  //   console.log(value);
-
-  //   documentCards.filter(function() {
-  //       return ($(this).find('.document-info').text().toLowerCase().indexOf(value) < 1);
-  //   }).addClass('hidden');
-  // }
-
+    this.setState({ searchInput: event.target.value});
+    this.setState({ loadedCampaigns: this.state.allCampaigns.filter(function(campaign) {
+      var campaignName = campaign.name.toLowerCase();
+      return campaignName.indexOf(event.target.value) > -1; 
+    })});
+    console.log(this.state);
+  }
 
   render() {
+    console.log("RENDERING CAMPAIGNS");
     var campaigns = this.props.campaigns;
+    var loadedCampaigns = this.state.loadedCampaigns;
     var handleLoadCampaign = this.props.handleLoadCampaign;
     var history = this.props.history;
 
@@ -55,7 +66,7 @@ class CampaignsComponent extends React.Component {
         campaignsJsx = function () { return 'No campaigns created yet.' }();
 
       } else {
-        campaignsJsx = this.props.campaigns.map((campaign, i) => {
+        campaignsJsx = loadedCampaigns.map((campaign, i) => {
           return <Campaign campaign={campaign} handleLoadCampaign={handleLoadCampaign} history={history} />
         });
       }
@@ -90,7 +101,7 @@ class CampaignsComponent extends React.Component {
               <div className="col-12">
                 <div className="search-container">
                   <div className="form-group search-box">
-                    <input id="search-input" type="text" className="form-control" placeholder="Search Dragonfly Campaigns..." />
+                    <input ref="searchInput" id="search-input" onChange={this.searchInput} type="text" className="form-control" placeholder="Search Dragonfly Campaigns..." />
                     <button className="search-btn">
                       <i className='fa fa-search'></i>
                     </button>
@@ -222,7 +233,7 @@ class Campaign extends React.Component {
       },
     };
 
-    var compaignAnalytics = function () { return <C3Chart data={data} /> }();
+    // var compaignAnalytics = function () { return <C3Chart data={data} /> }();
 
     // campaignAnalytics.chart.resize({
     //   height: 200,
@@ -246,7 +257,7 @@ class Campaign extends React.Component {
 
                 {/* <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> */}
                 <div className="c3-chart-container">
-                  {compaignAnalytics}
+                  {/* {compaignAnalytics} */}
                 </div>
 
                 <div className="card-action-links">

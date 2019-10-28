@@ -57,6 +57,7 @@ class LandingPageComponent extends React.Component {
                                         <h3>Start <b>engaging</b> with your customers.</h3>
                                         <p>Incentivize your customers for learning about your products, sparking engagement and knowledge you can measure. <b>Try it out for free today.</b></p>
                                     </div>
+                                    
                                     <div className="hb-form">
                                         <form onSubmit={this.handleSubmit}>
                                             <div className="row">
@@ -73,18 +74,8 @@ class LandingPageComponent extends React.Component {
                                                 </div>
                                             </div>
                                         </form>
-                                        {/* <form>
-                                            <div className="row">
-                                                <div className="col-md-4">
-                                                    <input name="email" className="form-control" placeholder="Email Address" type="email" /> </div>
-                                                <div className="col-md-4">
-                                                    <input name="password" className="form-control" placeholder="Password" type="password" /> </div>
-                                                <div className="col-md-4">
-                                                    <button className="m-btn m-btn-theme">Create Account</button>
-                                                </div>
-                                            </div>
-                                        </form> */}
                                     </div>
+
                                 </div>
                             </div>
                         </div>
