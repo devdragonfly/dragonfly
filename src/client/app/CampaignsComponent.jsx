@@ -57,6 +57,8 @@ class CampaignsComponent extends React.Component {
     var handleLoadCampaign = this.props.handleLoadCampaign;
     var history = this.props.history;
 
+    var appMenu = function () { return <AppMenuComponent current="campaigns" /> }();
+
     var campaignsJsx = function () { return '' }();
 
     if (campaigns !== 'not found') {
@@ -69,8 +71,8 @@ class CampaignsComponent extends React.Component {
         });
       }
     }
+  
 
-    var appMenu = function () { return <AppMenuComponent current="campaigns" /> }();
 
 
     return (
@@ -238,6 +240,10 @@ class Campaign extends React.Component {
     //   width: 324
     // });
 
+    var expiresAt = 'Never Expires';
+    if (this.props.campaign.expirationDate) {
+      expiresAt = "Ends: " + this.props.campaign.expirationDate;
+    }
 
     return (
       <div className="col-12 col-md-4 col-lg-3 campaign-cards-container">
@@ -251,7 +257,7 @@ class Campaign extends React.Component {
                 </div>
 
                 <h5 className="card-title">{this.props.campaign.name}</h5>
-                <h6 className="card-subtitle mb-2">Ends: {this.props.campaign.expirationDate}</h6>
+                <h6 className="card-subtitle mb-2">{expiresAt}</h6>
 
                 {/* <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> */}
                 <div className="c3-chart-container">
