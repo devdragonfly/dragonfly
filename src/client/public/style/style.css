@@ -13,6 +13,12 @@ body {
 .home-banner .hb-text p {
   font-size: 1.4em; }
 
+.footer-about .fot-logo {
+  padding-bottom: 0px !important; }
+  .footer-about .fot-logo img {
+    margin-top: -36px;
+    margin-left: -36px; }
+
 /* ----- COMPONENTS ----- */
 .app-nav {
   background-color: #fff !important;
