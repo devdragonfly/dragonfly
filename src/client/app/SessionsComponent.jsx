@@ -2,8 +2,7 @@ import React from 'react';
 import { Link } from 'react-router';
 import AppMenuComponent from './components/base/AppMenuComponent.jsx';
 
-import BuildNewDragonflyModal from './components/modals/BuildNewDragonflyModal.jsx';
-
+// import BuildNewDragonflyModal from './components/modals/BuildNewDragonflyModal.jsx';
 
 class SessionsComponent extends React.Component {
 
@@ -14,6 +13,7 @@ class SessionsComponent extends React.Component {
 
 
   componentWillMount() {
+    console.log("Loading Builder Page");
 
     var myThis = this;
     var organizationId = this.props.organizationId;
@@ -29,6 +29,12 @@ class SessionsComponent extends React.Component {
       }
     };
 
+    var sessions = this.props.sessions;
+    if (sessions === 'not found') {
+      this.props.handleLoadNext('sessions');
+      this.props.history.push('loadsessions');
+    }
+
     this.props.dbQuery(params, function (result) {
       var next = myThis.props.next;
 
@@ -37,11 +43,9 @@ class SessionsComponent extends React.Component {
 
     });
 
-    var sessions = this.props.sessions;
-    if (sessions === 'not found') {
-      this.props.handleLoadNext('sessions');
-      this.props.history.push('loadsessions');
-    }
+    console.log("Sessions Props");
+    console.log(this.props);
+
   }
 
   render() {
@@ -55,6 +59,8 @@ class SessionsComponent extends React.Component {
     var history = this.props.history;
 
     var numVideos = videos.length;
+
+    var appMenu = function () { return <AppMenuComponent current="sessions" /> }();
 
     var videosJsx = function () { return '' }();
 
@@ -88,9 +94,8 @@ class SessionsComponent extends React.Component {
       }
     }
 
-    var appMenu = function () { return <AppMenuComponent current="sessions" /> }();
 
-    var buildNewDragonflyModal = function () { return <BuildNewDragonflyModal />}();
+    // var buildNewDragonflyModal = function () { return <BuildNewDragonflyModal />}();
 
     return (
 
@@ -194,7 +199,7 @@ class SessionsComponent extends React.Component {
 
             
             {/* Build Dragonfly Modal */}
-            {buildNewDragonflyModal}
+            {/* {buildNewDragonflyModal} */}
 
           </div>
 

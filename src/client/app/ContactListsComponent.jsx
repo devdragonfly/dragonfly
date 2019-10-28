@@ -12,11 +12,14 @@ class ContactListsComponent extends React.Component {
   }
 
   componentWillMount() {
+    console.log("Loading ContactLists Page");
     var contactLists = this.props.contactLists;
     if (contactLists === 'not found') {
       this.props.handleLoadNext('contactlists');
       this.props.history.push('loadcontactlists');
     }
+
+    console.log(this.props);
   }
 
   render() {
