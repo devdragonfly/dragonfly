@@ -17,11 +17,12 @@ const userPool = new CognitoUserPool({
 
 const buttonClassName = "btn btn-primary btn-lg";
 
+
 class LandingPageMain extends React.Component {
 
   constructor(props) {
     super(props);
-    // this.props.handleSignOut();
+    this.props.handleSignOut();
     // this.state = {
     //   emailValue: props.email,
     //   passwordValue: '',

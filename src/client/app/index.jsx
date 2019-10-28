@@ -52,15 +52,17 @@ import DragonflyCompleteComponent from './DragonflyCompleteComponent.jsx';
 import ImportAlertComponent from './ImportAlertComponent.jsx';
 
 import LandingPageMain from './landing/LandingPageMain.jsx';
+import LandingPageComponent from './landing/LandingPageComponent.jsx';
+
 
 import DashboardPage from './pages/DashboardPage.jsx';
 
 render(
     <Router>
         <Route path="/" component={Main} history={browserHistory}>
-            <IndexRoute component={LandingPageMain} />
-            <Route path="" component={LandingPageMain}/>
-            <Route path="signup" component={LandingPageMain} />
+            <IndexRoute component={LandingPageComponent} />
+            <Route path="" component={LandingPageComponent}/>
+            <Route path="signup" component={LandingPageComponent} />
             <Route path="confirmregistration" component={ConfirmRegistrationComponent}/>
             <Route path="successcodeverified" component={SuccessCodeVerifiedComponent}/>
             <Route path="resendcode" component={ResendCodeComponent}/>

@@ -140,11 +140,11 @@ class NavOutsideComponent extends React.Component {
 
   showClickedButtonState(yes) {
     if (yes) {
-      this.setState({ buttonRestClassName: "dragon-hidden" });
+      this.setState({ buttonRestClassName: "hidden" });
       this.setState({ buttonClickedClassName: buttonClassName });
     } else {
       this.setState({ buttonRestClassName: buttonClassName });
-      this.setState({ buttonClickedClassName: "dragon-hidden" });
+      this.setState({ buttonClickedClassName: "hidden" });
     }
   }
 
