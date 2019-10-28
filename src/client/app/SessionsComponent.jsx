@@ -68,6 +68,7 @@ class SessionsComponent extends React.Component {
         });
       }
     }
+    
 
     var sessionsJsx = function () { return '' }();
 
