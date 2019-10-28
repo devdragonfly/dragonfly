@@ -26,11 +26,9 @@ class CampaignsComponent extends React.Component {
 
     this.state = {
       allCampaigns: this.props.campaigns,
-      loadedCampaigns: [],
+      loadedCampaigns: this.props.campaigns,
       searchInput: '',
     }
-    this.state.allCampaigns = 
-    this.state.loadedCampaigns = 
     
     console.log("STATE AFTER: ", this.state);
     console.log(this.refs);

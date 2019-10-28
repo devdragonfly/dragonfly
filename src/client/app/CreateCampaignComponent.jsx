@@ -123,8 +123,7 @@ class CreateCampaignComponent extends React.Component {
       Item: {
         organizationId: organizationIdValue,
         campaignId: campaignIdValue,
-        name: nameValue,
-        dateCreated: "today"
+        name: nameValue
       }
     };
 
