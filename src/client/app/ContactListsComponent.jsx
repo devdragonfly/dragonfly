@@ -152,7 +152,9 @@ class ContactList extends React.Component {
 
                 <div className="card-action-links">
                   <a onClick={this.handleEditContactList.bind(this)} className="card-link link-video-view"><i className="fas fa-user-friends"></i> View</a>
-                  <a onClick={this.handleDeleteContactList.bind(this)} className="card-link link-video-edit"><i className="fas fa-plus"></i> Quick Add</a>
+                  {/* <a onClick={this.handleDeleteContactList.bind(this)} className="card-link link-video-edit"><i className="fas fa-plus"></i> Quick Add</a> */}
+                  <a className="card-link link-video-edit"><i className="fas fa-plus"></i> Quick Add</a>
+
                 </div>
 
               </div>

@@ -33,7 +33,6 @@ class GenerateDragonfliesComponent extends React.Component {
   }
 
   render() {
-    var organizationMenu = function () { return <OrganizationMenuComponent current="campaigns" /> }();
     var campaign = this.props.campaign;
     var session = campaign.session;
     var contactList = campaign.contactList;

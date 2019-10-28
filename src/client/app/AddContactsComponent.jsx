@@ -1,6 +1,7 @@
 import React from 'react';
-import {Link} from 'react-router';
-import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
+import { Link } from 'react-router';
+
+import AppMenuComponent from './components/base/AppMenuComponent.jsx';
 
 
 const buttonClassName = "btn btn-primary";
@@ -9,9 +10,10 @@ class AddContactsComponent extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {contacts : [0,1,2,3,4,5,6,7,8,9],
-                  buttonRestClassName : buttonClassName,
-                  buttonClickedClassName : "dragon-hidden"
+    this.state = {
+      contacts: [0, 1, 2, 3, 4, 5, 6, 7, 8, 9],
+      buttonRestClassName: buttonClassName,
+      buttonClickedClassName: "dragon-hidden"
     };
     this.showClickedButtonState = this.showClickedButtonState.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -20,7 +22,7 @@ class AddContactsComponent extends React.Component {
   }
 
   handleLoadContact(i, first, last, email, isValid) {
-    var contact = { first : first, last : last, email : email, isValid : isValid};
+    var contact = { first: first, last: last, email: email, isValid: isValid };
     var contacts = this.state.contacts;
     contacts[i] = contact;
     this.setState({
@@ -38,38 +40,58 @@ class AddContactsComponent extends React.Component {
 
   render() {
 
-    var countArray = [0,1,2,3,4,5,6,7,8,9];
+    var appMenu = function () { return <AppMenuComponent current="contactlists" /> }();
+
+
+    var countArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
     var handleLoadContact = this.handleLoadContact;
     var newContactsJsx = countArray.map((count, i) => {
-                return <NewContact i={i} handleLoadContact={handleLoadContact} />
-        });
+      return <NewContact i={i} handleLoadContact={handleLoadContact} />
+    });
 
-
-    var organizationMenu = function() {return <OrganizationMenuComponent current="contactlists" /> }();
 
 
     return (
 
-        <div className="row">
-          {organizationMenu}
-          <div className="col-sm-6">
-            <h3><i className='fa fa-address-book-o fa-fw'></i> {this.props.contactList.name}</h3>
+      <div id="add-contact-container">
+        {appMenu}
+
+        <div className="row justify-content-center">
+          <div className="col-12 col-lg-10">
+
+
+            {/* start */}
+            <div className="row page_header_container">
+              <div className="col-12">
+                <div className="page_header_title float-left">
+                  <h3 className="page-title">View Contact List</h3>
+                  <p><b>List: </b> {this.props.contactList.name} </p>
+                </div>
+
+                <div className="page_header_action float-right">
+
+                </div>
+                <div className="clearfix"></div>
+                <hr className="page_header_divider" />
+              </div>
+            </div>
+
 
             <form onSubmit={this.handleSubmit}>
               <div className="dragon-select-list">
                 {newContactsJsx}
               </div>
 
-              <br/>
+              <br />
 
               <input type="submit" className={this.state.buttonRestClassName} value="Add Contacts" />
               <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Adding Contacts</div>
             </form>
 
           </div>
-          <div className="col-sm-4">
-          </div>
         </div>
+
+      </div>
     );
   }
 
@@ -77,11 +99,11 @@ class AddContactsComponent extends React.Component {
 
   showClickedButtonState(yes) {
     if (yes) {
-          this.setState({ buttonRestClassName: "dragon-hidden" });
-          this.setState({ buttonClickedClassName: buttonClassName });
+      this.setState({ buttonRestClassName: "dragon-hidden" });
+      this.setState({ buttonClickedClassName: buttonClassName });
     } else {
-          this.setState({ buttonRestClassName: buttonClassName });
-          this.setState({ buttonClickedClassName: "dragon-hidden" });
+      this.setState({ buttonRestClassName: buttonClassName });
+      this.setState({ buttonClickedClassName: "dragon-hidden" });
     }
   }
 
@@ -104,27 +126,27 @@ class AddContactsComponent extends React.Component {
     }
 
     for (var i = 0; i < contacts.length; i++) {
-        if (contacts[i].isValid) {
-          validContacts.push({first: contacts[i].first, last: contacts[i].last, email: contacts[i].email});
-        }
+      if (contacts[i].isValid) {
+        validContacts.push({ first: contacts[i].first, last: contacts[i].last, email: contacts[i].email });
+      }
     }
 
     var params = {
-            TableName:"ContactLists",
-            Key: {
-                organizationId : organizationId,
-                contactListId : contactListId
-            },
-            UpdateExpression: "set contacts = :contacts",
-            ExpressionAttributeValues:{
-                ":contacts":validContacts
-            },
-            ReturnValues:"UPDATED_NEW"
-        };
+      TableName: "ContactLists",
+      Key: {
+        organizationId: organizationId,
+        contactListId: contactListId
+      },
+      UpdateExpression: "set contacts = :contacts",
+      ExpressionAttributeValues: {
+        ":contacts": validContacts
+      },
+      ReturnValues: "UPDATED_NEW"
+    };
 
 
 
-    this.props.dbUpdate(params, function(result) {
+    this.props.dbUpdate(params, function (result) {
       myThis.showClickedButtonState(false);
       myThis.props.handleLoadContacts(result.Attributes.contacts);
       mixpanel.track("Upload Contacts", {
@@ -149,7 +171,7 @@ class NewContact extends React.Component {
 
   constructor(props) {
     super(props);
-    this.state = {email : '', firstName : '', lastName : '', isValid : false};
+    this.state = { email: '', firstName: '', lastName: '', isValid: false };
     this.updateFirstNameValue = this.updateFirstNameValue.bind(this);
     this.updateLastNameValue = this.updateLastNameValue.bind(this);
     this.updateEmailValue = this.updateEmailValue.bind(this);
@@ -167,20 +189,20 @@ class NewContact extends React.Component {
 
 
     return (
-        <div className="dragon-select-list-row">
-            <div className="dragon-select-list-form-cell">
-              <i className={validityIndicator}></i>
-            </div>
-            <div className="dragon-select-list-form-cell">
-              <input value={this.state.firstName} onChange={this.updateFirstNameValue} className="form-control" placeholder="first name"/>
-            </div>
-            <div className="dragon-select-list-form-cell">
-              <input value={this.state.lastName} onChange={this.updateLastNameValue} className="form-control" placeholder="last name"/>
-            </div>
-            <div className="dragon-select-list-form-cell">
-              <input value={this.state.email} onChange={this.updateEmailValue} className="form-control" placeholder="email"/>
-            </div>
+      <div className="dragon-select-list-row">
+        <div className="dragon-select-list-form-cell">
+          <i className={validityIndicator}></i>
         </div>
+        <div className="dragon-select-list-form-cell">
+          <input value={this.state.firstName} onChange={this.updateFirstNameValue} className="form-control" placeholder="first name" />
+        </div>
+        <div className="dragon-select-list-form-cell">
+          <input value={this.state.lastName} onChange={this.updateLastNameValue} className="form-control" placeholder="last name" />
+        </div>
+        <div className="dragon-select-list-form-cell">
+          <input value={this.state.email} onChange={this.updateEmailValue} className="form-control" placeholder="email" />
+        </div>
+      </div>
     );
   }
 
@@ -220,8 +242,8 @@ class NewContact extends React.Component {
 
 
   validateEmail(email) {
-      var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-      return re.test(email);
+    var re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+    return re.test(email);
   }
 
 }
