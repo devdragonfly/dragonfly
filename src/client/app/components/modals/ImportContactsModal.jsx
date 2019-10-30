@@ -58,13 +58,12 @@ export default class ImportContactsModal extends React.Component {
             <div className="modal" style={divStyle}>
                 <div className="modal-content" role="document">
                     <div className="modal-header">
-                        Hello
+                        <h4>Import Contact List (.xlsx)</h4>
                         <span onClick={this.props.onClose} className="close">&times;</span>
                     </div>
                     <div className="modal-body">
                         <div className="row">
-                            <div className="col-sm-6">
-                                <label for="input">Import your contact list in .xlsx format</label>
+                            <div className="col-12">
                                 <input onChange={this.props.handleSubmit} type="file" accept=".xlsx" className="form-control" id="input" placeholder="exel file" />
                             </div>
                         </div>

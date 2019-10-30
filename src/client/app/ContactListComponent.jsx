@@ -138,7 +138,7 @@ class ContactListComponent extends React.Component {
 
             <div className="dragonfly-card">
               <div className="card">
-                <div className="card-body">
+                <div className="card-body pb-4">
                   <div className="dragon-select-list">
                     {contactsJsx}
                   </div>
@@ -345,7 +345,7 @@ class Contact extends React.Component {
           {this.props.contact.email}
         </div>
         <div className="dragon-select-list-cell" onClick={this.handleEditContact.bind(this)}>
-          <i className="fa fa-pencil-square-o fa-fw fa-lg" aria-hidden="true"></i>
+          <i className="fas fa-pen fa-fw fa-lg" aria-hidden="true"></i>
         </div>
         <div className="dragon-select-list-cell" onClick={this.handleDeleteContact.bind(this)}>
           <i className='fa fa-trash fa-fw fa-lg'></i>
