@@ -13,33 +13,30 @@ class SuccessCodeVerifiedComponent extends React.Component {
 
   render() {
     return (
-      
 
-      <div className="row home-bg-outer"><div className="col-sm-12">
-      <div className="home-bg-inner">
-      <div className="row">
-        <div className="col-sm-1">
-        </div>
-        <div className="col-sm-4">
-          <br/><br/><br/><br/>
+
+
+      <div className="row confirm-sign-up-container justify-content-center">
+
+        <div className="col-12 col-lg-10">
+          
           <div className="signUpBox">
             <h2 className="dragonfly-blue">Thank You!</h2>
-            Your account creation is now complete.
-            <br/><br/>
-            Please sign in above with your email and password.
-          </div>
-          <br/><br/><br/><br/>
-        </div>
-        <div className="col-sm-7">
-        </div>
-        </div></div>
-      </div></div>
-      
+            <p className="sign-up-confirm-info-text mar-text-split">Your account creation is now complete.</p>
 
-      
+            <p className="sign-up-confirm-info-text">Please sign in above with your email and password.</p>
+          </div>
+
+        </div>
+
+      </div>
+
+
+
+
     );
   }
-  
+
 }
 
 export default SuccessCodeVerifiedComponent;

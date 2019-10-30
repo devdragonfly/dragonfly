@@ -163,7 +163,6 @@ class SessionsComponent extends React.Component {
 
                           <div className="video-slider-hover-action-icon justify-content-cetner align-items-center">
                             <Link to={`uploadvideo`} className=""><i className='fa fa-plus'></i></Link>
-                            {/* <i className="fa fa-plus"></i> */}
                           </div>
 
                           <div className="video-slider-info">
@@ -195,7 +194,6 @@ class SessionsComponent extends React.Component {
                     </div>
 
                     <div className="page-section-header-actions float-right">
-                      {/* <i className="fa fa-plus"></i> */}
                     </div>
 
                     <div className="clearfix"></div>
@@ -262,7 +260,6 @@ class VideoThumbnail extends React.Component {
       <div className="video-slider-card">
 
         <div className="video-slider-item" style={divStyle} onClick={this.handleSelectVideo.bind(this, this.props.video)}>
-          {/* <img className="video-img-thumbnail" src={videoThumbnailURL} /> */}
           <div className="video-slider-body">
 
             <div className="video-slider-hover-action-icon justify-content-cetner align-items-center">
@@ -271,7 +268,6 @@ class VideoThumbnail extends React.Component {
 
             <div className="video-slider-info">
               <h5 className="video-title">{this.props.video.name}</h5>
-              {/* <i className={statusIconClassName}></i> {status} */}
             </div>
 
           </div>

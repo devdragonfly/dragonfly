@@ -749,4 +749,11 @@ body {
   .session-add-breakpoint .session-add-breakpoint-questions {
     width: 100%; }
 
+.confirm-sign-up-container {
+  background: #2a60d9;
+  height: 100%;
+  min-height: 100vh; }
+  .confirm-sign-up-container .signUpBox {
+    margin-top: 10%; }
+
 /*# sourceMappingURL=style.css.map */
