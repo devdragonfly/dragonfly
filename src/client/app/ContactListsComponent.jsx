@@ -19,7 +19,7 @@ class ContactListsComponent extends React.Component {
       this.props.history.push('loadcontactlists');
     }
 
-    console.log(this.props);
+    console.log(this.props.history);
   }
 
   render() {

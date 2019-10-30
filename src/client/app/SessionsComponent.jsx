@@ -18,7 +18,28 @@ class SessionsComponent extends React.Component {
     var myThis = this;
     var organizationId = this.props.organizationId;
 
-    var params = {
+
+    var sessionParams = {
+      TableName: "Sessions",
+      KeyConditionExpression: "#organizationId = :organizationId",
+      ExpressionAttributeNames: {
+        "#organizationId": "organizationId"
+      },
+      ExpressionAttributeValues: {
+        ":organizationId": organizationId
+      }
+    };
+
+
+    var sessions = this.props.sessions;
+    if (sessions === 'not found') {
+      this.props.dbQuery(sessionParams, function (result) {
+        myThis.props.handleLoadSessions(result);
+      });
+    }
+
+
+    var videoParams = {
       TableName: "Videos",
       KeyConditionExpression: "#organizationId = :organizationId",
       ExpressionAttributeNames: {
@@ -29,18 +50,8 @@ class SessionsComponent extends React.Component {
       }
     };
 
-    var sessions = this.props.sessions;
-    if (sessions === 'not found') {
-      this.props.handleLoadNext('sessions');
-      this.props.history.push('loadsessions');
-    }
-
-    this.props.dbQuery(params, function (result) {
-      var next = myThis.props.next;
-
+    this.props.dbQuery(videoParams, function (result) {
       myThis.props.handleLoadVideos(result);
-      myThis.props.history.push(next);
-
     });
 
     console.log("Sessions Props");
@@ -74,7 +85,7 @@ class SessionsComponent extends React.Component {
         });
       }
     }
-    
+
 
     var sessionsJsx = function () { return '' }();
 
@@ -197,7 +208,7 @@ class SessionsComponent extends React.Component {
               </div>
             </div>
 
-            
+
             {/* Build Dragonfly Modal */}
             {/* {buildNewDragonflyModal} */}
 
@@ -208,7 +219,7 @@ class SessionsComponent extends React.Component {
 
     );
   }
-  
+
 
 
 }
@@ -243,7 +254,7 @@ class VideoThumbnail extends React.Component {
 
     var divStyle = {
       backgroundImage: 'url(' + imgURL + ')'
-  }
+    }
 
     return (
 
