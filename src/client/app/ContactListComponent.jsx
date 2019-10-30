@@ -4,9 +4,12 @@ import { Link } from 'react-router';
 import AppMenuComponent from './components/base/AppMenuComponent.jsx';
 import ImportAlertComponent from './ImportAlertComponent.jsx';
 
+import ImportContactsModal from './components/modals/ImportContactsModal.jsx';
+
 import ReactDOM from 'react-dom';
 import readXlsxFile from 'read-excel-file'
 import EditContact from './EditContactComponet.jsx'
+
 
 
 
@@ -22,9 +25,12 @@ class ContactListComponent extends React.Component {
     this.deleteContact = this.deleteContact.bind(this);
     this.editContact = this.editContact.bind(this);
 
+    this.toggleImportModal = this.toggleImportModal.bind(this);
+
     this.state = {
       show: false,
-      alertMessage: ''
+      alertMessage: '',
+      showImportModal: false
     };
   }
 
@@ -81,6 +87,16 @@ class ContactListComponent extends React.Component {
     });
   }
 
+  toggleImportModal(e) {
+    console.log("toggleImportModal() Called");
+
+    if (this.state.showImportModal) {
+      this.setState({ showImportModal: false });
+    } else {
+      this.setState({ showImportModal: true });
+    }
+  }
+
   render() {
 
     var contacts = this.props.contactList.contacts;
@@ -107,27 +123,40 @@ class ContactListComponent extends React.Component {
 
             <div className="row page_header_container">
               <div className="col-12">
-                <h3 className="page_header_title float-left"> {this.props.contactList.name}</h3>
+
+                <div className="page_header_title float-left">
+                  <h3 className="page-title">{this.props.contactList.name}</h3>
+                </div>
                 <div className="page_header_action float-right">
                   <Link to={`addcontacts`} className="btn btn-primary float-right"><i className='fa fa-plus'></i> Add Contact</Link>
+                  <a onClick={this.toggleImportModal} className="btn btn-default float-right mar-header-btn"><i className='fas fa-file-upload'></i> Import (.xlsx)</a>
                 </div>
                 <div className="clearfix"></div>
                 <hr className="page_header_divider" />
               </div>
             </div>
 
-            <div className="dragon-select-list">
-              {contactsJsx}
+            <div className="dragonfly-card">
+              <div className="card">
+                <div className="card-body">
+                  <div className="dragon-select-list">
+                    {contactsJsx}
+                  </div>
+                </div>
+              </div>
             </div>
 
 
-            <div className="row">
+            {/* <div className="row">
               <div className="col-sm-6">
-                {/*onClick={this.showAlert} */}
                 <label for="input">Import your contact list in .xlsx format</label>
                 <input type="file" accept=".xlsx" onChange={this.handleFile} className="form-control" id="input" placeholder="exel file" />
               </div>
-            </div>
+            </div> */}
+
+
+
+            <ImportContactsModal show={this.state.showImportModal} handleSubmit={this.handleFile} onClose={this.toggleImportModal} />
 
 
             <ImportAlertComponent show={this.state.show} onClose={this.showAlert} alertMessage={this.state.alertMessage} />
@@ -226,7 +255,8 @@ class ContactListComponent extends React.Component {
   showAlert(message) {
     this.setState({
       show: !this.state.show,
-      alertMessage: message
+      alertMessage: message,
+      showImportModal: false
     });
   };
 
