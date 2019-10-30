@@ -96,6 +96,13 @@ class SessionComponent extends React.Component {
     var appMenu = function () { return <AppMenuComponent current="sessions" /> }();
     var millisecondsJsx = function () { return <MillisecondsComponent milliseconds={milliseconds} /> }();
 
+    console.log("RENDERING Session: ");
+    console.log(session);
+
+    var breakpointsCount = 0;
+    if (session.breakpoints) {
+      breakpointsCount = session.breakpoints.length;
+    }
     return (
 
       <div id="viewSessionsComponent">
@@ -109,7 +116,7 @@ class SessionComponent extends React.Component {
               <div className="col-12">
                 <div className="page_header_title float-left">
                   <h3 className="page-title">Edit Session: {this.props.session.name}</h3>
-                  <p><b>Breakpoints: </b> {session.breakpoints.length}</p>
+                  <p><b>Breakpoints: </b> {breakpointsCount}</p>
                 </div>
 
                 <div className="page_header_action float-right">
