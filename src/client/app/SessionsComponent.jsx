@@ -96,6 +96,7 @@ class SessionsComponent extends React.Component {
       } else {
         var breakpointCount = 0;
         sessionsJsx = this.props.sessions.map((session, i) => {
+          console.log(session);
           breakpointCount = 0;
           if (session.breakpoints != null) {
             breakpointCount = session.breakpoints.length;
@@ -316,7 +317,7 @@ class Session extends React.Component {
               <div className="card-body">
 
                 <h5 className="card-title">{this.props.session.name}</h5>
-                <h6 className="card-subtitle mb-0"><i className="fas fa-film"></i> Testing Video</h6>
+                <h6 className="card-subtitle mb-0"><i className="fas fa-film"></i> {this.props.session.video.name}</h6>
                 <h7 className="card-subtitle mb-2"><i className="far fa-dot-circle"></i> {this.props.breakpointCount} Breakpoints</h7>
 
                 <div className="card-action-links">
