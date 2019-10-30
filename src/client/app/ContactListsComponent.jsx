@@ -22,6 +22,7 @@ class ContactListsComponent extends React.Component {
     console.log(this.props.history);
   }
 
+
   render() {
     var contactLists = this.props.contactLists;
     var handleLoadContactList = this.props.handleLoadContactList;
@@ -113,6 +114,11 @@ class ContactList extends React.Component {
     );
     let contactName;
 
+    let numContacts = 0;
+    if (this.props.contactList.contacts) {
+      numContacts = this.props.contactList.contacts.length;
+    }
+
 
     if (edit) {
       contactName = (
@@ -151,7 +157,7 @@ class ContactList extends React.Component {
               <div className="card-body">
 
                 <h5 className="card-title">{contactName}</h5>
-                <h6 className="card-subtitle mb-2"><i className="fas fa-user"></i> 0 </h6>
+                <h6 className="card-subtitle mb-2"><i className="fas fa-user"></i> {numContacts} Contacts </h6>
 
                 <div className="card-action-links">
                   <a onClick={this.handleEditContactList.bind(this)} className="card-link link-video-view"><i className="fas fa-user-friends"></i> View</a>
