@@ -1,6 +1,6 @@
 import React from 'react';
-import {Link} from 'react-router';
-import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
+import { Link } from 'react-router';
+import AppMenuComponent from './components/base/AppMenuComponent.jsx';
 
 
 const buttonClassName = "btn btn-primary";
@@ -10,16 +10,17 @@ class UploadVideoComponent extends React.Component {
   constructor(props) {
     super(props);
 
-    var videoId = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-        var r = Math.random()*16|0, v = c == 'x' ? r : (r&0x3|0x8);
-        return v.toString(16);
+    var videoId = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+      var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+      return v.toString(16);
     });
 
-    this.state = {file : null,
-                  nameValue : '',
-                  buttonRestClassName : buttonClassName,
-                  buttonClickedClassName : "dragon-hidden",
-                  videoId : videoId
+    this.state = {
+      file: null,
+      nameValue: '',
+      buttonRestClassName: buttonClassName,
+      buttonClickedClassName: "dragon-hidden",
+      videoId: videoId
     };
     this.updateNameValue = this.updateNameValue.bind(this);
     this.handleFile = this.handleFile.bind(this);
@@ -33,34 +34,56 @@ class UploadVideoComponent extends React.Component {
 
   render() {
 
-    var organizationMenu = function() {return <OrganizationMenuComponent current="videos" /> }();
+    // var organizationMenu = function() {return <OrganizationMenuComponent current="videos" /> }();
+
+    var appMenu = function () { return <AppMenuComponent current="sessions" /> }();
+
 
     return (
 
-        <div className="row">
-          {organizationMenu}
-          <div className="col-sm-4">
 
-            <h3><i className='fa fa-file-video-o fa-fw'></i> Upload Video</h3>
+      <div id="uploadVideoComponent">
+        {appMenu}
+        <div className="row justify-content-center">
+          <div className="col-12 col-lg-10">
+
+
+            {/* PAGE HEADER */}
+            <div className="row page_header_container">
+              <div className="col-12">
+
+                <div className="page_header_title float-left">
+                  <h3 className="page-title">Upload a Video</h3>
+                </div>
+
+                <div className="page_header_action float-right">
+                </div>
+                <div className="clearfix"></div>
+                <hr className="page_header_divider" />
+              </div>
+            </div>
+
+
             <form ref='uploadForm' onSubmit={this.handleSubmit}>
 
-              <br/>
-              <input value={this.state.nameValue} onChange={this.updateNameValue} className="form-control" placeholder="name of video"/>
+              <br />
+              <input value={this.state.nameValue} onChange={this.updateNameValue} className="form-control" placeholder="name of video" />
 
-              <br/>
+              <br />
 
-              <input type="file" onChange={this.handleFile} className="form-control" placeholder="video file"/>
+              <input type="file" onChange={this.handleFile} className="form-control" placeholder="video file" />
 
-              <br/>
+              <br />
 
               <input type="submit" className={this.state.buttonRestClassName} value="Upload" />
               <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Uploading</div>
             </form>
 
-          </div>
-          <div className="col-sm-6">
+
           </div>
         </div>
+      </div>
+    
 
 
     );
@@ -68,11 +91,11 @@ class UploadVideoComponent extends React.Component {
 
   showClickedButtonState(yes) {
     if (yes) {
-          this.setState({ buttonRestClassName: "dragon-hidden" });
-          this.setState({ buttonClickedClassName: buttonClassName });
+      this.setState({ buttonRestClassName: "dragon-hidden" });
+      this.setState({ buttonClickedClassName: buttonClassName });
     } else {
-          this.setState({ buttonRestClassName: buttonClassName });
-          this.setState({ buttonClickedClassName: "dragon-hidden" });
+      this.setState({ buttonRestClassName: buttonClassName });
+      this.setState({ buttonClickedClassName: "dragon-hidden" });
     }
   }
 
@@ -112,54 +135,54 @@ class UploadVideoComponent extends React.Component {
     var utc = new Date().getTime();
 
     var params = {
-        TableName:"Videos",
-        Item:{
-            organizationId : organizationId,
-            videoId : videoId,
-            name : nameValue,
-            uploadStatus : 'Uploading',
-            utc : utc
-        }
+      TableName: "Videos",
+      Item: {
+        organizationId: organizationId,
+        videoId: videoId,
+        name: nameValue,
+        uploadStatus: 'Uploading',
+        utc: utc
+      }
     };
 
     this.props.s3Upload(file, videoId, myThis.videoUploadFailedCallback, myThis.videoUploadedCallback, nameValue);
 
-    this.props.dbPut(params, function(result){
+    this.props.dbPut(params, function (result) {
       myThis.showClickedButtonState(false);
       myThis.props.history.push('loadvideos');
     });
 
   }
 
- videoUploadFailedCallback() {
+  videoUploadFailedCallback() {
     this.updateVideoUploadStatus("Upload Failed");
   }
 
- videoUploadedCallback() {
+  videoUploadedCallback() {
     this.updateVideoUploadStatus("Processing");
   }
 
- updateVideoUploadStatus(uploadStatus) {
+  updateVideoUploadStatus(uploadStatus) {
     var myThis = this;
     const organizationId = this.props.organizationId;
     const videoId = this.state.videoId;
     var utc = new Date().getTime();
     var params = {
-        TableName:"Videos",
-        Key: {
-            organizationId : organizationId,
-            videoId : videoId
-        },
-        UpdateExpression: "set uploadStatus = :uploadStatus, utc = :utc",
-        ExpressionAttributeValues:{
-            ":uploadStatus" : uploadStatus,
-            ":utc":utc
-        },
-        ReturnValues:"UPDATED_NEW"
+      TableName: "Videos",
+      Key: {
+        organizationId: organizationId,
+        videoId: videoId
+      },
+      UpdateExpression: "set uploadStatus = :uploadStatus, utc = :utc",
+      ExpressionAttributeValues: {
+        ":uploadStatus": uploadStatus,
+        ":utc": utc
+      },
+      ReturnValues: "UPDATED_NEW"
     };
 
 
-    this.props.dbUpdate(params, function(result) {
+    this.props.dbUpdate(params, function (result) {
       myThis.props.handleVideoStatusUpdate(videoId, uploadStatus);
     });
   }
