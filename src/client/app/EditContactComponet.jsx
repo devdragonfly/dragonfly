@@ -43,7 +43,7 @@ class EditContact extends React.Component {
               <input defaultValue={this.props.contact.email} onChange={this.updateEmailValue} className="form-control" placeholder="email"/>
             </div>
             <div className="dragon-select-list-form-cell" onClick={this.handleSaveContact.bind(this)}>
-              <i className="fa fa-floppy-o fa-fw fa-lg"></i>
+              <i className="fas fa-save fa-fw fa-lg"></i>
             </div>
             <div className="dragon-select-list-form-cell" onClick={this.handleCancelContact.bind(this)}>
               <i className='fa fa-times fa-fw fa-lg'></i>

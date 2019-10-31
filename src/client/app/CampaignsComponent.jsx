@@ -265,8 +265,10 @@ class Campaign extends React.Component {
                 </div>
 
                 <div className="card-action-links">
-                  <a className="card-link link-campaign-view"><i className="fas fa-chart-line"></i> View</a>
-                  <a className="card-link link-campaign-edit"><i className="fas fa-pencil-alt"></i> Edit</a>
+                  {/* <a className="card-link link-campaign-view"><i className="fas fa-chart-line"></i> View</a>
+                  <a className="card-link link-campaign-edit"><i className="fas fa-pencil-alt"></i> Edit</a> */}
+                  <a className="card-link link-campaign-edit"><i className="fas fa-chart-line"></i> View</a>
+
                 </div>
 
               </div>
