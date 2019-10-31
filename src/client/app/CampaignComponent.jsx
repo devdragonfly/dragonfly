@@ -242,22 +242,17 @@ class CampaignComponent extends React.Component {
                 <div className="campaign_card">
                   <div className="card">
                     <div className="card-body">
-                      <div className="card-actions-icon">
-                        <i className="fas fa-ellipsis-h pull-right"></i>
-                      </div>
+                      
 
                       <h5 className="card-title">Results</h5>
-                      <h6 className="card-subtitle mb-2">1,357 Views</h6>
+                      <h6 className="card-subtitle mb-2">0 Views</h6>
 
                       {/* <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> */}
                       <div className="c3-chart-container">
                         {compaignAnalytics}
                       </div>
 
-                      <div className="card-action-links">
-                        <a className="card-link link-campaign-view"><i className="fas fa-chart-line"></i> View</a>
-                        <a className="card-link link-campaign-edit"><i className="fas fa-pencil-alt"></i> Edit</a>
-                      </div>
+                    
 
                     </div>
                   </div>
@@ -269,22 +264,15 @@ class CampaignComponent extends React.Component {
               <div className="campaign_card">
                   <div className="card">
                     <div className="card-body">
-                      <div className="card-actions-icon">
-                        <i className="fas fa-ellipsis-h pull-right"></i>
-                      </div>
+                      
 
                       <h5 className="card-title">Dragonflies</h5>
-                      <h6 className="card-subtitle mb-2">1,912 Contacts</h6>
+                      <h6 className="card-subtitle mb-2">0 Contacts</h6>
 
                       {/* <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> */}
                       <div className="c3-chart-container">
                       {dragonfliesJsx}
 
-                      </div>
-
-                      <div className="card-action-links">
-                        <a className="card-link link-campaign-view"><i className="fas fa-chart-line"></i> View</a>
-                        <a className="card-link link-campaign-edit"><i className="fas fa-pencil-alt"></i> Edit</a>
                       </div>
 
                     </div>

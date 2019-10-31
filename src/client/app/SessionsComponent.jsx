@@ -251,6 +251,7 @@ class VideoThumbnail extends React.Component {
 
     const imgURL = 'https://s3-us-west-2.amazonaws.com/dragonfly-videos-thumbnails/' + this.props.video.videoId + '/thumbs-' + this.props.video.videoId + '-00001.jpg';
 
+
     var divStyle = {
       backgroundImage: 'url(' + imgURL + ')'
     }
@@ -301,7 +302,15 @@ class Session extends React.Component {
     super(props);
   }
 
+  
+
   render() {
+
+    let videoName = "No Video Selected";
+    if (this.props.session.video) {
+      videoName = this.props.session.video.name;
+    }
+
     return (
 
 
@@ -313,7 +322,7 @@ class Session extends React.Component {
               <div className="card-body">
 
                 <h5 className="card-title">{this.props.session.name}</h5>
-                <h6 className="card-subtitle mb-0"><i className="fas fa-film"></i> {this.props.session.video.name}</h6>
+                <h6 className="card-subtitle mb-0"><i className="fas fa-film"></i> {videoName}</h6>
                 <h7 className="card-subtitle mb-2"><i className="far fa-dot-circle"></i> {this.props.breakpointCount} Breakpoints</h7>
 
                 <div className="card-action-links">
