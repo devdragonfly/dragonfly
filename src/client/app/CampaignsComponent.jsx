@@ -30,24 +30,18 @@ class CampaignsComponent extends React.Component {
       searchInput: '',
     }
     
-    console.log("STATE AFTER: ", this.state);
-    console.log(this.refs);
-    console.log(this.props);
   }
 
 
 
   searchInput(event) {
     console.log("Searching...: ");
-    console.log(event);
-    console.log(event.target.value);
 
     this.setState({ searchInput: event.target.value});
     this.setState({ loadedCampaigns: this.state.allCampaigns.filter(function(campaign) {
       var campaignName = campaign.name.toLowerCase();
-      return campaignName.indexOf(event.target.value) > -1; 
+      return campaignName.indexOf(event.target.value.toLowerCase()) > -1; 
     })});
-    console.log(this.state);
   }
 
   render() {

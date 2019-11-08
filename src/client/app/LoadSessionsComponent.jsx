@@ -24,9 +24,11 @@ class LoadSessionsComponent extends React.Component {
     };
 
     this.props.dbQuery(params, function(result) {
-      var next = myThis.props.next;
+      // var next = myThis.props.next;
       myThis.props.handleLoadSessions(result);
-      myThis.props.history.push(next);  
+      // myThis.props.history.push(next);
+      
+      myThis.props.history.push('sessions');   
       
     });
     

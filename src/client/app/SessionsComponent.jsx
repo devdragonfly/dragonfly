@@ -8,6 +8,9 @@ class SessionsComponent extends React.Component {
 
   constructor(props) {
     super(props);
+
+    this.searchInput = this.searchInput.bind(this);
+
   }
 
 
@@ -18,24 +21,10 @@ class SessionsComponent extends React.Component {
     var myThis = this;
     var organizationId = this.props.organizationId;
 
-
-    var sessionParams = {
-      TableName: "Sessions",
-      KeyConditionExpression: "#organizationId = :organizationId",
-      ExpressionAttributeNames: {
-        "#organizationId": "organizationId"
-      },
-      ExpressionAttributeValues: {
-        ":organizationId": organizationId
-      }
-    };
-
-
-    var sessions = this.props.sessions;
-    if (sessions === 'not found') {
-      this.props.dbQuery(sessionParams, function (result) {
-        myThis.props.handleLoadSessions(result);
-      });
+    this.state = {
+      allSessions: [],
+      loadedSessions: [],
+      searchInput: ''
     }
 
 
@@ -52,11 +41,62 @@ class SessionsComponent extends React.Component {
 
     this.props.dbQuery(videoParams, function (result) {
       myThis.props.handleLoadVideos(result);
+      console.log("Finished Loading Videos");
     });
+
+
+    var sessionParams = {
+      TableName: "Sessions",
+      KeyConditionExpression: "#organizationId = :organizationId",
+      ExpressionAttributeNames: {
+        "#organizationId": "organizationId"
+      },
+      ExpressionAttributeValues: {
+        ":organizationId": organizationId
+      }
+    };
+
+
+    var sessions = this.props.sessions;
+    if (sessions === 'not found') {
+      this.props.history.push('loadsessions');
+      // this.props.dbQuery(sessionParams, function (result) {
+      //   myThis.props.handleLoadSessions(result);
+      //   console.log("Finished Loading Sessions");
+      //   myThis.setState({
+      //     allSessions: myThis.props.sessions,
+      //     loadedSessions: myThis.props.sessions,
+      //     searchInput: ''
+      //   });
+      // });
+    }
+
+    this.setState({
+      allSessions: this.props.sessions,
+      loadedSessions: this.props.sessions,
+      searchInput: ''
+    });
+
+
 
     console.log("Sessions Props");
     console.log(this.props);
+    console.log("Sessions State");
+    console.log(this.state);
 
+  }
+
+
+  searchInput(event) {
+    console.log("Searching...: ");
+    console.log(event.target.value);
+
+    this.setState({ searchInput: event.target.value});
+    this.setState({ loadedSessions: this.state.allSessions.filter(function(session) {
+      var sessionName = session.name.toLowerCase();
+      return sessionName.indexOf(event.target.value.toLowerCase()) > -1; 
+    })});
+    console.log(this.state);
   }
 
   render() {
@@ -70,6 +110,8 @@ class SessionsComponent extends React.Component {
     var history = this.props.history;
 
     var numVideos = videos.length;
+
+    // this.setState({allSessions: this.props.sessions});
 
     var appMenu = function () { return <AppMenuComponent current="sessions" /> }();
 
@@ -95,7 +137,7 @@ class SessionsComponent extends React.Component {
 
       } else {
         var breakpointCount = 0;
-        sessionsJsx = this.props.sessions.map((session, i) => {
+        sessionsJsx = this.state.loadedSessions.map((session, i) => {
           console.log(session);
           breakpointCount = 0;
           if (session.breakpoints != null) {
@@ -201,6 +243,20 @@ class SessionsComponent extends React.Component {
                 </div>
 
                 <div className="clearfix"></div>
+
+                <div className="row">
+                  <div className="col-12">
+                    <div className="search-container">
+                      <div className="form-group search-box">
+                        <input ref="searchInput" id="search-input" onChange={this.searchInput} type="text" className="form-control" placeholder="Search Dragonfly Sessions..." />
+                        <button className="search-btn">
+                          <i className='fa fa-search'></i>
+                        </button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
                 <div className="row">
                   {sessionsJsx}
                 </div>
@@ -302,7 +358,7 @@ class Session extends React.Component {
     super(props);
   }
 
-  
+
 
   render() {
 
