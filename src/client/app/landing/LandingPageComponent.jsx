@@ -50,6 +50,7 @@ class LandingPageComponent extends React.Component {
                 <main>
                     <section id="home" className="home-banner">
                         <div className="effect"></div>
+                        <div className="particles-box" id="particles-box"></div>
                         <div className="container">
                             <div className="row align-items-center justify-content-center">
                                 <div className="col-12 col-lg-10">

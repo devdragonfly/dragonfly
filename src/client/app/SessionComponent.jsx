@@ -171,7 +171,8 @@ class SessionComponent extends React.Component {
                         </div>
 
                         <div className="card-action-links">
-                          <a className="card-link link-video-edit"><i className="far fa-dot-circle"></i> Save Breakpoint</a>
+                          <br/>
+                          {/* <a className="card-link link-video-edit"><i className="far fa-dot-circle"></i> Save Breakpoint</a> */}
                         </div>
 
                       </div>
