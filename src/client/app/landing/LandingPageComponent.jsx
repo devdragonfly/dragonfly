@@ -81,7 +81,7 @@ class LandingPageComponent extends React.Component {
                             </div>
                         </div>
                     </section>
-                    <section id="about" className="section-top-up gray-bg">
+                    <section id="about" className="section-top-up gray-bg m-50px-t">
                         <div className="container">
                             <div className="row">
                                 <div className="col-md-4 m-15px-tb">
@@ -140,13 +140,13 @@ class LandingPageComponent extends React.Component {
                                         <ul className="list-type-01">
                                             <li>
                                                 <div className="icon yellow"> <i className="fas fa-asterisk"></i> </div>
-                                                <h6>Improve communication skills</h6> <a className="m-link" href="#">Learn more about <i className="fas fa-long-arrow-alt-right"></i></a> </li>
+                                                <h6>Improve Customer Engagement</h6> <a className="m-link" href="#">Learn more about <i className="fas fa-long-arrow-alt-right"></i></a> </li>
                                         </ul>
                                     </div>
                                 </div>
                                 <div className="col-lg-6">
                                     <div className="side-feature sm-p-0px-l md-p-40px-l p-70px-l">
-                                        <label className="theme-color">Build a database of customer knowledge</label>
+                                        <label className="theme-color">Build A Database Of Customer Knowledge</label>
                                         <h2>Make smarter business decisions with data analysis</h2>
                                         <p className="large">Dragonfly gives you the power to measure your messaging coverage and impact allowing you to see where you need to apply information to increase sales.</p>
                                         <br />
