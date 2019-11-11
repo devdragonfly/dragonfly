@@ -224,7 +224,7 @@ class GenerateDragonfliesComponent extends React.Component {
                       <div className="form-group">
                         <div className="col-xs-6">
                           <label for="exp_date">
-                            <i className='fa fa-calendar-times-o fa-fw fa-lg'></i>
+                            <i className='far fa-calendar-times fa-fw fa-lg'></i>
                             Campaign Expiration Date
                 </label>
                           <br />
@@ -239,6 +239,8 @@ class GenerateDragonfliesComponent extends React.Component {
                         <input type="submit" className={this.state.buttonRestClassName} value="Generate Dragonflies" />
                         <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Generating Dragonflies</div>
                       </form>
+
+                      <div className="clearfix"></div>
                     </div>
                   </div>
                 </div>
