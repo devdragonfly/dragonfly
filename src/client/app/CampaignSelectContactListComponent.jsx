@@ -1,7 +1,8 @@
 import React from 'react';
-import {Link} from 'react-router';
-import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
+import { Link } from 'react-router';
+// import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
 
+import AppMenuComponent from './components/base/AppMenuComponent.jsx';
 
 
 class CampaignSelectContactListComponent extends React.Component {
@@ -24,7 +25,9 @@ class CampaignSelectContactListComponent extends React.Component {
   }
 
   render() {
-    var organizationMenu = function() {return <OrganizationMenuComponent current="campaigns" /> }();
+
+    var appMenu = function () { return <AppMenuComponent current="campaigns" /> }();
+
     var contactLists = this.props.contactLists;
     var handleSelectContactList = this.handleSelectContactList;
     var history = this.props.history;
@@ -32,50 +35,51 @@ class CampaignSelectContactListComponent extends React.Component {
 
 
 
-    var contactListsJsx = function() {return '' }();
+    var contactListsJsx = function () { return '' }();
 
     if (contactLists !== 'not found') {
-          if (contactLists.length === 0) {
-            contactListsJsx = function() {return 'No contact lists created yet.' }();
+      if (contactLists.length === 0) {
+        contactListsJsx = function () { return 'No contact lists created yet.' }();
 
-          } else {
-            var contactCount = 0;
-            contactListsJsx = this.props.contactLists.map((contactList, i) => {
-                contactCount = 0;
-                if (contactList.contacts != null) {
-                  contactCount = contactList.contacts.length;
-                } else
-                { return null;}
-                return <ContactList contactList={contactList} handleSelectContactList={handleSelectContactList} contactCount={contactCount} />
-            });
-          }
+      } else {
+        var contactCount = 0;
+        contactListsJsx = this.props.contactLists.map((contactList, i) => {
+          contactCount = 0;
+          if (contactList.contacts != null) {
+            contactCount = contactList.contacts.length;
+          } else { return null; }
+          return <ContactList contactList={contactList} handleSelectContactList={handleSelectContactList} contactCount={contactCount} />
+        });
+      }
     }
 
     return (
 
-        <div className="row">
-          {organizationMenu}
+      <div id="viewCampaignComponent">
+        {appMenu}
 
-          <div className="col-sm-6">
+        <div className="row justify-content-center">
+
+          <div className="col-12 col-lg-10">
             <h3><i className='fa fa-line-chart fa-fw'></i> {this.props.campaign.name}</h3>
-            <br/><br/>
+            <br /><br />
             Select a Contact List for this Campaign:
-            <br/><br/>
+            <br /><br />
 
             <div className="dragon-select-list">
               {contactListsJsx}
             </div>
 
-          <br/><br/>
+            <br /><br />
             If you have not created the Contact List for this Campaign yet, &nbsp;
             <Link to={`createcontactlist`}>click here</Link>
             &nbsp; to create it now.
-          <br/><br/>
+          <br /><br />
 
           </div>
-          <div className="col-sm-4">
-          </div>
+
         </div>
+      </div>
 
     );
   }
@@ -105,17 +109,17 @@ class ContactList extends React.Component {
 
   render() {
     return (
-        <div onClick={this.selectContactList.bind(this, this.props.contactList)} className="dragon-select-list-row dragon-pointer">
-          <div className="dragon-select-list-cell">
-            <i className='fa fa-address-book-o fa-fw fa-lg'></i>
-          </div>
-          <div className="dragon-select-list-cell">
-            {this.props.contactList.name}
-          </div>
-          <div className="dragon-select-list-cell">
-            Contacts ({this.props.contactCount})
-          </div>
+      <div onClick={this.selectContactList.bind(this, this.props.contactList)} className="dragon-select-list-row dragon-pointer">
+        <div className="dragon-select-list-cell">
+          <i className='fa fa-address-book-o fa-fw fa-lg'></i>
         </div>
+        <div className="dragon-select-list-cell">
+          {this.props.contactList.name}
+        </div>
+        <div className="dragon-select-list-cell">
+          Contacts ({this.props.contactCount})
+          </div>
+      </div>
     );
   }
 
