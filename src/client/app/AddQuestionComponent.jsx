@@ -1,8 +1,9 @@
 import React from 'react';
 import {Link} from 'react-router';
-import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
+import AppMenuComponent from './components/base/AppMenuComponent.jsx';
 import AnswerComponent from './AnswerComponent.jsx';
 import SelectTypeComponent from './components/session/SelectTypeComponent.jsx';
+
 
 const buttonClassName = "btn btn-primary";
 
@@ -73,13 +74,16 @@ class AddQuestionComponent extends React.Component {
 
     var selectTypeComponent = function() {return <SelectTypeComponent selectHandler={handleTypeSelect} type={type}/> }();
 
-    var organizationMenu = function() {return <OrganizationMenuComponent current="sessions" /> }();
+    var appMenu = function () { return <AppMenuComponent current="sessions" /> }();
+
 
     return (
 
-        <div className="row">
-          {organizationMenu}
-          <div className="col-sm-6">
+      <div id="addBreakpointQuestion">
+      {appMenu}
+      <div className="row justify-content-center">
+        <div className="col-12 col-lg-10">
+
             <h3><i className='fa fa-file-video-o fa-fw'></i> {this.props.session.name}</h3>
 
             <br/><br/>
@@ -111,8 +115,8 @@ class AddQuestionComponent extends React.Component {
             <span className="dragon-error">{this.state.errorMessage}</span>
 
           </div>
-          <div className="col-sm-4">
-          </div>
+          
+        </div>
         </div>
     );
   }

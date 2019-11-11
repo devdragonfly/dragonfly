@@ -1,7 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router';
 
-import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
 import ImageModalComponent from './components/ImageModalComponent.jsx';
 
 import AppMenuComponent from './components/base/AppMenuComponent.jsx';
@@ -78,20 +77,27 @@ class GenerateDragonfliesComponent extends React.Component {
                 <div className="dragonfly-card">
                   <div className="card">
                     <div className="card-body">
-                      <div className="form-group">
-                        <div className="col">
-                          <label for="ex1"><i className='fa fa-graduation-cap fa-fw fa-lg'></i> Session</label><br />
+                      <div className="row">
+                        <div className="col-4">
+                          <label for="ex1"><i className='far fa-play-circle fa-fw fa-lg'></i> Session</label><br />
                           &nbsp;{sessionName}
                         </div>
-                        <div className="col">
-                          <label for="ex2"><i className='fa fa-address-book-o fa-fw fa-lg'></i> Contact List</label><br />
+                        <div className="col-4">
+                          <label for="ex2"><i className='fas fa-user-friends fa-fw fa-lg'></i> Contact List</label><br />
                           &nbsp;{contactListName}
                         </div>
-                        <div className="col">
-                          <label for="ex3"><i className='fa fa-credit-card fa-fw fa-lg'></i> Incentive per Dragonfly</label><br />
+                        <div className="col-4">
+                          <label for="ex3"><i className='fas fa-dollar-sign fa-fw fa-lg'></i> Incentive per Dragonfly</label><br />
                           <input value={this.state.incentiveValue} id="ex3" onChange={this.updateIncentiveValue} className="form-control" placeholder="dollar amount" />
                         </div>
                       </div>
+
+
+                      <div className="form-group">
+
+
+                      </div>
+
                     </div>
                   </div>
                 </div>
