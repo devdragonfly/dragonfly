@@ -29,6 +29,8 @@ class CampaignsComponent extends React.Component {
       loadedCampaigns: this.props.campaigns,
       searchInput: '',
     }
+
+    console.log("Campaigns JSON: ", this.state);
     
   }
 

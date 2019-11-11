@@ -102,6 +102,7 @@ class CampaignComponent extends React.Component {
 
       } else {
         dragonfliesJsx = dragonflies.map((dragonfly, i) => {
+          console.log("Campaign JSON: ", dragonfly);
           sessionName = dragonfly.session.name;
           return <Dragonfly dragonfly={dragonfly} path={path} />
 
@@ -203,7 +204,6 @@ class CampaignComponent extends React.Component {
 
     var compaignAnalytics = function () { return <C3Chart data={data} /> }();
 
-    // var organizationMenu = function() {return <OrganizationMenuComponent current="campaigns" />}();
     var exportCsvButton = function () { return <ExportCampaignButton dragonfliesData={dragonflies} /> }();
     var appMenu = function () { return <AppMenuComponent current="campaigns" /> }();
 
@@ -239,41 +239,53 @@ class CampaignComponent extends React.Component {
 
             <div className="row">
               <div className="col-12">
-                <div className="campaign_card">
+                <div className="campaign_card pb-15">
                   <div className="card">
                     <div className="card-body">
-                      
+
 
                       <h5 className="card-title">Results</h5>
                       <h6 className="card-subtitle mb-2">0 Views</h6>
 
                       {/* <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> */}
-                      <div className="c3-chart-container">
-                        {compaignAnalytics}
-                      </div>
+                      <div className="row">
+                        <div className="col-12">
+                        <canvas id="questionResultsChart"></canvas>
 
-                    
+                          {/* <div className="c3-chart-container">
+                            {compaignAnalytics}
+                          </div> */}
+                        </div>
+                      </div>
 
                     </div>
                   </div>
                 </div>
-                {/* <canvas id="questionResultsChart"></canvas> */}
               </div>
-              <div className="col-12">
+            </div>
 
-              <div className="campaign_card">
+
+            <div className="row">
+              <div className="col-12">
+                <hr />
+                <div className="campaign_card">
                   <div className="card">
                     <div className="card-body">
-                      
+
 
                       <h5 className="card-title">Dragonflies</h5>
                       <h6 className="card-subtitle mb-2">0 Contacts</h6>
 
                       {/* <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> */}
-                      <div className="c3-chart-container">
-                      {dragonfliesJsx}
+                      <div className="row pb-10">
+                        <div className="col-12">
+                          <div className="c3-chart-container">
+                            {dragonfliesJsx}
 
+                          </div>
+                        </div>
                       </div>
+
 
                     </div>
                   </div>
@@ -309,33 +321,38 @@ class Dragonfly extends React.Component {
     var status = "not opened";
     if (this.props.dragonfly.results != null) { status = "completed" }
     return (
-      <div className="dragon-select-list-row dragon-pointer">
-        <div className="dragon-select-list-cell">
-          <i className='fa fa-address-book-o fa-fw fa-lg'></i>
-        </div>
-        <div className="dragon-select-list-cell">
-          {this.props.dragonfly.contact.first}
-          &nbsp;
+      <div className="row">
+        <div className="col-12">
+          <div className="dragon-select-list-row dragon-pointer">
+            <div className="dragon-select-list-cell">
+              <i className='fa fa-address-book-o fa-fw fa-lg'></i>
+            </div>
+            <div className="dragon-select-list-cell">
+              {this.props.dragonfly.contact.first}
+              &nbsp;
             {this.props.dragonfly.contact.last}
-        </div>
-        <div className="dragon-select-list-cell">
-          {this.props.dragonfly.contact.email}
-        </div>
-        <div className="dragon-select-list-cell">
-          <span onClick={this.copyToClipboard.bind(this, dragonflyPath)}>
-            <i className='fa fa-clipboard fa-fw'></i>
-            Copy URL
+            </div>
+            <div className="dragon-select-list-cell">
+              {this.props.dragonfly.contact.email}
+            </div>
+            <div className="dragon-select-list-cell">
+              <span onClick={this.copyToClipboard.bind(this, dragonflyPath)}>
+                <i className='fa fa-clipboard fa-fw'></i>
+                Copy URL
             </span>
-        </div>
-        <div className="dragon-select-list-cell">
-          {this.props.dragonfly.reward}
-        </div>
-        <div className="dragon-select-list-cell">
-          <span onClick={this.showResults.bind(this, this.props.dragonfly)}>
-            {status}
-          </span>
+            </div>
+            <div className="dragon-select-list-cell">
+              {this.props.dragonfly.reward}
+            </div>
+            <div className="dragon-select-list-cell">
+              <span onClick={this.showResults.bind(this, this.props.dragonfly)}>
+                {status}
+              </span>
+            </div>
+          </div>
         </div>
       </div>
+
     );
   }
 
