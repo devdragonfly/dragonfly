@@ -1,7 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router';
-import OrganizationMenuComponent from './OrganizationMenuComponent.jsx';
 
+import AppMenuComponent from './components/base/AppMenuComponent.jsx';
 
 
 class CampaignSelectSessionComponent extends React.Component {
@@ -10,7 +10,7 @@ class CampaignSelectSessionComponent extends React.Component {
     super(props);
     this.handleSelectSession = this.handleSelectSession.bind(this);
   }
-  
+
   componentWillMount() {
     var sessions = this.props.sessions;
     if (sessions == 'not found') {
@@ -20,62 +20,65 @@ class CampaignSelectSessionComponent extends React.Component {
     if (sessions.length === 0) {
       this.props.history.push('campaignnosessions');
     }
-    
+
   }
 
   render() {
-    var organizationMenu = function() {return <OrganizationMenuComponent current="campaigns" /> }();
+    var appMenu = function () { return <AppMenuComponent current="campaigns" /> }();
+
     var sessions = this.props.sessions;
     var handleSelectSession = this.handleSelectSession;
     var history = this.props.history;
-    
-    var sessionsJsx = function() {return '' }();
-    
+
+    var sessionsJsx = function () { return '' }();
+
     if (sessions !== 'not found') {
-          if (sessions.length === 0) {
-            sessionsJsx = function() {return 'No sessions created yet.' }();
-            
-          } else {
-            var breakpointCount = 0;
-            sessionsJsx = this.props.sessions.map((session, i) => {
-                breakpointCount = 0;
-                if (session.breakpoints != null) {
-                  breakpointCount = session.breakpoints.length;
-                }
-                return <Session session={session} handleSelectSession={handleSelectSession} breakpointCount={breakpointCount}/>
-            });
+      if (sessions.length === 0) {
+        sessionsJsx = function () { return 'No sessions created yet.' }();
+
+      } else {
+        var breakpointCount = 0;
+        sessionsJsx = this.props.sessions.map((session, i) => {
+          breakpointCount = 0;
+          if (session.breakpoints != null) {
+            breakpointCount = session.breakpoints.length;
           }
+          return <Session session={session} handleSelectSession={handleSelectSession} breakpointCount={breakpointCount} />
+        });
+      }
     }
-    
+
     return (
 
-        <div className="row">
-          {organizationMenu}
+      <div id="viewCampaignComponent">
+        {appMenu}
 
-          <div className="col-sm-6">
+        <div className="row justify-content-center">
+
+          <div className="col-12 col-lg-10">
             <h3><i className='fa fa-line-chart fa-fw'></i> {this.props.campaign.name}</h3>
-            <br/><br/>
+            <br /><br />
             Select a Session for the Campaign:
-            <br/><br/>
-            
-          <div className="dragon-select-list">
+            <br /><br />
+
+            <div className="dragon-select-list">
               {sessionsJsx}
-          </div>
-          
-          <br/><br/>
+            </div>
+
+            <br /><br />
             If you have not created the Session for this Campaign yet, &nbsp;
             <Link to={`createsession`}>click here</Link>
             &nbsp; to create it now.
-          <br/><br/>
-            
+          <br /><br />
+
           </div>
-          <div className="col-sm-4">
-          </div>
+
         </div>
+      </div>
 
     );
   }
-  
+
 
 
   handleSelectSession(session) {
@@ -84,7 +87,7 @@ class CampaignSelectSessionComponent extends React.Component {
     this.props.handleLoadCampaign(campaign);
     this.props.history.push('campaign');
   }
-  
+
 
 }
 
@@ -101,20 +104,20 @@ class Session extends React.Component {
 
   render() {
     return (
-        <div onClick={this.selectSession.bind(this, this.props.session)} className="dragon-select-list-row dragon-pointer">
-          <div className="dragon-select-list-cell">
-            <i className='fa fa-graduation-cap fa-fw fa-lg'></i> 
-          </div>
-          <div className="dragon-select-list-cell">
-            {this.props.session.name}
-          </div>
-          <div className="dragon-select-list-cell">
-            Breakpoints ({this.props.breakpointCount})
-          </div>
+      <div onClick={this.selectSession.bind(this, this.props.session)} className="dragon-select-list-row dragon-pointer">
+        <div className="dragon-select-list-cell">
+          <i className='fa fa-graduation-cap fa-fw fa-lg'></i>
         </div>
+        <div className="dragon-select-list-cell">
+          {this.props.session.name}
+        </div>
+        <div className="dragon-select-list-cell">
+          Breakpoints ({this.props.breakpointCount})
+          </div>
+      </div>
     );
   }
-  
+
   selectSession(session) {
     this.props.handleSelectSession(session);
   }
