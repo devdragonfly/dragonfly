@@ -124,7 +124,7 @@ class CampaignComponent extends React.Component {
     console.log(params);
 
     this.props.dbUpdate(params, function (result) {
-      myThis.props.history.push('loadcampaigns');   
+      myThis.props.history.push('loadcampaigns');
     });
   }
 
@@ -291,7 +291,7 @@ class CampaignComponent extends React.Component {
 
 
                       <h5 className="card-title">Results</h5>
-                      <h6 className="card-subtitle mb-2">0 Views</h6>
+                      {/* <h6 className="card-subtitle mb-2">0 Views</h6> */}
 
                       {/* <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> */}
                       <div className="row">
@@ -316,26 +316,24 @@ class CampaignComponent extends React.Component {
                 <hr />
                 <div className="campaign_card">
                   <div className="card">
-                    <div className="card-body">
+                    <div className="card-body pb-15">
 
 
                       <h5 className="card-title">Dragonflies</h5>
-                      <h6 className="card-subtitle mb-2">{ numDragonflies } Contacts</h6>
+                      <h6 className="card-subtitle mb-2">{numDragonflies} Contacts</h6>
 
                       {/* <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> */}
-                      <div className="row pb-10">
-                        <div className="col-12">
-                          <div className="c3-chart-container">
-                            {dragonfliesJsx}
 
-                          </div>
-                        </div>
+                      <div className="dragon-select-list">
+                        {dragonfliesJsx}
                       </div>
 
 
                     </div>
                   </div>
                 </div>
+                <hr />
+
               </div>
             </div>
 
@@ -358,6 +356,7 @@ class CampaignComponent extends React.Component {
 
 
 
+
 class Dragonfly extends React.Component {
 
   constructor(props) {
@@ -370,11 +369,10 @@ class Dragonfly extends React.Component {
     var status = "not opened";
     if (this.props.dragonfly.results != null) { status = "completed" }
     return (
-      <div className="row">
-        <div className="col-12">
-          <div className="dragon-select-list-row dragon-pointer">
+
+          <div className="dragon-select-list-row dragon-pointer w-100">
             <div className="dragon-select-list-cell">
-              <i className='fa fa-address-book-o fa-fw fa-lg'></i>
+              <i className='far fa-user fa-fw fa-lg'></i>
             </div>
             <div className="dragon-select-list-cell">
               {this.props.dragonfly.contact.first}
@@ -399,8 +397,7 @@ class Dragonfly extends React.Component {
               </span>
             </div>
           </div>
-        </div>
-      </div>
+  
 
     );
   }
