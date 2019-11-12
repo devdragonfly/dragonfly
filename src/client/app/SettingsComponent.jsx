@@ -26,11 +26,22 @@ class SettingsComponent extends React.Component {
         <div className="row justify-content-center">
           
           <div className="col-12 col-lg-10">
+
+          <div className="row page_header_container">
+              <div className="col-12">
+                <div className="page_header_title float-left">
+                  <h3 className="page-title">My Account</h3>
+                  {/* <p>You have <b>{numContactLists}</b> contact lists.</p> */}
+                </div>
+
+                <div className="page_header_action float-right">
+                  {/* <Link to={`createcontactlist`} className="btn btn-primary float-right"><i className='fa fa-plus'></i> Create Contact List</Link> */}
+                </div>
+                <div className="clearfix"></div>
+                <hr className="page_header_divider" />
+              </div>
+            </div>
             
-            
-            <h3>Settings</h3>
-            
-            <br/><br/>
             
             <h4>Organization Name</h4>
             {this.props.organizationName}
