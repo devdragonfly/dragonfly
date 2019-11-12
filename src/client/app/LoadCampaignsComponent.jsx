@@ -16,11 +16,13 @@ class LoadCampaignsComponent extends React.Component {
     var params = {
       TableName: "Campaigns",
       KeyConditionExpression: "#organizationId = :organizationId",
+      FilterExpression : 'isArchived  <> :isArchivedVal',
       ExpressionAttributeNames: {
         "#organizationId": "organizationId"
       },
       ExpressionAttributeValues: {
-        ":organizationId": organizationId
+        ":organizationId": organizationId,
+        ":isArchivedVal": 1
       }
     };
 

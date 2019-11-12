@@ -44,6 +44,12 @@ body {
 .mt-15 {
   margin-top: 15px; }
 
+.mr-5 {
+  margin-right: 5px !important; }
+
+.ml-5 {
+  margin-left: 5px !important; }
+
 .home-banner .hb-text h3 {
   font-size: 4.5em; }
 .home-banner .hb-text p {
@@ -738,8 +744,41 @@ body {
         color: black;
         text-decoration: none;
         cursor: pointer; }
+    .modal .modal-content .modal-body {
+      padding: 0; }
+      .modal .modal-content .modal-body .modal-action-buttons .btn {
+        line-height: inherit;
+        border-radius: 5px;
+        width: auto;
+        padding: 10px 25px;
+        font-size: 17px;
+        cursor: pointer;
+        -moz-transition: ease-in-out all 0.25s;
+        -o-transition: ease-in-out all 0.25s;
+        -webkit-transition: ease-in-out all 0.25s;
+        transition: ease-in-out all 0.25s;
+        display: inline-block;
+        border: 2px solid transparent; }
+        .modal .modal-content .modal-body .modal-action-buttons .btn i {
+          margin-right: 5px; }
+      .modal .modal-content .modal-body .modal-action-buttons .btn-default {
+        background: #9aa0ac;
+        border-color: #9aa0ac;
+        color: #424342; }
+        .modal .modal-content .modal-body .modal-action-buttons .btn-default:hover {
+          background: #ffffff;
+          color: #000000;
+          border-color: #2a60d9; }
+      .modal .modal-content .modal-body .modal-action-buttons .btn-primary {
+        background: #265cdc;
+        border-color: #2a60d9;
+        color: #ffffff; }
+        .modal .modal-content .modal-body .modal-action-buttons .btn-primary:hover {
+          background: #ffffff;
+          color: #2a60d9;
+          border-color: #2a60d9; }
   .modal:before {
-    content: '';
+    content: "";
     display: inline-block;
     height: 100%;
     vertical-align: middle;

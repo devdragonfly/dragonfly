@@ -5,6 +5,8 @@ import Chart from 'chart.js';
 
 import AppMenuComponent from './components/base/AppMenuComponent.jsx';
 
+import ConfirmDeleteModal from './components/modals/ConfirmDeleteModal.jsx';
+
 import C3Chart from 'react-c3js';
 
 
@@ -16,11 +18,13 @@ class CampaignComponent extends React.Component {
 
     this.state = {
       path: "not found",
-      totals: []
+      totals: [],
+      alertMessage: '',
+      showDeleteModal: false
     };
 
-
-
+    this.archiveDragonFly = this.archiveDragonFly.bind(this);
+    this.toggleDeleteModal = this.toggleDeleteModal.bind(this);
 
   }
 
@@ -87,11 +91,51 @@ class CampaignComponent extends React.Component {
 
   }
 
+  toggleDeleteModal(e) {
+    console.log("toggleDeleteModal() Called");
+
+    if (this.state.showDeleteModal) {
+      this.setState({ showDeleteModal: false });
+    } else {
+      this.setState({ showDeleteModal: true });
+    }
+  }
+
+  archiveDragonFly() {
+
+    var myThis = this;
+
+    var organizationId = this.props.organizationId;
+    var campaignId = this.props.campaign.campaignId;
+
+    var params = {
+      TableName: "Campaigns",
+      Key: {
+        organizationId: organizationId,
+        campaignId: campaignId
+      },
+      UpdateExpression: "set isArchived = :isArchived",
+      ExpressionAttributeValues: {
+        ":isArchived": 1
+      },
+      ReturnValues: "UPDATED_NEW"
+    }
+
+    console.log(params);
+
+    this.props.dbUpdate(params, function (result) {
+      myThis.props.history.push('loadcampaigns');   
+    });
+  }
+
+
+
   render() {
     var path = this.state.path;
 
     var dragonflies = this.props.results;
     var sessionName = "session name";
+    var numDragonflies = 0;
 
     var dragonfliesJsx = function () { return '' }();
 
@@ -101,6 +145,7 @@ class CampaignComponent extends React.Component {
         dragonfliesJsx = function () { return 'ERROR: No dragonflies created.' }();
 
       } else {
+        numDragonflies = dragonflies.length;
         dragonfliesJsx = dragonflies.map((dragonfly, i) => {
           console.log("Campaign JSON: ", dragonfly);
           sessionName = dragonfly.session.name;
@@ -202,7 +247,7 @@ class CampaignComponent extends React.Component {
       },
     };
 
-    var compaignAnalytics = function () { return <C3Chart data={data} /> }();
+    // var compaignAnalytics = function () { return <C3Chart data={data} /> }();
 
     var exportCsvButton = function () { return <ExportCampaignButton dragonfliesData={dragonflies} /> }();
     var appMenu = function () { return <AppMenuComponent current="campaigns" /> }();
@@ -230,6 +275,7 @@ class CampaignComponent extends React.Component {
                 </div>
 
                 <div className="page_header_action float-right">
+                  <a onClick={this.toggleDeleteModal} className="btn btn-primary float-right ml-5"><i className="far fa-trash-alt"></i> Delete</a>
                   {exportCsvButton}
                 </div>
                 <div className="clearfix"></div>
@@ -250,7 +296,7 @@ class CampaignComponent extends React.Component {
                       {/* <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> */}
                       <div className="row">
                         <div className="col-12">
-                        <canvas id="questionResultsChart"></canvas>
+                          <canvas id="questionResultsChart"></canvas>
 
                           {/* <div className="c3-chart-container">
                             {compaignAnalytics}
@@ -274,7 +320,7 @@ class CampaignComponent extends React.Component {
 
 
                       <h5 className="card-title">Dragonflies</h5>
-                      <h6 className="card-subtitle mb-2">0 Contacts</h6>
+                      <h6 className="card-subtitle mb-2">{ numDragonflies } Contacts</h6>
 
                       {/* <p className="card-text">Some quick example text to build on the card title and make up the bulk of the card's content.</p> */}
                       <div className="row pb-10">
@@ -299,6 +345,9 @@ class CampaignComponent extends React.Component {
           </div>
 
         </div>
+
+        <ConfirmDeleteModal show={this.state.showDeleteModal} handleSubmit={this.archiveDragonFly} onClose={this.toggleDeleteModal} />
+
       </div>
 
     );

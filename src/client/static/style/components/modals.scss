@@ -1,70 +1,108 @@
 /* Modal */
 .modal {
-    display: none; /* Hidden by default */
-    position: fixed; /* Stay in place */
-    z-index: 1; /* Sit on top */
-    left: 0;
-    top: 0;
-    width: 100%; /* Full width */
-    height: 100%; /* Full height */
-    overflow: auto; /* Enable scroll if needed */
-    background-color: rgb(0,0,0); /* Fallback color */
-    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  display: none; /* Hidden by default */
+  position: fixed; /* Stay in place */
+  z-index: 1; /* Sit on top */
+  left: 0;
+  top: 0;
+  width: 100%; /* Full width */
+  height: 100%; /* Full height */
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0, 0, 0); /* Fallback color */
+  background-color: rgba(0, 0, 0, 0.4); /* Black w/ opacity */
 
-    text-align: center;
-    padding: 0 !important;
+  text-align: center;
+  padding: 0 !important;
 
-    /* Modal Content/Box */
-    .modal-content {
-        background-color: #fefefe;
-        margin: 15% auto; /* 15% from the top and centered */
-        padding: 20px;
-        border: 1px solid #888;
-        width: 40%; /* Could be more or less, depending on screen size */
-        
-        display: inline-block;
-        text-align: left;
-        vertical-align: middle;
-        border-radius: 5px;
-        border: 1px solid rgba(0, 0, 0, 0.1);
-        // z-index: 99999;
+  /* Modal Content/Box */
+  .modal-content {
+    background-color: #fefefe;
+    margin: 15% auto; /* 15% from the top and centered */
+    padding: 20px;
+    border: 1px solid #888;
+    width: 40%; /* Could be more or less, depending on screen size */
 
+    display: inline-block;
+    text-align: left;
+    vertical-align: middle;
+    border-radius: 5px;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    // z-index: 99999;
 
-        .modal-header {
-            border-bottom: none;
-            padding: 0.2em 0 0 0;
-             /* The Close Button */
-            .close {
-                color: #aaa;
-                float: right;
-                font-size: 28px;
-                font-weight: bold;
-            }
-  
-            .close:hover,
-            .close:focus {
-                color: black;
-                text-decoration: none;
-                cursor: pointer;
-            }
+    .modal-header {
+      border-bottom: none;
+      padding: 0.2em 0 0 0;
+      /* The Close Button */
+      .close {
+        color: #aaa;
+        float: right;
+        font-size: 28px;
+        font-weight: bold;
+      }
+
+      .close:hover,
+      .close:focus {
+        color: black;
+        text-decoration: none;
+        cursor: pointer;
+      }
+    }
+
+    .modal-body {
+      padding: 0;
+
+      .modal-action-buttons {
+        .btn {
+          line-height: inherit;
+          border-radius: 5px;
+          width: auto;
+          padding: 10px 25px;
+          font-size: 17px;
+          cursor: pointer;
+          -moz-transition: ease-in-out all 0.25s;
+          -o-transition: ease-in-out all 0.25s;
+          -webkit-transition: ease-in-out all 0.25s;
+          transition: ease-in-out all 0.25s;
+          display: inline-block;
+          border: 2px solid transparent;
+
+          i {
+            margin-right: 5px;
+          }
         }
-        
-    }
-      
 
-    &:before {
-        content: '';
-        display: inline-block;
-        height: 100%;
-        vertical-align: middle;
-        margin-right: -4px;
-    }
+        .btn-default {
+          background: $dragonfly-light;
+          border-color: $dragonfly-light;
+          color: $dragonfly-dark;
 
+          &:hover {
+            background: $dragonfly-white;
+            color: $dragonfly-black;
+            border-color: $dragonfly-blue-dark;
+          }
+        }
+
+        .btn-primary {
+          background: #265cdc;
+          border-color: $dragonfly-blue-dark;
+          color: $dragonfly-white;
+
+          &:hover {
+            background: $dragonfly-white;
+            color: $dragonfly-blue-dark;
+            border-color: $dragonfly-blue-dark;
+          }
+        }
+      }
+    }
+  }
+
+  &:before {
+    content: "";
+    display: inline-block;
+    height: 100%;
+    vertical-align: middle;
+    margin-right: -4px;
+  }
 }
-
-
-
-  
- 
- 
-    
