@@ -13,21 +13,21 @@ class SettingsComponent extends React.Component {
   }
 
   render() {
-    
+
     // var organizationMenu = function() {return <OrganizationMenuComponent current="settings" /> }();
     var appMenu = function () { return <AppMenuComponent current="settings" /> }();
 
-    
+
     return (
 
       <div className="settings-container">
         {appMenu}
 
         <div className="row justify-content-center">
-          
+
           <div className="col-12 col-lg-10">
 
-          <div className="row page_header_container">
+            <div className="row page_header_container">
               <div className="col-12">
                 <div className="page_header_title float-left">
                   <h3 className="page-title">My Account</h3>
@@ -41,27 +41,56 @@ class SettingsComponent extends React.Component {
                 <hr className="page_header_divider" />
               </div>
             </div>
+
+
+
+            {/* Section Header */}
+            <div className="row page-section-header-container">
+              <div className="col-12">
+
+                <div className="page-section-header float-left">
+                  <h4 className="page-section-title">My Organization</h4>
+                </div>
+
+                <div className="page-section-header-actions float-right">
+                </div>
+
+                <div className="clearfix"></div>
+              </div>
+            </div>
+
+            <div className="row">
+              <div className="col-12 col-md-4 col-lg-3 campaign-cards-container">
+
+                <div id="sessionCardComponent" className="">
+                  <div className="dragonfly-card">
+                    <div className="card">
+                      <div className="card-body">
+
+                        <h5 className="card-title">{this.props.organizationName}</h5>
+                        {/* <h6 className="card-subtitle mb-0"><i className="fas fa-film"></i> {videoName}</h6> */}
+
+                        <div className="card-action-links">
+                          {/* <a className="card-link link-video-view"><i className="fab fa-youtube"></i> View</a> */}
+                          <Link to={`organizationname`} className="card-link link-video-edit"><i className="fas fa-pencil-alt"></i> Edit Name</Link>
+                        </div>
+
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+
             
-            
-            <h4>Organization Name</h4>
-            {this.props.organizationName}
-            &nbsp;&nbsp;
-            <Link to={`organizationname`}><i className='fa fa-edit fa-fw'></i></Link>
-            
-            
-            <br/><br/><br/>
-            
-            <h4>Team</h4>
-            [list team members here]<br/>
-            add remove
-            
-            
-            
+
+
+
           </div>
         </div>
 
       </div>
-        
+
 
 
 

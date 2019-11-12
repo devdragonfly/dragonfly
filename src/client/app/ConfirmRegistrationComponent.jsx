@@ -38,18 +38,17 @@ class ConfirmRegistrationComponent extends React.Component {
 
   render() {
     return (
-      <div className="row home-bg-outer"><div className="col-sm-12">
-      <div className="home-bg-inner">
-      <div className="row">
-        <div className="col-sm-1">
-        </div>
-        <div className="col-sm-4">
-          <br/><br/><br/><br/>
-          <div className="signUpBox">
+
+      <div className="row confirm-sign-up-container justify-content-center">
+
+        <div className="col-12 col-lg-6 mt-30">
+
+        <div className="signUpBox">
           <form onSubmit={this.handleSubmit}>
               <h1 className="dragonfly-blue">Confirm Email Address</h1>
-              A six-digit verification code was sent to the email address <br/><br/>
-              <i>{this.props.email}</i>. <br/><br/> 
+              A six-digit verification code was sent to the email address <br/>
+              <p className="sign-up-email-text">{this.props.email}</p> 
+              <br/>
               Please enter that code here so we can verify this is your email.
               <br/><br/>
               <b>VERIFICATION CODE</b><br/>
@@ -63,12 +62,33 @@ class ConfirmRegistrationComponent extends React.Component {
             Can't find email with verification code?<br/>
             <Link to={`resendcode`}>Re-send email.</Link>
           </div>
-          <br/><br/><br/><br/>
+          
+          {/* <div className="signUpBox">
+
+            <h2 className="dragonfly-blue">Thank You!</h2>
+            <p className="sign-up-confirm-info-text mar-text-split">Your account creation is now complete.</p>
+
+            <p className="sign-up-confirm-info-text">Please sign in above with your email and password.</p>
+          </div> */}
+
         </div>
-        <div className="col-sm-7">
-        </div>
-        </div></div>
-      </div></div>
+
+      </div>
+
+      // <div className="row home-bg-outer"><div className="col-sm-12">
+      // <div className="home-bg-inner">
+      // <div className="row">
+      //   <div className="col-sm-1">
+      //   </div>
+      //   <div className="col-sm-4">
+      //     <br/><br/><br/><br/>
+          
+      //     <br/><br/><br/><br/>
+      //   </div>
+      //   <div className="col-sm-7">
+      //   </div>
+      //   </div></div>
+      // </div></div>
       
     );
   }

@@ -146,7 +146,7 @@ class LandingPageComponent extends React.Component {
                                 </div>
                                 <div className="col-lg-6">
                                     <div className="side-feature sm-p-0px-l md-p-40px-l p-70px-l">
-                                        <label className="theme-color">Build A Database Of Customer Knowledge</label>
+                                        <label className="theme-color">Build a Database of Customer Knowledge</label>
                                         <h2>Make smarter business decisions with data analysis</h2>
                                         <p className="large">Dragonfly gives you the power to measure your messaging coverage and impact allowing you to see where you need to apply information to increase sales.</p>
                                         <br />
@@ -159,6 +159,10 @@ class LandingPageComponent extends React.Component {
                                     </div>
                                 </div>
                             </div>
+                        </div>
+
+                        <div className="container">
+                            <img className="dragondly-mql-graphic" src="images/landing_page/MQL_transparent.png"></img>
                         </div>
                     </section>
                     <section id="feature" className="section p-0px-b effect-section gray-bg">
