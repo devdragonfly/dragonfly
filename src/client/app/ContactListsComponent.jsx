@@ -31,11 +31,14 @@ class ContactListsComponent extends React.Component {
     var dbUpdate = this.props.dbUpdate;
     var contactListsJsx = function () { return '' }();
 
+    var numContactLists = 0;
+
     if (contactLists !== 'not found') {
       if (contactLists.length === 0) {
         contactListsJsx = function () { return 'No contact lists created yet.' }();
 
       } else {
+        numContactLists = contactLists.length;
         var contactCount = 0;
         contactListsJsx = this.props.contactLists.map((contactList, i) => {
           contactCount = 0;
@@ -58,9 +61,14 @@ class ContactListsComponent extends React.Component {
 
         <div className="row justify-content-center">
           <div className="col-12 col-lg-10">
+
             <div className="row page_header_container">
               <div className="col-12">
-                <h3 className="page_header_title float-left">Contact Lists</h3>
+                <div className="page_header_title float-left">
+                  <h3 className="page-title">Contact Lists</h3>
+                  <p>You have <b>{numContactLists}</b> contact lists.</p>
+                </div>
+
                 <div className="page_header_action float-right">
                   <Link to={`createcontactlist`} className="btn btn-primary float-right"><i className='fa fa-plus'></i> Create Contact List</Link>
                 </div>
