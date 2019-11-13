@@ -84,6 +84,34 @@ class SettingsComponent extends React.Component {
 
             
 
+            {/* Section Header */}
+            <div className="row page-section-header-container mt-5">
+              <div className="col-12">
+
+                <div className="page-section-header float-left">
+                  <h4 className="page-section-title">Dragonfly Payments</h4>
+                </div>
+
+                <div className="page-section-header-actions float-right">
+                </div>
+
+                {/* <div className="section-tabs-container">
+                  <div className="row">
+                    <div className="col-12">
+                      <ul className="section-tab-list">
+                        <li className="section-tab-item">Dashboard</li>
+                        <li className="section-tab-item">Billing Info</li>
+                        <li className="section-tab-item">Payment Methods</li>
+                      </ul>
+                    </div>
+                  </div>
+
+                </div> */}
+
+                <div className="clearfix"></div>
+              </div>
+            </div>
+
 
 
           </div>
