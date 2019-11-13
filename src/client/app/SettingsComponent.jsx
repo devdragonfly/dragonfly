@@ -95,7 +95,7 @@ class SettingsComponent extends React.Component {
                 <div className="page-section-header-actions float-right">
                 </div>
 
-                {/* <div className="section-tabs-container">
+                <div className="section-tabs-container">
                   <div className="row">
                     <div className="col-12">
                       <ul className="section-tab-list">
@@ -106,7 +106,7 @@ class SettingsComponent extends React.Component {
                     </div>
                   </div>
 
-                </div> */}
+                </div>
 
                 <div className="clearfix"></div>
               </div>
