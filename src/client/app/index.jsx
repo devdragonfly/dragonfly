@@ -1,3 +1,8 @@
+if (window.location.protocol !== 'https:') {
+    window.location = 'https:' + window.location.href.substring(window.location.protocol.length)
+    return // to stop app from mounting
+  }
+
 import React, { Component } from 'react';
 import { render } from 'react-dom';
 // Import routing components
@@ -56,6 +61,9 @@ import LandingPageComponent from './landing/LandingPageComponent.jsx';
 
 
 import DashboardPage from './pages/DashboardPage.jsx';
+
+
+
 
 render(
     <Router>
