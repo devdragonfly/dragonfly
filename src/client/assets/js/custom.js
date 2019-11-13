@@ -402,8 +402,8 @@
 
 	// Window on Load
 	$(window).on("load", function () {
-		SMA.masonry(),
-			SMA.PreLoad();
+		// SMA.masonry(),
+		// 	SMA.PreLoad();
 	});
 	// Document on Ready
 	$(document).on("ready", function () {
