@@ -1,3 +1,10 @@
+
+
+if (window.location.protocol !== 'https:') {
+  window.location = 'https:' + window.location.href.substring(window.location.protocol.length)
+  return // to stop app from mounting
+}
+
 //
 // # SimpleServer
 //
