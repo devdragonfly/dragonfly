@@ -102,6 +102,7 @@
 
 
 .page-section-header-container {
+  margin-bottom: 5px;
 
   .page-section-header {
 
@@ -109,6 +110,7 @@
       color: #000000;
       font-size: 0.9em;
       font-weight: 500;
+      margin-bottom: 0;
 
     }
 
@@ -133,6 +135,31 @@
       }
     }
 
+  }
+
+  .section-tabs-container {
+    // display: inline-block;
+
+    .section-tab-list {
+      display: inline-flex;
+      list-style-type: none;
+      padding-left: 0;
+
+      .section-tab-item {
+        padding: 0 1em 1em 0;
+        font-size: 0.9em;
+
+        &.active {
+          color: $color_blue_dark;
+          font-weight: 600;
+        }
+
+        &:hover {
+          color: $color_blue_dark;
+          font-weight: 600;
+        }
+      }
+    }
   }
 
 }
