@@ -41,7 +41,7 @@ class LandingPageComponent extends React.Component {
     render() {
 
         var videoThumbStyle = {
-            backgroundImage: 'url(assets/images/video_thumbnails/how_it_works_video_thumb.png)'
+            backgroundImage: 'url(assets/images/video_thumbnails/dragonfly_video_thumbnail.png)'
         }
 
         return (
