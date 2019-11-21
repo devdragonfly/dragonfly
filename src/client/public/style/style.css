@@ -77,6 +77,21 @@ body {
 .font-24 {
   font-size: 24px !important; }
 
+.landing-graphic-container {
+  margin-top: 100px;
+  padding-left: 2em;
+  padding-right: 2em; }
+  .landing-graphic-container .dragondly-mql-graphic-section {
+    position: relative;
+    top: 0;
+    margin-top: -30px;
+    -moz-transition: ease all 0.55s;
+    -o-transition: ease all 0.55s;
+    -webkit-transition: ease all 0.55s;
+    transition: ease all 0.55s; }
+    .landing-graphic-container .dragondly-mql-graphic-section:hover {
+      top: -10px; }
+
 /* ----- COMPONENTS ----- */
 .app-nav {
   background-color: #fff !important;

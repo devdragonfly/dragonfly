@@ -161,8 +161,16 @@ class LandingPageComponent extends React.Component {
                             </div>
                         </div>
 
-                        <div className="container">
-                            <img className="dragondly-mql-graphic" src="images/landing_page/MQL_transparent.png"></img>
+                        {/* <div className="container">
+                            <img className="dragondly-mql-graphic" src="assets/images/landing_page/Dragonfly3graphic.png"></img>
+                        </div> */}
+
+                        <div className="container landing-graphic-container">
+                            <img className="dragondly-mql-graphic-section" src="assets/images/landing_page/Dragonfly3graphic1.png"></img>
+                            <img className="dragondly-mql-graphic-section" src="assets/images/landing_page/Dragonfly3graphic2.png"></img>
+                            <img className="dragondly-mql-graphic-section" src="assets/images/landing_page/Dragonfly3graphic3.png"></img>
+                            <img className="dragondly-mql-graphic-section" src="assets/images/landing_page/Dragonfly3graphic4.png"></img>
+
                         </div>
                     </section>
                     <section id="feature" className="section p-0px-b effect-section gray-bg">
