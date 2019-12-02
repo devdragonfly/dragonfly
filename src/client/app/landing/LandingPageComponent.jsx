@@ -124,12 +124,15 @@ class LandingPageComponent extends React.Component {
                     <section id="feature" className="section effect-section">
                         <div className="effect-01 left"></div>
                         <div className="container">
-                            <div className="row justify-content-center sm-m-45px-b m-60px-b">
+                            <div className="row justify-content-center sm-m-25px-b m-35px-b">
                                 <div className="col-lg-8 col-md-10">
                                     <div className="section-title text-center">
                                         <h2><small>Uniform, scalable, and documentable information sharing for your marketing, sales, and customer success teams.</small></h2> </div>
                                 </div>
                             </div>
+                            <div className="container">
+                            <img className="dragondly-mql-graphic" src="assets/images/landing_page/dragonflyMQL.png"></img>
+                        </div>
                             <div className="row align-items-center">
                                 <div className="col-lg-6">
                                     <div className="side-feature sm-p-0px-r md-p-30px-r p-70px-r">
@@ -161,17 +164,15 @@ class LandingPageComponent extends React.Component {
                             </div>
                         </div>
 
-                        {/* <div className="container">
-                            <img className="dragondly-mql-graphic" src="assets/images/landing_page/Dragonfly3graphic.png"></img>
-                        </div> */}
+                        
 
-                        <div className="container landing-graphic-container">
+                        {/* <div className="container landing-graphic-container">
                             <img className="dragondly-mql-graphic-section" src="assets/images/landing_page/Dragonfly3graphic1.png"></img>
                             <img className="dragondly-mql-graphic-section" src="assets/images/landing_page/Dragonfly3graphic2.png"></img>
                             <img className="dragondly-mql-graphic-section" src="assets/images/landing_page/Dragonfly3graphic3.png"></img>
                             <img className="dragondly-mql-graphic-section" src="assets/images/landing_page/Dragonfly3graphic4.png"></img>
 
-                        </div>
+                        </div> */}
                     </section>
                     <section id="feature" className="section p-0px-b effect-section gray-bg">
                         <div className="bg-effect bg-cover bg-no-repeat gb-ef70 theme-bg"></div>
@@ -198,8 +199,7 @@ class LandingPageComponent extends React.Component {
                             <div className="row justify-content-center sm-m-25px-b m-45px-b">
                                 <div className="col-lg-8 col-md-10">
                                     <div className="section-title text-center">
-                                        <h2>How Does Dragonfly Work?</h2>
-                                        <p>Building a Dragonfly session is simple.</p>
+                                        <h2>Building a Dragonfly session is simple.</h2>
                                     </div>
                                 </div>
                             </div>
