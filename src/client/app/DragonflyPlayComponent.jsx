@@ -563,7 +563,7 @@ class MultipleAnswerComponent extends React.Component {
               <input type="checkbox" value={this.props.answer.isSelected} checked={this.props.answer.isSelected} disabled={this.props.isDisabled} />
             </div>
             <div className="dragon-select-list-form-cell-lg">
-              {this.props.answer.letter}
+              {/* {this.props.answer.letter} */}
             </div>
             <div className="dragon-select-list-form-cell-lg">
               {this.props.answer.text}
