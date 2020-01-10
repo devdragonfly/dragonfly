@@ -71,6 +71,7 @@ class GenerateDragonfliesComponent extends React.Component {
               </div>
             </div>
 
+
             {/* start */}
             <div className="row">
               <div className="col-12">
@@ -410,6 +411,31 @@ class GenerateDragonfliesComponent extends React.Component {
         }
       })
       dragonflies.push(dragonfly);
+
+
+      //Upload first 10 Items
+      if (i > 1 && i % 9 == 0) {
+
+        var params = {
+          RequestItems: { "Dragonflies": putRequests, "Results": putRequests },
+          ReturnConsumedCapacity: "NONE",
+          ReturnItemCollectionMetrics: "NONE"
+        };
+
+        myThis.props.dbBatchWrite(params, function (result) {
+          // myThis.showClickedButtonState(false);
+    
+          // campaign.expirationDate = myThis.state.expirationDate;
+          // myThis.props.handleLoadCampaign(campaign);
+    
+          // myThis.props.history.push('loadresults');
+          console.log("Uploaded Segment of batch");
+        });
+
+        putRequests = [];
+      }
+
+
     }
     var params = {
       RequestItems: { "Dragonflies": putRequests, "Results": putRequests },
@@ -433,7 +459,7 @@ class GenerateDragonfliesComponent extends React.Component {
   }
 
   createId() {
-    return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
+    return 'Axxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
       var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
       return v.toString(16);
     });
