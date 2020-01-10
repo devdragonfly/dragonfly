@@ -434,28 +434,40 @@ class GenerateDragonfliesComponent extends React.Component {
 
         putRequests = [];
       }
+    }
 
+    if (putRequests.length > 0) {
+      var params = {
+        RequestItems: { "Dragonflies": putRequests, "Results": putRequests },
+        ReturnConsumedCapacity: "NONE",
+        ReturnItemCollectionMetrics: "NONE"
+      };
+
+      myThis.props.dbBatchWrite(params, function (result) {
+        myThis.showClickedButtonState(false);
+  
+        campaign.expirationDate = myThis.state.expirationDate;
+        myThis.props.handleLoadCampaign(campaign);
+  
+        myThis.props.history.push('loadresults');
+      });
 
     }
-    var params = {
-      RequestItems: { "Dragonflies": putRequests, "Results": putRequests },
-      ReturnConsumedCapacity: "NONE",
-      ReturnItemCollectionMetrics: "NONE"
-    };
+
     mixpanel.track('Generating Dragonfly Links', {
       'OrganizationId': organizationId,
       'CampaignId': campaignId,
       'CampaignName': campaign.name,
       'CustomTexts': customTexts
     });
-    myThis.props.dbBatchWrite(params, function (result) {
-      myThis.showClickedButtonState(false);
 
-      campaign.expirationDate = myThis.state.expirationDate;
-      myThis.props.handleLoadCampaign(campaign);
+    campaign.expirationDate = myThis.state.expirationDate;
+    myThis.props.handleLoadCampaign(campaign);
 
-      myThis.props.history.push('loadresults');
-    });
+    myThis.props.history.push('loadresults');
+
+    
+    
   }
 
   createId() {
