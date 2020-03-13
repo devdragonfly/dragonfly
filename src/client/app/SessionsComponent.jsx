@@ -25,7 +25,8 @@ class SessionsComponent extends React.Component {
     this.state = {
       allSessions: [],
       loadedSessions: [],
-      searchInput: ''
+      searchInput: '',
+      sessionHasLoaded: false,
     }
 
 
@@ -57,26 +58,23 @@ class SessionsComponent extends React.Component {
       }
     };
 
-
-    var sessions = this.props.sessions;
-    if (sessions === 'not found') {
-      this.props.history.push('loadsessions');
-      // this.props.dbQuery(sessionParams, function (result) {
-      //   myThis.props.handleLoadSessions(result);
-      //   console.log("Finished Loading Sessions");
-      //   myThis.setState({
-      //     allSessions: myThis.props.sessions,
-      //     loadedSessions: myThis.props.sessions,
-      //     searchInput: ''
-      //   });
-      // });
-    }
-
-    this.setState({
-      allSessions: this.props.sessions,
-      loadedSessions: this.props.sessions,
-      searchInput: ''
+    this.props.dbQuery(sessionParams, function (result) {
+      myThis.props.handleLoadSessions(result);
+      console.log("Finished Loading Sessions");
+      myThis.setState({
+        allSessions: myThis.props.sessions,
+        loadedSessions: myThis.props.sessions,
+        searchInput: '',
+        sessionsHasLoaded: true,
+      });
     });
+
+
+    // var sessions = this.props.sessions;
+    // if (sessions === 'not found') {
+    //   this.props.history.push('loadsessions');
+     
+    // }
 
 
 
@@ -132,7 +130,7 @@ class SessionsComponent extends React.Component {
 
     var sessionsJsx = function () { return '' }();
 
-    if (sessions !== 'not found') {
+    if (this.state.sessionsHasLoaded) {
       if (sessions.length === 0) {
         sessionsJsx = function () { return 'No sessions created yet.' }();
 
@@ -147,6 +145,8 @@ class SessionsComponent extends React.Component {
           return <Session session={session} handleLoadSession={handleLoadSession} breakpointCount={breakpointCount} history={history} />
         });
       }
+    } else {
+      sessionsJsx = function () { return 'No sessions created yet.' }();
     }
 
 

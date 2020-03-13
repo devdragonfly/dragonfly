@@ -23,6 +23,7 @@ class LoadContactListsComponent extends React.Component {
             ":organizationId":organizationId
         }
     };
+    
 
     this.props.dbQuery(params, function(result) {
       var next = myThis.props.next;

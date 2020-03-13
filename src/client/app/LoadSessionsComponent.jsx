@@ -27,8 +27,9 @@ class LoadSessionsComponent extends React.Component {
       // var next = myThis.props.next;
       myThis.props.handleLoadSessions(result);
       // myThis.props.history.push(next);
+
       
-      myThis.props.history.push('sessions');   
+      myThis.props.history.push(myThis.props.next);   
       
     });
     
