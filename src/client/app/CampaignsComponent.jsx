@@ -17,6 +17,8 @@ class CampaignsComponent extends React.Component {
   }
 
 
+
+
   componentWillMount() {
     this.props.handleLoadResults("not found");
     var campaigns = this.props.campaigns;
@@ -68,6 +70,7 @@ class CampaignsComponent extends React.Component {
       }
     }
   
+
 
 
 

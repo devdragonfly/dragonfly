@@ -416,6 +416,7 @@ class GenerateDragonfliesComponent extends React.Component {
       //Upload first 10 Items
       if (i > 1 && i % 9 == 0) {
 
+        
         var params = {
           RequestItems: { "Dragonflies": putRequests, "Results": putRequests },
           ReturnConsumedCapacity: "NONE",

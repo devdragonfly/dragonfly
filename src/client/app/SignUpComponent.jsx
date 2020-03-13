@@ -22,6 +22,7 @@ const userPool = new CognitoUserPool({
 
 
 
+
 const buttonClassName = "btn btn-primary btn-lg";
 
 class SignUpComponent extends React.Component {
