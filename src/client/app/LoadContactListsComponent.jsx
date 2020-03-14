@@ -27,21 +27,15 @@ class LoadContactListsComponent extends React.Component {
 
     this.props.dbQuery(params, function(result) {
       var next = myThis.props.next;
+      console.log("NEXT: ", next);
+      console.log('PROPS: ', myThis.props);
       myThis.props.handleLoadContactLists(result);
-      myThis.props.history.push(next);
 
       if ( next === 'campaignselectcontactlist') {
-        var atLeastOneHasContacts = false;
         var contactLists = myThis.props.contactLists;
-
-        for (var i = 0; i < contactLists.length; i++) {
-            if (contactLists[i].contacts != null) {
-              atLeastOneHasContacts = true;
-            }
-        }
-        if (!atLeastOneHasContacts) {
-          myThis.props.history.push('campaignnocontactlists');
-        }
+        myThis.props.history.push(next);
+      } else {
+        myThis.props.history.push('contactlists');
       }
 
     });
