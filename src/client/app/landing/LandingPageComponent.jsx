@@ -309,37 +309,6 @@ class LandingPageComponent extends React.Component {
                             </div>
                         </div>
                     </section>
-
-                    {/* <section id="get_started" className="section section-get-started theme-bg">
-                        <div className="container"> */}
-                            {/* <div className="row justify-content-center sm-m-25px-b m-45px-b">
-                                <div className="col-lg-8 col-md-10">
-                                    <div className="section-title text-center">
-                                        <h2 className="white-color">Get started by creating a free account today.</h2> </div>
-                                </div>
-                            </div> */}
-
-                            {/* <div className="row justify-content-center">
-                                <div className="col-md-9 col-lg-7">
-                                    <div className="create-account-form">
-                                        <form>
-                                            <div className="row">
-                                                <div className="col-md-4">
-                                                    <input name="email" className="form-control" placeholder="Email Address" type="email" /> </div>
-                                                <div className="col-md-4">
-                                                    <input name="password" className="form-control" placeholder="Password" type="password" /> </div>
-                                                <div className="col-md-4">
-                                                    <button className="m-btn m-btn-theme">Create Account</button>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div> */}
-
-                        {/* </div>
-                    </section> */}
-
                 </main>
                 <footer className="footer-one">
                     <div className="footer-top">
