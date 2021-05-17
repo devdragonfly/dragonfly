@@ -58,25 +58,6 @@ class LandingPageComponent extends React.Component {
                                         <h3>Start <b>engaging</b> with your customers.</h3>
                                         <p>Incentivize your customers for learning about your products, sparking engagement and knowledge you can measure. <b>Try it out for free today.</b></p>
                                     </div>
-                                    
-                                    <div className="hb-form">
-                                        <form onSubmit={this.handleSubmit}>
-                                            <div className="row">
-                                                <div className="col-md-4">
-                                                    <input value={this.state.emailValue} onChange={this.updateEmailValue} placeholder="email" className="form-control input-lg" />
-                                                </div>
-                                                <div className="col-md-4">
-                                                    <input type="password" value={this.state.passwordValue} onChange={this.updatePasswordValue} placeholder="password" className="form-control input-lg" />
-
-                                                </div>
-                                                <div className="col-md-4">
-                                                    <input type="submit" className={this.state.buttonRestClassName} value="Create Account" />
-                                                    <div className={this.state.buttonClickedClassName}><i className='fa fa-circle-o-notch fa-spin'></i> Creating Account</div>
-                                                </div>
-                                            </div>
-                                        </form>
-                                    </div>
-
                                 </div>
                             </div>
                         </div>
@@ -328,15 +309,17 @@ class LandingPageComponent extends React.Component {
                             </div>
                         </div>
                     </section>
-                    <section id="get_started" className="section section-get-started theme-bg">
-                        <div className="container">
-                            <div className="row justify-content-center sm-m-25px-b m-45px-b">
+
+                    {/* <section id="get_started" className="section section-get-started theme-bg">
+                        <div className="container"> */}
+                            {/* <div className="row justify-content-center sm-m-25px-b m-45px-b">
                                 <div className="col-lg-8 col-md-10">
                                     <div className="section-title text-center">
                                         <h2 className="white-color">Get started by creating a free account today.</h2> </div>
                                 </div>
-                            </div>
-                            <div className="row justify-content-center">
+                            </div> */}
+
+                            {/* <div className="row justify-content-center">
                                 <div className="col-md-9 col-lg-7">
                                     <div className="create-account-form">
                                         <form>
@@ -352,9 +335,11 @@ class LandingPageComponent extends React.Component {
                                         </form>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                    </section>
+                            </div> */}
+
+                        {/* </div>
+                    </section> */}
+
                 </main>
                 <footer className="footer-one">
                     <div className="footer-top">
